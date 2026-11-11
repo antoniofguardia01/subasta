@@ -154,11 +154,18 @@ export function Ticker({ mensajes, pausa, alto }: { mensajes: MensajeTicker[]; p
     let x = v.clientWidth * 0.6;
     let ultimo = performance.now();
     let raf = 0;
+    let ultimoId = -999;
     const siguiente = (): { m: MensajeTicker; nuevo: boolean } => {
       const u = d.urgentes.shift();
-      if (u) return { m: u, nuevo: true };
+      if (u) {
+        ultimoId = u.id;
+        return { m: u, nuevo: true };
+      }
       const lista = d.mensajes.length ? d.mensajes : [RELLENO];
-      return { m: lista[d.indice++ % lista.length], nuevo: false };
+      let m = lista[d.indice++ % lista.length];
+      if (m.id === ultimoId && lista.length > 1) m = lista[d.indice++ % lista.length];
+      ultimoId = m.id;
+      return { m, nuevo: false };
     };
     const paso = (t: number) => {
       const dt = Math.min(0.05, (t - ultimo) / 1000);

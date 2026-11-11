@@ -51,7 +51,7 @@ export function Inicio() {
     const q = gsap.utils.selector(el);
     const rm = reducirMovimiento();
     const t = gsap.timeline({ defaults: { ease: 'expo.out' } });
-    gsap.set(q('.ini-martillo'), { yPercent: -160, rotation: -38, opacity: 0 });
+    gsap.set(q('.ini-martillo'), { rotation: 28, opacity: 0 });
     gsap.set(q('.ini-letra'), { yPercent: 115 });
     gsap.set(q('.ini-placa'), { scaleX: 0 });
     gsap.set(q('.ini-placa span'), { opacity: 0 });
@@ -63,6 +63,7 @@ export function Inicio() {
       gsap.set(q('.ini-placa span, .ini-haz'), { opacity: 1 });
       gsap.set(q('.ini-entra'), { y: 0, opacity: 1 });
       gsap.set(q('.ini-negro'), { opacity: 0 });
+      gsap.set(q('.ini-martillo'), { rotation: -90, opacity: 1 });
       return;
     }
     void video.current?.play().catch(() => {});
@@ -71,7 +72,7 @@ export function Inicio() {
       .to(q('.ini-haz'), { opacity: 1, duration: 0.18, ease: 'steps(3)', stagger: 0.24, onStart: () => sonar.tic(true) }, 0.35)
       // 1.5 s: cae el martillo (acelera) y golpea.
       .to(q('.ini-martillo'), { opacity: 1, duration: 0.1 }, 1.45)
-      .to(q('.ini-martillo'), { yPercent: 0, rotation: 8, duration: 0.42, ease: 'power3.in' }, 1.45)
+      .to(q('.ini-martillo'), { rotation: -90, duration: 0.42, ease: 'power3.in' }, 1.45)
       .add(() => {
         sonar.martillo();
         vibrar([40, 30, 90]);
@@ -81,7 +82,9 @@ export function Inicio() {
       }, 1.87)
       .fromTo(q('.ini-flash'), { opacity: 1 }, { opacity: 0, duration: 0.5, ease: 'power2.out' }, 1.87)
       .fromTo(q('.ini-marca'), { scaleY: 0.9, scaleX: 1.04 }, { scaleY: 1, scaleX: 1, duration: 0.8, ease: 'elastic.out(1, 0.35)' }, 1.87)
-      .to(q('.ini-martillo'), { rotation: -22, yPercent: -34, xPercent: 16, duration: 0.9, ease: 'elastic.out(1, 0.5)' }, 1.9)
+      // Rebote del martillo: se levanta un poco y queda apoyado sobre el logo.
+      .to(q('.ini-martillo'), { rotation: -74, duration: 0.16, ease: 'power2.out' }, 1.89)
+      .to(q('.ini-martillo'), { rotation: -90, duration: 0.5, ease: 'bounce.out' }, 2.05)
       // 1.9 s: el logo se arma letra por letra, con resorte.
       .to(q('.ini-letra'), { yPercent: 0, duration: 0.7, ease: 'back.out(1.7)', stagger: 0.04 }, 1.9)
       .to(q('.ini-placa'), { scaleX: 1, duration: 0.55 }, 2.35)
@@ -204,8 +207,8 @@ export function Inicio() {
 
       <main className="ini-centro">
         <div className="ini-marca">
-          <img className="ini-martillo" src="/media/martillo.webp" alt="" draggable={false} />
           <h1 className="ini-logo" aria-label="Subasta Futbolera">
+            <img className="ini-martillo" src="/media/martillo.webp" alt="" draggable={false} />
             <span className="ini-fila">
               {'SUBASTA'.split('').map((l, i) => (
                 <b className="ini-letra" key={i}>
@@ -283,10 +286,10 @@ export function Inicio() {
           ))}
           <em key={tema}>{TEMAS.find((t) => t.id === tema)?.nombre}</em>
         </div>
-        <button className="ini-sonido" data-on={sonido ? '1' : '0'} onClick={() => (setSonido(!sonido), void activarSonido(!sonido))}>
-          ♪ {sonido ? 'Con sonido' : 'Silencio'}
-        </button>
       </footer>
+      <button className="ini-sonido ini-entra" data-on={sonido ? '1' : '0'} onClick={() => (setSonido(!sonido), void activarSonido(!sonido))}>
+        ♪ {sonido ? 'Con sonido' : 'Silencio'}
+      </button>
       <div className="ini-ticker">
         <Ticker mensajes={TITULARES} alto={36} />
       </div>

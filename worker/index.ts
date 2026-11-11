@@ -90,6 +90,12 @@ export default {
         if (!codigoValido(codigo) || !cuerpo.texto) return json({ error: 'faltan datos' }, 400);
         return sala(env, codigo).fetch('https://do/admin/ticker', { method: 'POST', body: JSON.stringify(cuerpo) });
       }
+      if (partes[2] === 'avanzar' && req.method === 'POST') {
+        const cuerpo = (await req.json().catch(() => ({}))) as { sala?: string; hasta?: string };
+        const codigo = String(cuerpo.sala ?? '').toUpperCase();
+        if (!codigoValido(codigo)) return json({ error: 'faltan datos' }, 400);
+        return sala(env, codigo).fetch('https://do/admin/avanzar', { method: 'POST', body: JSON.stringify(cuerpo) });
+      }
       if (partes[2] === 'ping') return json({ ok: true });
     }
 

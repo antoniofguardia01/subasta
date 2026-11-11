@@ -30,8 +30,12 @@
 
 .ini-centro { position: relative; z-index: 3; flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(18px, 4vh, 44px); padding: calc(env(safe-area-inset-top) + 12px) 20px 8px; }
 .ini-marca { position: relative; display: flex; flex-direction: column; align-items: center; transform: translate3d(calc(var(--px) * -8px), calc(var(--py) * -6px), 0); transform-origin: 50% 100%; }
-.ini-martillo { position: absolute; left: 50%; bottom: 86%; height: clamp(120px, 26vh, 300px); width: auto; margin-left: clamp(40px, 12vw, 150px); transform-origin: 50% 92%; z-index: 2; filter: drop-shadow(0 12px 0 rgba(0, 0, 0, 0.35)); pointer-events: none; }
-.ini-logo { display: flex; flex-direction: column; align-items: center; margin: 0; line-height: 1; }
+/* El martillo pivota en la punta del mango, a la derecha del logo: cae girando y queda acostado sobre la palabra. */
+.ini-logo { position: relative; display: flex; flex-direction: column; align-items: center; margin: 0; line-height: 1; --mh: min(21vh, 40vw); }
+.ini-martillo {
+  position: absolute; right: 0; bottom: calc(100% + var(--mh) * 0.17); height: var(--mh); width: auto; margin-right: calc(var(--mh) * -0.2);
+  transform-origin: 50% 96%; z-index: 2; filter: drop-shadow(0 calc(var(--mh) * 0.04) 0 rgba(0, 0, 0, 0.4)); pointer-events: none;
+}
 .ini-fila { display: flex; overflow: hidden; padding: 0.04em 0.02em 0; }
 .ini-letra { display: block; font-size: clamp(74px, 21vw, 250px); font-weight: 900; font-stretch: 62%; line-height: 0.84; color: #fff; letter-spacing: -0.012em; will-change: transform; }
 .ini-placa {
@@ -79,7 +83,7 @@
 .ini-estado[data-estado='mal'] { color: #ff8573; opacity: 1; }
 .ini-volver { font-size: 15px; padding: 0.7em 1.4em; color: #fff; }
 
-.ini-pie { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 18px 12px; flex: none; }
+.ini-pie { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 18px 12px; flex: none; }
 .ini-temas { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .ini-temas > span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; }
 .ini-temas button { position: relative; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex: none; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35); transition: transform 240ms var(--ease-rebote), box-shadow 200ms ease; }
@@ -88,7 +92,7 @@
 .ini-temas button i:last-child { right: 0; }
 .ini-temas button[data-on='1'] { transform: scale(1.22); box-shadow: 0 0 0 3px #fff; }
 .ini-temas em { font-style: normal; font-size: 13px; font-weight: 800; font-stretch: 88%; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: sube 320ms var(--ease-out) both; }
-.ini-sonido { flex: none; padding: 8px 14px; border-radius: 20px; background: rgba(255, 255, 255, 0.14); font-size: 13px; font-weight: 800; text-transform: uppercase; white-space: nowrap; transition: background-color 180ms ease, color 180ms ease; }
+.ini-sonido { position: absolute; right: 14px; top: calc(env(safe-area-inset-top) + 12px); z-index: 4; padding: 8px 14px; border-radius: 20px; background: rgba(255, 255, 255, 0.14); font-size: 13px; font-weight: 800; text-transform: uppercase; white-space: nowrap; transition: background-color 180ms ease, color 180ms ease; }
 .ini-sonido[data-on='1'] { background: var(--acento); color: var(--acento-tinta); }
 .ini-ticker { position: relative; z-index: 3; flex: none; padding-bottom: env(safe-area-inset-bottom); background: var(--placa); }
 
@@ -103,7 +107,7 @@
   .ini-centro { gap: 12px; }
   .ini-letra { font-size: clamp(60px, 18vh, 150px); }
   .ini-placa { font-size: clamp(22px, 6.6vh, 56px); }
-  .ini-martillo { height: 18vh; }
+  .ini-logo { --mh: 16vh; }
   .ini-bajada { display: none; }
 }
 

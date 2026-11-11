@@ -74,6 +74,25 @@ export class RoomDO implements DurableObject {
       return Response.json({ ok: true });
     }
 
+    if (ruta === '/admin/avanzar' && req.method === 'POST') {
+      // Herramienta de pruebas: adelanta el reloj hasta el final de la ronda o de la partida (sin ofertas).
+      const p = this.partida;
+      if (!p || !p.mazo) return Response.json({ ok: false, error: 'sin partida' }, { status: 404 });
+      const { hasta } = (await req.json()) as { hasta?: 'ronda' | 'final' };
+      const rondaInicial = p.rondaIdx;
+      let t = Date.now();
+      for (let i = 0; i < 5000 && p.fase !== 'final'; i++) {
+        if (hasta !== 'final' && p.rondaIdx > rondaInicial && p.fase === 'ronda') break;
+        t = Math.max(t, p.vence);
+        p.avanzar(t);
+      }
+      // El reloj real retoma desde ahora.
+      if (p.fase !== 'final') p.vence = Date.now() + p.duracion;
+      p.hechos = [];
+      this.difundir();
+      return Response.json({ ok: true, fase: p.fase, ronda: p.rondaIdx });
+    }
+
     if (ruta === '/ws') {
       if (req.headers.get('Upgrade') !== 'websocket') return new Response('se esperaba websocket', { status: 426 });
       if (!this.partida) return new Response('sala inexistente', { status: 404 });

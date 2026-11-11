@@ -46,6 +46,7 @@ export function Reloj({ sala, activo, vence, duracion, pausaResto, alTic, sonido
   useEffect(() => {
     let raf = 0;
     let seg = -1;
+    let activoAntes = false;
     let tension = -1;
     let cuenta = -1;
     const paso = () => {
@@ -54,9 +55,10 @@ export function Reloj({ sala, activo, vence, duracion, pausaResto, alTic, sonido
       const k = c.duracion > 0 ? Math.min(1, resto / c.duracion) : 0;
       arco.current?.setAttribute('stroke-dashoffset', String(LARGO * (1 - k)));
       const s = Math.ceil(resto / 1000);
-      if (s !== seg) {
+      if (s !== seg || c.activo !== activoAntes) {
         seg = s;
-        if (texto.current) texto.current.textContent = c.activo ? String(s) : '';
+        activoAntes = c.activo;
+        if (texto.current) texto.current.textContent = String(s);
         if (c.activo && c.pausaResto == null && raiz.current) {
           // Pulso por segundo; crece cuando queda poco.
           raiz.current.dataset.pulso = '0';

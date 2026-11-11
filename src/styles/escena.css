@@ -90,7 +90,7 @@
 .escena[data-desenlace='pasa'] .esc-sello span, .escena[data-desenlace='salteada'] .esc-sello span { background: #14161a; color: #fff; box-shadow: 0 0 0 calc(var(--u) * 0.5) #fff; }
 .esc-troll { position: absolute; right: calc(var(--u) * 3); top: calc(var(--v) * 8); opacity: 0; pointer-events: none; z-index: 6; }
 .esc-troll span { display: block; padding: 0.02em 0.3em; font-size: calc(var(--u) * 6.4); font-weight: 900; font-stretch: 62%; text-transform: uppercase; background: #ffe14a; color: #14161a; box-shadow: 0 0 0 calc(var(--u) * 0.45) #14161a; }
-.esc-martillo { position: absolute; right: calc(var(--u) * 6); top: calc(var(--v) * 2); height: calc(var(--v) * 58); width: auto; opacity: 0; pointer-events: none; z-index: 4; }
+.esc-martillo { position: absolute; right: calc(var(--u) * 3); top: calc(var(--v) * -14); height: calc(var(--v) * 56); width: auto; opacity: 0; pointer-events: none; z-index: 4; }
 .esc-venta {
   position: absolute; left: calc(var(--u) * 4); bottom: calc(var(--v) * 6); display: flex; align-items: center; gap: 0.7em; opacity: 0; z-index: 5;
   padding: 0.45em 0.9em 0.45em 0.5em; border-radius: 99em; background: #0c0e0d; color: #fff; box-shadow: 0 0 0 calc(var(--u) * 0.25) var(--comprador);
@@ -140,24 +140,24 @@
 @keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
 
 /* ───────── Variante compacta (celular) ───────── */
-.escena[data-compacta] .esc-figura { right: calc(var(--u) * -9); height: calc(var(--v) * 98); width: calc(var(--v) * 98 * 1.125); }
+.escena[data-compacta] .esc-figura { right: calc(var(--u) * -13); height: calc(var(--v) * 94); width: calc(var(--v) * 94 * 1.125); }
 .escena[data-compacta] .esc-placa { left: calc(var(--u) * 3.5); width: calc(var(--u) * 70); align-items: start; padding-top: calc(var(--v) * 9); }
 .escena[data-compacta] .placa-precio { min-width: calc(var(--u) * 44); padding: calc(var(--u) * 2.6) calc(var(--u) * 4.4) calc(var(--u) * 2.8) calc(var(--u) * 3.6); border-radius: calc(var(--u) * 2) calc(var(--u) * 2) calc(var(--u) * 2) calc(var(--u) * 5); }
 .escena[data-compacta] .pp-rotulo { font-size: calc(var(--u) * 5); }
 .escena[data-compacta] .pp-monto { font-size: calc(var(--u) * 13.5); }
 .escena[data-compacta] .pp-pos { font-size: calc(var(--u) * 3); }
 .escena[data-compacta] .pp-lider { font-size: calc(var(--u) * 3); }
-.escena[data-compacta] .placa-nombre { min-width: calc(var(--u) * 52); max-width: calc(var(--u) * 68); }
+.escena[data-compacta] .placa-nombre { min-width: calc(var(--u) * 44); max-width: calc(var(--u) * 60); }
 .escena[data-compacta] .pn-cuerpo { padding: calc(var(--u) * 2.2) calc(var(--u) * 6) calc(var(--u) * 2) calc(var(--u) * 3.2); }
-.escena[data-compacta] .pn-nombre { font-size: calc(var(--u) * 5.6); }
-.escena[data-compacta] .pn-apellido { font-size: calc(var(--u) * 8); }
-.escena[data-compacta] .pn-apellido[data-largo='1'] { font-size: calc(var(--u) * 5.8); }
-.escena[data-compacta] .pn-etiqueta { font-size: calc(var(--u) * 2.9); padding: calc(var(--u) * 1.1) calc(var(--u) * 3.2); }
-.escena[data-compacta] .pn-dato { font-size: calc(var(--u) * 3); max-width: calc(var(--u) * 58); }
+.escena[data-compacta] .pn-nombre { font-size: calc(var(--u) * 4.4); }
+.escena[data-compacta] .pn-apellido { font-size: calc(var(--u) * 6.4); }
+.escena[data-compacta] .pn-apellido[data-largo='1'] { font-size: calc(var(--u) * 4.6); }
+.escena[data-compacta] .pn-etiqueta { font-size: calc(var(--u) * 2.5); padding: calc(var(--u) * 1.1) calc(var(--u) * 3.2); }
+.escena[data-compacta] .pn-dato { font-size: calc(var(--u) * 2.8); max-width: calc(var(--u) * 46); }
 .escena[data-compacta] .esc-sello { right: calc(var(--u) * 4); top: calc(var(--v) * 42); }
 .escena[data-compacta] .esc-sello span { font-size: calc(var(--u) * 13); }
 .escena[data-compacta] .esc-troll span { font-size: calc(var(--u) * 9); }
-.escena[data-compacta] .esc-martillo { right: calc(var(--u) * 2); height: calc(var(--v) * 62); }
+.escena[data-compacta] .esc-martillo { right: calc(var(--u) * 2); top: calc(var(--v) * -10); height: calc(var(--v) * 56); }
 .escena[data-compacta] .esc-venta { font-size: calc(var(--u) * 3.3); bottom: calc(var(--v) * 5); left: calc(var(--u) * 3.5); }
 .escena[data-compacta] .esc-cuenta { font-size: calc(var(--u) * 8.5); top: auto; bottom: calc(var(--v) * 6); }
 .escena[data-compacta] .esc-cuenta[data-n='2'] { font-size: calc(var(--u) * 9.5); }
