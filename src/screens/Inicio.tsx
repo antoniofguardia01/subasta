@@ -11,7 +11,7 @@ import { claveDispositivo, pareceTV, reducirMovimiento, usarFlechas, vibrar } fr
 const TITULARES = [
   'Bienvenidos a la Subasta Futbolera: 1000 millones por cabeza y once huecos que llenar',
   'Cada oferta suma 1 millón. No hay vuelta atrás',
-  'Las siluetas mienten. Los trolls también',
+  'Las siluetas mienten. Los precios también',
   'Si nadie oferta y no sobran cartas, decide la ruleta',
   'Se juega con 3 a 8 amigos. O enemigos, da igual',
 ].map((texto, i) => ({ id: -10 - i, texto, tipo: 'sistema' as const }));

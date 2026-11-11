@@ -7,6 +7,9 @@ export const UMBRAL_BARATO = 30;
 /** Cada ronda lleva al menos esta cantidad de cartas baratas. */
 export const BARATAS_POR_RONDA = 2;
 
+/** Rótulos de la placa cuando sale un troll: lo presentan como un fichaje más, sin delatarlo con la palabra. */
+export const ETIQUETAS_SORPRESA = ['FICHAJE BOMBA', 'REFUERZO DE LUJO', 'JOYA DEL BARRIO', 'CRACK DE POTRERO', 'ÍDOLO LOCAL', 'PROMESA ETERNA', 'LEYENDA DEL ASADO', 'TAPADO DEL MERCADO'];
+
 export function cartasPorRonda(participantes: number, ajustes: Ajustes): number {
   return participantes + ajustes.extra;
 }
@@ -86,7 +89,7 @@ export function generarMazo(
     pais: '',
     rating: t.rating,
     rareza: 'troll',
-    etiqueta: 'CARTA TROLL',
+    etiqueta: elegir(rng, ETIQUETAS_SORPRESA),
     dato: t.descripcion || 'Nadie sabe de dónde salió',
     precioMinimo: precioTroll(t, FORMACION[hueco]),
     foto: t.foto,
@@ -194,7 +197,7 @@ export function crearReponedor(pool: readonly Jugador[], trolls: readonly Troll[
       pais: '',
       rating: t.rating,
       rareza: 'troll',
-      etiqueta: 'CARTA TROLL',
+      etiqueta: elegir(rng, ETIQUETAS_SORPRESA),
       dato: t.descripcion || 'Nadie sabe de dónde salió',
       precioMinimo: precioRepuesto(t, pos),
       foto: t.foto,

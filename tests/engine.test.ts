@@ -95,6 +95,14 @@ describe('mazo', () => {
     }
   });
 
+  it('el anfitrión puede fijar su propio rango de trolls antes de empezar (apaga el automático)', () => {
+    const { p } = sala(6, { trollsMin: 2, trollsMax: 2 }, 77, 60);
+    expect(p.ajustes.trollsAuto).toBe(false);
+    for (const ronda of p.mazo!.rondas) expect(ronda.cartas.filter((c) => c.tipo === 'troll')).toHaveLength(2);
+    // Y al salir, la carta no se delata con la palabra "troll".
+    for (const ronda of p.mazo!.rondas) for (const c of ronda.cartas) expect(c.etiqueta.toLowerCase()).not.toContain('troll');
+  });
+
   it('los trolls salen camuflados: con un precio de futbolista real, no regalados', () => {
     const precios: number[] = [];
     for (let s = 1; s <= 20; s++) {

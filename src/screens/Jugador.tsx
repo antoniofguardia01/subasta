@@ -307,23 +307,20 @@ function Reglas({ sala, s, editable }: { sala: Sala; s: EstadoPublico; editable:
       <Paso rotulo="Cada oferta suma" valor={a.incremento} min={1} max={10} sufijo="M" cambiar={(v) => poner({ incremento: v })} editable={editable} />
       <Paso rotulo="Cartas extra por ronda" valor={a.extra} min={0} max={2} cambiar={(v) => poner({ extra: v })} editable={editable} />
       <Paso rotulo="Skips por participante" valor={a.skips} min={0} max={5} cambiar={(v) => poner({ skips: v })} editable={editable} />
+      {/* El rango se puede fijar a mano antes de empezar; tocarlo apaga el ajuste automático. */}
+      <Paso rotulo="Trolls por ronda: mínimo" valor={a.trollsMin} min={0} max={5} cambiar={(v) => poner({ trollsMin: v, trollsMax: Math.max(v, a.trollsMax) })} editable={editable} />
+      <Paso rotulo="Trolls por ronda: máximo" valor={a.trollsMax} min={a.trollsMin} max={5} cambiar={(v) => poner({ trollsMax: v })} editable={editable} />
       <div className="regla">
         <span>
-          Trolls según la cantidad de jugadores
+          Ajustar trolls según los jugadores
           <small>
-            Ahora: de {auto.min} a {auto.max} por ronda, al azar
+            {a.trollsAuto ? `Activado: con ${Math.max(2, s.jugadores.length)} en la sala salen de ${auto.min} a ${auto.max}` : `Apagado: usa tu rango. Automático sería de ${auto.min} a ${auto.max}`}
           </small>
         </span>
         <button className="interruptor" data-on={a.trollsAuto ? '1' : '0'} disabled={!editable} onClick={() => (vibrar(8), poner({ trollsAuto: !a.trollsAuto }))} aria-pressed={a.trollsAuto}>
           <i />
         </button>
       </div>
-      {!a.trollsAuto && (
-        <>
-          <Paso rotulo="Trolls por ronda (mínimo)" valor={a.trollsMin} min={0} max={5} cambiar={(v) => poner({ trollsMin: v, trollsMax: Math.max(v, a.trollsMax) })} editable={editable} />
-          <Paso rotulo="Trolls por ronda (máximo)" valor={a.trollsMax} min={a.trollsMin} max={5} cambiar={(v) => poner({ trollsMax: v })} editable={editable} />
-        </>
-      )}
       <div className="regla">
         <span>
           Trolls camuflados

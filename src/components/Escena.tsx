@@ -351,7 +351,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
           <span>{d ? SELLO[d] : ''}</span>
         </div>
         <div className="esc-troll" aria-hidden>
-          <span>¡Troll!</span>
+          <span>{carta?.compradorId ? '¡Caíste!' : '¡Se salvaron!'}</span>
         </div>
         <img className="esc-martillo" src="/media/martillo.webp" alt="" draggable={false} aria-hidden />
       </div>

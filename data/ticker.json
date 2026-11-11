@@ -158,7 +158,7 @@
    "id": "t023",
    "disparador": "troll",
    "intensidad": 2,
-   "texto": "¡TROLL! {jugador} creyó que era un crack y se llevó a {troll}.",
+   "texto": "{jugador} creyó que era un crack y se llevó a {troll}. Felicitaciones.",
    "activo": true
   },
   {
@@ -655,7 +655,7 @@
    "id": "t094",
    "disparador": "relleno",
    "intensidad": 3,
-   "texto": "Se informa que los trolls no aceptan devoluciones ni reclamos.",
+   "texto": "Se informa que no se aceptan devoluciones ni reclamos.",
    "activo": true
   }
  ],
