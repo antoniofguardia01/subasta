@@ -1,0 +1,663 @@
+{
+ "plantillas": [
+  {
+   "id": "t001",
+   "disparador": "vendido",
+   "intensidad": 1,
+   "texto": "{jugador} se lleva a {carta} por ${monto}M. Bienvenido a casa.",
+   "activo": true
+  },
+  {
+   "id": "t002",
+   "disparador": "vendido",
+   "intensidad": 1,
+   "texto": "Martillazo: {carta} es de {jugador} por ${monto}M.",
+   "activo": true
+  },
+  {
+   "id": "t003",
+   "disparador": "vendido",
+   "intensidad": 2,
+   "texto": "{jugador} pagó ${monto}M por {carta} y sonríe como si hubiera hecho negocio.",
+   "activo": true
+  },
+  {
+   "id": "t004",
+   "disparador": "vendido",
+   "intensidad": 2,
+   "texto": "{carta} ya tiene dueño: {jugador}. Las devoluciones no existen.",
+   "activo": true
+  },
+  {
+   "id": "t005",
+   "disparador": "vendido",
+   "intensidad": 2,
+   "texto": "{jugador} firmó a {carta}. El representante todavía se está riendo.",
+   "activo": true
+  },
+  {
+   "id": "t006",
+   "disparador": "vendido",
+   "intensidad": 3,
+   "texto": "{jugador} pagó ${monto}M por {carta}. Con esa plata te comprabas un club entero en segunda.",
+   "activo": true
+  },
+  {
+   "id": "t007",
+   "disparador": "vendido_caro",
+   "intensidad": 1,
+   "texto": "{jugador} pagó ${monto}M por {carta}. Se calentó la cosa.",
+   "activo": true
+  },
+  {
+   "id": "t008",
+   "disparador": "vendido_caro",
+   "intensidad": 2,
+   "texto": "{jugador} soltó ${monto}M por {carta}. ¿Con qué compras el resto del equipo?",
+   "activo": true
+  },
+  {
+   "id": "t009",
+   "disparador": "vendido_caro",
+   "intensidad": 2,
+   "texto": "Alguien revísele el pulso a {jugador}: ${monto}M por {carta}.",
+   "activo": true
+  },
+  {
+   "id": "t010",
+   "disparador": "vendido_caro",
+   "intensidad": 2,
+   "texto": "{jugador} pagó ${monto}M. El orgullo no tiene precio, pero {carta} sí.",
+   "activo": true
+  },
+  {
+   "id": "t011",
+   "disparador": "vendido_caro",
+   "intensidad": 3,
+   "texto": "{jugador} acaba de regalar ${monto}M. {rival} lo infló y se fue silbando bajito.",
+   "activo": true
+  },
+  {
+   "id": "t012",
+   "disparador": "vendido_caro",
+   "intensidad": 3,
+   "texto": "${monto}M por {carta}. {jugador} confundió la subasta con una colecta.",
+   "activo": true
+  },
+  {
+   "id": "t013",
+   "disparador": "robo",
+   "intensidad": 1,
+   "texto": "{jugador} se llevó a {carta} casi al precio de salida. Negocio redondo.",
+   "activo": true
+  },
+  {
+   "id": "t014",
+   "disparador": "robo",
+   "intensidad": 2,
+   "texto": "¡Robo a mano armada! {jugador} se queda con {carta} por ${monto}M y nadie dijo nada.",
+   "activo": true
+  },
+  {
+   "id": "t015",
+   "disparador": "robo",
+   "intensidad": 2,
+   "texto": "{carta} por ${monto}M. Los demás estaban mirando el celular, pero no la subasta.",
+   "activo": true
+  },
+  {
+   "id": "t016",
+   "disparador": "robo",
+   "intensidad": 3,
+   "texto": "{jugador} les robó a {carta} en la cara. Se durmieron todos, qué vergüenza.",
+   "activo": true
+  },
+  {
+   "id": "t017",
+   "disparador": "estrella",
+   "intensidad": 1,
+   "texto": "¡Cartón lleno! {jugador} se queda con {carta}.",
+   "activo": true
+  },
+  {
+   "id": "t018",
+   "disparador": "estrella",
+   "intensidad": 2,
+   "texto": "{jugador} ya tiene a {carta}. Ahora que el resto del equipo no dé lástima.",
+   "activo": true
+  },
+  {
+   "id": "t019",
+   "disparador": "estrella",
+   "intensidad": 2,
+   "texto": "{carta} en el equipo de {jugador}. Uno juega, los otros diez miran.",
+   "activo": true
+  },
+  {
+   "id": "t020",
+   "disparador": "estrella",
+   "intensidad": 3,
+   "texto": "{jugador} tiene a {carta} y diez huecos. Promete.",
+   "activo": true
+  },
+  {
+   "id": "t021",
+   "disparador": "troll",
+   "intensidad": 1,
+   "texto": "Llegó {troll}: {descripcion}. Lo fichó {jugador}.",
+   "activo": true
+  },
+  {
+   "id": "t022",
+   "disparador": "troll",
+   "intensidad": 2,
+   "texto": "{jugador} pagó ${monto}M por {troll}. {descripcion}. Felicitaciones.",
+   "activo": true
+  },
+  {
+   "id": "t023",
+   "disparador": "troll",
+   "intensidad": 2,
+   "texto": "¡TROLL! {jugador} creyó que era un crack y se llevó a {troll}.",
+   "activo": true
+  },
+  {
+   "id": "t024",
+   "disparador": "troll",
+   "intensidad": 2,
+   "texto": "{troll} ya es titular en el equipo de {jugador}. De {posicion}. En serio.",
+   "activo": true
+  },
+  {
+   "id": "t025",
+   "disparador": "troll",
+   "intensidad": 3,
+   "texto": "{jugador} gastó ${monto}M en {troll}. Hay decisiones que persiguen a uno toda la vida.",
+   "activo": true
+  },
+  {
+   "id": "t026",
+   "disparador": "troll",
+   "intensidad": 3,
+   "texto": "Era {troll}. {jugador} no lo vio venir, y eso que la silueta avisaba.",
+   "activo": true
+  },
+  {
+   "id": "t027",
+   "disparador": "troll",
+   "intensidad": 3,
+   "texto": "{troll} de {posicion}. El equipo de {jugador} ya huele a descenso.",
+   "activo": true
+  },
+  {
+   "id": "t028",
+   "disparador": "obligado",
+   "intensidad": 1,
+   "texto": "{jugador} era el último y se lleva a {carta} por ${monto}M.",
+   "activo": true
+  },
+  {
+   "id": "t029",
+   "disparador": "obligado",
+   "intensidad": 2,
+   "texto": "A {jugador} le tocó lo que quedaba: {carta}. No se elige, se acepta.",
+   "activo": true
+  },
+  {
+   "id": "t030",
+   "disparador": "obligado",
+   "intensidad": 2,
+   "texto": "{jugador} obligado a pagar ${monto}M por {carta}. Así es llegar último a todo.",
+   "activo": true
+  },
+  {
+   "id": "t031",
+   "disparador": "obligado",
+   "intensidad": 3,
+   "texto": "{jugador} se lleva las sobras: {carta} por ${monto}M. Como en los cumpleaños.",
+   "activo": true
+  },
+  {
+   "id": "t032",
+   "disparador": "obligado",
+   "intensidad": 3,
+   "texto": "Nadie lo quiso, {jugador} lo tiene: {carta}. Historia de amor.",
+   "activo": true
+  },
+  {
+   "id": "t033",
+   "disparador": "ruleta",
+   "intensidad": 1,
+   "texto": "La ruleta eligió: {carta} es para {jugador} por ${monto}M.",
+   "activo": true
+  },
+  {
+   "id": "t034",
+   "disparador": "ruleta",
+   "intensidad": 2,
+   "texto": "La ruleta no perdona. {jugador} paga ${monto}M por {carta} sin haber abierto la boca.",
+   "activo": true
+  },
+  {
+   "id": "t035",
+   "disparador": "ruleta",
+   "intensidad": 2,
+   "texto": "{jugador} salió sorteado. Lástima que no era un premio.",
+   "activo": true
+  },
+  {
+   "id": "t036",
+   "disparador": "ruleta",
+   "intensidad": 3,
+   "texto": "Entre todos decidieron no ofertar y la ruleta castigó a {jugador}. Justicia divina.",
+   "activo": true
+  },
+  {
+   "id": "t037",
+   "disparador": "ruleta",
+   "intensidad": 3,
+   "texto": "{jugador} no quería a {carta}. {carta} tampoco quería a {jugador}. Pero acá están.",
+   "activo": true
+  },
+  {
+   "id": "t038",
+   "disparador": "liquidacion",
+   "intensidad": 2,
+   "texto": "A {jugador} no le alcanzaba y se la dejaron en ${monto}M. Liquidación por cierre.",
+   "activo": true
+  },
+  {
+   "id": "t039",
+   "disparador": "liquidacion",
+   "intensidad": 3,
+   "texto": "{jugador} pagó con lo último que le quedaba en el bolsillo: ${monto}M por {carta}.",
+   "activo": true
+  },
+  {
+   "id": "t040",
+   "disparador": "pasa",
+   "intensidad": 1,
+   "texto": "Nadie ofertó por {carta}. Pasa sin pena ni gloria.",
+   "activo": true
+  },
+  {
+   "id": "t041",
+   "disparador": "pasa",
+   "intensidad": 2,
+   "texto": "{carta} se fue sin que nadie levantara la mano. Tibios.",
+   "activo": true
+  },
+  {
+   "id": "t042",
+   "disparador": "pasa",
+   "intensidad": 2,
+   "texto": "Silencio total. {carta} vuelve al vestuario sin equipo.",
+   "activo": true
+  },
+  {
+   "id": "t043",
+   "disparador": "pasa",
+   "intensidad": 3,
+   "texto": "Era {carta} y ninguno ofertó. Después lloran por el equipo que tienen.",
+   "activo": true
+  },
+  {
+   "id": "t044",
+   "disparador": "salteada",
+   "intensidad": 1,
+   "texto": "{jugador} salteó la carta. Era {carta}.",
+   "activo": true
+  },
+  {
+   "id": "t045",
+   "disparador": "salteada",
+   "intensidad": 2,
+   "texto": "{jugador} usó un skip y se perdieron a {carta}. Agradézcanle.",
+   "activo": true
+  },
+  {
+   "id": "t046",
+   "disparador": "salteada",
+   "intensidad": 2,
+   "texto": "Salteada por {jugador}. Era {carta}. Juzguen ustedes.",
+   "activo": true
+  },
+  {
+   "id": "t047",
+   "disparador": "salteada",
+   "intensidad": 3,
+   "texto": "{jugador} salteó a {carta} sin consultar a nadie. Dictadura.",
+   "activo": true
+  },
+  {
+   "id": "t048",
+   "disparador": "salteada",
+   "intensidad": 3,
+   "texto": "{jugador} esquivó la bala… o tiró un crack a la basura. Era {carta}.",
+   "activo": true
+  },
+  {
+   "id": "t049",
+   "disparador": "tarde",
+   "intensidad": 1,
+   "texto": "{jugador} ofertó tarde. El martillo ya había caído.",
+   "activo": true
+  },
+  {
+   "id": "t050",
+   "disparador": "tarde",
+   "intensidad": 2,
+   "texto": "{jugador} llegó tarde. Como a todos lados.",
+   "activo": true
+  },
+  {
+   "id": "t051",
+   "disparador": "tarde",
+   "intensidad": 2,
+   "texto": "Ya dije tres, {jugador}. Suelta el botón.",
+   "activo": true
+  },
+  {
+   "id": "t052",
+   "disparador": "tarde",
+   "intensidad": 3,
+   "texto": "{jugador} apretó cuando ya estaba vendido. Reflejos de arquero suplente.",
+   "activo": true
+  },
+  {
+   "id": "t053",
+   "disparador": "tarde",
+   "intensidad": 3,
+   "texto": "Tarde, {jugador}. Así también se te fue el amor de tu vida.",
+   "activo": true
+  },
+  {
+   "id": "t054",
+   "disparador": "sin_saldo",
+   "intensidad": 1,
+   "texto": "{jugador} llegó a su tope: tiene que guardar para completar el equipo.",
+   "activo": true
+  },
+  {
+   "id": "t055",
+   "disparador": "sin_saldo",
+   "intensidad": 2,
+   "texto": "A {jugador} no le alcanza. Vayan haciendo una colecta.",
+   "activo": true
+  },
+  {
+   "id": "t056",
+   "disparador": "sin_saldo",
+   "intensidad": 2,
+   "texto": "{jugador} quiso ofertar con plata que no tiene. El banco dijo que no.",
+   "activo": true
+  },
+  {
+   "id": "t057",
+   "disparador": "sin_saldo",
+   "intensidad": 3,
+   "texto": "{jugador} está seco. Se gastó todo y todavía le faltan jugadores.",
+   "activo": true
+  },
+  {
+   "id": "t058",
+   "disparador": "sin_saldo",
+   "intensidad": 3,
+   "texto": "{jugador} mirando la subasta desde la vereda de enfrente. Sin un peso.",
+   "activo": true
+  },
+  {
+   "id": "t059",
+   "disparador": "guerra",
+   "intensidad": 1,
+   "texto": "{jugador} y {rival} no aflojan: ya van ${monto}M.",
+   "activo": true
+  },
+  {
+   "id": "t060",
+   "disparador": "guerra",
+   "intensidad": 2,
+   "texto": "Guerra abierta entre {jugador} y {rival}. Los demás, con pochoclos.",
+   "activo": true
+  },
+  {
+   "id": "t061",
+   "disparador": "guerra",
+   "intensidad": 2,
+   "texto": "${monto}M y siguen. {jugador} y {rival} se odian con respeto.",
+   "activo": true
+  },
+  {
+   "id": "t062",
+   "disparador": "guerra",
+   "intensidad": 3,
+   "texto": "{jugador} y {rival} se están fundiendo mutuamente. Sigan, sigan.",
+   "activo": true
+  },
+  {
+   "id": "t063",
+   "disparador": "ultima",
+   "intensidad": 1,
+   "texto": "Última oportunidad: alguien se la lleva sí o sí.",
+   "activo": true
+  },
+  {
+   "id": "t064",
+   "disparador": "ultima",
+   "intensidad": 2,
+   "texto": "Nadie oferta y la ruleta se está calentando. Alguien se la lleva sí o sí.",
+   "activo": true
+  },
+  {
+   "id": "t065",
+   "disparador": "ultima",
+   "intensidad": 3,
+   "texto": "Miren para otro lado tranquilos, que la ruleta elige igual.",
+   "activo": true
+  },
+  {
+   "id": "t066",
+   "disparador": "ronda",
+   "intensidad": 1,
+   "texto": "Arranca la ronda de {posicion}.",
+   "activo": true
+  },
+  {
+   "id": "t067",
+   "disparador": "ronda",
+   "intensidad": 2,
+   "texto": "Turno de {posicion}. Ojo con lo que compran.",
+   "activo": true
+  },
+  {
+   "id": "t068",
+   "disparador": "ronda",
+   "intensidad": 2,
+   "texto": "Se viene {posicion}. Las siluetas mienten, quedan avisados.",
+   "activo": true
+  },
+  {
+   "id": "t069",
+   "disparador": "ronda",
+   "intensidad": 3,
+   "texto": "{posicion}: la posición donde {ultimo} suele hacer papelones.",
+   "activo": true
+  },
+  {
+   "id": "t070",
+   "disparador": "entra",
+   "intensidad": 1,
+   "texto": "{jugador} entró a la sala.",
+   "activo": true
+  },
+  {
+   "id": "t071",
+   "disparador": "entra",
+   "intensidad": 2,
+   "texto": "Llegó {jugador}. Escondan la billetera.",
+   "activo": true
+  },
+  {
+   "id": "t072",
+   "disparador": "entra",
+   "intensidad": 2,
+   "texto": "{jugador} está en la casa. Ahora sí hay nivel… o no.",
+   "activo": true
+  },
+  {
+   "id": "t073",
+   "disparador": "entra",
+   "intensidad": 3,
+   "texto": "Entró {jugador}. Bajó el promedio de la sala, pero se lo quiere igual.",
+   "activo": true
+  },
+  {
+   "id": "t074",
+   "disparador": "sale",
+   "intensidad": 1,
+   "texto": "{jugador} se desconectó.",
+   "activo": true
+  },
+  {
+   "id": "t075",
+   "disparador": "sale",
+   "intensidad": 2,
+   "texto": "{jugador} perdió la conexión. O huyó. Nunca lo sabremos.",
+   "activo": true
+  },
+  {
+   "id": "t076",
+   "disparador": "sale",
+   "intensidad": 2,
+   "texto": "A {jugador} se le bloqueó el celular. La subasta no espera a nadie.",
+   "activo": true
+  },
+  {
+   "id": "t077",
+   "disparador": "sale",
+   "intensidad": 3,
+   "texto": "{jugador} se fue. Si le toca la ruleta ausente, que no llore después.",
+   "activo": true
+  },
+  {
+   "id": "t078",
+   "disparador": "ultimo",
+   "intensidad": 2,
+   "texto": "{jugador} es el que menos plata tiene: ${monto}M. Y falta un montón.",
+   "activo": true
+  },
+  {
+   "id": "t079",
+   "disparador": "ultimo",
+   "intensidad": 2,
+   "texto": "Informe económico: {jugador} está en la lona con ${monto}M.",
+   "activo": true
+  },
+  {
+   "id": "t080",
+   "disparador": "ultimo",
+   "intensidad": 3,
+   "texto": "{jugador} tiene ${monto}M y un equipo que tampoco los vale.",
+   "activo": true
+  },
+  {
+   "id": "t081",
+   "disparador": "atrasado",
+   "intensidad": 2,
+   "texto": "{jugador} es el que menos jugadores tiene. Tranquilo, hay tiempo. Poco.",
+   "activo": true
+  },
+  {
+   "id": "t082",
+   "disparador": "atrasado",
+   "intensidad": 3,
+   "texto": "{jugador} sigue sin armar el equipo. ¿Vino a jugar o a mirar?",
+   "activo": true
+  },
+  {
+   "id": "t083",
+   "disparador": "inicio",
+   "intensidad": 1,
+   "texto": "Se barajó el mazo. Que gane el menos peor.",
+   "activo": true
+  },
+  {
+   "id": "t084",
+   "disparador": "inicio",
+   "intensidad": 2,
+   "texto": "Mazo nuevo, mismas malas decisiones. Arrancamos.",
+   "activo": true
+  },
+  {
+   "id": "t085",
+   "disparador": "inicio",
+   "intensidad": 2,
+   "texto": "Recuerden: 1000 millones cada uno y once huecos. Nadie se salva de completar.",
+   "activo": true
+  },
+  {
+   "id": "t086",
+   "disparador": "final",
+   "intensidad": 1,
+   "texto": "Se terminó. Ganó {jugador}.",
+   "activo": true
+  },
+  {
+   "id": "t087",
+   "disparador": "final",
+   "intensidad": 2,
+   "texto": "{jugador} armó el mejor equipo. {ultimo}, el tuyo ni lo comentamos.",
+   "activo": true
+  },
+  {
+   "id": "t088",
+   "disparador": "final",
+   "intensidad": 3,
+   "texto": "Campeón: {jugador}. Descendido: {ultimo}. El resto, intrascendentes.",
+   "activo": true
+  },
+  {
+   "id": "t089",
+   "disparador": "relleno",
+   "intensidad": 1,
+   "texto": "Cada oferta suma 1 millón. No hay vuelta atrás.",
+   "activo": true
+  },
+  {
+   "id": "t090",
+   "disparador": "relleno",
+   "intensidad": 1,
+   "texto": "Si nadie oferta y no sobran cartas, la ruleta decide.",
+   "activo": true
+  },
+  {
+   "id": "t091",
+   "disparador": "relleno",
+   "intensidad": 2,
+   "texto": "La silueta engaña. El precio también. Confíen en nadie.",
+   "activo": true
+  },
+  {
+   "id": "t092",
+   "disparador": "relleno",
+   "intensidad": 2,
+   "texto": "El que guarda siempre tiene… un equipo horrible.",
+   "activo": true
+  },
+  {
+   "id": "t093",
+   "disparador": "relleno",
+   "intensidad": 2,
+   "texto": "Consejo gratis: no se enamoren de una silueta.",
+   "activo": true
+  },
+  {
+   "id": "t094",
+   "disparador": "relleno",
+   "intensidad": 3,
+   "texto": "Se informa que los trolls no aceptan devoluciones ni reclamos.",
+   "activo": true
+  }
+ ],
+ "manuales": []
+}

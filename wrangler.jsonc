@@ -1,0 +1,20 @@
+{
+  // Un solo Worker: sirve el frontend (dist/) y las salas en tiempo real (Durable Objects en memoria).
+  "name": "remate",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/c/*"]
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "ROOM", "class_name": "RoomDO" },
+      { "name": "REGISTRY", "class_name": "RegistryDO" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RoomDO", "RegistryDO"] }],
+  "vars": { "ADMIN_PIN": "cambiar-este-pin" }
+}
