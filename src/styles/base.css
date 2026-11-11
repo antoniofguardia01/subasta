@@ -1,0 +1,221 @@
+/* ───────── Tokens ───────── */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-rebote: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --f-display: 'Archivo Variable', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+  --f-num: 'Martian Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Paletas de rareza: iguales en todos los escenarios */
+  --plata-0: #8fa3b8; --plata-1: #e3ecf5; --plata-2: #586c84; --plata-3: #b9c7d6; --plata-a: #e3ecf5;
+  --oro-0: #e7c269; --oro-1: #fbeab6; --oro-2: #c4952b; --oro-3: #f3d98c; --oro-a: #f4c653;
+  --prime-0: #f09a05; --prime-1: #ffe08a; --prime-2: #b55a00; --prime-3: #ffc21c; --prime-a: #ffcb3d;
+  --leyenda-0: #15120c; --leyenda-1: #f7d774; --leyenda-2: #2c2516; --leyenda-3: #c79a2e; --leyenda-a: #f7d774;
+  --troll-0: #d7263d; --troll-1: #ff8573; --troll-2: #8a0f24; --troll-3: #f24b4b; --troll-a: #ffd9d2;
+}
+
+/* ───────── Escenarios ───────── */
+:root, :root[data-tema='estadio'] {
+  --bg: #06100c; --bg2: #0c1d16; --bg3: #143024;
+  --tinta: #f2fff6; --tinta2: #8fb3a0;
+  --placa: #0e1512; --placa-tinta: #f2fff6;
+  --acento: #c6f432; --acento-tinta: #0b1a08;
+  --m0: #0fbf57; --m1: #b4ec2b; --m2: #0a5a3c; --m3: #1fe07a; --m-a: #2fe37b;
+}
+:root[data-tema='copa'] {
+  --bg: #050a1c; --bg2: #0b1638; --bg3: #142458;
+  --tinta: #eef3ff; --tinta2: #8a9ac6;
+  --placa: #080d20; --placa-tinta: #eef3ff;
+  --acento: #6fe3ff; --acento-tinta: #04122b;
+  --m0: #1b4fe0; --m1: #6fe3ff; --m2: #0b1f7a; --m3: #3f86ff; --m-a: #7de3ff;
+}
+:root[data-tema='album'] {
+  --bg: #efe4cc; --bg2: #e3d5b5; --bg3: #d4c39c;
+  --tinta: #1d2433; --tinta2: #6b6a5e;
+  --placa: #1d2433; --placa-tinta: #f6eeda;
+  --acento: #e4572e; --acento-tinta: #fff6ea;
+  --m0: #17a7a0; --m1: #f6eeda; --m2: #0d5c63; --m3: #7fd8c9; --m-a: #9ff0e2;
+}
+:root[data-tema='pizarra'] {
+  --bg: #111715; --bg2: #1b2421; --bg3: #26332e;
+  --tinta: #f1efe6; --tinta2: #9aa39d;
+  --placa: #0c110f; --placa-tinta: #f1efe6;
+  --acento: #f4e04d; --acento-tinta: #17170a;
+  --m0: #2c4a40; --m1: #e9efe9; --m2: #1c322b; --m3: #48705f; --m-a: #f4e04d;
+}
+:root[data-tema='miami'] {
+  --bg: #04171a; --bg2: #0a2a2e; --bg3: #124046;
+  --tinta: #fff3f8; --tinta2: #9fc2c0;
+  --placa: #071214; --placa-tinta: #fff3f8;
+  --acento: #ff4f9a; --acento-tinta: #2a0416;
+  --m0: #ff4f9a; --m1: #ffd0a6; --m2: #0fb5ae; --m3: #ff86b8; --m-a: #ffd0a6;
+}
+
+/* ───────── Base ───────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #app { height: 100%; margin: 0; }
+html { background: var(--bg); color: var(--tinta); -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--f-display);
+  font-stretch: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input { font: inherit; color: inherit; }
+img { display: block; -webkit-user-drag: none; }
+h1, h2, h3, p { margin: 0; }
+
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; font-feature-settings: 'zero'; letter-spacing: -0.04em; }
+.cond { font-stretch: 62%; }
+.ancha { font-stretch: 125%; }
+
+/* Foco visible: imprescindible para navegar con control remoto */
+:focus { outline: none; }
+:focus-visible { outline: 4px solid var(--acento); outline-offset: 4px; border-radius: 6px; }
+
+/* ───────── Pantalla ───────── */
+.pantalla { position: fixed; inset: 0; overflow: hidden; background: var(--bg); color: var(--tinta); }
+
+/* ───────── Telón entre pantallas ───────── */
+.telon { position: fixed; inset: 0; z-index: 1000; pointer-events: all; overflow: hidden; }
+.telon-disco { position: absolute; border-radius: 50%; will-change: transform; }
+.telon-disco.d1 { background: var(--m2); }
+.telon-disco.d2 { background: var(--m0); }
+.telon-disco.d3 { background: var(--bg); }
+.telon-cartel {
+  position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
+  font-weight: 900; font-stretch: 62%; font-size: clamp(54px, 16vw, 240px); line-height: 0.9;
+  color: var(--acento); text-transform: uppercase;
+}
+.telon-simple { position: fixed; inset: 0; z-index: 1000; background: var(--bg); }
+
+/* ───────── Fondo animado ───────── */
+.fondo { position: absolute; inset: 0; overflow: hidden; background: var(--f0, var(--m0)); contain: strict; }
+.fondo i { position: absolute; display: block; will-change: transform; }
+.fondo .grano {
+  inset: -50%; width: 200%; height: 200%; opacity: 0.11; mix-blend-mode: overlay; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grano 0.9s steps(4) infinite;
+}
+@keyframes grano { 0% { transform: translate(0, 0); } 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -1%); } 100% { transform: translate(0, 0); } }
+
+/* Las formas usan --f0..--f3 (paleta actual) y --vel (ritmo: sube con la tensión) */
+.fondo { --vel: 1; --fu: 1vw; }
+.fondo .fa, .fondo .fb, .fondo .fc, .fondo .fd { animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate; }
+
+/* Patrón "círculos" (estadio): grandes discos y arcos, como una cancha vista desde arriba */
+.fondo[data-patron='circulos'] .fa { width: calc(var(--fu) * 120); height: calc(var(--fu) * 120); border-radius: 50%; left: 28%; top: -70%; background: var(--f1, var(--m1)); animation-name: deriva-a; animation-duration: calc(17s / var(--vel)); }
+.fondo[data-patron='circulos'] .fb { width: calc(var(--fu) * 92); height: calc(var(--fu) * 92); border-radius: 50%; left: -38%; top: 34%; background: var(--f2, var(--m2)); animation-name: deriva-b; animation-duration: calc(21s / var(--vel)); }
+.fondo[data-patron='circulos'] .fc { width: calc(var(--fu) * 54); height: calc(var(--fu) * 54); border-radius: 50%; left: 58%; top: 46%; background: var(--f3, var(--m3)); animation-name: deriva-c; animation-duration: calc(14s / var(--vel)); }
+.fondo[data-patron='circulos'] .fd { width: calc(var(--fu) * 30); height: calc(var(--fu) * 30); border-radius: 50%; left: 8%; top: -18%; border: 2.4vmax solid var(--f1, var(--m1)); opacity: 0.55; animation-name: deriva-c; animation-duration: calc(25s / var(--vel)); }
+
+/* Patrón "rayos" (copa): destello estrellado que gira despacio */
+.fondo[data-patron='rayos'] .fa { width: calc(var(--fu) * 220); height: calc(var(--fu) * 220); left: -60%; top: -150%; border-radius: 50%; background: repeating-conic-gradient(from 0deg, var(--f2, var(--m2)) 0 9deg, transparent 9deg 18deg); opacity: 0.6; animation: giro calc(90s / var(--vel)) linear infinite; }
+.fondo[data-patron='rayos'] .fb { width: calc(var(--fu) * 78); height: calc(var(--fu) * 78); border-radius: 50%; left: 46%; top: -30%; background: var(--f3, var(--m3)); animation-name: deriva-b; animation-duration: calc(19s / var(--vel)); }
+.fondo[data-patron='rayos'] .fc { width: calc(var(--fu) * 46); height: calc(var(--fu) * 46); left: -12%; top: 52%; background: var(--f1, var(--m1)); clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); opacity: 0.9; animation: giro calc(60s / var(--vel)) linear infinite reverse; }
+.fondo[data-patron='rayos'] .fd { width: 120%; height: 34%; left: -10%; top: 78%; background: var(--f2, var(--m2)); border-radius: 50% 50% 0 0; animation-name: deriva-c; animation-duration: calc(23s / var(--vel)); }
+
+/* Patrón "puntos" (álbum): trama de imprenta y círculos de papel */
+.fondo[data-patron='puntos'] .fa { inset: -10%; width: 120%; height: 120%; background-image: radial-gradient(var(--f2, var(--m2)) 26%, transparent 27%); background-size: 2.6vmax 2.6vmax; opacity: 0.35; animation: trama calc(40s / var(--vel)) linear infinite; }
+.fondo[data-patron='puntos'] .fb { width: calc(var(--fu) * 70); height: calc(var(--fu) * 70); border-radius: 50%; left: 44%; top: -26%; background: var(--f1, var(--m1)); animation-name: deriva-b; animation-duration: calc(22s / var(--vel)); }
+.fondo[data-patron='puntos'] .fc { width: calc(var(--fu) * 60); height: calc(var(--fu) * 60); border-radius: 50%; left: -22%; top: 48%; background: var(--f2, var(--m2)); animation-name: deriva-a; animation-duration: calc(18s / var(--vel)); }
+.fondo[data-patron='puntos'] .fd { width: calc(var(--fu) * 26); height: calc(var(--fu) * 26); border-radius: 50%; left: 70%; top: 62%; background: var(--f3, var(--m3)); animation-name: deriva-c; animation-duration: calc(15s / var(--vel)); }
+
+/* Patrón "líneas" (pizarra): marcas de cancha dibujadas con tiza */
+.fondo[data-patron='lineas'] .fa { width: calc(var(--fu) * 64); height: calc(var(--fu) * 64); border-radius: 50%; left: 46%; top: -8%; border: 0.5vmax solid var(--f1, var(--m1)); opacity: 0.5; animation-name: deriva-b; animation-duration: calc(24s / var(--vel)); }
+.fondo[data-patron='lineas'] .fb { width: 0.5vmax; height: 140%; left: 78%; top: -20%; background: var(--f1, var(--m1)); opacity: 0.5; animation-name: deriva-c; animation-duration: calc(24s / var(--vel)); }
+.fondo[data-patron='lineas'] .fc { width: 44%; height: 62%; left: -6%; top: 20%; border: 0.5vmax solid var(--f1, var(--m1)); opacity: 0.4; animation-name: deriva-a; animation-duration: calc(20s / var(--vel)); }
+.fondo[data-patron='lineas'] .fd { width: calc(var(--fu) * 110); height: calc(var(--fu) * 110); border-radius: 50%; left: -60%; top: 30%; background: var(--f2, var(--m2)); animation-name: deriva-c; animation-duration: calc(28s / var(--vel)); z-index: -1; }
+
+/* Patrón "bandas" (miami): franjas diagonales y un sol */
+.fondo[data-patron='bandas'] .fa { width: 160%; height: 26%; left: -30%; top: 62%; background: var(--f2, var(--m2)); transform-origin: center; rotate: -14deg; animation-name: banda-a; animation-duration: calc(16s / var(--vel)); }
+.fondo[data-patron='bandas'] .fb { width: 160%; height: 12%; left: -30%; top: 44%; background: var(--f1, var(--m1)); rotate: -14deg; animation-name: banda-b; animation-duration: calc(20s / var(--vel)); }
+.fondo[data-patron='bandas'] .fc { width: calc(var(--fu) * 58); height: calc(var(--fu) * 58); border-radius: 50%; left: 48%; top: -24%; background: var(--f1, var(--m1)); animation-name: deriva-b; animation-duration: calc(22s / var(--vel)); }
+.fondo[data-patron='bandas'] .fd { width: 160%; height: 5%; left: -30%; top: 30%; background: var(--f3, var(--m3)); rotate: -14deg; animation-name: banda-a; animation-duration: calc(13s / var(--vel)); }
+
+@keyframes deriva-a { from { transform: translate3d(-4%, -3%, 0) scale(1); } to { transform: translate3d(5%, 6%, 0) scale(1.08); } }
+@keyframes deriva-b { from { transform: translate3d(3%, 4%, 0) scale(1.04); } to { transform: translate3d(-6%, -5%, 0) scale(0.96); } }
+@keyframes deriva-c { from { transform: translate3d(-6%, 5%, 0) rotate(0deg); } to { transform: translate3d(7%, -7%, 0) rotate(8deg); } }
+@keyframes banda-a { from { transform: translate3d(-5%, 0, 0); } to { transform: translate3d(5%, 0, 0); } }
+@keyframes banda-b { from { transform: translate3d(6%, 0, 0); } to { transform: translate3d(-6%, 0, 0); } }
+@keyframes giro { to { transform: rotate(360deg); } }
+@keyframes trama { to { transform: translate3d(5.2vmax, 2.6vmax, 0); } }
+
+/* Paleta del fondo según rareza */
+[data-paleta='plata'] { --f0: var(--plata-0); --f1: var(--plata-1); --f2: var(--plata-2); --f3: var(--plata-3); --fa: var(--plata-a); }
+[data-paleta='oro'] { --f0: var(--oro-0); --f1: var(--oro-1); --f2: var(--oro-2); --f3: var(--oro-3); --fa: var(--oro-a); }
+[data-paleta='prime'] { --f0: var(--prime-0); --f1: var(--prime-1); --f2: var(--prime-2); --f3: var(--prime-3); --fa: var(--prime-a); }
+[data-paleta='leyenda'] { --f0: var(--leyenda-0); --f1: var(--leyenda-1); --f2: var(--leyenda-2); --f3: var(--leyenda-3); --fa: var(--leyenda-a); }
+[data-paleta='troll'] { --f0: var(--troll-0); --f1: var(--troll-1); --f2: var(--troll-2); --f3: var(--troll-3); --fa: var(--troll-a); }
+[data-paleta='misterio'], [data-paleta='comun'] { --f0: var(--m0); --f1: var(--m1); --f2: var(--m2); --f3: var(--m3); --fa: var(--m-a); }
+[data-paleta='oscuro'] { --f0: var(--bg); --f1: var(--bg3); --f2: var(--bg2); --f3: var(--bg3); --fa: var(--acento); }
+
+/* ───────── Botones ───────── */
+.btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  padding: 0.85em 1.4em; border-radius: 0.5em;
+  font-weight: 800; font-stretch: 75%; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1;
+  background: var(--placa); color: var(--placa-tinta);
+  box-shadow: 0 0.28em 0 rgba(0, 0, 0, 0.45);
+  transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out), background-color 160ms ease, opacity 160ms ease;
+}
+.btn:active:not(:disabled) { transform: translateY(0.2em) scale(0.98); box-shadow: 0 0.06em 0 rgba(0, 0, 0, 0.45); }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.btn--acento { background: var(--acento); color: var(--acento-tinta); }
+.btn--linea { background: transparent; box-shadow: inset 0 0 0 0.14em currentColor; color: var(--tinta); }
+.btn--linea:active:not(:disabled) { box-shadow: inset 0 0 0 0.14em currentColor; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover:not(:disabled) { transform: translateY(-0.08em); box-shadow: 0 0.36em 0 rgba(0, 0, 0, 0.45); }
+  .btn--linea:hover:not(:disabled) { box-shadow: inset 0 0 0 0.14em currentColor; background: color-mix(in srgb, currentColor 10%, transparent); }
+}
+
+/* ───────── Avatar ───────── */
+.avatar {
+  --c: var(--acento);
+  position: relative; width: 1em; height: 1em; border-radius: 50%; flex: none; overflow: hidden;
+  background: var(--c); box-shadow: 0 0 0 0.06em var(--c);
+}
+.avatar img { width: 118%; height: 118%; margin: -4% -9% 0; object-fit: cover; object-position: 50% 12%; }
+.avatar[data-off='1'] { filter: grayscale(1); opacity: 0.55; }
+
+/* ───────── Ticker ───────── */
+.ticker {
+  position: relative; display: flex; align-items: stretch; height: var(--tk-h, 44px); overflow: hidden;
+  background: var(--placa); color: var(--placa-tinta); font-size: calc(var(--tk-h, 44px) * 0.42);
+}
+.ticker-marca {
+  flex: none; display: flex; align-items: center; padding: 0 0.9em; z-index: 2;
+  background: var(--acento); color: var(--acento-tinta);
+  font-weight: 900; font-stretch: 62%; text-transform: uppercase; letter-spacing: 0.03em;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 0.7em) 100%, 0 100%); padding-right: 1.5em;
+}
+.ticker-marca b { display: inline-block; }
+.ticker-marca[data-flash='1'] b { animation: ticker-flash 0.9s var(--ease-out); }
+@keyframes ticker-flash { 0% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.ticker-via { position: relative; flex: 1; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 3%, #000 96%, transparent); }
+.ticker-cinta { position: absolute; top: 0; left: 0; height: 100%; display: flex; align-items: center; white-space: nowrap; will-change: transform; animation: ticker-corre linear infinite; }
+.ticker[data-pausa='1'] .ticker-cinta { animation-play-state: paused; }
+.ticker-msg { display: inline-flex; align-items: center; padding: 0 1.2em; font-weight: 600; font-stretch: 88%; }
+.ticker-msg::before { content: ''; width: 0.5em; height: 0.5em; margin-right: 1.2em; background: var(--acento); transform: rotate(45deg); flex: none; }
+.ticker-msg[data-tipo='manual'] { color: var(--acento); font-weight: 800; }
+.ticker-msg[data-nuevo='1'] { animation: ticker-nuevo 2.4s var(--ease-out); }
+@keyframes ticker-nuevo { 0%, 40% { color: var(--acento); } 100% { color: inherit; } }
+@keyframes ticker-corre { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+
+/* ───────── Utilidades ───────── */
+.oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.fx-lienzo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; }
+
+/* Modo lite (teles lentas): sin grano, sin mezclas, formas quietas */
+:root[data-lite='1'] .fondo .grano { display: none; }
+:root[data-lite='1'] .fondo i { animation: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fondo i, .ticker-marca[data-flash='1'] b { animation: none !important; }
+  .ticker-cinta { animation-duration: 120s !important; }
+}

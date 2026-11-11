@@ -7,7 +7,7 @@
     "dev": "npm run build && wrangler dev --port 8787 --ip 0.0.0.0",
     "dev:web": "vite",
     "build": "vite build",
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p worker/tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p worker/tsconfig.json && tsc --noEmit -p scripts/tsconfig.json",
     "test": "vitest run",
     "simulate": "tsx scripts/simulate.ts",
     "photos:import": "tsx scripts/import-photos.ts",
@@ -27,14 +27,17 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261110.1",
+    "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/ws": "^8.18.2",
     "@vitejs/plugin-react": "^6.3.0",
     "sharp": "^0.35.5",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.8",
     "vitest": "^5.1.0",
-    "wrangler": "^4.160.0"
+    "wrangler": "^4.160.0",
+    "ws": "^8.22.2"
   }
 }
