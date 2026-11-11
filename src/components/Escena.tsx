@@ -303,11 +303,12 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
               <div className="placa-nombre" data-paleta={rev.rareza}>
                 <div className="pn-cuerpo">
                   {rev.apellido && rev.nombre && (
-                    <span className="pn-linea pn-nombre">
+                    <span className="pn-linea pn-nombre" style={{ '--k': Math.min(1, 12 / rev.nombre.length) } as CSSProperties}>
                       <span>{rev.nombre}</span>
                     </span>
                   )}
-                  <span className="pn-linea pn-apellido" data-largo={(rev.apellido || rev.nombre).length > 11 ? '1' : undefined}>
+                  {/* Los nombres largos se achican en proporción para entrar siempre en la placa. */}
+                  <span className="pn-linea pn-apellido" style={{ '--k': Math.min(1, 9.2 / (rev.apellido || rev.nombre).length) } as CSSProperties}>
                     <span>{rev.apellido || rev.nombre}</span>
                   </span>
                 </div>

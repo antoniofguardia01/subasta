@@ -57,6 +57,10 @@ export interface Ajustes {
   skips: number;
   trollsMin: number;
   trollsMax: number;
+  /** La cantidad de trolls por ronda se ajusta sola a la cantidad de participantes (ver rangoTrolls). */
+  trollsAuto: boolean;
+  /** Los trolls salen con un precio creíble de futbolista, para que no se delaten por baratos. */
+  trollsCamuflados: boolean;
   ultimaOportunidad: number;
   /** Si nadie oferta y no sobran cartas, alguien se la lleva (última oportunidad + ruleta). */
   forzar: boolean;
@@ -76,6 +80,8 @@ export const AJUSTES_DEFECTO: Ajustes = {
   skips: 2,
   trollsMin: 1,
   trollsMax: 2,
+  trollsAuto: true,
+  trollsCamuflados: true,
   ultimaOportunidad: 10,
   forzar: true,
   orden: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -306,4 +312,15 @@ export type MsgServidor =
   | { t: 'pong'; t0: number; ahora: number }
   | { t: 'error'; codigo: string; texto: string };
 
-export const COLORES_EQUIPO = ['#ff5a3c', '#2f8bff', '#ffd400', '#19d38a', '#ff66c4', '#ff9d1c', '#7de3ff', '#c8f03c'];
+export const MAX_PARTICIPANTES = 10;
+export const COLORES_EQUIPO = ['#ff5a3c', '#2f8bff', '#ffd400', '#19d38a', '#ff66c4', '#ff9d1c', '#7de3ff', '#c8f03c', '#b79cff', '#f4efe2'];
+
+/**
+ * Trolls por ronda según la cantidad de participantes (aleatorio dentro del rango):
+ * 3 → 1 · 4–5 → 1–2 · 6 → 1–3 · 7 → 2–3 · 8–9 → 2–4 · 10 → 3–5.
+ */
+export function rangoTrolls(participantes: number): { min: number; max: number } {
+  const min = Math.max(1, Math.floor((participantes - 1) / 3));
+  const max = Math.max(min, Math.floor(participantes / 2));
+  return { min, max };
+}

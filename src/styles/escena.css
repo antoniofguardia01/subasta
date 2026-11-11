@@ -44,7 +44,7 @@
 }
 .pp-rotulo { font-size: calc(var(--u) * 3.3); font-weight: 900; font-stretch: 125%; text-transform: uppercase; line-height: 1; letter-spacing: -0.01em; }
 .pp-monto { display: block; font-size: calc(var(--u) * 8.6); font-weight: 800; line-height: 1.02; color: var(--m-a); margin: calc(var(--u) * 0.2) 0 calc(var(--u) * 0.3); white-space: nowrap; transform-origin: 0 60%; animation: golpe-precio 260ms var(--ease-out); }
-.pp-monto .numero { font-variation-settings: 'wdth' 112, 'wght' 800; }
+.pp-monto .numero { font-family: var(--f-display); font-stretch: 125%; letter-spacing: -0.02em; }
 @keyframes golpe-precio { from { transform: scale(1.09); } to { transform: scale(1); } }
 .pp-pos { font-size: calc(var(--u) * 1.9); font-weight: 800; font-stretch: 125%; text-transform: uppercase; letter-spacing: 0.02em; color: var(--acento); line-height: 1.1; }
 :root[data-tema='album'] .pp-pos { color: var(--m3); }
@@ -65,9 +65,8 @@
 }
 .pn-linea { display: block; overflow: hidden; line-height: 0.98; text-transform: uppercase; font-weight: 900; font-stretch: 125%; letter-spacing: -0.015em; white-space: nowrap; }
 .pn-linea > span { display: block; }
-.pn-nombre { font-size: calc(var(--u) * 4.2); color: var(--fa); }
-.pn-apellido { font-size: calc(var(--u) * 5.8); color: #fff; }
-.pn-apellido[data-largo='1'] { font-size: calc(var(--u) * 4.3); font-stretch: 100%; }
+.pn-nombre { font-size: calc(var(--u) * 3.6 * var(--k, 1)); color: var(--fa); }
+.pn-apellido { font-size: calc(var(--u) * 5.6 * var(--k, 1)); color: #fff; }
 .pn-etiqueta {
   align-self: stretch; display: flex; align-items: center; gap: 0.6em; padding: calc(var(--u) * 0.7) calc(var(--u) * 2.4);
   background: #f6f2e7; color: #17191c; border-radius: 0 0 calc(var(--u) * 1) calc(var(--u) * 2.6);
@@ -149,9 +148,8 @@
 .escena[data-compacta] .pp-lider { font-size: calc(var(--u) * 3); }
 .escena[data-compacta] .placa-nombre { min-width: calc(var(--u) * 44); max-width: calc(var(--u) * 60); }
 .escena[data-compacta] .pn-cuerpo { padding: calc(var(--u) * 2.2) calc(var(--u) * 6) calc(var(--u) * 2) calc(var(--u) * 3.2); }
-.escena[data-compacta] .pn-nombre { font-size: calc(var(--u) * 4.4); }
-.escena[data-compacta] .pn-apellido { font-size: calc(var(--u) * 6.4); }
-.escena[data-compacta] .pn-apellido[data-largo='1'] { font-size: calc(var(--u) * 4.6); }
+.escena[data-compacta] .pn-nombre { font-size: calc(var(--u) * 4 * var(--k, 1)); }
+.escena[data-compacta] .pn-apellido { font-size: calc(var(--u) * 6.2 * var(--k, 1)); }
 .escena[data-compacta] .pn-etiqueta { font-size: calc(var(--u) * 2.5); padding: calc(var(--u) * 1.1) calc(var(--u) * 3.2); }
 .escena[data-compacta] .pn-dato { font-size: calc(var(--u) * 2.8); max-width: calc(var(--u) * 46); }
 .escena[data-compacta] .esc-sello { right: calc(var(--u) * 4); top: calc(var(--v) * 42); }

@@ -11,15 +11,11 @@
     "test": "vitest run",
     "simulate": "tsx scripts/simulate.ts",
     "photos:import": "tsx scripts/import-photos.ts",
-    "troll:add": "tsx scripts/troll.ts add",
-    "troll:list": "tsx scripts/troll.ts list",
-    "troll:set": "tsx scripts/troll.ts set",
-    "troll:rm": "tsx scripts/troll.ts rm",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "fuentes": "node scripts/fuentes.mjs",
+    "fotos:hoja": "python3 scripts/hoja-validacion.py"
   },
   "dependencies": {
-    "@fontsource-variable/archivo": "^5.3.0",
-    "@fontsource-variable/martian-mono": "^5.3.0",
     "gsap": "^3.15.1",
     "qrcode-generator": "^2.0.4",
     "react": "^19.3.1",

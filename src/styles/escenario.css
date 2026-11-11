@@ -7,16 +7,16 @@
 .tv-capa[data-on='1'] { opacity: 1; visibility: visible; transform: scale(1); transition: opacity 420ms ease, transform 600ms var(--ease-out), visibility 0s; }
 .tv-ticker { position: absolute; left: 0; bottom: 0; width: 1920px; z-index: 30; }
 
-.logo-mini { font-weight: 900; font-stretch: 100%; font-size: 26px; letter-spacing: -0.02em; color: var(--acento); line-height: 1; }
+.logo-mini { font-weight: 900; font-stretch: 62%; font-size: 38px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--acento); line-height: 1; }
 
 /* ───────── Barra superior ───────── */
 .tv-top { position: absolute; left: 0; top: 0; width: 1920px; height: 150px; display: flex; align-items: stretch; background: var(--bg); z-index: 10; }
-.tv-marca { flex: none; width: 400px; padding: 20px 0 0 36px; display: flex; flex-direction: column; gap: 8px; }
+.tv-marca { flex: none; width: 420px; padding: 14px 0 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .tv-ronda { display: flex; flex-direction: column; animation: sube 500ms var(--ease-out) both; }
-.tv-ronda span { font-size: 26px; font-weight: 700; font-stretch: 75%; text-transform: uppercase; color: var(--tinta2); line-height: 1.1; }
+.tv-ronda span { font-size: 22px; font-weight: 700; font-stretch: 75%; text-transform: uppercase; color: var(--tinta2); line-height: 1.1; }
 .tv-ronda span b { color: var(--tinta); font-size: 34px; }
 .tv-ronda span i { font-style: normal; }
-.tv-ronda em { font-style: normal; font-size: 40px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; color: var(--tinta); white-space: nowrap; }
+.tv-ronda em { font-style: normal; font-size: 56px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; color: var(--tinta); white-space: nowrap; }
 @keyframes sube { from { transform: translateY(40%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 .tv-chips { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 0 28px 0 0; }
@@ -79,14 +79,14 @@
 
 /* Tira inferior */
 .tv-tira {
-  position: absolute; left: 0; bottom: 0; width: 1920px; height: 118px; z-index: 11; display: flex; align-items: center; gap: 44px; padding: 0 36px;
+  position: absolute; left: 0; bottom: 0; width: 1920px; height: 118px; z-index: 11; display: flex; align-items: center; gap: 30px; padding: 0 30px;
   background: linear-gradient(0deg, rgba(6, 8, 7, 0.94), rgba(6, 8, 7, 0.78)); color: #fff;
   transform: translateY(100%); transition: transform 520ms var(--ease-out);
 }
 .tv-tira[data-on='1'] { transform: translateY(0); }
-.tira-bloque { display: flex; align-items: center; gap: 18px; }
-.tira-rotulo { font-size: 24px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; white-space: nowrap; color: rgba(255, 255, 255, 0.72); }
-.tira-rotulo b { color: #fff; font-size: 32px; }
+.tira-bloque { display: flex; align-items: center; gap: 14px; flex: none; }
+.tira-rotulo { font-size: 20px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; white-space: nowrap; color: rgba(255, 255, 255, 0.72); }
+.tira-rotulo b { color: #fff; font-size: 30px; }
 .tira-cartas { display: flex; gap: 8px; }
 .mini {
   position: relative; width: 62px; height: 84px; border-radius: 8px; overflow: hidden; display: grid; place-items: center;
@@ -110,10 +110,10 @@
 .tira-desc > b { font-size: 46px; color: var(--acento); line-height: 1; }
 .tira-desc[data-cero='1'] > b { color: #ff5b6b; }
 
-.tv-botones { margin-left: auto; display: flex; gap: 10px; }
+.tv-botones { margin-left: auto; display: flex; gap: 8px; flex: none; }
 .tv-botones button {
-  display: flex; align-items: center; gap: 8px; height: 54px; padding: 0 18px; border-radius: 10px; background: rgba(255, 255, 255, 0.12); color: #fff;
-  font-size: 20px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; white-space: nowrap;
+  display: flex; align-items: center; gap: 7px; height: 52px; padding: 0 13px; border-radius: 10px; background: rgba(255, 255, 255, 0.12); color: #fff;
+  font-size: 17px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; white-space: nowrap;
   transition: background-color 160ms ease, transform 140ms var(--ease-out);
 }
 .tv-botones button i { font-style: normal; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 6px; background: rgba(255, 255, 255, 0.2); font-size: 15px; }
@@ -143,6 +143,10 @@
 .panel-equipo .cancha-caja { flex: none; max-height: 100%; }
 .panel-equipos[data-n='7'] .panel-equipo, .panel-equipos[data-n='8'] .panel-equipo { flex-basis: 214px; }
 .panel-equipos[data-n='7'] header, .panel-equipos[data-n='8'] header { font-size: 20px; }
+.panel-equipos[data-n='9'] .panel-equipo, .panel-equipos[data-n='10'] .panel-equipo { flex-basis: 170px; }
+.panel-equipos[data-n='9'], .panel-equipos[data-n='10'] { gap: 12px; }
+.panel-equipos[data-n='9'] header, .panel-equipos[data-n='10'] header { font-size: 16px; gap: 6px; }
+.panel-equipos[data-n='9'] header .avatar, .panel-equipos[data-n='10'] header .avatar { font-size: 30px; }
 
 .saldo-fila { display: grid; grid-template-columns: 64px 240px 1fr 170px 520px; align-items: center; gap: 18px; height: 70px; font-size: 26px; }
 .saldo-fila .avatar { font-size: 56px; }
@@ -239,12 +243,12 @@
 .tv-lobby { position: absolute; inset: 0; }
 .tv-lobby .fondo { position: absolute; inset: 0; }
 .lobby-izq { position: absolute; left: 80px; top: 70px; width: 820px; display: flex; flex-direction: column; color: #fff; }
-.lobby-izq .logo-mini { font-size: 44px; color: #fff; margin-bottom: 34px; }
+.lobby-izq .logo-mini { font-size: 62px; color: #fff; margin-bottom: 34px; }
 .lobby-rotulo { align-self: flex-start; padding: 6px 18px; background: var(--placa); color: var(--placa-tinta); font-size: 30px; font-weight: 800; font-stretch: 88%; text-transform: uppercase; border-radius: 8px; }
 .lobby-codigo { display: flex; gap: 16px; margin: 22px 0 18px; }
 .lobby-codigo b {
   display: grid; place-items: center; width: 180px; height: 230px; border-radius: 22px; background: var(--placa); color: var(--m-a);
-  font-size: 190px; font-weight: 900; font-stretch: 100%; line-height: 1; box-shadow: 0 12px 0 rgba(0, 0, 0, 0.3);
+  font-size: 150px; font-weight: 900; font-stretch: 125%; line-height: 1; box-shadow: 0 12px 0 rgba(0, 0, 0, 0.3);
   animation: letra-cae 700ms calc(300ms + var(--i) * 110ms) var(--ease-rebote) both;
 }
 @keyframes letra-cae { from { transform: translateY(-140%) rotate(-12deg); opacity: 0; } to { transform: translateY(0) rotate(0); opacity: 1; } }

@@ -3,8 +3,9 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-rebote: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --f-display: 'Archivo Variable', 'Arial Narrow', 'Helvetica Neue', sans-serif;
-  --f-num: 'Martian Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* La familia cambia con el escenario (ver fuentes.css): 62% = titular, 100% = texto, 125% = placa */
+  --f-display: 'SF-estadio', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+  --f-num: 'SF-cifras', 'SF-estadio', sans-serif;
 
   /* Paletas de rareza: iguales en todos los escenarios */
   --plata-0: #8fa3b8; --plata-1: #e3ecf5; --plata-2: #586c84; --plata-3: #b9c7d6; --plata-a: #e3ecf5;
@@ -23,6 +24,7 @@
   --m0: #0fbf57; --m1: #b4ec2b; --m2: #0a5a3c; --m3: #1fe07a; --m-a: #2fe37b;
 }
 :root[data-tema='copa'] {
+  --f-display: 'SF-copa', 'Arial Narrow', sans-serif;
   --bg: #050a1c; --bg2: #0b1638; --bg3: #142458;
   --tinta: #eef3ff; --tinta2: #8a9ac6;
   --placa: #080d20; --placa-tinta: #eef3ff;
@@ -30,6 +32,7 @@
   --m0: #1b4fe0; --m1: #6fe3ff; --m2: #0b1f7a; --m3: #3f86ff; --m-a: #7de3ff;
 }
 :root[data-tema='album'] {
+  --f-display: 'SF-album', 'Arial Narrow', sans-serif;
   --bg: #efe4cc; --bg2: #e3d5b5; --bg3: #d4c39c;
   --tinta: #1d2433; --tinta2: #6b6a5e;
   --placa: #1d2433; --placa-tinta: #f6eeda;
@@ -37,6 +40,7 @@
   --m0: #17a7a0; --m1: #f6eeda; --m2: #0d5c63; --m3: #7fd8c9; --m-a: #9ff0e2;
 }
 :root[data-tema='pizarra'] {
+  --f-display: 'SF-pizarra', 'Arial Narrow', sans-serif;
   --bg: #111715; --bg2: #1b2421; --bg3: #26332e;
   --tinta: #f1efe6; --tinta2: #9aa39d;
   --placa: #0c110f; --placa-tinta: #f1efe6;
@@ -44,6 +48,7 @@
   --m0: #2c4a40; --m1: #e9efe9; --m2: #1c322b; --m3: #48705f; --m-a: #f4e04d;
 }
 :root[data-tema='miami'] {
+  --f-display: 'SF-miami', 'Arial Narrow', sans-serif;
   --bg: #04171a; --bg2: #0a2a2e; --bg3: #124046;
   --tinta: #fff3f8; --tinta2: #9fc2c0;
   --placa: #071214; --placa-tinta: #fff3f8;
@@ -70,7 +75,7 @@ input { font: inherit; color: inherit; }
 img { display: block; -webkit-user-drag: none; }
 h1, h2, h3, p { margin: 0; }
 
-.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; font-feature-settings: 'zero'; letter-spacing: -0.04em; }
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 .cond { font-stretch: 62%; }
 .ancha { font-stretch: 125%; }
 
@@ -159,7 +164,7 @@ h1, h2, h3, p { margin: 0; }
 .btn {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
   padding: 0.85em 1.4em; border-radius: 0.5em;
-  font-weight: 800; font-stretch: 75%; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1;
+  font-weight: 900; font-stretch: 62%; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1; font-size: 1.15em;
   background: var(--placa); color: var(--placa-tinta);
   box-shadow: 0 0.28em 0 rgba(0, 0, 0, 0.45);
   transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out), background-color 160ms ease, opacity 160ms ease;
@@ -191,7 +196,7 @@ h1, h2, h3, p { margin: 0; }
 .ticker-marca {
   flex: none; display: flex; align-items: center; padding: 0 0.9em; z-index: 2;
   background: var(--acento); color: var(--acento-tinta);
-  font-weight: 900; font-stretch: 62%; text-transform: uppercase; letter-spacing: 0.03em;
+  font-weight: 900; font-stretch: 62%; text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.15em;
   clip-path: polygon(0 0, 100% 0, calc(100% - 0.7em) 100%, 0 100%); padding-right: 1.5em;
 }
 .ticker-marca b { display: inline-block; }

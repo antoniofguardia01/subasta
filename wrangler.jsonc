@@ -15,6 +15,6 @@
       { "name": "REGISTRY", "class_name": "RegistryDO" }
     ]
   },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RoomDO", "RegistryDO"] }],
-  "vars": { "ADMIN_PIN": "cambiar-este-pin" }
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RoomDO", "RegistryDO"] }]
+  // ADMIN_PIN no va acá: en local se lee de .dev.vars y en producción es un secreto (wrangler secret put ADMIN_PIN).
 }

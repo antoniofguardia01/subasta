@@ -2,7 +2,7 @@
 import { CSSProperties, FormEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import type { Ajustes, EstadoPublico, JugadorSala, MotivoRechazo } from '../../shared/types';
-import { POS_NOMBRE } from '../../shared/types';
+import { MAX_PARTICIPANTES, POS_NOMBRE, rangoTrolls } from '../../shared/types';
 import { Avatar, Fondo, Numero, Ticker, cuentaEquipo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
@@ -206,7 +206,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
       <div className="lobby-cuerpo">
         <h2>
           En la sala <b className="num">{s.jugadores.length}</b>
-          <i className="num">/8</i>
+          <i className="num">/{MAX_PARTICIPANTES}</i>
         </h2>
         <div className="lobby-jugs">
           {s.jugadores.map((j, i) => (
@@ -298,7 +298,8 @@ function Paso({ rotulo, valor, min, max, paso = 1, sufijo = '', cambiar, editabl
 function Reglas({ sala, s, editable }: { sala: Sala; s: EstadoPublico; editable: boolean }) {
   const a = s.ajustes;
   const poner = (p: Partial<Ajustes>) => sala.enviar({ t: 'ajustes', ajustes: p });
-  const necesarios = s.jugadores.length ? 11 * a.trollsMax : 22;
+  const auto = rangoTrolls(Math.max(2, s.jugadores.length));
+  const necesarios = 11 * (a.trollsAuto ? auto.max : a.trollsMax);
   return (
     <div className="reglas">
       <Paso rotulo="Presupuesto por cabeza" valor={a.presupuesto} min={300} max={3000} paso={100} sufijo="M" cambiar={(v) => poner({ presupuesto: v })} editable={editable} />
@@ -306,8 +307,32 @@ function Reglas({ sala, s, editable }: { sala: Sala; s: EstadoPublico; editable:
       <Paso rotulo="Cada oferta suma" valor={a.incremento} min={1} max={10} sufijo="M" cambiar={(v) => poner({ incremento: v })} editable={editable} />
       <Paso rotulo="Cartas extra por ronda" valor={a.extra} min={0} max={2} cambiar={(v) => poner({ extra: v })} editable={editable} />
       <Paso rotulo="Skips por participante" valor={a.skips} min={0} max={5} cambiar={(v) => poner({ skips: v })} editable={editable} />
-      <Paso rotulo="Trolls por ronda (mínimo)" valor={a.trollsMin} min={0} max={3} cambiar={(v) => poner({ trollsMin: v, trollsMax: Math.max(v, a.trollsMax) })} editable={editable} />
-      <Paso rotulo="Trolls por ronda (máximo)" valor={a.trollsMax} min={a.trollsMin} max={3} cambiar={(v) => poner({ trollsMax: v })} editable={editable} />
+      <div className="regla">
+        <span>
+          Trolls según la cantidad de jugadores
+          <small>
+            Ahora: de {auto.min} a {auto.max} por ronda, al azar
+          </small>
+        </span>
+        <button className="interruptor" data-on={a.trollsAuto ? '1' : '0'} disabled={!editable} onClick={() => (vibrar(8), poner({ trollsAuto: !a.trollsAuto }))} aria-pressed={a.trollsAuto}>
+          <i />
+        </button>
+      </div>
+      {!a.trollsAuto && (
+        <>
+          <Paso rotulo="Trolls por ronda (mínimo)" valor={a.trollsMin} min={0} max={5} cambiar={(v) => poner({ trollsMin: v, trollsMax: Math.max(v, a.trollsMax) })} editable={editable} />
+          <Paso rotulo="Trolls por ronda (máximo)" valor={a.trollsMax} min={a.trollsMin} max={5} cambiar={(v) => poner({ trollsMax: v })} editable={editable} />
+        </>
+      )}
+      <div className="regla">
+        <span>
+          Trolls camuflados
+          <small>Salen con precio de futbolista: el que lo compra paga lo que ofertó</small>
+        </span>
+        <button className="interruptor" data-on={a.trollsCamuflados ? '1' : '0'} disabled={!editable} onClick={() => (vibrar(8), poner({ trollsCamuflados: !a.trollsCamuflados }))} aria-pressed={a.trollsCamuflados}>
+          <i />
+        </button>
+      </div>
       <Paso rotulo="Última oportunidad" valor={a.ultimaOportunidad} min={3} max={30} sufijo="s" cambiar={(v) => poner({ ultimaOportunidad: v })} editable={editable} />
       <Paso rotulo="Picante de las burlas" valor={a.intensidad} min={1} max={3} cambiar={(v) => poner({ intensidad: v as 1 | 2 | 3 })} editable={editable} />
       <div className="regla">
@@ -577,6 +602,12 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
     sala.enviar({ t: 'ofertar', uid: carta.uid });
   };
 
+  const alTocar = () => {
+    if (puedeOfertar) return ofertar();
+    // Tocó cuando ya había caído el martillo: el servidor lo rechaza por tarde (y el ticker se burla).
+    if (carta && s.fase === 'martillo' && carta.compradorId && carta.compradorId !== yo.id && !yo.equipo[r?.hueco ?? -1]) sala.enviar({ t: 'ofertar', uid: carta.uid });
+  };
+
   const alVolar = useCallback((origen: DOMRect, img: string, pid: string) => {
     const chip = raiz.current?.querySelector<HTMLElement>(pid === yo.id ? '[data-destino="equipo"]' : `[data-chip="${pid}"]`);
     const destino = chip?.getBoundingClientRect();
@@ -720,7 +751,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
         <div className="j-reloj">
           <Reloj sala={sala} activo={enPuja} vence={carta?.vence ?? 0} duracion={enPuja ? (carta?.duracion ?? 1) : s.ajustes.segundos * 1000} pausaResto={s.pausa ? s.pausaResto : undefined} alTic={setTic} sonido={sonidoPreferido()} />
         </div>
-        <button ref={boton} className="ofertar" data-modo={modo} disabled={!puedeOfertar} onPointerDown={puedeOfertar ? ofertar : undefined}>
+        <button ref={boton} className="ofertar" data-modo={modo} aria-disabled={!puedeOfertar} onPointerDown={alTocar}>
           <span className="ofertar-cara">
             <b>{rotulo}</b>
             <small className={modo === 'activo' || modo === 'lider' ? 'num' : ''}>{bajada}</small>

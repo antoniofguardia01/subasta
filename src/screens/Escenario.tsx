@@ -2,7 +2,7 @@
 import { CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import gsap from 'gsap';
 import type { EstadoPublico, JugadorSala } from '../../shared/types';
-import { POS_NOMBRE } from '../../shared/types';
+import { MAX_PARTICIPANTES, POS_NOMBRE } from '../../shared/types';
 import { Avatar, Cancha, Fondo, Numero, QR, Ticker, cuentaEquipo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
@@ -575,6 +575,12 @@ function LobbyTV({ s }: { s: EstadoPublico }) {
           <span>
             <b className="num">{s.ajustes.skips}</b> skips
           </span>
+          <span>
+            <b className="num">
+              {s.ajustes.trollsMin}–{s.ajustes.trollsMax}
+            </b>{' '}
+            trolls por ronda
+          </span>
           <span>{tema?.nombre}</span>
         </div>
       </div>
@@ -584,7 +590,7 @@ function LobbyTV({ s }: { s: EstadoPublico }) {
       <div className="lobby-gente">
         <h3>
           En la sala <b className="num">{s.jugadores.length}</b>
-          <i className="num">/8</i>
+          <i className="num">/{MAX_PARTICIPANTES}</i>
         </h3>
         <div className="lobby-lista">
           {s.jugadores.map((j, i) => (

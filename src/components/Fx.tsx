@@ -38,7 +38,8 @@ export const Fx = forwardRef<FxApi, { className?: string }>(function Fx({ classN
     const c = lienzo.current;
     if (!c) return;
     const ctx = c.getContext('2d')!;
-    const dt = Math.min(0.04, (t - ultimo.current) / 1000 || 0.016);
+    // El primer cuadro puede traer una marca de tiempo anterior a la guardada: nunca retroceder.
+    const dt = Math.max(0, Math.min(0.04, (t - ultimo.current) / 1000 || 0.016));
     ultimo.current = t;
     const W = c.width;
     const H = c.height;
@@ -49,7 +50,7 @@ export const Fx = forwardRef<FxApi, { className?: string }>(function Fx({ classN
       if (p.vida <= 0) continue;
       const k = p.vida / p.max;
       if (p.tipo === 'onda') {
-        const r = p.tam * (1 - k * k * k);
+        const r = Math.max(0, p.tam * (1 - k * k * k));
         ctx.globalAlpha = k;
         ctx.strokeStyle = p.color;
         ctx.lineWidth = Math.max(1, p.tam * 0.06 * k);

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@fontsource-variable/archivo/wdth.css';
-import '@fontsource-variable/martian-mono/wdth.css';
+import './styles/fuentes.css';
 import './styles/base.css';
 import './styles/escena.css';
 import './styles/escenario.css';

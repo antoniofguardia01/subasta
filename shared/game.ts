@@ -18,10 +18,12 @@ import {
   Historial,
   Jugador,
   JugadorSala,
+  MAX_PARTICIPANTES,
   Mazo,
   MotivoRechazo,
   OfertaVista,
   Troll,
+  rangoTrolls,
 } from './types';
 import { crearReponedor, generarMazo, pisosDeRonda } from './deck';
 import { Rng, crearRng } from './rng';
@@ -142,7 +144,7 @@ export class Partida {
       return { ok: true };
     }
     if (this.fase !== 'lobby') return { ok: false, codigo: 'en_juego', texto: 'La subasta ya arrancó. Espera la revancha.' };
-    if (this.jugadores.length >= 8) return { ok: false, codigo: 'llena', texto: 'La sala está llena (8).' };
+    if (this.jugadores.length >= MAX_PARTICIPANTES) return { ok: false, codigo: 'llena', texto: `La sala está llena (${MAX_PARTICIPANTES}).` };
     const color = COLORES_EQUIPO.find((c) => !this.jugadores.some((j) => j.color === c)) ?? COLORES_EQUIPO[0];
     this.jugadores.push({
       id,
@@ -156,6 +158,7 @@ export class Partida {
       gastado: 0,
     });
     if (!this.anfitrionId) this.anfitrionId = id;
+    this.ajustarTrolls();
     this.eventos.push({ e: 'entra', pid: id });
     return { ok: true };
   }
@@ -171,6 +174,7 @@ export class Partida {
     const i = this.jugadores.findIndex((j) => j.id === id);
     if (i < 0) return;
     this.jugadores.splice(i, 1);
+    this.ajustarTrolls();
     this.eventos.push({ e: 'expulsado', pid: id });
     if (this.anfitrionId === id) this.anfitrionId = this.jugadores[0]?.id ?? null;
     if (this.fase === 'lobby' || this.fase === 'final') return;
@@ -206,8 +210,12 @@ export class Partida {
     a.segundos = lim(a.segundos, 5, 60);
     a.extra = lim(a.extra, 0, 2);
     a.skips = lim(a.skips, 0, 5);
-    a.trollsMin = lim(a.trollsMin, 0, 3);
-    a.trollsMax = Math.max(a.trollsMin, lim(a.trollsMax, 0, 3));
+    a.trollsMin = lim(a.trollsMin, 0, 5);
+    a.trollsMax = Math.max(a.trollsMin, lim(a.trollsMax, 0, 5));
+    a.trollsAuto = !!a.trollsAuto;
+    a.trollsCamuflados = !!a.trollsCamuflados;
+    // Tocar los valores a mano apaga el modo automático.
+    if ((parcial.trollsMin !== undefined || parcial.trollsMax !== undefined) && parcial.trollsAuto === undefined) a.trollsAuto = false;
     a.ultimaOportunidad = lim(a.ultimaOportunidad, 3, 30);
     a.forzar = !!a.forzar;
     a.intensidad = lim(a.intensidad, 1, 3) as 1 | 2 | 3;
@@ -215,16 +223,25 @@ export class Partida {
       Array.isArray(a.orden) && a.orden.length === FORMACION.length && new Set(a.orden).size === FORMACION.length && a.orden.every((n) => n >= 0 && n < FORMACION.length);
     if (!ordenOk) a.orden = [...AJUSTES_DEFECTO.orden];
     this.ajustes = a;
+    this.ajustarTrolls();
     for (const j of this.jugadores) {
       j.saldo = a.presupuesto;
       j.skips = a.skips;
     }
   }
 
+  /** En modo automático, el rango de trolls por ronda sigue a la cantidad de participantes. */
+  private ajustarTrolls() {
+    if (!this.ajustes.trollsAuto || this.fase !== 'lobby') return;
+    const r = rangoTrolls(Math.max(2, this.jugadores.length));
+    this.ajustes = { ...this.ajustes, trollsMin: r.min, trollsMax: r.max };
+  }
+
   // ───────────── Arranque ─────────────
 
   empezar(pool: readonly Jugador[], trolls: readonly Troll[], semilla: number, ahora: number): boolean {
     if (this.fase !== 'lobby' || this.jugadores.length < 2) return false;
+    this.ajustarTrolls();
     this.mazo = generarMazo(pool, trolls, this.jugadores.length, this.ajustes, semilla);
     this.pisos = pisosDeRonda(this.mazo);
     this.rng = crearRng((semilla ^ 0x9e3779b9) >>> 0);

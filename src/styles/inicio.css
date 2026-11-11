@@ -1,5 +1,10 @@
 /* ───────── Pantalla de inicio ───────── */
-.inicio { --px: 0; --py: 0; display: flex; flex-direction: column; color: #fff; background: #020403; }
+.inicio { --px: 0; --py: 0; --ini-tinta: #fff; --ini-velo: 2, 4, 3; --ini-fuerza: 1; display: flex; flex-direction: column; color: var(--ini-tinta); background: #020403; }
+/* Escenarios con ilustración propia: el velo se aclara para que el dibujo se vea */
+:root[data-tema='pizarra'] .inicio { --ini-fuerza: 0.72; }
+:root[data-tema='miami'] .inicio { --ini-velo: 3, 22, 26; --ini-fuerza: 0.7; }
+:root[data-tema='album'] .inicio { --ini-tinta: #1d2433; --ini-velo: 239, 228, 204; --ini-fuerza: 0.62; background: #efe4cc; }
+.ini-imagen { position: absolute; left: -3%; top: -3%; width: 106%; height: 106%; object-fit: cover; transform: translate3d(calc(var(--px) * -1.2%), calc(var(--py) * -1.2%), 0); will-change: transform; animation: aparece 600ms ease both; }
 .ini-fondo { position: absolute; inset: 0; overflow: hidden; }
 .ini-fondo > .fondo { position: absolute; inset: 0; opacity: 0.5; }
 /* Video del estadio: los reflectores se encienden solos; al terminar queda el último cuadro. */
@@ -9,7 +14,8 @@
 :root[data-tema='copa'] .ini-tinte, :root[data-tema='miami'] .ini-tinte { opacity: 0.85; }
 :root[data-tema='album'] .ini-tinte { opacity: 0.6; }
 :root[data-tema='pizarra'] .ini-tinte { opacity: 0.35; background: #6b7a72; }
-.ini-vineta { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 38%, rgba(2, 4, 3, 0) 0%, rgba(2, 4, 3, 0.42) 55%, rgba(2, 4, 3, 0.94) 100%), linear-gradient(0deg, rgba(2, 4, 3, 0.96) 0%, rgba(2, 4, 3, 0) 46%); }
+.ini-vineta { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 38%, rgba(var(--ini-velo), 0) 0%, rgba(var(--ini-velo), calc(0.42 * var(--ini-fuerza))) 55%, rgba(var(--ini-velo), calc(0.94 * var(--ini-fuerza))) 100%), linear-gradient(0deg, rgba(var(--ini-velo), calc(0.96 * var(--ini-fuerza))) 0%, rgba(var(--ini-velo), 0) 46%); transition: opacity 400ms ease; }
+:root[data-tema='album'] .ini-haces, :root[data-tema='pizarra'] .ini-haces, :root[data-tema='album'] .ini-desfile { display: none; }
 
 /* Haces de luz que barren despacio */
 .ini-haces { position: absolute; inset: 0; mix-blend-mode: screen; transform: translate3d(calc(var(--px) * 1.5%), 0, 0); }
@@ -36,31 +42,33 @@
   position: absolute; right: 0; bottom: calc(100% + var(--mh) * 0.17); height: var(--mh); width: auto; margin-right: calc(var(--mh) * -0.2);
   transform-origin: 50% 96%; z-index: 2; filter: drop-shadow(0 calc(var(--mh) * 0.04) 0 rgba(0, 0, 0, 0.4)); pointer-events: none;
 }
-.ini-fila { display: flex; overflow: hidden; padding: 0.04em 0.02em 0; }
-.ini-letra { display: block; font-size: clamp(74px, 21vw, 250px); font-weight: 900; font-stretch: 62%; line-height: 0.84; color: #fff; letter-spacing: -0.012em; will-change: transform; }
+.ini-fila { display: flex; overflow: hidden; padding: 0.06em 0.08em 0.02em; }
+.ini-letra { display: block; font-size: clamp(74px, 21vw, 250px); font-weight: 900; font-stretch: 62%; line-height: 0.84; color: var(--ini-tinta); letter-spacing: -0.012em; will-change: transform; text-shadow: 0 0.035em 0 rgba(0, 0, 0, 0.42); }
+:root[data-tema='album'] .ini-letra { text-shadow: 0 0.035em 0 rgba(239, 228, 204, 0.9); }
 .ini-placa {
   display: flex; margin-top: clamp(4px, 1vw, 12px); padding: 0.14em 0.5em 0.1em; background: var(--acento); color: var(--acento-tinta); transform-origin: 50% 50%;
   font-size: clamp(27px, 7.7vw, 92px); font-weight: 900; font-stretch: 125%; letter-spacing: 0.05em; line-height: 1; border-radius: 0.14em 0.14em 0.14em 0.5em;
   transition: background-color 400ms ease, color 400ms ease;
 }
-.ini-bajada { margin-top: clamp(10px, 2vh, 20px); font-size: clamp(14px, 3.6vw, 26px); font-weight: 700; font-stretch: 100%; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.82); text-align: center; }
+.ini-bajada { margin-top: clamp(10px, 2vh, 20px); font-size: clamp(14px, 3.6vw, 26px); font-weight: 700; font-stretch: 100%; text-transform: uppercase; letter-spacing: 0.14em; color: var(--ini-tinta); text-align: center; padding: 0.3em 0.8em; border-radius: 0.4em; background: rgba(var(--ini-velo), 0.55); }
 
 .inicio-menu { position: relative; width: min(100%, 460px); height: 232px; flex: none; }
 .ini-panel { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 12px; opacity: 0; visibility: hidden; transform: translateY(18px) scale(0.97); transition: opacity 240ms ease, transform 380ms var(--ease-out), visibility 0s 240ms; }
 .ini-panel[data-on='1'] { opacity: 1; visibility: visible; transform: none; transition: opacity 280ms 120ms ease, transform 420ms 120ms var(--ease-out), visibility 0s; }
-.ini-btn { width: 100%; height: 66px; font-size: 25px; border-radius: 16px; flex: none; }
-.ini-btn.btn--acento { font-size: 31px; font-stretch: 62%; font-weight: 900; height: 76px; }
+.ini-btn { width: 100%; height: 66px; font-size: 30px; border-radius: 16px; flex: none; }
+.ini-btn.btn--acento { font-size: 40px; font-stretch: 62%; font-weight: 900; height: 76px; }
 .ini-btn:not(.btn--acento):not(.btn--linea) { background: #fff; color: #0b0d0c; }
-.ini-btn--tv { height: 56px; font-size: 20px; flex-direction: column; gap: 2px; color: #fff; }
+.ini-btn--tv { height: 56px; font-size: 24px; flex-direction: column; gap: 2px; color: var(--ini-tinta); background: rgba(var(--ini-velo), 0.45); }
 .ini-btn--tv small { font-size: 12px; font-weight: 700; text-transform: none; letter-spacing: 0; opacity: 0.85; }
 .ini-btn--tv[data-sugerido] { height: 76px; box-shadow: inset 0 0 0 0.14em var(--acento); animation: late 0.9s ease-in-out infinite alternate; }
 
 .ini-panel--codigo { align-items: center; gap: 10px; }
+.ini-rotulo, .ini-estado { padding: 0.25em 0.8em; border-radius: 0.4em; background: rgba(var(--ini-velo), 0.6); }
 .ini-rotulo { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
 .ini-cajas { position: relative; display: flex; gap: 10px; }
 .ini-cajas b {
   position: relative; display: grid; place-items: center; width: clamp(62px, 19vw, 86px); height: clamp(80px, 24vw, 108px); border-radius: 16px; overflow: hidden;
-  background: rgba(8, 10, 9, 0.72); border: 4px solid rgba(255, 255, 255, 0.3); font-size: clamp(48px, 15vw, 70px); font-weight: 900; color: #fff;
+  background: rgba(8, 10, 9, 0.72); border: 4px solid rgba(255, 255, 255, 0.3); font-size: clamp(38px, 11.5vw, 56px); font-weight: 900; font-stretch: 125%; line-height: 1; color: #fff;
   transition: border-color 160ms ease, background-color 200ms ease, transform 220ms var(--ease-rebote);
 }
 .ini-cajas b > span { display: block; animation: letra-salta 320ms var(--ease-rebote); }
@@ -81,18 +89,18 @@
 .ini-estado { font-size: 15px; font-weight: 700; opacity: 0.85; min-height: 1.3em; }
 .ini-estado[data-estado='ok'] { color: var(--acento); opacity: 1; }
 .ini-estado[data-estado='mal'] { color: #ff8573; opacity: 1; }
-.ini-volver { font-size: 15px; padding: 0.7em 1.4em; color: #fff; }
+.ini-volver { font-size: 15px; padding: 0.7em 1.4em; color: var(--ini-tinta); background: rgba(var(--ini-velo), 0.45); }
 
 .ini-pie { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 18px 12px; flex: none; }
 .ini-temas { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .ini-temas > span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; }
-.ini-temas button { position: relative; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex: none; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35); transition: transform 240ms var(--ease-rebote), box-shadow 200ms ease; }
+.ini-temas button { position: relative; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex: none; box-shadow: 0 0 0 2px rgba(127, 127, 127, 0.6); transition: transform 240ms var(--ease-rebote), box-shadow 200ms ease; }
 .ini-temas button i { position: absolute; top: 0; bottom: 0; width: 50%; }
 .ini-temas button i:first-child { left: 0; }
 .ini-temas button i:last-child { right: 0; }
-.ini-temas button[data-on='1'] { transform: scale(1.22); box-shadow: 0 0 0 3px #fff; }
+.ini-temas button[data-on='1'] { transform: scale(1.22); box-shadow: 0 0 0 3px var(--ini-tinta); }
 .ini-temas em { font-style: normal; font-size: 13px; font-weight: 800; font-stretch: 88%; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: sube 320ms var(--ease-out) both; }
-.ini-sonido { position: absolute; right: 14px; top: calc(env(safe-area-inset-top) + 12px); z-index: 4; padding: 8px 14px; border-radius: 20px; background: rgba(255, 255, 255, 0.14); font-size: 13px; font-weight: 800; text-transform: uppercase; white-space: nowrap; transition: background-color 180ms ease, color 180ms ease; }
+.ini-sonido { position: absolute; right: 14px; top: calc(env(safe-area-inset-top) + 12px); z-index: 4; padding: 8px 14px; border-radius: 20px; background: rgba(var(--ini-velo), 0.6); color: var(--ini-tinta); font-size: 13px; font-weight: 800; text-transform: uppercase; white-space: nowrap; transition: background-color 180ms ease, color 180ms ease; }
 .ini-sonido[data-on='1'] { background: var(--acento); color: var(--acento-tinta); }
 .ini-ticker { position: relative; z-index: 3; flex: none; padding-bottom: env(safe-area-inset-bottom); background: var(--placa); }
 
@@ -129,7 +137,7 @@
 .tvm-izq { flex: 1; min-width: 0; }
 .tvm-rotulo { font-size: 2.6vmin; font-weight: 800; font-stretch: 125%; text-transform: uppercase; letter-spacing: 0.06em; color: var(--acento); }
 .tvm-codigo { display: flex; gap: 1.6vmin; margin: 1.4vmin 0 2.4vmin; }
-.tvm-codigo b { display: grid; place-items: center; width: 15vmin; height: 19vmin; border-radius: 2vmin; background: rgba(255, 255, 255, 0.1); border: 0.5vmin solid rgba(255, 255, 255, 0.3); font-size: 15vmin; font-weight: 900; line-height: 1; color: var(--m-a); animation: letra-cae 700ms calc(250ms + var(--i) * 110ms) var(--ease-rebote) both; }
+.tvm-codigo b { display: grid; place-items: center; width: 15vmin; height: 19vmin; border-radius: 2vmin; background: rgba(255, 255, 255, 0.1); border: 0.5vmin solid rgba(255, 255, 255, 0.3); font-size: 11vmin; font-weight: 900; font-stretch: 125%; line-height: 1; color: var(--m-a); animation: letra-cae 700ms calc(250ms + var(--i) * 110ms) var(--ease-rebote) both; }
 .tvm-pasos { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 0.6vmin; font-size: 2.5vmin; font-weight: 600; line-height: 1.3; opacity: 0.92; }
 .tvm-pasos b { color: var(--acento); font-weight: 900; }
 .tvm-qr { flex: none; width: 34vmin; height: 34vmin; padding: 1.4vmin; border-radius: 2.6vmin; background: #fff; transform: rotate(2deg); animation: qr-entra 800ms 600ms var(--ease-rebote) both; }

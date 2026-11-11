@@ -16,6 +16,8 @@ const TITULARES = [
   'Se juega con 3 a 8 amigos. O enemigos, da igual',
 ].map((texto, i) => ({ id: -10 - i, texto, tipo: 'sistema' as const }));
 
+const FONDOS_PROPIOS = ['album', 'pizarra', 'miami'];
+
 const centro = (el: Element) => {
   const r = el.getBoundingClientRect();
   return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
@@ -190,6 +192,8 @@ export function Inicio() {
         <Fondo paleta="oscuro" />
         <video ref={video} className="ini-video" src="/media/estadio.mp4" poster="/media/estadio.jpg" muted playsInline preload="auto" />
         <div className="ini-tinte" />
+        {/* Álbum, Pizarra y Miami tienen su propia ilustración de fondo (entra con fundido al elegir el escenario). */}
+        {FONDOS_PROPIOS.includes(tema) && <img key={tema} className="ini-imagen" src={`/media/fondo-${tema}.jpg`} alt="" draggable={false} />}
         <div className="ini-haces" aria-hidden>
           {[0, 1, 2, 3].map((i) => (
             <i className="ini-haz" key={i} style={{ '--i': i } as CSSProperties} />

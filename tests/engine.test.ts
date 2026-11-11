@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Partida, TIEMPOS } from '../shared/game';
 import { generarMazo, pisosDeRonda, UMBRAL_BARATO } from '../shared/deck';
-import { AJUSTES_DEFECTO, Ajustes, FORMACION, Jugador, Pos, Troll } from '../shared/types';
+import { AJUSTES_DEFECTO, Ajustes, FORMACION, Jugador, Pos, Troll, rangoTrolls } from '../shared/types';
 
 // ───────────── Datos de prueba: 270 jugadores (30 por posición, laterales 15 + 15) ─────────────
 function pool(): Jugador[] {
@@ -70,6 +70,69 @@ describe('mazo', () => {
         for (const c of r.cartas) if (c.tipo === 'jugador') expect(c.refId.startsWith(r.pos + '-')).toBe(true);
       });
     }
+  });
+
+  it('el rango de trolls por ronda crece con la cantidad de participantes', () => {
+    expect(rangoTrolls(3)).toEqual({ min: 1, max: 1 });
+    expect(rangoTrolls(5)).toEqual({ min: 1, max: 2 });
+    expect(rangoTrolls(6)).toEqual({ min: 1, max: 3 });
+    expect(rangoTrolls(8)).toEqual({ min: 2, max: 4 });
+    expect(rangoTrolls(10)).toEqual({ min: 3, max: 5 });
+    // En una sala, el modo automático aplica el rango al empezar.
+    for (const n of [6, 10]) {
+      const { p } = sala(n, {}, n * 31, 60);
+      const r = rangoTrolls(n);
+      expect(p.ajustes.trollsMin).toBe(r.min);
+      expect(p.ajustes.trollsMax).toBe(r.max);
+      const vistos = new Set<number>();
+      for (const ronda of p.mazo!.rondas) {
+        const t = ronda.cartas.filter((c) => c.tipo === 'troll').length;
+        expect(t).toBeGreaterThanOrEqual(r.min);
+        expect(t).toBeLessThanOrEqual(r.max);
+        vistos.add(t);
+      }
+      expect(vistos.size).toBeGreaterThan(1); // varía de una ronda a otra
+    }
+  });
+
+  it('los trolls salen camuflados: con un precio de futbolista real, no regalados', () => {
+    const precios: number[] = [];
+    for (let s = 1; s <= 20; s++) {
+      const m = generarMazo(pool(), trolls(), 6, { ...AJUSTES_DEFECTO, trollsMin: 1, trollsMax: 3 }, s);
+      for (const r of m.rondas) for (const c of r.cartas) if (c.tipo === 'troll') precios.push(c.precioMinimo);
+    }
+    expect(Math.min(...precios)).toBeGreaterThanOrEqual(5);
+    expect(Math.max(...precios)).toBeGreaterThan(100); // a veces se disfrazan de estrella
+    expect(precios.filter((p) => p > 30).length / precios.length).toBeGreaterThan(0.4);
+    // Con el camuflaje apagado vuelven a su precio propio.
+    const m = generarMazo(pool(), trolls(), 6, { ...AJUSTES_DEFECTO, trollsCamuflados: false }, 3);
+    for (const r of m.rondas) for (const c of r.cartas) if (c.tipo === 'troll') expect(c.precioMinimo).toBe(5);
+  });
+
+  it('quien compra un troll paga lo que ofertó, como con cualquier jugador', () => {
+    const { p, hasta, ir, ahora } = sala(3);
+    // Avanza hasta que la carta en puja sea un troll.
+    for (let i = 0; i < 60; i++) {
+      hasta('puja');
+      if (p.cartaActual()!.tipo === 'troll') break;
+      ir(15000);
+      if (p.fase === 'ultima') ir(10000);
+    }
+    const c = p.cartaActual()!;
+    expect(c.tipo).toBe('troll');
+    const pid = p.pendientes()[0].id;
+    const rival = p.pendientes()[1]?.id ?? pid;
+    const antes = p.jugador(pid)!.saldo;
+    p.ofertar(pid, c.uid, ahora());
+    if (rival !== pid) {
+      p.ofertar(rival, c.uid, ahora());
+      p.ofertar(pid, c.uid, ahora());
+    }
+    const precio = p.precio;
+    ir(15000);
+    expect(p.compradorId).toBe(pid);
+    expect(p.jugador(pid)!.saldo).toBe(antes - precio);
+    expect(precio).toBeGreaterThan(c.precioMinimo);
   });
 
   it('mete 1 o 2 trolls por ronda, en posiciones que cambian', () => {
@@ -370,8 +433,9 @@ describe('sala', () => {
     expect(p.jugador('a')!.conectado).toBe(false);
     p.conectar('a', true);
     expect(p.jugador('a')!.conectado).toBe(true);
-    for (let i = 0; i < 7; i++) p.entrar(`z${i}`, `Otro ${i}`, 'x');
-    expect(p.entrar('extra', 'Noveno', 'x').ok).toBe(false);
+    for (let i = 0; i < 9; i++) p.entrar(`z${i}`, `Otro ${i}`, 'x');
+    expect(p.jugadores).toHaveLength(10);
+    expect(p.entrar('extra', 'Once', 'x').ok).toBe(false);
   });
 
   it('expulsar al que iba ganando devuelve la carta a su precio mínimo', () => {

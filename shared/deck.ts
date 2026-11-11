@@ -46,6 +46,17 @@ export function generarMazo(
     return null;
   };
 
+  /**
+   * Precio de salida de un troll. Camuflado: copia el precio mínimo de un futbolista real de esa posición
+   * (con una pequeña variación), así la silueta + el precio no delatan que es un troll.
+   */
+  const precioTroll = (t: Troll, pos: Pos): number => {
+    const reales = porPos.get(pos) ?? [];
+    if (!ajustes.trollsCamuflados || !reales.length) return Math.max(1, Math.round(t.precioMinimo));
+    const base = elegir(rng, reales).precioMinimo;
+    return Math.max(5, Math.round(base + entero(rng, -3, 3)));
+  };
+
   let serie = 0;
   const cartaDeJugador = (j: Jugador, hueco: number): Carta => ({
     uid: `c${++serie}`,
@@ -77,7 +88,7 @@ export function generarMazo(
     rareza: 'troll',
     etiqueta: 'CARTA TROLL',
     dato: t.descripcion || 'Nadie sabe de dónde salió',
-    precioMinimo: Math.max(1, Math.round(t.precioMinimo)),
+    precioMinimo: precioTroll(t, FORMACION[hueco]),
     foto: t.foto,
     token: tokenAleatorio(rng),
   });
@@ -87,7 +98,7 @@ export function generarMazo(
     const pos = FORMACION[hueco];
     const libres = barajar(rng, (porPos.get(pos) ?? []).filter((j) => !usados.has(j.id)));
 
-    // Trolls de la ronda: 1–2 al azar, dejando siempre lugar para al menos un futbolista.
+    // Trolls de la ronda: cantidad al azar dentro del rango, dejando siempre lugar para al menos un futbolista.
     let nTrolls = Math.min(entero(rng, ajustes.trollsMin, ajustes.trollsMax), Math.max(0, total - 1));
     if (!trollsActivos.length) nTrolls = 0;
     let nFut = total - nTrolls;
@@ -143,6 +154,12 @@ export function crearReponedor(pool: readonly Jugador[], trolls: readonly Troll[
   const usados = new Set<string>();
   for (const r of mazo.rondas) for (const c of r.cartas) usados.add(c.refId);
   let serie = 0;
+  const camuflar = mazo.rondas.some((r) => r.cartas.some((c) => c.tipo === 'troll' && c.precioMinimo > 20));
+  const precioRepuesto = (t: Troll, pos: Pos): number => {
+    const reales = pool.filter((j) => j.pos === pos);
+    if (!camuflar || !reales.length) return Math.max(1, Math.round(t.precioMinimo));
+    return Math.max(5, elegir(rng, reales).precioMinimo);
+  };
   return (hueco: number): Carta | null => {
     const pos = FORMACION[hueco];
     const libres = pool.filter((j) => j.pos === pos && j.fotos?.length && !usados.has(j.id));
@@ -179,7 +196,7 @@ export function crearReponedor(pool: readonly Jugador[], trolls: readonly Troll[
       rareza: 'troll',
       etiqueta: 'CARTA TROLL',
       dato: t.descripcion || 'Nadie sabe de dónde salió',
-      precioMinimo: Math.max(1, Math.round(t.precioMinimo)),
+      precioMinimo: precioRepuesto(t, pos),
       foto: t.foto,
     };
   };
