@@ -1,6 +1,6 @@
 {
   // Un solo Worker: sirve el frontend (dist/) y las salas en tiempo real (Durable Objects en memoria).
-  "name": "remate",
+  "name": "subasta-futbolera",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
   "assets": {

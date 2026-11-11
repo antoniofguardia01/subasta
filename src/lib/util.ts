@@ -51,3 +51,26 @@ export function pareceTV(): boolean {
 }
 
 export const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+
+/**
+ * Navegación con control remoto: las flechas mueven el foco entre los botones visibles del contenedor.
+ * Devuelve la función que quita el oyente.
+ */
+export function usarFlechas(selector: string): () => void {
+  const tecla = (e: KeyboardEvent) => {
+    const avanzar = e.key === 'ArrowDown' || e.key === 'ArrowRight';
+    const volver = e.key === 'ArrowUp' || e.key === 'ArrowLeft';
+    if (!avanzar && !volver) return;
+    if (document.activeElement instanceof HTMLInputElement) return;
+    const caja = document.querySelector(selector);
+    if (!caja) return;
+    const lista = [...caja.querySelectorAll<HTMLElement>('button:not(:disabled), [tabindex="0"]')].filter((b) => b.offsetParent !== null && b.tabIndex >= 0);
+    if (!lista.length) return;
+    const i = lista.indexOf(document.activeElement as HTMLElement);
+    const sig = lista[(i + (avanzar ? 1 : -1) + lista.length) % lista.length] ?? lista[0];
+    sig.focus();
+    e.preventDefault();
+  };
+  addEventListener('keydown', tecla);
+  return () => removeEventListener('keydown', tecla);
+}

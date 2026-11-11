@@ -29,11 +29,45 @@ export async function activarSonido(on: boolean) {
         maestro.connect(ctx.destination);
       }
       await ctx.resume();
+      void cargarMuestras();
     } catch {
       activo = false;
     }
   } else await ctx?.suspend().catch(() => {});
   oyentes.forEach((f) => f());
+}
+
+// Muestras grabadas (generadas con Higgsfield): se usan cuando están cargadas; si no, suena el sintetizador.
+const MUESTRAS = ['martillazo', 'revela', 'troll', 'ovacion'] as const;
+type Muestra = (typeof MUESTRAS)[number];
+const buffers: Partial<Record<Muestra, AudioBuffer>> = {};
+let cargando = false;
+
+async function cargarMuestras() {
+  if (cargando || !ctx) return;
+  cargando = true;
+  await Promise.all(
+    MUESTRAS.map(async (m) => {
+      try {
+        const r = await fetch(`/media/sfx/${m}.mp3`);
+        buffers[m] = await ctx!.decodeAudioData(await r.arrayBuffer());
+      } catch {
+        /* sin muestra: queda el sintetizador */
+      }
+    }),
+  );
+}
+
+function muestra(m: Muestra, vol = 0.8, cuando = 0): boolean {
+  const b = buffers[m];
+  if (!sonidoActivo() || !ctx || !maestro || !b) return false;
+  const src = ctx.createBufferSource();
+  src.buffer = b;
+  const g = ctx.createGain();
+  g.gain.value = vol;
+  src.connect(g).connect(maestro);
+  src.start(ctx.currentTime + cuando);
+  return true;
 }
 
 /** Intenta reanudar el audio si ya estaba elegido (tras el primer toque en la página). */
@@ -95,6 +129,10 @@ export const sonar = {
     ruido(0.08, 0.12, 2400);
   },
   martillo() {
+    if (muestra('martillazo', 1)) {
+      tono(110, 0.5, 'sine', 0.35, 50);
+      return;
+    }
     tono(150, 0.32, 'sine', 0.6, 46);
     ruido(0.16, 0.5, 900);
     tono(900, 0.05, 'square', 0.12);
@@ -112,12 +150,16 @@ export const sonar = {
     ruido(0.5, 0.2, 3200, 0, 'highpass');
   },
   revela(nivel: 0 | 1 | 2) {
-    ruido(0.45, 0.22, 4000, 0, 'highpass');
+    if (!muestra('revela', 0.7)) ruido(0.45, 0.22, 4000, 0, 'highpass');
     const notas = nivel === 2 ? [392, 494, 587, 784, 988] : nivel === 1 ? [392, 494, 587, 784] : [440, 554, 659];
     notas.forEach((f, i) => tono(f, 0.5 + i * 0.05, 'triangle', 0.18, undefined, 0.12 + i * 0.07));
     if (nivel > 0) tono(98, 1.2, 'sine', 0.3, undefined, 0.1);
   },
+  ovacion() {
+    muestra('ovacion', 0.6, 0.15);
+  },
   troll() {
+    if (muestra('troll', 0.9)) return;
     tono(300, 0.16, 'sawtooth', 0.22, 220);
     tono(220, 0.16, 'sawtooth', 0.22, 165, 0.18);
     tono(165, 0.5, 'sawtooth', 0.24, 82, 0.36);
@@ -131,6 +173,7 @@ export const sonar = {
     tono(880, 0.14, 'square', 0.14, undefined, 0.16);
   },
   fanfarria() {
+    muestra('ovacion', 0.8);
     [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tono(f, 0.28, 'triangle', 0.22, undefined, i * 0.13));
     ruido(1.4, 0.12, 5000, 0.2, 'highpass');
   },

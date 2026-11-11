@@ -7,7 +7,7 @@
 .tv-capa[data-on='1'] { opacity: 1; visibility: visible; transform: scale(1); transition: opacity 420ms ease, transform 600ms var(--ease-out), visibility 0s; }
 .tv-ticker { position: absolute; left: 0; bottom: 0; width: 1920px; z-index: 30; }
 
-.logo-mini { font-weight: 900; font-stretch: 125%; font-size: 30px; letter-spacing: -0.02em; color: var(--acento); line-height: 1; }
+.logo-mini { font-weight: 900; font-stretch: 100%; font-size: 26px; letter-spacing: -0.02em; color: var(--acento); line-height: 1; }
 
 /* ───────── Barra superior ───────── */
 .tv-top { position: absolute; left: 0; top: 0; width: 1920px; height: 150px; display: flex; align-items: stretch; background: var(--bg); z-index: 10; }

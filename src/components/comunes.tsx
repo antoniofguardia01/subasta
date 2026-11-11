@@ -116,7 +116,7 @@ export const QR = memo(function QR({ texto, className = '' }: { texto: string; c
 
 // ───────────── Ticker ─────────────
 
-const RELLENO: MensajeTicker = { id: -1, texto: 'REMATE · Cada oferta suma 1 millón · Si nadie oferta y no sobran cartas, decide la ruleta', tipo: 'sistema' };
+const RELLENO: MensajeTicker = { id: -1, texto: 'SUBASTA FUTBOLERA · Cada oferta suma 1 millón · Si nadie oferta y no sobran cartas, decide la ruleta', tipo: 'sistema' };
 
 /**
  * Barra de noticias sin fin. Los mensajes nuevos entran por la derecha sin saltos:

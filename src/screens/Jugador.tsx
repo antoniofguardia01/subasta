@@ -179,7 +179,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   const url = `${location.origin}/r/${s.codigo}`;
   const compartir = async () => {
     try {
-      if (navigator.share) await navigator.share({ title: 'REMATE', text: `Entra a mi subasta: sala ${s.codigo}`, url });
+      if (navigator.share) await navigator.share({ title: 'Subasta Futbolera', text: `Entra a mi subasta: sala ${s.codigo}`, url });
       else await navigator.clipboard.writeText(url);
     } catch {
       /* cancelado */

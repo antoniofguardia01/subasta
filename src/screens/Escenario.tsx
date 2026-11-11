@@ -124,7 +124,7 @@ export function Escenario({ codigo }: { codigo: string }) {
             <>
               <header className="tv-top">
                 <div className="tv-marca">
-                  <b className="logo-mini">REMATE</b>
+                  <b className="logo-mini">SUBASTA FUTBOLERA</b>
                   <div className="tv-ronda" key={s.ronda?.indice ?? -1}>
                     {s.ronda ? (
                       <>
@@ -549,7 +549,7 @@ function LobbyTV({ s }: { s: EstadoPublico }) {
     <div className="tv-lobby">
       <Fondo paleta="misterio" />
       <div className="lobby-izq">
-        <b className="logo-mini">REMATE</b>
+        <b className="logo-mini">SUBASTA FUTBOLERA</b>
         <span className="lobby-rotulo">Escanea para entrar a la sala</span>
         <div className="lobby-codigo" aria-label={`Código ${s.codigo}`}>
           {s.codigo.split('').map((l, i) => (

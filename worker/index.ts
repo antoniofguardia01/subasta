@@ -1,6 +1,7 @@
 // Entrada del Worker: API + enrutado a los Durable Objects. El frontend lo sirven los assets estáticos.
 import trollsJson from '../data/trolls.json';
-import type { Troll } from '../shared/types';
+import jugadoresJson from '../data/players.json';
+import type { Jugador, Troll } from '../shared/types';
 
 export { RoomDO } from './room';
 export { RegistryDO } from './registry';
@@ -64,7 +65,11 @@ export default {
     // ── Datos públicos del lobby (galería de avatares) ──
     if (partes[1] === 'datos') {
       const trolls = (trollsJson as unknown as Troll[]).filter((t) => t.activo).map((t) => ({ id: t.id, nombre: t.nombre, foto: t.foto }));
-      return Response.json({ avatares: trolls }, { headers: { 'cache-control': 'public, max-age=60' } });
+      // Algunas fotos al azar para el desfile de siluetas de la pantalla de inicio.
+      const conFoto = (jugadoresJson as unknown as Jugador[]).filter((j) => j.fotos?.length);
+      const siluetas: string[] = [];
+      for (let i = 0; i < 9 && conFoto.length; i++) siluetas.push(conFoto.splice(Math.floor(Math.random() * conFoto.length), 1)[0].fotos[0]);
+      return Response.json({ avatares: trolls, siluetas }, { headers: { 'cache-control': 'no-store' } });
     }
 
     // ── TVs ──

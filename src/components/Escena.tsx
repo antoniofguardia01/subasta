@@ -140,14 +140,14 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       const capa = q('.esc-capa');
       if (venta) {
         // ── Martillazo: baja en 160 ms, aplasta la escena, destello, onda y sello ──
-        t.set(q('.esc-martillo'), { opacity: 1, rotation: -72, transformOrigin: '88% 88%' })
-          .to(q('.esc-martillo'), { rotation: 6, duration: rm ? 0.01 : 0.16, ease: 'power4.in' })
+        t.set(q('.esc-martillo'), { opacity: 1, rotation: 14, transformOrigin: '50% 94%' })
+          .to(q('.esc-martillo'), { rotation: -88, duration: rm ? 0.01 : 0.16, ease: 'power4.in' })
           .add(() => impacto([color, '#ffffff', '#ffe27a'], true))
           .to(capa, { scaleY: rm ? 1 : 0.94, scaleX: rm ? 1 : 1.03, duration: 0.07, ease: 'power2.out' })
           .to(capa, { scaleY: 1, scaleX: 1, duration: 0.7, ease: 'elastic.out(1, 0.35)' })
           .fromTo(q('.esc-destello'), { opacity: 0.85 }, { opacity: 0, duration: 0.4, ease: 'power2.out' }, '<-0.07')
           .fromTo(q('.esc-sello'), { opacity: 0, scale: rm ? 1 : 2.6, rotation: -20 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.34, ease: 'back.out(2.2)' }, '<')
-          .to(q('.esc-martillo'), { rotation: -36, opacity: 0, duration: 0.45, ease: 'power2.out' }, '<0.3')
+          .to(q('.esc-martillo'), { rotation: -52, opacity: 0, duration: 0.45, ease: 'power2.out' }, '<0.3')
           .fromTo(q('.esc-venta'), { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.45, ease: 'expo.out' }, '<0.05');
         if (d !== 'vendido' && !rm) t.fromTo(capa, { x: -14 }, { x: 0, duration: 0.5, ease: 'elastic.out(1.2, 0.2)' }, 0.18);
       } else {
@@ -196,6 +196,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       t.add(() => {
         if (troll) sonar.troll();
         else sonar.revela(vendida ? nivel : 0);
+        if (vendida && nivel > 0) sonar.ovacion();
         const p = getComputedStyle(el.querySelector('.esc-fondo2')!);
         const colores = [p.getPropertyValue('--f1').trim() || '#fff', p.getPropertyValue('--fa').trim() || '#fff', '#ffffff'];
         fx.current?.onda(compacta ? 0.62 : 0.7, 0.6, colores[0], 0.9);
@@ -351,14 +352,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         <div className="esc-troll" aria-hidden>
           <span>¡Troll!</span>
         </div>
-        <svg className="esc-martillo" viewBox="0 0 200 200" aria-hidden>
-          <rect x="92" y="60" width="16" height="130" rx="8" fill="#c79a5b" />
-          <rect x="92" y="150" width="16" height="40" rx="8" fill="#8a6234" />
-          <rect x="30" y="18" width="140" height="62" rx="14" fill="#6b3f1d" />
-          <rect x="30" y="18" width="26" height="62" rx="10" fill="#f4c653" />
-          <rect x="144" y="18" width="26" height="62" rx="10" fill="#f4c653" />
-          <rect x="62" y="26" width="76" height="10" rx="5" fill="#8a5a2e" />
-        </svg>
+        <img className="esc-martillo" src="/media/martillo.webp" alt="" draggable={false} aria-hidden />
       </div>
 
       <div className="esc-aviso" data-on={fase === 'ultima' ? '1' : '0'}>
