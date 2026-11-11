@@ -1,0 +1,1322 @@
+[
+ {
+  "id": "thibaut-courtois",
+  "nombre": "Thibaut",
+  "apellido": "Courtois",
+  "pos": "POR",
+  "pais": "Bélgica",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 105,
+  "etiqueta": "PRIME · MURO BELGA",
+  "dato": "Ataja hasta los penales que todavía no patearon.",
+  "fotos": [
+   "/img/players/thibaut-courtois.webp"
+  ],
+  "buscar": "Thibaut Courtois",
+  "ea": 192119
+ },
+ {
+  "id": "emiliano-martinez",
+  "nombre": "Emiliano",
+  "apellido": "Martínez",
+  "pos": "POR",
+  "pais": "Argentina",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 88,
+  "etiqueta": "ORO · EL DIBU",
+  "dato": "Baila, habla y encima ataja. Insoportable para el rival.",
+  "fotos": [
+   "/img/players/emiliano-martinez.webp"
+  ],
+  "buscar": "Emiliano Martinez",
+  "ea": 202811
+ },
+ {
+  "id": "alisson-becker",
+  "nombre": "Alisson",
+  "apellido": "Becker",
+  "pos": "POR",
+  "pais": "Brasil",
+  "rating": 89,
+  "rareza": "oro",
+  "precioMinimo": 82,
+  "etiqueta": "ORO · SEGURO DE VIDA",
+  "dato": "Hasta hizo un gol de cabeza. Más que varios nueves.",
+  "fotos": [
+   "/img/players/alisson-becker.webp"
+  ],
+  "buscar": "Alisson",
+  "ea": 212831
+ },
+ {
+  "id": "guillermo-ochoa",
+  "nombre": "Guillermo",
+  "apellido": "Ochoa",
+  "pos": "POR",
+  "pais": "México",
+  "rating": 79,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · CADA 4 AÑOS",
+  "dato": "Hiberna tres años y medio y despierta para el Mundial.",
+  "fotos": [],
+  "buscar": "Guillermo Ochoa"
+ },
+ {
+  "id": "keylor-navas",
+  "nombre": "Keylor",
+  "apellido": "Navas",
+  "pos": "POR",
+  "pais": "Costa Rica",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 26,
+  "etiqueta": "COMÚN · VETERANO",
+  "dato": "Tres Champions y todavía le discuten el puesto.",
+  "fotos": [],
+  "buscar": "Keylor Navas"
+ },
+ {
+  "id": "andre-onana",
+  "nombre": "André",
+  "apellido": "Onana",
+  "pos": "POR",
+  "pais": "Camerún",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 16,
+  "etiqueta": "COMÚN · SUSTO FIJO",
+  "dato": "Sale jugando con los pies… y con el corazón de todos.",
+  "fotos": [
+   "/img/players/andre-onana.webp"
+  ],
+  "buscar": "Andre Onana",
+  "ea": 226753
+ },
+ {
+  "id": "achraf-hakimi",
+  "nombre": "Achraf",
+  "apellido": "Hakimi",
+  "pos": "LD",
+  "pais": "Marruecos",
+  "rating": 88,
+  "rareza": "prime",
+  "precioMinimo": 100,
+  "etiqueta": "PRIME · TREN BALA",
+  "dato": "Sube, baja y vuelve a subir. Nadie sabe cuándo respira.",
+  "fotos": [
+   "/img/players/achraf-hakimi.webp"
+  ],
+  "buscar": "Achraf Hakimi",
+  "ea": 235212
+ },
+ {
+  "id": "trent-alexander-arnold",
+  "nombre": "Trent",
+  "apellido": "Alexander-Arnold",
+  "pos": "LD",
+  "pais": "Inglaterra",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 76,
+  "etiqueta": "ORO · PEGADA",
+  "dato": "Centra como los dioses, marca como tu primo.",
+  "fotos": [
+   "/img/players/trent-alexander-arnold.webp"
+  ],
+  "buscar": "Trent Alexander-Arnold",
+  "ea": 231281
+ },
+ {
+  "id": "dani-carvajal",
+  "nombre": "Dani",
+  "apellido": "Carvajal",
+  "pos": "LD",
+  "pais": "España",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 70,
+  "etiqueta": "ORO · MIL BATALLAS",
+  "dato": "Tiene más Champions que algunos clubes.",
+  "fotos": [
+   "/img/players/dani-carvajal.webp"
+  ],
+  "buscar": "Dani Carvajal",
+  "ea": 204963
+ },
+ {
+  "id": "denzel-dumfries",
+  "nombre": "Denzel",
+  "apellido": "Dumfries",
+  "pos": "LD",
+  "pais": "Países Bajos",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · LOCOMOTORA",
+  "dato": "Llega al área más que su propio nueve.",
+  "fotos": [
+   "/img/players/denzel-dumfries.webp"
+  ],
+  "buscar": "Denzel Dumfries",
+  "ea": 233096
+ },
+ {
+  "id": "gonzalo-montiel",
+  "nombre": "Gonzalo",
+  "apellido": "Montiel",
+  "pos": "LD",
+  "pais": "Argentina",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL PENAL",
+  "dato": "Pateó EL penal. Lo demás es anecdótico.",
+  "fotos": [
+   "/img/players/gonzalo-montiel.webp"
+  ],
+  "buscar": "Gonzalo Montiel",
+  "ea": 231340
+ },
+ {
+  "id": "nahuel-molina",
+  "nombre": "Nahuel",
+  "apellido": "Molina",
+  "pos": "LD",
+  "pais": "Argentina",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · CUMPLIDOR",
+  "dato": "No brilla, no molesta. Como un buen cuñado.",
+  "fotos": [
+   "/img/players/nahuel-molina.webp"
+  ],
+  "buscar": "Nahuel Molina",
+  "ea": 233084
+ },
+ {
+  "id": "virgil-van-dijk",
+  "nombre": "Virgil",
+  "apellido": "van Dijk",
+  "pos": "DFC",
+  "pais": "Países Bajos",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 110,
+  "etiqueta": "PRIME · EL PATRÓN",
+  "dato": "Nadie lo pasa. Algunos ni lo intentan.",
+  "fotos": [
+   "/img/players/virgil-van-dijk.webp"
+  ],
+  "buscar": "Virgil van Dijk",
+  "ea": 203376
+ },
+ {
+  "id": "ruben-dias",
+  "nombre": "Rúben",
+  "apellido": "Dias",
+  "pos": "DFC",
+  "pais": "Portugal",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 80,
+  "etiqueta": "ORO · CANDADO",
+  "dato": "Ordena la defensa a los gritos. Y funciona.",
+  "fotos": [
+   "/img/players/ruben-dias.webp"
+  ],
+  "buscar": "Ruben Dias",
+  "ea": 239818
+ },
+ {
+  "id": "william-saliba",
+  "nombre": "William",
+  "apellido": "Saliba",
+  "pos": "DFC",
+  "pais": "Francia",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 76,
+  "etiqueta": "ORO · ELEGANTE",
+  "dato": "Defiende de esmoquin.",
+  "fotos": [
+   "/img/players/william-saliba.webp"
+  ],
+  "buscar": "William Saliba",
+  "ea": 243715
+ },
+ {
+  "id": "cristian-romero",
+  "nombre": "Cristian",
+  "apellido": "Romero",
+  "pos": "DFC",
+  "pais": "Argentina",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 72,
+  "etiqueta": "ORO · EL CUTI",
+  "dato": "Va a todas. A todas. Incluso a las que no hacía falta.",
+  "fotos": [
+   "/img/players/cristian-romero.webp"
+  ],
+  "buscar": "Cristian Romero",
+  "ea": 232488
+ },
+ {
+  "id": "marquinhos",
+  "nombre": "Marquinhos",
+  "apellido": "",
+  "pos": "DFC",
+  "pais": "Brasil",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 68,
+  "etiqueta": "ORO · CAPITÁN",
+  "dato": "Lleva tantos años en el mismo club que ya paga expensas.",
+  "fotos": [
+   "/img/players/marquinhos.webp"
+  ],
+  "buscar": "Marquinhos",
+  "ea": 207865
+ },
+ {
+  "id": "antonio-rudiger",
+  "nombre": "Antonio",
+  "apellido": "Rüdiger",
+  "pos": "DFC",
+  "pais": "Alemania",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 66,
+  "etiqueta": "ORO · LOCO LINDO",
+  "dato": "Corre raro, marca feroz y asusta a propios y ajenos.",
+  "fotos": [
+   "/img/players/antonio-rudiger.webp"
+  ],
+  "buscar": "Antonio Rudiger",
+  "ea": 205452
+ },
+ {
+  "id": "lisandro-martinez",
+  "nombre": "Lisandro",
+  "apellido": "Martínez",
+  "pos": "DFC",
+  "pais": "Argentina",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 50,
+  "etiqueta": "PLATA · EL CARNICERO",
+  "dato": "Mide poco, pega mucho.",
+  "fotos": [
+   "/img/players/lisandro-martinez.webp"
+  ],
+  "buscar": "Lisandro Martinez",
+  "ea": 239301
+ },
+ {
+  "id": "ronald-araujo",
+  "nombre": "Ronald",
+  "apellido": "Araújo",
+  "pos": "DFC",
+  "pais": "Uruguay",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · GARRA",
+  "dato": "Cuando está sano es un muro. Cuando.",
+  "fotos": [
+   "/img/players/ronald-araujo.webp"
+  ],
+  "buscar": "Ronald Araujo",
+  "ea": 253163
+ },
+ {
+  "id": "nicolas-otamendi",
+  "nombre": "Nicolás",
+  "apellido": "Otamendi",
+  "pos": "DFC",
+  "pais": "Argentina",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL GENERAL",
+  "dato": "Veterano de tantas guerras que ya cobra pensión.",
+  "fotos": [
+   "/img/players/nicolas-otamendi.webp"
+  ],
+  "buscar": "Nicolas Otamendi",
+  "ea": 192366
+ },
+ {
+  "id": "kim-min-jae",
+  "nombre": "Kim",
+  "apellido": "Min-jae",
+  "pos": "DFC",
+  "pais": "Corea del Sur",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · EL MONSTRUO",
+  "dato": "Así le dicen. Con cariño.",
+  "fotos": [
+   "/img/players/kim-min-jae.webp"
+  ],
+  "buscar": "Kim Min-jae",
+  "ea": 237086
+ },
+ {
+  "id": "yerry-mina",
+  "nombre": "Yerry",
+  "apellido": "Mina",
+  "pos": "DFC",
+  "pais": "Colombia",
+  "rating": 77,
+  "rareza": "comun",
+  "precioMinimo": 20,
+  "etiqueta": "COMÚN · BAILARÍN",
+  "dato": "Festeja mejor de lo que defiende.",
+  "fotos": [
+   "/img/players/yerry-mina.webp"
+  ],
+  "buscar": "Yerry Mina",
+  "ea": 220523
+ },
+ {
+  "id": "harry-maguire",
+  "nombre": "Harry",
+  "apellido": "Maguire",
+  "pos": "DFC",
+  "pais": "Inglaterra",
+  "rating": 76,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · MEME VIVIENTE",
+  "dato": "Gira como un transatlántico. Pero cabecea, eh.",
+  "fotos": [
+   "/img/players/harry-maguire.webp"
+  ],
+  "buscar": "Harry Maguire",
+  "ea": 203263
+ },
+ {
+  "id": "nuno-mendes",
+  "nombre": "Nuno",
+  "apellido": "Mendes",
+  "pos": "LI",
+  "pais": "Portugal",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 86,
+  "etiqueta": "ORO · FLECHA",
+  "dato": "El mejor tres del mundo, y lo sabe.",
+  "fotos": [
+   "/img/players/nuno-mendes.webp"
+  ],
+  "buscar": "Nuno Mendes",
+  "ea": 252145
+ },
+ {
+  "id": "alphonso-davies",
+  "nombre": "Alphonso",
+  "apellido": "Davies",
+  "pos": "LI",
+  "pais": "Canadá",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 70,
+  "etiqueta": "ORO · CORRECAMINOS",
+  "dato": "Cuando arranca solo se ve el polvo.",
+  "fotos": [
+   "/img/players/alphonso-davies.webp"
+  ],
+  "buscar": "Alphonso Davies",
+  "ea": 234396
+ },
+ {
+  "id": "theo-hernandez",
+  "nombre": "Theo",
+  "apellido": "Hernández",
+  "pos": "LI",
+  "pais": "Francia",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 64,
+  "etiqueta": "ORO · MOTO",
+  "dato": "Ataca como wing y defiende… a veces.",
+  "fotos": [
+   "/img/players/theo-hernandez.webp"
+  ],
+  "buscar": "Theo Hernandez",
+  "ea": 232656
+ },
+ {
+  "id": "marc-cucurella",
+  "nombre": "Marc",
+  "apellido": "Cucurella",
+  "pos": "LI",
+  "pais": "España",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · LA MELENA",
+  "dato": "El pelo marca más que varios defensores.",
+  "fotos": [
+   "/img/players/marc-cucurella.webp"
+  ],
+  "buscar": "Marc Cucurella",
+  "ea": 239231
+ },
+ {
+  "id": "nicolas-tagliafico",
+  "nombre": "Nicolás",
+  "apellido": "Tagliafico",
+  "pos": "LI",
+  "pais": "Argentina",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · SOLDADO",
+  "dato": "Nunca un 8, nunca un 4. Siempre un 6.",
+  "fotos": [
+   "/img/players/nicolas-tagliafico.webp"
+  ],
+  "buscar": "Nicolas Tagliafico",
+  "ea": 211256
+ },
+ {
+  "id": "marcos-acuna",
+  "nombre": "Marcos",
+  "apellido": "Acuña",
+  "pos": "LI",
+  "pais": "Argentina",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · EL HUEVO",
+  "dato": "Marca con el cuerpo, con la mirada y con el apodo.",
+  "fotos": [
+   "/img/players/marcos-acuna.webp"
+  ],
+  "buscar": "Marcos Acuna",
+  "ea": 224334
+ },
+ {
+  "id": "rodri",
+  "nombre": "Rodri",
+  "apellido": "",
+  "pos": "MCD",
+  "pais": "España",
+  "rating": 91,
+  "rareza": "prime",
+  "precioMinimo": 120,
+  "etiqueta": "PRIME · BALÓN DE ORO",
+  "dato": "Juega al ajedrez mientras los demás corren.",
+  "fotos": [
+   "/img/players/rodri.webp"
+  ],
+  "buscar": "Rodri Hernandez",
+  "ea": 231866
+ },
+ {
+  "id": "moises-caicedo",
+  "nombre": "Moisés",
+  "apellido": "Caicedo",
+  "pos": "MCD",
+  "pais": "Ecuador",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 74,
+  "etiqueta": "ORO · NIÑO MOI",
+  "dato": "Roba pelotas como si se las debieran.",
+  "fotos": [
+   "/img/players/moises-caicedo.webp"
+  ],
+  "buscar": "Moises Caicedo",
+  "ea": 256079
+ },
+ {
+  "id": "casemiro",
+  "nombre": "Casemiro",
+  "apellido": "",
+  "pos": "MCD",
+  "pais": "Brasil",
+  "rating": 84,
+  "rareza": "oro",
+  "precioMinimo": 68,
+  "etiqueta": "ORO · TANQUE",
+  "dato": "Cinco Champions y una rodilla que pide retiro.",
+  "fotos": [
+   "/img/players/casemiro.webp"
+  ],
+  "buscar": "Casemiro",
+  "ea": 200145
+ },
+ {
+  "id": "aurelien-tchouameni",
+  "nombre": "Aurélien",
+  "apellido": "Tchouaméni",
+  "pos": "MCD",
+  "pais": "Francia",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 66,
+  "etiqueta": "ORO · EL COMODÍN",
+  "dato": "Juega de cinco, de central y de lo que haga falta.",
+  "fotos": [
+   "/img/players/aurelien-tchouameni.webp"
+  ],
+  "buscar": "Aurelien Tchouameni",
+  "ea": 241637
+ },
+ {
+  "id": "leandro-paredes",
+  "nombre": "Leandro",
+  "apellido": "Paredes",
+  "pos": "MCD",
+  "pais": "Argentina",
+  "rating": 80,
+  "rareza": "plata",
+  "precioMinimo": 32,
+  "etiqueta": "PLATA · PEGAME QUE ME GUSTA",
+  "dato": "Toca corto, pega largo. Y se ríe.",
+  "fotos": [
+   "/img/players/leandro-paredes.webp"
+  ],
+  "buscar": "Leandro Paredes",
+  "ea": 207439
+ },
+ {
+  "id": "manuel-ugarte",
+  "nombre": "Manuel",
+  "apellido": "Ugarte",
+  "pos": "MCD",
+  "pais": "Uruguay",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · PERRO DE PRESA",
+  "dato": "Muerde tobillos con profesionalismo.",
+  "fotos": [
+   "/img/players/manuel-ugarte.webp"
+  ],
+  "buscar": "Manuel Ugarte",
+  "ea": 253306
+ },
+ {
+  "id": "jude-bellingham",
+  "nombre": "Jude",
+  "apellido": "Bellingham",
+  "pos": "MC",
+  "pais": "Inglaterra",
+  "rating": 91,
+  "rareza": "prime",
+  "precioMinimo": 135,
+  "etiqueta": "PRIME · HEY JUDE",
+  "dato": "Tiene veintipocos y ya juega como si fuera el dueño.",
+  "fotos": [
+   "/img/players/jude-bellingham.webp"
+  ],
+  "buscar": "Jude Bellingham",
+  "ea": 252371
+ },
+ {
+  "id": "luka-modric",
+  "nombre": "Luka",
+  "apellido": "Modrić",
+  "pos": "MC",
+  "pais": "Croacia",
+  "rating": 89,
+  "rareza": "leyenda",
+  "precioMinimo": 150,
+  "etiqueta": "LEYENDA · EL MAGO",
+  "dato": "Juega con el exterior desde antes de que nacieras.",
+  "fotos": [
+   "/img/players/luka-modric.webp"
+  ],
+  "buscar": "Luka Modric",
+  "ea": 177003
+ },
+ {
+  "id": "pedri",
+  "nombre": "Pedri",
+  "apellido": "",
+  "pos": "MC",
+  "pais": "España",
+  "rating": 89,
+  "rareza": "prime",
+  "precioMinimo": 110,
+  "etiqueta": "PRIME · EL CEREBRO",
+  "dato": "No corre: se teletransporta a donde va a caer la pelota.",
+  "fotos": [
+   "/img/players/pedri.webp"
+  ],
+  "buscar": "Pedri",
+  "ea": 251854
+ },
+ {
+  "id": "federico-valverde",
+  "nombre": "Federico",
+  "apellido": "Valverde",
+  "pos": "MC",
+  "pais": "Uruguay",
+  "rating": 89,
+  "rareza": "prime",
+  "precioMinimo": 105,
+  "etiqueta": "PRIME · EL HALCÓN",
+  "dato": "Tres pulmones y un cañón en la derecha.",
+  "fotos": [
+   "/img/players/federico-valverde.webp"
+  ],
+  "buscar": "Federico Valverde",
+  "ea": 239053
+ },
+ {
+  "id": "enzo-fernandez",
+  "nombre": "Enzo",
+  "apellido": "Fernández",
+  "pos": "MC",
+  "pais": "Argentina",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 76,
+  "etiqueta": "ORO · EL CINCO",
+  "dato": "Costó una fortuna. Acá también.",
+  "fotos": [
+   "/img/players/enzo-fernandez.webp"
+  ],
+  "buscar": "Enzo Fernandez",
+  "ea": 247090
+ },
+ {
+  "id": "alexis-mac-allister",
+  "nombre": "Alexis",
+  "apellido": "Mac Allister",
+  "pos": "MC",
+  "pais": "Argentina",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 72,
+  "etiqueta": "ORO · COLORADO",
+  "dato": "El más prolijo de la familia. Y son varios.",
+  "fotos": [
+   "/img/players/alexis-mac-allister.webp"
+  ],
+  "buscar": "Alexis Mac Allister",
+  "ea": 239837
+ },
+ {
+  "id": "rodrigo-de-paul",
+  "nombre": "Rodrigo",
+  "apellido": "De Paul",
+  "pos": "MC",
+  "pais": "Argentina",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 46,
+  "etiqueta": "PLATA · MOTORCITO",
+  "dato": "Guardaespaldas oficial del 10.",
+  "fotos": [
+   "/img/players/rodrigo-de-paul.webp"
+  ],
+  "buscar": "Rodrigo De Paul",
+  "ea": 212616
+ },
+ {
+  "id": "guido-rodriguez",
+  "nombre": "Guido",
+  "apellido": "Rodríguez",
+  "pos": "MC",
+  "pais": "Argentina",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 18,
+  "etiqueta": "COMÚN · SILENCIOSO",
+  "dato": "Jugó 90 minutos y nadie se acuerda. Eso es oficio.",
+  "fotos": [
+   "/img/players/guido-rodriguez.webp"
+  ],
+  "buscar": "Guido Rodriguez",
+  "ea": 225659
+ },
+ {
+  "id": "kevin-de-bruyne",
+  "nombre": "Kevin",
+  "apellido": "De Bruyne",
+  "pos": "MCO",
+  "pais": "Bélgica",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 125,
+  "etiqueta": "PRIME · EL PELIRROJO",
+  "dato": "Ve pases que el VAR tarda diez minutos en entender.",
+  "fotos": [
+   "/img/players/kevin-de-bruyne.webp"
+  ],
+  "buscar": "Kevin De Bruyne",
+  "ea": 192985
+ },
+ {
+  "id": "jamal-musiala",
+  "nombre": "Jamal",
+  "apellido": "Musiala",
+  "pos": "MCO",
+  "pais": "Alemania",
+  "rating": 88,
+  "rareza": "prime",
+  "precioMinimo": 110,
+  "etiqueta": "PRIME · BAMBI",
+  "dato": "Gambetea en una baldosa y te pide disculpas.",
+  "fotos": [
+   "/img/players/jamal-musiala.webp"
+  ],
+  "buscar": "Jamal Musiala",
+  "ea": 256790
+ },
+ {
+  "id": "bruno-fernandes",
+  "nombre": "Bruno",
+  "apellido": "Fernandes",
+  "pos": "MCO",
+  "pais": "Portugal",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 80,
+  "etiqueta": "ORO · PROTESTÓN",
+  "dato": "Asiste, patea y le reclama al árbitro, todo a la vez.",
+  "fotos": [
+   "/img/players/bruno-fernandes.webp"
+  ],
+  "buscar": "Bruno Fernandes",
+  "ea": 212198
+ },
+ {
+  "id": "martin-degaard",
+  "nombre": "Martin",
+  "apellido": "Ødegaard",
+  "pos": "MCO",
+  "pais": "Noruega",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 78,
+  "etiqueta": "ORO · CAPITÁN FRÍO",
+  "dato": "Promesa eterna que un día cumplió.",
+  "fotos": [
+   "/img/players/martin-degaard.webp"
+  ],
+  "buscar": "Martin Odegaard",
+  "ea": 222665
+ },
+ {
+  "id": "paulo-dybala",
+  "nombre": "Paulo",
+  "apellido": "Dybala",
+  "pos": "MCO",
+  "pais": "Argentina",
+  "rating": 84,
+  "rareza": "oro",
+  "precioMinimo": 62,
+  "etiqueta": "ORO · LA JOYA",
+  "dato": "De cristal, pero de Murano.",
+  "fotos": [
+   "/img/players/paulo-dybala.webp"
+  ],
+  "buscar": "Paulo Dybala",
+  "ea": 211110
+ },
+ {
+  "id": "james-rodriguez",
+  "nombre": "James",
+  "apellido": "Rodríguez",
+  "pos": "MCO",
+  "pais": "Colombia",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · MUNDIALISTA",
+  "dato": "En su club suplente; con la selección, Maradona.",
+  "fotos": [
+   "/img/players/james-rodriguez.webp"
+  ],
+  "buscar": "James Rodriguez",
+  "ea": 257279
+ },
+ {
+  "id": "lucas-paqueta",
+  "nombre": "Lucas",
+  "apellido": "Paquetá",
+  "pos": "MCO",
+  "pais": "Brasil",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · SAMBA",
+  "dato": "Baila después de cada pase. De cada uno.",
+  "fotos": [
+   "/img/players/lucas-paqueta.webp"
+  ],
+  "buscar": "Lucas Paqueta",
+  "ea": 233927
+ },
+ {
+  "id": "miguel-almiron",
+  "nombre": "Miguel",
+  "apellido": "Almirón",
+  "pos": "MCO",
+  "pais": "Paraguay",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · SONRISA",
+  "dato": "Corre feliz. No siempre para el lado correcto.",
+  "fotos": [
+   "/img/players/miguel-almiron.webp"
+  ],
+  "buscar": "Miguel Almiron",
+  "ea": 230977
+ },
+ {
+  "id": "lionel-messi",
+  "nombre": "Lionel",
+  "apellido": "Messi",
+  "pos": "ED",
+  "pais": "Argentina",
+  "rating": 94,
+  "rareza": "leyenda",
+  "precioMinimo": 220,
+  "etiqueta": "LEYENDA · EL 10",
+  "dato": "Ya ganó todo. Juega para que tengas algo que contarle a tus nietos.",
+  "fotos": [
+   "/img/players/lionel-messi.webp"
+  ],
+  "buscar": "Lionel Messi",
+  "ea": 158023
+ },
+ {
+  "id": "lamine-yamal",
+  "nombre": "Lamine",
+  "apellido": "Yamal",
+  "pos": "ED",
+  "pais": "España",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 140,
+  "etiqueta": "PRIME · EL NENE",
+  "dato": "Tiene tarea de matemática y una Eurocopa.",
+  "fotos": [
+   "/img/players/lamine-yamal.webp"
+  ],
+  "buscar": "Lamine Yamal",
+  "ea": 277643
+ },
+ {
+  "id": "mohamed-salah",
+  "nombre": "Mohamed",
+  "apellido": "Salah",
+  "pos": "ED",
+  "pais": "Egipto",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 130,
+  "etiqueta": "PRIME · EL FARAÓN",
+  "dato": "Lleva años rompiendo récords con la misma jugada.",
+  "fotos": [
+   "/img/players/mohamed-salah.webp"
+  ],
+  "buscar": "Mohamed Salah",
+  "ea": 209331
+ },
+ {
+  "id": "bukayo-saka",
+  "nombre": "Bukayo",
+  "apellido": "Saka",
+  "pos": "ED",
+  "pais": "Inglaterra",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 90,
+  "etiqueta": "ORO · NIÑO ESTRELLA",
+  "dato": "Lo muelen a patadas y sigue sonriendo.",
+  "fotos": [
+   "/img/players/bukayo-saka.webp"
+  ],
+  "buscar": "Bukayo Saka",
+  "ea": 246669
+ },
+ {
+  "id": "raphinha",
+  "nombre": "Raphinha",
+  "apellido": "",
+  "pos": "ED",
+  "pais": "Brasil",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 86,
+  "etiqueta": "ORO · RENACIDO",
+  "dato": "Estuvo en la lista de transferibles. Ahora no se toca.",
+  "fotos": [
+   "/img/players/raphinha.webp"
+  ],
+  "buscar": "Raphinha",
+  "ea": 233419
+ },
+ {
+  "id": "angel-di-maria",
+  "nombre": "Ángel",
+  "apellido": "Di María",
+  "pos": "ED",
+  "pais": "Argentina",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 74,
+  "etiqueta": "ORO · FIDEO",
+  "dato": "Goles en todas las finales. Todas.",
+  "fotos": [
+   "/img/players/angel-di-maria.webp"
+  ],
+  "buscar": "Angel Di Maria",
+  "ea": 183898
+ },
+ {
+  "id": "hirving-lozano",
+  "nombre": "Hirving",
+  "apellido": "Lozano",
+  "pos": "ED",
+  "pais": "México",
+  "rating": 79,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · CHUCKY",
+  "dato": "Chiquito, rápido y con cara de travesura.",
+  "fotos": [
+   "/img/players/hirving-lozano.webp"
+  ],
+  "buscar": "Hirving Lozano",
+  "ea": 221992
+ },
+ {
+  "id": "antony",
+  "nombre": "Antony",
+  "apellido": "",
+  "pos": "ED",
+  "pais": "Brasil",
+  "rating": 76,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · TROMPO",
+  "dato": "Gira, gira, gira… y la pierde.",
+  "fotos": [
+   "/img/players/antony.webp"
+  ],
+  "buscar": "Antony",
+  "ea": 255475
+ },
+ {
+  "id": "cristiano-ronaldo",
+  "nombre": "Cristiano",
+  "apellido": "Ronaldo",
+  "pos": "DC",
+  "pais": "Portugal",
+  "rating": 91,
+  "rareza": "leyenda",
+  "precioMinimo": 200,
+  "etiqueta": "LEYENDA · EL BICHO",
+  "dato": "Siuuu. Cuarenta y pico y sigue saltando más que tú.",
+  "fotos": [
+   "/img/players/cristiano-ronaldo.webp"
+  ],
+  "buscar": "Cristiano Ronaldo",
+  "ea": 20801
+ },
+ {
+  "id": "erling-haaland",
+  "nombre": "Erling",
+  "apellido": "Haaland",
+  "pos": "DC",
+  "pais": "Noruega",
+  "rating": 92,
+  "rareza": "prime",
+  "precioMinimo": 145,
+  "etiqueta": "PRIME · EL ANDROIDE",
+  "dato": "No se sabe si es humano. Los goles sí son reales.",
+  "fotos": [
+   "/img/players/erling-haaland.webp"
+  ],
+  "buscar": "Erling Haaland",
+  "ea": 239085
+ },
+ {
+  "id": "harry-kane",
+  "nombre": "Harry",
+  "apellido": "Kane",
+  "pos": "DC",
+  "pais": "Inglaterra",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 125,
+  "etiqueta": "PRIME · HURACÁN",
+  "dato": "Hace goles en todos lados. Las copas son otro tema.",
+  "fotos": [
+   "/img/players/harry-kane.webp"
+  ],
+  "buscar": "Harry Kane",
+  "ea": 202126
+ },
+ {
+  "id": "robert-lewandowski",
+  "nombre": "Robert",
+  "apellido": "Lewandowski",
+  "pos": "DC",
+  "pais": "Polonia",
+  "rating": 89,
+  "rareza": "prime",
+  "precioMinimo": 115,
+  "etiqueta": "PRIME · LEWANGOLSKI",
+  "dato": "Envejece como los vinos caros.",
+  "fotos": [
+   "/img/players/robert-lewandowski.webp"
+  ],
+  "buscar": "Robert Lewandowski",
+  "ea": 188545
+ },
+ {
+  "id": "julian-alvarez",
+  "nombre": "Julián",
+  "apellido": "Álvarez",
+  "pos": "DC",
+  "pais": "Argentina",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 92,
+  "etiqueta": "ORO · LA ARAÑA",
+  "dato": "Corre por tres y encima define.",
+  "fotos": [
+   "/img/players/julian-alvarez.webp"
+  ],
+  "buscar": "Julian Alvarez",
+  "ea": 246191
+ },
+ {
+  "id": "lautaro-martinez",
+  "nombre": "Lautaro",
+  "apellido": "Martínez",
+  "pos": "DC",
+  "pais": "Argentina",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 88,
+  "etiqueta": "ORO · EL TORO",
+  "dato": "Racha o sequía, no hay término medio.",
+  "fotos": [
+   "/img/players/lautaro-martinez.webp"
+  ],
+  "buscar": "Lautaro Martinez",
+  "ea": 231478
+ },
+ {
+  "id": "luis-suarez",
+  "nombre": "Luis",
+  "apellido": "Suárez",
+  "pos": "DC",
+  "pais": "Uruguay",
+  "rating": 84,
+  "rareza": "oro",
+  "precioMinimo": 66,
+  "etiqueta": "ORO · EL PISTOLERO",
+  "dato": "Ya no corre, pero muerde.",
+  "fotos": [
+   "/img/players/luis-suarez.webp"
+  ],
+  "buscar": "Luis Suarez",
+  "ea": 176580
+ },
+ {
+  "id": "darwin-nunez",
+  "nombre": "Darwin",
+  "apellido": "Núñez",
+  "pos": "DC",
+  "pais": "Uruguay",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · CAOS",
+  "dato": "Erra el gol hecho y mete el imposible.",
+  "fotos": [
+   "/img/players/darwin-nunez.webp"
+  ],
+  "buscar": "Darwin Nunez",
+  "ea": 253072
+ },
+ {
+  "id": "richarlison",
+  "nombre": "Richarlison",
+  "apellido": "",
+  "pos": "DC",
+  "pais": "Brasil",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · LA PALOMA",
+  "dato": "Festeja como paloma. Define como una, también.",
+  "fotos": [
+   "/img/players/richarlison.webp"
+  ],
+  "buscar": "Richarlison",
+  "ea": 231943
+ },
+ {
+  "id": "kylian-mbappe",
+  "nombre": "Kylian",
+  "apellido": "Mbappé",
+  "pos": "EI",
+  "pais": "Francia",
+  "rating": 92,
+  "rareza": "prime",
+  "precioMinimo": 150,
+  "etiqueta": "PRIME · TORTUGA NINJA",
+  "dato": "Corre tan rápido que llega antes que el pase.",
+  "fotos": [
+   "/img/players/kylian-mbappe.webp"
+  ],
+  "buscar": "Kylian Mbappe",
+  "ea": 231747
+ },
+ {
+  "id": "vinicius-junior",
+  "nombre": "Vinícius",
+  "apellido": "Júnior",
+  "pos": "EI",
+  "pais": "Brasil",
+  "rating": 91,
+  "rareza": "prime",
+  "precioMinimo": 140,
+  "etiqueta": "PRIME · VINI",
+  "dato": "Baila, encara y se pelea con toda la tribuna.",
+  "fotos": [
+   "/img/players/vinicius-junior.webp"
+  ],
+  "buscar": "Vinicius Junior",
+  "ea": 238794
+ },
+ {
+  "id": "neymar",
+  "nombre": "Neymar",
+  "apellido": "",
+  "pos": "EI",
+  "pais": "Brasil",
+  "rating": 87,
+  "rareza": "prime",
+  "precioMinimo": 115,
+  "etiqueta": "PRIME · (LESIONADO)",
+  "dato": "Crack absoluto, cuando el parte médico lo permite.",
+  "fotos": [
+   "/img/players/neymar.webp"
+  ],
+  "buscar": "Neymar",
+  "ea": 190871
+ },
+ {
+  "id": "heung-min-son",
+  "nombre": "Heung-min",
+  "apellido": "Son",
+  "pos": "EI",
+  "pais": "Corea del Sur",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 80,
+  "etiqueta": "ORO · SONNY",
+  "dato": "El tipo más querido del fútbol. No tiene un solo enemigo.",
+  "fotos": [
+   "/img/players/heung-min-son.webp"
+  ],
+  "buscar": "Son Heung-min",
+  "ea": 200104
+ },
+ {
+  "id": "luis-diaz",
+  "nombre": "Luis",
+  "apellido": "Díaz",
+  "pos": "EI",
+  "pais": "Colombia",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 78,
+  "etiqueta": "ORO · LUCHO",
+  "dato": "Encara siempre. Siempre.",
+  "fotos": [
+   "/img/players/luis-diaz.webp"
+  ],
+  "buscar": "Luis Diaz",
+  "ea": 241084
+ },
+ {
+  "id": "khvicha-kvaratskhelia",
+  "nombre": "Khvicha",
+  "apellido": "Kvaratskhelia",
+  "pos": "EI",
+  "pais": "Georgia",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 74,
+  "etiqueta": "ORO · KVARADONA",
+  "dato": "Nadie sabe escribirlo, todos saben que la rompe.",
+  "fotos": [
+   "/img/players/khvicha-kvaratskhelia.webp"
+  ],
+  "buscar": "Khvicha Kvaratskhelia",
+  "ea": 247635
+ },
+ {
+  "id": "rafael-leao",
+  "nombre": "Rafael",
+  "apellido": "Leão",
+  "pos": "EI",
+  "pais": "Portugal",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 64,
+  "etiqueta": "ORO · SONRIENTE",
+  "dato": "Cuando tiene ganas es imparable. Cuando.",
+  "fotos": [
+   "/img/players/rafael-leao.webp"
+  ],
+  "buscar": "Rafael Leao",
+  "ea": 241721
+ },
+ {
+  "id": "jack-grealish",
+  "nombre": "Jack",
+  "apellido": "Grealish",
+  "pos": "EI",
+  "pais": "Inglaterra",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · GEMELOS",
+  "dato": "Las medias bajas y la noche larga.",
+  "fotos": [
+   "/img/players/jack-grealish.webp"
+  ],
+  "buscar": "Jack Grealish",
+  "ea": 206517
+ },
+ {
+  "id": "alejandro-garnacho",
+  "nombre": "Alejandro",
+  "apellido": "Garnacho",
+  "pos": "EI",
+  "pais": "Argentina",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 26,
+  "etiqueta": "COMÚN · BICHITO",
+  "dato": "Festeja como su ídolo. Lo demás está en proceso.",
+  "fotos": [
+   "/img/players/alejandro-garnacho.webp"
+  ],
+  "buscar": "Alejandro Garnacho",
+  "ea": 268438
+ }
+]

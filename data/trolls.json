@@ -1,0 +1,102 @@
+[
+ {
+  "id": "el-cono",
+  "nombre": "El Cono",
+  "descripcion": "Marca igual que un cono. Literal.",
+  "precioMinimo": 5,
+  "rating": 38,
+  "foto": "/img/trolls/el-cono.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "don-mate",
+  "nombre": "Don Mate",
+  "descripcion": "Siempre cebado, nunca en posición.",
+  "precioMinimo": 8,
+  "rating": 45,
+  "foto": "/img/trolls/don-mate.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "la-papa",
+  "nombre": "La Papa",
+  "descripcion": "Tiene la movilidad de una papa. Porque es una papa.",
+  "precioMinimo": 10,
+  "rating": 35,
+  "foto": "/img/trolls/la-papa.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "el-balde",
+  "nombre": "El Balde",
+  "descripcion": "Ataja solo lo que le cae adentro.",
+  "precioMinimo": 6,
+  "rating": 42,
+  "foto": "/img/trolls/el-balde.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "pelota-pinchada",
+  "nombre": "Pelota Pinchada",
+  "descripcion": "Viene desinflado desde el 2014.",
+  "precioMinimo": 12,
+  "rating": 40,
+  "foto": "/img/trolls/pelota-pinchada.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "el-arbitro",
+  "nombre": "El Árbitro",
+  "descripcion": "Cobra todo en contra. Siempre.",
+  "precioMinimo": 15,
+  "rating": 48,
+  "foto": "/img/trolls/el-arbitro.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "tio-asador",
+  "nombre": "Tío Asador",
+  "descripcion": "Juega bien hasta que prenden el fuego.",
+  "precioMinimo": 8,
+  "rating": 52,
+  "foto": "/img/trolls/tio-asador.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "el-suplente",
+  "nombre": "El Suplente",
+  "descripcion": "Calienta el banco como nadie.",
+  "precioMinimo": 5,
+  "rating": 44,
+  "foto": "/img/trolls/el-suplente.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "senor-bigote",
+  "nombre": "Señor Bigote",
+  "descripcion": "Dice que jugó en primera. Nadie lo vio.",
+  "precioMinimo": 10,
+  "rating": 50,
+  "foto": "/img/trolls/senor-bigote.svg",
+  "activo": true,
+  "deMuestra": true
+ },
+ {
+  "id": "el-fantasma",
+  "nombre": "El Fantasma",
+  "descripcion": "Desaparece en los partidos importantes.",
+  "precioMinimo": 7,
+  "rating": 41,
+  "foto": "/img/trolls/el-fantasma.svg",
+  "activo": true,
+  "deMuestra": true
+ }
+]
