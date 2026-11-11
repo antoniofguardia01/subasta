@@ -608,7 +608,12 @@ export class Partida {
     let proximaImg: string | undefined;
     if (r && this.fase !== 'final') {
       const cartas: CartaRondaVista[] = r.cartas.map((c, i) => {
-        const estado = this.estados[i] ?? 'espera';
+        let estado = this.estados[i] ?? 'espera';
+        if (estado === 'actual' && this.desenlace) {
+          estado = this.desenlace === 'pasa' ? 'pasada' : this.desenlace === 'salteada' ? 'salteada' : 'vendida';
+          // Resuelta pero todavía sin revelar: se informa el desenlace, no la identidad.
+          if (this.fase !== 'revela') return { estado, compradorId: this.compradores[i], precio: this.preciosVenta[i] };
+        }
         const publica = estado === 'vendida' || estado === 'pasada' || estado === 'salteada' || estado === 'sobrante';
         return publica
           ? { estado, compradorId: this.compradores[i], precio: this.preciosVenta[i], rareza: c.rareza, nombre: c.apellido || c.nombre, img: this.img(c) }

@@ -592,7 +592,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
       .to(el, { clipPath: 'circle(34% at 50% 42%)', duration: 0.3, ease: 'power2.out' }, 0)
       .to(el, { x: destino.left + destino.width / 2 - (origen.left + origen.width / 2), y: destino.top + destino.height / 2 - (origen.top + origen.height * 0.42), scale: (lado / origen.width) * 2, duration: 0.7, ease: 'power3.inOut' }, 0.08)
       .to(el, { opacity: 0, duration: 0.12 }, 0.7)
-      .add(() => void gsap.fromTo(chip, { scale: 1.25 }, { scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.4)' }), 0.72);
+      .add(() => void gsap.fromTo(chip.querySelector('.avatar') ?? chip.querySelector('i') ?? chip, { scale: 1.6 }, { scale: 1, duration: 0.7, ease: 'elastic.out(1, 0.4)', clearProps: 'transform' }), 0.72);
   }, [yo.id]);
 
   // Texto del botón principal según la situación.
@@ -891,7 +891,7 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
       <div className="f-scroll">
         <div className="f-titulo">
           <span>Se bajó el martillo</span>
-          <h1>{miPuesto === 1 ? '¡Campeón!' : miPuesto === puestos.length ? 'Descendiste' : `Puesto ${miPuesto}`}</h1>
+          <h1 data-largo={miPuesto === puestos.length && miPuesto !== 1 ? '1' : undefined}>{miPuesto === 1 ? '¡Campeón!' : miPuesto === puestos.length ? 'Descendiste' : `Puesto ${miPuesto}`}</h1>
         </div>
         <div className="f-tabla">
           {puestos.map((p, i) => (

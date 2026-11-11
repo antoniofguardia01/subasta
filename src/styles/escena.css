@@ -197,7 +197,7 @@
 @keyframes recarga-arco { from { stroke: #fff; stroke-width: 16; } to { stroke-width: 8; } }
 
 /* ───────── Cancha ───────── */
-.cancha { position: relative; width: 100%; height: 100%; border-radius: 3% / 2.4%; background: repeating-linear-gradient(0deg, #1e7a45 0 10%, #1a6e3e 10% 20%); overflow: hidden; --c: var(--acento); --ch: 1px; }
+.cancha { position: relative; width: 100%; height: 100%; border-radius: 3% / 2.4%; background: repeating-linear-gradient(0deg, #1e7a45 0 10%, #1a6e3e 10% 20%); overflow: hidden; --c: var(--acento); }
 .cancha-lineas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .cancha-lineas * { fill: none; stroke: rgba(255, 255, 255, 0.55); stroke-width: 0.6; vector-effect: non-scaling-stroke; }
 .cancha-hueco { position: absolute; width: 22%; margin-left: -11%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: calc(var(--ch) * 4); }

@@ -54,6 +54,7 @@
 .tv-centro .esc-placa { z-index: 1; padding-bottom: 210px; }
 .tv-centro .esc-venta { bottom: 146px; }
 .tv-centro .esc-martillo { right: 60px; }
+.tv-centro .esc-cuenta { top: auto; bottom: 146px; }
 .tv-centro .esc-sello { right: 330px; }
 
 .tv-reloj { position: absolute; right: 36px; top: 30px; z-index: 9; --reloj: 196px; opacity: 0; transform: scale(0.8); transition: opacity 260ms ease, transform 420ms var(--ease-rebote); }
@@ -67,7 +68,7 @@
   transition: opacity 240ms ease, transform 240ms var(--ease-out);
 }
 .oferta .avatar { font-size: 40px; }
-.oferta span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.oferta > span:not(.avatar) { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .oferta b { color: var(--c); font-size: 24px; }
 .oferta[data-i='0'] { background: var(--c); color: #0b0d0c; transform: scale(1.06); transform-origin: 100% 50%; }
 .oferta[data-i='0'] b { color: #0b0d0c; }
@@ -131,6 +132,8 @@
 .panel-nota { margin-top: 22px; font-size: 22px; color: rgba(255, 255, 255, 0.65); }
 .panel-equipos { display: flex; gap: 18px; height: 100%; justify-content: center; }
 .panel-equipo { flex: 0 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.panel-equipos[data-n='2'] .panel-equipo, .panel-equipos[data-n='3'] .panel-equipo, .panel-equipos[data-n='4'] .panel-equipo { flex-basis: 440px; }
+.panel-equipos[data-n='5'] .panel-equipo { flex-basis: 350px; }
 .panel-equipo header { display: flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 900; font-stretch: 75%; text-transform: uppercase; }
 .panel-equipo header .avatar { font-size: 44px; }
 .panel-equipo header b { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -174,11 +177,11 @@
 .cartel-texto h2 { font-size: 230px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 0.86; color: var(--tinta); letter-spacing: -0.01em; animation: sube 700ms 300ms var(--ease-out) both; max-width: 1700px; }
 .cartel-texto p { font-size: 34px; font-weight: 700; font-stretch: 88%; color: var(--tinta2); animation: sube 600ms 480ms var(--ease-out) both; margin-top: 18px; }
 
-.fin-cont { position: absolute; inset: 0; padding: 56px 80px 150px; display: flex; flex-direction: column; gap: 30px; }
+.fin-cont { position: absolute; inset: 0; padding: 50px 80px 44px; display: flex; flex-direction: column; gap: 30px; }
 .fin-cont h2 { font-size: 84px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; color: var(--tinta); animation: sube 500ms 250ms var(--ease-out) both; }
 .fin-cont h2 span { color: var(--tinta2); }
-.fin-grilla { display: flex; gap: 20px; flex: 1; align-items: stretch; }
-.fin-carta { flex: 1 1 0; min-width: 0; max-width: 300px; display: flex; flex-direction: column; gap: 8px; animation: carta-sube 620ms calc(380ms + var(--i) * 70ms) var(--ease-out) both; }
+.fin-grilla { display: flex; gap: 22px; flex: 1; min-height: 0; align-items: stretch; }
+.fin-carta { flex: 1 1 0; min-width: 0; max-width: 400px; display: flex; flex-direction: column; gap: 8px; animation: carta-sube 620ms calc(380ms + var(--i) * 70ms) var(--ease-out) both; }
 .fin-foto { position: relative; flex: 1; border-radius: 16px; overflow: hidden; background: var(--f0); border-bottom: 10px solid var(--c); }
 .fin-foto::before { content: ''; position: absolute; width: 130%; height: 80%; left: -40%; top: -30%; border-radius: 50%; background: var(--f1); opacity: 0.7; }
 .fin-foto img { position: absolute; left: -10%; bottom: 0; width: 120%; height: 100%; object-fit: contain; object-position: 50% 100%; }
@@ -304,7 +307,7 @@
 /* ───────── Avisos ───────── */
 .tv-reconecta { position: absolute; left: 50%; top: 170px; transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 14px; padding: 12px 26px; border-radius: 40px; background: #ffe14a; color: #14161a; font-size: 26px; font-weight: 800; animation: sube 400ms var(--ease-out) both; }
 .tv-reconecta i { width: 22px; height: 22px; border-radius: 50%; border: 5px solid #14161a; border-right-color: transparent; animation: giro 0.8s linear infinite; }
-.tv-sonido { position: absolute; left: 36px; bottom: 204px; z-index: 60; display: flex; align-items: center; gap: 12px; padding: 12px 22px; border-radius: 40px; background: var(--acento); color: var(--acento-tinta); font-size: 22px; font-weight: 800; font-stretch: 88%; text-transform: uppercase; animation: sube 500ms 1.2s var(--ease-out) both; }
+.tv-sonido { position: absolute; left: 36px; bottom: 84px; z-index: 60; display: flex; align-items: center; gap: 12px; padding: 12px 22px; border-radius: 40px; background: var(--acento); color: var(--acento-tinta); font-size: 22px; font-weight: 800; font-stretch: 88%; text-transform: uppercase; animation: sube 500ms 1.2s var(--ease-out) both; }
 .tv-sonido i { font-style: normal; font-size: 28px; animation: late 0.6s ease-in-out infinite alternate; }
 .tv-juego .tv-centro ~ * { z-index: 12; }
 

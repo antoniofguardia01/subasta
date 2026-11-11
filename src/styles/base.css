@@ -177,7 +177,7 @@ h1, h2, h3, p { margin: 0; }
 /* ───────── Avatar ───────── */
 .avatar {
   --c: var(--acento);
-  position: relative; width: 1em; height: 1em; border-radius: 50%; flex: none; overflow: hidden;
+  position: relative; display: inline-block; vertical-align: middle; width: 1em; height: 1em; border-radius: 50%; flex: none; overflow: hidden;
   background: var(--c); box-shadow: 0 0 0 0.06em var(--c);
 }
 .avatar img { width: 118%; height: 118%; margin: -4% -9% 0; object-fit: cover; object-position: 50% 12%; }

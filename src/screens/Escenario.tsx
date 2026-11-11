@@ -99,7 +99,8 @@ export function Escenario({ codigo }: { codigo: string }) {
       )
       .to(el, { opacity: 0, duration: 0.12 }, 0.72)
       .add(() => {
-        gsap.fromTo(chip, { scale: 1.22 }, { scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+        const av = chip.querySelector('.avatar');
+        if (av) gsap.fromTo(av, { scale: 1.6 }, { scale: 1, duration: 0.7, ease: 'elastic.out(1, 0.4)', clearProps: 'transform' });
         const r = lienzo.current!.getBoundingClientRect();
         fx.current?.estallar((destino.left + destino.width / 2 - r.left) / r.width, (destino.top + destino.height / 2 - r.top) / r.height, [color, '#fff'], 26, 0.45);
         sonar.toque();
@@ -185,7 +186,7 @@ export function Escenario({ codigo }: { codigo: string }) {
             Se cayó la señal. Reconectando…
           </div>
         )}
-        {!conSonido && (
+        {!conSonido && (s.fase === 'lobby' || s.fase === 'intro') && (
           <button className="tv-sonido" onClick={() => void activarSonido(true)} autoFocus>
             <i>♪</i> Pulsa OK para activar el sonido
           </button>
