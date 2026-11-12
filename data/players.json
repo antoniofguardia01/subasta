@@ -5461,9 +5461,12 @@
   "precioMinimo": 90,
   "etiqueta": "ORO · EL ELEFANTE",
   "dato": "Cuando había una final, él aparecía como por arte de magia.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/didier-drogba.webp"
+  ],
   "buscar": "Didier Drogba",
-  "wiki": "Didier Drogba"
+  "wiki": "Didier Drogba",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/7/77/Didier_Drogba_%282019%29_%28cropped2%29.jpg"
  },
  {
   "id": "carles-puyol",
@@ -5491,9 +5494,12 @@
   "precioMinimo": 80,
   "etiqueta": "ORO · EL MURO AZZURRO",
   "dato": "Ganó un Balón de Oro siendo defensor. Casi un milagro.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/fabio-cannavaro.webp"
+  ],
   "buscar": "Fabio Cannavaro",
-  "wiki": "Fabio Cannavaro"
+  "wiki": "Fabio Cannavaro",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/0/09/Fabio_Cannavaro_2011.jpg"
  },
  {
   "id": "juan-roman-riquelme",
@@ -5506,9 +5512,12 @@
   "precioMinimo": 70,
   "etiqueta": "ORO · EL ÚLTIMO DIEZ",
   "dato": "Jugaba despacio para que el resto se lo pierda.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/juan-roman-riquelme.webp"
+  ],
   "buscar": "Juan Román Riquelme",
-  "wiki": "Juan Román Riquelme"
+  "wiki": "Juan Román Riquelme",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Juan_Rom%C3%A1n_Riquelme_-_2019.jpg"
  },
  {
   "id": "gabriel-batistuta",
@@ -5575,9 +5584,12 @@
   "precioMinimo": 85,
   "etiqueta": "ORO · EL BAIXINHO",
   "dato": "Bajito, rápido y descarado. Y con 1000 goles.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/romario.webp"
+  ],
   "buscar": "Romário",
-  "wiki": "Romário"
+  "wiki": "Romário",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Senadores_da_57%C2%AA_Legislatura_%2852689451805%29_%28cropped_-_3x4%29.jpg"
  },
  {
   "id": "dani-alves",
@@ -5641,8 +5653,11 @@
   "precioMinimo": 75,
   "etiqueta": "ORO · EL BAILARÍN",
   "dato": "Un lateral que quería ser mediocampista, extremo y delantero.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/marcelo.webp"
+  ],
   "buscar": "Marcelo",
-  "wiki": "Marcelo (footballer, born 1988)"
+  "wiki": "Marcelo (footballer, born 1988)",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Marcelo_Vieira_in_2022.jpg"
  }
 ]
