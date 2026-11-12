@@ -5,6 +5,7 @@ import { BotonPantalla, Fondo, Ticker } from '../components/comunes';
 import { Fx, FxApi } from '../components/Fx';
 import { irConTelon } from '../lib/ruta';
 import { activarSonido, sonar, sonidoPreferido } from '../lib/sonido';
+import { musica } from '../lib/musica';
 import { TEMAS, aplicarTema, elegirTemaPropio, temaActual } from '../lib/temas';
 import { claveDispositivo, pareceTV, reducirMovimiento, usarFlechas, vibrar } from '../lib/util';
 import { IconoSonido } from '../components/Iconos';
@@ -35,6 +36,11 @@ export function Inicio() {
   const [siluetas, setSiluetas] = useState<string[]>([]);
   const [tema, setTema] = useState(temaActual());
   const [sonido, setSonido] = useState(sonidoPreferido());
+  // Música de fondo en la portada (solo si el sonido está prendido).
+  useEffect(() => {
+    musica(sonido ? 0.45 : null);
+    return () => musica(null);
+  }, [sonido]);
   const cajas = useRef<HTMLDivElement>(null);
   const entrada = useRef<HTMLInputElement>(null);
   const tele = pareceTV();

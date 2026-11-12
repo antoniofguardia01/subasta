@@ -6,6 +6,8 @@ let maestro: GainNode | null = null;
 let activo = leer('sonido', false);
 const oyentes = new Set<() => void>();
 
+/** El contexto de audio y el volumen maestro (para que la música se enchufe al mismo lugar que los efectos). */
+export const audio = () => ({ ctx, maestro });
 export const sonidoActivo = () => activo && !!ctx && ctx.state === 'running';
 export const sonidoPreferido = () => activo;
 

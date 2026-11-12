@@ -75,6 +75,17 @@ export function IconoSonido({ on, className, size }: P & { on: boolean }) {
   );
 }
 
+export function IconoMusica({ on, className, size }: P & { on: boolean }) {
+  return (
+    <svg {...svg(size, className)}>
+      <path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+      <circle cx="6.5" cy="18" r="3" fill="currentColor" />
+      <circle cx="16.5" cy="16" r="3" fill="currentColor" />
+      {!on && <path d="M3 3l18 18" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />}
+    </svg>
+  );
+}
+
 export function IconoLapiz({ className, size }: P) {
   return (
     <svg {...svg(size, className)}>

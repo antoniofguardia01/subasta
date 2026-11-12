@@ -22,6 +22,7 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 - `src/screens/` — `Inicio`, `Jugador` (celular), `Escenario` (TV, lienzo fijo 1920×1080 escalado), `Tv` (emparejar), `Vincular`.
 - `src/components/Iconos.tsx` — íconos SVG dibujados (rarezas, sonido, liviano…); no usar glifos de texto. `Escaner.tsx` — lector de QR (BarcodeDetector o jsQR bajo demanda) en Conectar TV.
 - `src/lib/sonido.ts` — sintetizador + muestras; `ambiente(nivel)` es la tribuna de fondo de la TV. `src/lib/rendimiento.ts` — modo liviano (Smart TV automática, medición continua, botón/tecla L).
+- `src/lib/musica.ts` — música dinámica generada en vivo (secuenciador en La menor, capas por intensidad 0–1, tempo 104→140 bpm); `musica(nivel|null)` se llama desde la TV según la fase y desde la portada; preferencia propia (botón de nota o tecla M en la TV). Los celulares no la reproducen. Para probarla sin altavoces: `renderizarPrueba()` + esbuild + OfflineAudioContext en Playwright.
 - `src/styles/fuentes.css` — generado. Cada escenario tiene una familia compuesta: `font-stretch: 62%` = titular, `100%` = texto, `125%` = placa.
 - `tests/engine.test.ts` — tests del motor. Correr `npm test` después de tocar `shared/`.
 

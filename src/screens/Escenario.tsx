@@ -15,7 +15,8 @@ import { useEquipoEnPantalla } from '../lib/vistaFinal';
 import { activarSonido, alCambiarSonido, ambiente, sonar, sonidoActivo } from '../lib/sonido';
 import { TEMAS } from '../lib/temas';
 import { reducirMovimiento } from '../lib/util';
-import { IconoLiviano, IconoSonido } from '../components/Iconos';
+import { IconoLiviano, IconoMusica, IconoSonido } from '../components/Iconos';
+import { alCambiarMusica, musica, musicaPreferida, ponerMusica } from '../lib/musica';
 import { alCambiarLite, esLite, ponerLite } from '../lib/rendimiento';
 
 type Panel = 'equipos' | 'saldos' | 'historial' | null;
@@ -50,8 +51,14 @@ export function Escenario({ codigo }: { codigo: string }) {
     if (!fase || !conSonido) return ambiente(null);
     const NIVEL: Partial<Record<string, number>> = { lobby: 0.05, intro: 0.3, ronda: 0.25, presenta: 0.35, puja: 0.5, ultima: 0.9, ruleta: 0.85, martillo: 0.75, revela: 0.6, finronda: 0.3, final: 0.55 };
     ambiente(pausa ? 0 : (NIVEL[fase] ?? 0.25));
+    // La música: más tranquila que la tribuna en el lobby y mucho más viva en la puja y en la última oportunidad.
+    const MUSICA: Partial<Record<string, number>> = { lobby: 0.12, intro: 0.5, ronda: 0.4, presenta: 0.45, puja: 0.62, ultima: 1, ruleta: 0.9, martillo: 0.7, revela: 0.5, finronda: 0.3, final: 0.8 };
+    musica(pausa ? 0.05 : (MUSICA[fase] ?? 0.4));
   }, [fase, pausa, conSonido]);
-  useEffect(() => () => ambiente(null), []);
+  useEffect(() => () => (ambiente(null), musica(null)), []);
+  useEffect(() => {
+    if (!conSonido) musica(null);
+  }, [conSonido]);
   useEffect(() => {
     if (!conSonido) return;
     if (fase === 'intro') sonar.silbato();
@@ -92,6 +99,7 @@ export function Escenario({ codigo }: { codigo: string }) {
       else if (e.key === '2') setPanel((p) => (p === 'saldos' ? null : 'saldos'));
       else if (e.key === '3') setPanel((p) => (p === 'historial' ? null : 'historial'));
       else if (e.key === 'l' || e.key === 'L') ponerLite(!esLite());
+      else if (e.key === 'm' || e.key === 'M') ponerMusica(!musicaPreferida());
       else if (e.key === 'f' || e.key === 'F') void (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.());
       else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
         // Las flechas recorren los botones de la barra.
@@ -284,6 +292,8 @@ function Ofertas({ s }: { s: EstadoPublico }) {
 
 function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; panel: Panel; setPanel: (p: Panel) => void; conSonido: boolean; pausar: () => void }) {
   const [lite, setLite] = useState(esLite());
+  const [hayMusica, setHayMusica] = useState(musicaPreferida());
+  useEffect(() => alCambiarMusica(() => setHayMusica(musicaPreferida())), []);
   useEffect(() => alCambiarLite(() => setLite(esLite())), []);
   const r = s.ronda;
   const quedan = r ? r.cartas.filter((c) => c.estado === 'espera' || c.estado === 'actual').length : 0;
@@ -339,6 +349,9 @@ function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; pan
         </button>
         <button className="tv-ico" data-on={conSonido ? '1' : '0'} onClick={() => void activarSonido(!conSonido)} title={conSonido ? 'Con sonido' : 'Silencio'} aria-label={conSonido ? 'Quitar sonido' : 'Poner sonido'}>
           <IconoSonido on={conSonido} size={26} />
+        </button>
+        <button className="tv-ico" data-on={hayMusica ? '1' : '0'} onClick={() => ponerMusica(!hayMusica)} title="Música (M)" aria-label={hayMusica ? 'Quitar la música' : 'Poner música'}>
+          <IconoMusica on={hayMusica} size={26} />
         </button>
         <button className="tv-ico" data-on={lite ? '1' : '0'} onClick={() => ponerLite(!lite)} title="Modo liviano (L): menos efectos para teles lentas" aria-label="Modo liviano">
           <IconoLiviano size={26} />
