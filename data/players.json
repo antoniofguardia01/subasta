@@ -5110,9 +5110,12 @@
   "precioMinimo": 28,
   "etiqueta": "COMÚN · EL FIESTERO DE LEICESTER",
   "dato": "Campeón con un equipo de mentira. Y la liga de verdad.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/jamie-vardy.webp"
+  ],
   "buscar": "Jamie Vardy",
-  "wiki": "Jamie Vardy"
+  "wiki": "Jamie Vardy",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "guillermo-ochoa",
@@ -5287,9 +5290,12 @@
   "precioMinimo": 150,
   "etiqueta": "LEYENDA · GIGI",
   "dato": "Ataja desde que tus papás iban a la escuela.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/gianluigi-buffon.webp"
+  ],
   "buscar": "Gianluigi Buffon",
-  "wiki": "Gianluigi Buffon"
+  "wiki": "Gianluigi Buffon",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "iker-casillas",
@@ -5374,9 +5380,12 @@
   "precioMinimo": 150,
   "etiqueta": "LEYENDA · EL ILUSIONISTA",
   "dato": "Un gol en una final del Mundial. El mundo entero se quedó mudo.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/andres-iniesta.webp"
+  ],
   "buscar": "Andrés Iniesta",
-  "wiki": "Andrés Iniesta"
+  "wiki": "Andrés Iniesta",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "andrea-pirlo",
@@ -5497,9 +5506,12 @@
   "precioMinimo": 85,
   "etiqueta": "ORO · LA MELENA",
   "dato": "Defendía con el corazón. Y con el pelo.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/carles-puyol.webp"
+  ],
   "buscar": "Carles Puyol",
-  "wiki": "Carles Puyol"
+  "wiki": "Carles Puyol",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "fabio-cannavaro",
@@ -5638,9 +5650,12 @@
   "precioMinimo": 80,
   "etiqueta": "ORO · EL CAPITÁN SIN FOCO",
   "dato": "Jugaba bien en cualquier puesto. Y casi nadie se daba cuenta.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/philipp-lahm.webp"
+  ],
   "buscar": "Philipp Lahm",
-  "wiki": "Philipp Lahm"
+  "wiki": "Philipp Lahm",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "gerard-pique",

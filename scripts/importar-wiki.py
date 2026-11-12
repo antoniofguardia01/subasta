@@ -91,7 +91,10 @@ def main():
         ruta, _, caja = ruta.partition('@')
         locales[pid] = (ruta, tuple(int(n) for n in caja.split(',')) if caja else None)
         del args[i : i + 2]
-    pendientes = [j for j in jugadores if (j['id'] in locales) or (j.get('wiki') and ((j['id'] in args) if args else not j['fotos']))]
+    if locales:  # con --foto solo se hacen esas (más los ids que se pidan aparte)
+        pendientes = [j for j in jugadores if j['id'] in locales or (j.get('wiki') and j['id'] in args)]
+    else:
+        pendientes = [j for j in jugadores if j.get('wiki') and ((j['id'] in args) if args else not j['fotos'])]
     print(f'Importando {len(pendientes)} jugadores desde Wikipedia…')
     sesion = new_session('u2net')
     os.makedirs(SALIDA, exist_ok=True)
