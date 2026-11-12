@@ -16,6 +16,7 @@ import { guardar, leer, vibrar } from '../lib/util';
 import { CanchaMedida, Cargando, SinSala } from './Escenario';
 import { useEquipoEnPantalla } from '../lib/vistaFinal';
 import { IconoCerrar, IconoLapiz, IconoMenos } from '../components/Iconos';
+import { Escaner, hayCamara } from '../components/Escaner';
 
 interface AvatarDato {
   id: string;
@@ -416,6 +417,7 @@ function ConectarTV({ codigo }: { codigo: string }) {
   const [letras, setLetras] = useState('');
   const [estado, setEstado] = useState<'idle' | 'enviando' | 'ok' | 'mal'>('idle');
   const [mensaje, setMensaje] = useState('');
+  const [camara, setCamara] = useState(false);
   const caja = useRef<HTMLDivElement>(null);
 
   const guardarTvs = (l: TvGuardada[]) => {
@@ -514,7 +516,7 @@ function ConectarTV({ codigo }: { codigo: string }) {
       )}
       <span className="ctv-rotulo">{tvs.length ? 'Vincular otra TV' : 'Vincular una TV'}</span>
       <p className="ctv-ayuda">
-        En la tele abre <b>{location.host}/tv</b> y escribe acá el código de 4 letras que aparece (o escanea su QR con la cámara).
+        En la tele abre <b>{location.host}/tv</b> y escribe acá el código de 4 letras que aparece, o escanea su QR.
       </p>
       <div className="ctv-codigo" ref={caja} data-estado={estado}>
         {[0, 1, 2, 3].map((i) => (
@@ -524,6 +526,24 @@ function ConectarTV({ codigo }: { codigo: string }) {
         ))}
         <input value={letras} onChange={(e) => escribir(e.target.value)} inputMode="text" autoCapitalize="characters" autoComplete="off" maxLength={4} aria-label="Código de la TV" />
       </div>
+      {hayCamara() &&
+        (camara ? (
+          <Escaner
+            cerrar={() => setCamara(false)}
+            alLeer={(texto) => {
+              // El QR de la tele apunta a /v/ABCD.
+              const m = texto.match(/\/v\/([A-Za-z]{4})\b/) ?? texto.match(/^([A-Za-z]{4})$/);
+              if (!m) return false;
+              setCamara(false);
+              escribir(m[1]);
+              return true;
+            }}
+          />
+        ) : (
+          <button className="ctv-escanear" onClick={() => (vibrar(10), setCamara(true))}>
+            Escanear el QR de la tele
+          </button>
+        ))}
       {mensaje && (
         <p className="ctv-mensaje" data-estado={estado} key={mensaje}>
           {mensaje}
