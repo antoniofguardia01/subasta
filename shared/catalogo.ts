@@ -9,7 +9,8 @@ export interface CatalogoDatos {
   plantillas: { custom: Plantilla[]; apagadas: string[] };
 }
 
-export const fotoTroll = (id: string, v: number) => `/catalogo/troll/${id}.webp?v=${v}`;
+export const fotoTroll = (id: string, v: number, rostro?: readonly number[]) =>
+  `/catalogo/troll/${id}.webp?v=${v}${rostro?.length === 4 ? `&r=${rostro.map((n) => Math.round(n * 1000) / 1000).join(',')}` : ''}`;
 export const fotoJugador = (id: string, v: number) => `/catalogo/jugador/${id}.webp?v=${v}`;
 
 export function jugadoresFinal(base: readonly Jugador[], cat: CatalogoDatos | null): Jugador[] {
@@ -27,7 +28,7 @@ export function jugadoresFinal(base: readonly Jugador[], cat: CatalogoDatos | nu
 /** Si en el panel hay trolls cargados, se usan esos; si no, los dibujos de muestra del repo. */
 export function trollsFinal(base: readonly Troll[], cat: CatalogoDatos | null): Troll[] {
   if (!cat || !cat.trolls.length) return base.slice();
-  return cat.trolls.map((t) => ({ ...t, foto: fotoTroll(t.id, t.v) }));
+  return cat.trolls.map((t) => ({ ...t, foto: fotoTroll(t.id, t.v, t.rostro) }));
 }
 
 export function plantillasFinal(base: readonly Plantilla[], cat: CatalogoDatos | null): Plantilla[] {

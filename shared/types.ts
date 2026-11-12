@@ -48,6 +48,8 @@ export interface Troll {
   opaca?: boolean;
   /** true mientras no tenga nombre/descripción puestos por el admin. */
   pendiente?: boolean;
+  /** Dónde está la cara en la foto: [centro x, centro y, ancho de la cara, ancho/alto de la imagen], todo en fracciones. Sirve para encuadrar el avatar. */
+  rostro?: [number, number, number, number];
 }
 
 export interface Ajustes {

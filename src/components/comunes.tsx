@@ -72,10 +72,25 @@ export function BotonPantalla({ corto = false, className = '' }: { corto?: boole
 
 // ───────────── Avatar ─────────────
 
+/** La URL de la foto puede traer `r=cx,cy,ancho,proporción` (dónde está la cara). Con eso se encuadra la cara en el círculo. */
+export function encuadreRostro(src: string): CSSProperties | undefined {
+  const m = src.match(/[?&]r=([\d.]+),([\d.]+),([\d.]+),([\d.]+)/);
+  if (!m) return undefined;
+  const [cx, cy, w, ar] = [+m[1], +m[2], +m[3], +m[4]];
+  if (!(w > 0) || !(ar > 0)) return undefined;
+  // La cara ocupa ~60% del círculo; la imagen siempre tiene que cubrirlo entero.
+  const W = Math.max(0.6 / w, 1.02, 1.02 * ar);
+  const H = W / ar;
+  const clamp = (v: number, tam: number) => Math.min(0, Math.max(1 - tam, v));
+  const izq = clamp(0.5 - cx * W, W);
+  const arriba = clamp(0.46 - cy * H, H);
+  return { position: 'absolute', margin: 0, maxWidth: 'none', objectFit: 'fill', width: `${W * 100}%`, height: `${H * 100}%`, left: `${izq * 100}%`, top: `${arriba * 100}%` };
+}
+
 export function Avatar({ src, color, off, className = '' }: { src: string; color?: string; off?: boolean; className?: string }) {
   return (
     <span className={`avatar ${className}`} data-off={off ? '1' : undefined} style={color ? ({ '--c': color } as CSSProperties) : undefined}>
-      {src && <img src={src} alt="" draggable={false} />}
+      {src && <img src={src} alt="" draggable={false} style={encuadreRostro(src)} />}
     </span>
   );
 }

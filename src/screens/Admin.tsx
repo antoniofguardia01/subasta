@@ -2,9 +2,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Fondo } from '../components/comunes';
 import { irConTelon } from '../lib/ruta';
+import { Avatar } from '../components/comunes';
 
 type Tab = 'trolls' | 'jugadores' | 'mensajes';
-interface TrollA { id: string; nombre: string; descripcion: string; precioMinimo: number; activo: boolean; pendiente: boolean; opaca: boolean; foto: string }
+interface TrollA { id: string; nombre: string; descripcion: string; precioMinimo: number; activo: boolean; pendiente: boolean; opaca: boolean; foto: string; rostro?: number[] }
 interface JugA { id: string; nombre: string; apellido: string; pos: string; pais: string; rating: number; rareza: string; precioMinimo: number; etiqueta: string; dato: string; fotos: string[]; editado: boolean; propio: boolean }
 interface Plant { id: string; disparador: string; intensidad: number; texto: string; activo: boolean }
 interface Estado { jugadores: JugA[]; trolls: TrollA[]; muestras: boolean; plantillasBase: Plant[]; plantillas: { custom: Plant[]; apagadas: string[] } }
@@ -163,6 +164,9 @@ function TrollCard({ t, api, recargar, avisar }: { t: TrollA } & Omit<Props, 'es
   const [desc, setDesc] = useState(t.descripcion);
   const [precio, setPrecio] = useState(t.precioMinimo);
   const foto = useRef<HTMLInputElement>(null);
+  const [ros, setRos] = useState<number[] | undefined>(t.rostro);
+  const [ar, setAr] = useState(1);
+  const baseFoto = t.foto.replace(/&r=[^&]*/, '');
   const guardar = async (extra: object = {}) => {
     await api('c/troll/' + t.id, 'PUT', { nombre, descripcion: desc, precioMinimo: precio, ...extra });
     avisar('Guardado');
@@ -183,6 +187,37 @@ function TrollCard({ t, api, recargar, avisar }: { t: TrollA } & Omit<Props, 'es
         Precio de salida suelto
         <input type="number" min={1} max={100} value={precio} onChange={(e) => setPrecio(Number(e.target.value))} onBlur={() => precio !== t.precioMinimo && void guardar()} />
       </label>
+      <details className="admin-enc">
+        <summary>Encuadre del avatar{ros ? '' : ' (sin ajustar)'}</summary>
+        <p>Toca la cara en la foto y ajusta el tamaño. Así se ve en el círculo:</p>
+        <div className="admin-enc-fila">
+          <Avatar src={ros ? `${baseFoto}&r=${ros.join(',')}` : baseFoto} className="admin-enc-prev" />
+          <input
+            type="range"
+            min={10}
+            max={90}
+            value={Math.round((ros?.[2] ?? 0.4) * 100)}
+            onChange={(e) => setRos([ros?.[0] ?? 0.5, ros?.[1] ?? 0.35, Number(e.target.value) / 100, ar])}
+            onPointerUp={() => ros && void guardar({ rostro: ros })}
+            onKeyUp={() => ros && void guardar({ rostro: ros })}
+            aria-label="Tamaño de la cara"
+          />
+        </div>
+        <div className="admin-enc-foto">
+          <img
+            src={baseFoto}
+            alt=""
+            onLoad={(e) => setAr(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight)}
+            onClick={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              const n = [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height, ros?.[2] ?? 0.4, ar];
+              setRos(n);
+              void guardar({ rostro: n });
+            }}
+          />
+          {ros && <i style={{ left: `${ros[0] * 100}%`, top: `${ros[1] * 100}%`, width: `${ros[2] * 100}%` }} />}
+        </div>
+      </details>
       <div className="admin-fila">
         <button onClick={() => void guardar({ activo: !t.activo })}>{t.activo ? 'Desactivar' : 'Activar'}</button>
         <button onClick={() => foto.current?.click()}>Cambiar foto</button>
