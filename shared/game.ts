@@ -40,6 +40,8 @@ export interface Tiempos {
   revelaGrande: number;
   revelaCorta: number;
   finronda: number;
+  /** Fin de ronda cuando sobraron cartas: se revelan las que nadie vio y hace falta más tiempo. */
+  finrondaSobrantes: number;
 }
 
 export const TIEMPOS: Tiempos = {
@@ -53,6 +55,7 @@ export const TIEMPOS: Tiempos = {
   revelaGrande: 10500,
   revelaCorta: 5500,
   finronda: 5200,
+  finrondaSobrantes: 9500,
 };
 
 /** Hechos del juego: materia prima del ticker de burlas. */
@@ -601,7 +604,7 @@ export class Partida {
     });
     this.cartaIdx = -1;
     this.limpiarCarta();
-    this.fijarFase('finronda', this.tiempos.finronda, t);
+    this.fijarFase('finronda', this.sobrantes.length ? this.tiempos.finrondaSobrantes : this.tiempos.finronda, t);
   }
 
   // ───────────── Vista pública ─────────────

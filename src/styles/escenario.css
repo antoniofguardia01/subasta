@@ -379,3 +379,24 @@
 .tv-tira[data-lleno='1'] .tira-cartas { gap: 4px; }
 .tv-tira[data-lleno='1'] .tv-botones { gap: 5px; }
 .tv-tira[data-lleno='1'] .tira-pend .avatar { font-size: 40px; margin-left: -20px; }
+
+/* ── Fin de ronda: las cartas que nadie vio, reveladas ── */
+.fin-cont[data-sobra='1'] h2 { font-size: 64px; }
+.fin-cont[data-sobra='1'] { gap: 18px; padding-top: 36px; }
+.fin-cont[data-sobra='1'] .fin-carta > b { font-size: 26px; }
+.fin-sobra-bloque { flex: none; display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 3px dashed rgba(255, 255, 255, 0.25); }
+.fin-sobra-bloque h3 { font-size: 24px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tinta2); animation: sube 500ms 700ms var(--ease-out) both; }
+.fin-sobras { display: flex; gap: 22px; }
+.fin-sobra { position: relative; flex: 1 1 0; max-width: 560px; min-width: 0; display: flex; align-items: center; gap: 18px; padding: 12px 18px 12px 12px; border-radius: 18px; background: rgba(0, 0, 0, 0.38); border-left: 10px solid var(--f1, #fff); animation: carta-sube 620ms calc(900ms + var(--i) * 260ms) var(--ease-out) both; }
+.fin-sobra[data-troll='1'] { border-left-color: #ff5b6b; }
+.fin-sobra-foto { position: relative; flex: none; width: 150px; height: 150px; border-radius: 14px; overflow: hidden; background: var(--f0, #333); }
+.fin-sobra-foto img { position: absolute; left: -10%; bottom: 0; width: 120%; height: 112%; object-fit: contain; object-position: 50% 100%; animation: fin-sobra-revela 1.4s calc(1500ms + var(--i) * 260ms) ease both; }
+.fin-sobra-foto[data-marco='1'] img { left: 0; width: 100%; height: 100%; object-fit: cover; clip-path: ellipse(44% 52% at 50% 50%); }
+.fin-sobra-datos { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.fin-sobra-datos b { font-size: 36px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; color: var(--tinta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fin-sobra-datos span { font-size: 20px; font-weight: 600; color: var(--tinta2); line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.fin-sobra-sello { position: absolute; right: -8px; top: -14px; padding: 4px 12px; border-radius: 6px; font-style: normal; font-size: 20px; font-weight: 900; font-stretch: 75%; text-transform: uppercase; background: #ffe14a; color: #14161a; transform: rotate(5deg); animation: fin-sobra-sello 480ms calc(2300ms + var(--i) * 260ms) cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.fin-sobra[data-troll='1'] .fin-sobra-sello { background: #ff5b6b; color: #fff; }
+@keyframes fin-sobra-revela { 0%, 45% { filter: brightness(0) invert(1); transform: scale(0.96); } 100% { filter: none; transform: scale(1); } }
+@keyframes fin-sobra-sello { from { opacity: 0; transform: rotate(5deg) scale(2.6); } to { opacity: 1; transform: rotate(5deg) scale(1); } }
+.fin-sobras { padding-top: 22px; }

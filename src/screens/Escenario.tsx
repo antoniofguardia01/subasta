@@ -500,7 +500,7 @@ function FinRonda({ s }: { s: EstadoPublico }) {
     <div className="fin-ronda" data-on={on ? '1' : '0'}>
       <Fondo paleta="oscuro" />
       {r && on && (
-        <div className="fin-cont">
+        <div className="fin-cont" data-sobra={s.sobrantes?.length ? '1' : undefined}>
           <h2>
             {POS_NOMBRE[r.pos]} <span>· así quedó</span>
           </h2>
@@ -522,9 +522,23 @@ function FinRonda({ s }: { s: EstadoPublico }) {
             })}
           </div>
           {!!s.sobrantes?.length && (
-            <p className="fin-sobrantes">
-              Nadie llegó a ver a: <b>{s.sobrantes.map((c) => c.apellido || c.nombre).join(' · ')}</b>
-            </p>
+            <div className="fin-sobra-bloque">
+              <h3>Los que se quedaron sin ver</h3>
+              <div className="fin-sobras">
+                {s.sobrantes.map((c, i) => (
+                  <div className="fin-sobra" key={c.uid} data-paleta={c.rareza} data-troll={c.tipo === 'troll' ? '1' : undefined} style={{ '--i': i } as CSSProperties}>
+                    <div className="fin-sobra-foto" data-marco={c.marco ? '1' : undefined}>
+                      <img src={c.img} alt="" />
+                    </div>
+                    <div className="fin-sobra-datos">
+                      <b>{c.apellido || c.nombre}</b>
+                      <span>{c.tipo === 'troll' ? c.dato || 'Una sorpresa de las buenas' : `${c.etiqueta} · ${c.rating}`}</span>
+                    </div>
+                    <i className="fin-sobra-sello">{c.tipo === 'troll' ? '¡Se salvaron!' : 'Se quedó en la banca'}</i>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       )}

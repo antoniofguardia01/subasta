@@ -779,6 +779,18 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
                 <span>Ronda cerrada</span>
                 <b>{yo.equipo[r.hueco] ? yo.equipo[r.hueco]!.apellido || yo.equipo[r.hueco]!.nombre : POS_NOMBRE[r.pos]}</b>
                 <small>{yo.equipo[r.hueco] ? `Tu ${POS_NOMBRE[r.pos].toLowerCase()} por $${yo.equipo[r.hueco]!.pagado}M` : ''}</small>
+                {!!s.sobrantes?.length && (
+                  <div className="j-sobras">
+                    <em>Se quedaron sin ver</em>
+                    {s.sobrantes.map((c, i) => (
+                      <div key={c.uid} data-troll={c.tipo === 'troll' ? '1' : undefined} style={{ '--i': i } as CSSProperties}>
+                        <img src={c.img} alt="" data-marco={c.marco ? '1' : undefined} />
+                        <b>{c.apellido || c.nombre}</b>
+                        <small>{c.tipo === 'troll' ? '¡Se salvaron!' : `${c.rating} · sin dueño`}</small>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </>
             )}
           </div>
