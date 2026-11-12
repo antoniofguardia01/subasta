@@ -37,14 +37,15 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 ## Plan por etapas
 
 1. **Slice jugable** ✅ — inicio, salas, emparejar TV, mazo, subasta completa, ruleta, resultados, 5 escenarios, 78 cartas con foto, trolls de muestra.
-2. **Publicación y robustez** — desplegar; guardar una copia de la partida en el almacenamiento del Durable Object para sobrevivir reinicios; reconexión probada con cortes reales.
+2. **Publicación y robustez** ✅ — publicado en `subasta-futbolera.antoniofguardia01.workers.dev` (`npm run deploy`; los archivos estáticos van al KV `subasta-futbolera-archivos`). La partida se guarda sola en el almacenamiento del Durable Object (`Partida.exportar/importar`) y se restaura tras un reinicio; probado matando el servidor en plena puja.
 3. **Contenido** — los 270 jugadores con precio mínimo (tabla para revisar), simulación de calibración, fotos de leyendas, informe de fallos.
 4. **Administración** — panel web con PIN (trolls con nombre/descripción/pendientes, jugadores, precios, ticker) y la vía por Claude (`troll:add` + endpoints).
 5. **Pulido** — repaso de animación pantalla por pantalla, sonido completo, íconos dibujados (hoy hay glifos), modo lite en TV real, escaneo de QR, prueba con 5–10 celulares.
 
 ## Pendientes conocidos
 
-- La partida vive solo en memoria: si todos los dispositivos se desconectan un par de minutos, la sala puede perderse (etapa 2).
+- El PIN de administración no está configurado en producción (falta `wrangler secret put ADMIN_PIN`).
+- Desde las sesiones en la nube, publicar necesita `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` y un `CLOUDFLARE_API_TOKEN` cualquiera (el proxy pone el real).
 - Los trolls actuales son dibujos de muestra; faltan las fotos reales.
 - Revisar a ojo las fotos importadas (`docs/validacion-fotos.png`): alguna puede ser de otra persona con el mismo apellido.
 - Faltan Keylor Navas y Ochoa (sin retrato en la fuente).

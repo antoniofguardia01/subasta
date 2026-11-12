@@ -360,7 +360,8 @@ describe('subasta', () => {
     for (const h of p.historial)
       if (h.compradorId) {
         expect(h.precio!).toBeGreaterThanOrEqual(1);
-        expect(h.precio!).toBe(h.carta.precioMinimo);
+        // Normalmente el precio mínimo; menos solo si al forzado no le alcanzaba (liquidación).
+        expect(h.precio!).toBeLessThanOrEqual(h.carta.precioMinimo);
       }
     for (const j of p.jugadores) {
       expect(j.equipo.every((f) => f)).toBe(true);
@@ -436,6 +437,29 @@ describe('reserva de presupuesto', () => {
       expect(new Set(ids).size).toBe(ids.length);
       for (const h of p.historial) if (h.compradorId) expect(h.precio!).toBeGreaterThanOrEqual(1);
     }
+  });
+});
+
+describe('copia de seguridad', () => {
+  it('una partida restaurada a mitad de una puja sigue exactamente igual', () => {
+    const { p, hasta, ir, ahora } = sala(4);
+    hasta('puja');
+    p.ofertar('p0', p.cartaActual()!.uid, ahora());
+    ir(15000);
+    hasta('puja');
+    p.ofertar('p2', p.cartaActual()!.uid, ahora());
+    const copia = JSON.parse(JSON.stringify(p.exportar()));
+    const q = new Partida('TEST');
+    q.importar(copia, pool(), trolls(), ahora());
+    expect(JSON.stringify(q.vista())).toBe(JSON.stringify({ ...p.vista(), jugadores: p.vista().jugadores.map((j) => ({ ...j, conectado: false })) }));
+    // Y se puede seguir jugando hasta el final desde la copia.
+    let t = ahora();
+    for (let i = 0; i < 3000 && q.fase !== 'final'; i++) {
+      t = Math.max(t + 1, q.vence);
+      q.avanzar(t);
+    }
+    expect(q.fase).toBe('final');
+    for (const j of q.jugadores) expect(j.equipo.filter((f) => f).length).toBe(11);
   });
 });
 

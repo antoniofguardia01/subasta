@@ -28,6 +28,8 @@ export class RoomDO implements DurableObject {
   private limpieza: ReturnType<typeof setTimeout> | null = null;
   private claveCreador: string | null = null;
   private codigo = '';
+  private guardado: ReturnType<typeof setTimeout> | null = null;
+  private cargada = false;
 
   constructor(
     private state: DurableObjectState,
@@ -44,6 +46,7 @@ export class RoomDO implements DurableObject {
   async fetch(req: Request): Promise<Response> {
     const url = new URL(req.url);
     const ruta = url.pathname;
+    await this.restaurar();
 
     if (ruta === '/crear' && req.method === 'POST') {
       if (this.partida) return Response.json({ ok: false }, { status: 409 });
@@ -109,6 +112,36 @@ export class RoomDO implements DurableObject {
     }
 
     return new Response('no encontrado', { status: 404 });
+  }
+
+  // ───────────── Copia de seguridad (almacenamiento propio del Durable Object) ─────────────
+
+  /** Si el servidor se reinició, recupera la partida guardada (salvo que sea muy vieja). */
+  private async restaurar() {
+    if (this.cargada) return;
+    this.cargada = true;
+    if (this.partida) return;
+    const copia = await this.state.storage.get<{ codigo: string; claveCreador: string | null; cuando: number; datos: Record<string, unknown> }>('partida');
+    if (!copia) return;
+    if (Date.now() - copia.cuando > 6 * 60 * 60 * 1000) {
+      await this.state.storage.deleteAll();
+      return;
+    }
+    this.codigo = copia.codigo;
+    this.claveCreador = copia.claveCreador;
+    this.partida = new Partida(copia.codigo);
+    this.partida.importar(copia.datos, this.pool(), this.trolls(), Date.now());
+    this.programarReloj();
+    this.programarLimpieza();
+  }
+
+  private guardar() {
+    if (this.guardado) return;
+    this.guardado = setTimeout(() => {
+      this.guardado = null;
+      if (!this.partida) return;
+      void this.state.storage.put('partida', { codigo: this.codigo, claveCreador: this.claveCreador, cuando: Date.now(), datos: this.partida.exportar() });
+    }, 400);
   }
 
   // ───────────── Mensajes ─────────────
@@ -263,6 +296,7 @@ export class RoomDO implements DurableObject {
       }
     }
     this.programarReloj();
+    this.guardar();
   }
 
   private programarReloj() {
@@ -284,6 +318,7 @@ export class RoomDO implements DurableObject {
       if (this.conexiones.size === 0) {
         if (this.reloj) clearTimeout(this.reloj);
         this.partida = null;
+        void this.state.storage.deleteAll();
       }
     }, VIDA_SIN_GENTE);
   }

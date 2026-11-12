@@ -26,7 +26,7 @@ import {
   rangoTrolls,
 } from './types';
 import { crearReponedor, generarMazo, pisosDeRonda } from './deck';
-import { Rng, crearRng } from './rng';
+import { crearRng } from './rng';
 import { calcularFinal } from './score';
 
 export interface Tiempos {
@@ -119,7 +119,8 @@ export class Partida {
   hechos: Hecho[] = [];
   secos = new Set<string>();
 
-  private rng: Rng = crearRng(1);
+  /** Cantidad de ruletas ya sorteadas: con la semilla alcanza para repetir el azar tras restaurar. */
+  ruletas = 0;
   private reponer: ((hueco: number) => Carta | null) | null = null;
 
   constructor(
@@ -245,7 +246,7 @@ export class Partida {
     this.ajustarTrolls();
     this.mazo = generarMazo(pool, trolls, this.jugadores.length, this.ajustes, semilla);
     this.pisos = pisosDeRonda(this.mazo);
-    this.rng = crearRng((semilla ^ 0x9e3779b9) >>> 0);
+    this.ruletas = 0;
     this.reponer = crearReponedor(pool, trolls, this.mazo, semilla);
     for (const j of this.jugadores) {
       j.saldo = this.ajustes.presupuesto;
@@ -472,7 +473,8 @@ export class Partida {
         const pueden = pend.filter((j) => this.tope(j) >= carta.precioMinimo);
         const liquidacion = pueden.length === 0;
         const candidatos = liquidacion ? pend : pueden;
-        const ganador = candidatos[Math.floor(this.rng() * candidatos.length)];
+        const azar = crearRng(((this.mazo!.semilla ^ 0x9e3779b9) + this.ruletas++) >>> 0);
+        const ganador = candidatos[Math.floor(azar() * candidatos.length)];
         this.ruleta = { candidatos: candidatos.map((j) => j.id), ganador: ganador.id, liquidacion };
         return this.fijarFase('ruleta', this.tiempos.ruleta, t);
       }
@@ -699,6 +701,29 @@ export class Partida {
       trollsDisponibles,
       panel: this.panel,
     };
+  }
+
+  // ───────────── Copia de seguridad ─────────────
+
+  private static CAMPOS = ['ajustes', 'jugadores', 'anfitrionId', 'fase', 'pausa', 'pausaResto', 'panel', 'mazo', 'pisos', 'rondaIdx', 'cartaIdx', 'estados', 'compradores', 'preciosVenta', 'precio', 'liderId', 'ofertas', 'totalOfertas', 'vence', 'duracion', 'desenlace', 'compradorId', 'pagado', 'salteadaPor', 'ruleta', 'sobrantes', 'final', 'historial', 'ruletas'] as const;
+
+  /** Estado completo en un objeto plano (para guardarlo y restaurarlo si el servidor se reinicia). */
+  exportar(): Record<string, unknown> {
+    const o: Record<string, unknown> = {};
+    for (const k of Partida.CAMPOS) o[k] = this[k];
+    o.comproEnRonda = [...this.comproEnRonda];
+    o.secos = [...this.secos];
+    return o;
+  }
+
+  importar(o: Record<string, unknown>, pool: readonly Jugador[], trolls: readonly Troll[], ahora: number) {
+    for (const k of Partida.CAMPOS) if (k in o) (this as Record<string, unknown>)[k] = o[k];
+    this.comproEnRonda = new Set((o.comproEnRonda as string[]) ?? []);
+    this.secos = new Set((o.secos as string[]) ?? []);
+    if (this.mazo) this.reponer = crearReponedor(pool, trolls, this.mazo, this.mazo.semilla);
+    // Nadie está conectado todavía, y la fase en curso retoma con un respiro.
+    for (const j of this.jugadores) j.conectado = false;
+    if (this.fase !== 'lobby' && this.fase !== 'final' && !this.pausa) this.vence = Math.max(this.vence, ahora + 2500);
   }
 
   /** Busca la foto real detrás de un token (para servir la imagen sin revelar la identidad en la URL). */
