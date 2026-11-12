@@ -47,7 +47,7 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 2. **Publicación y robustez** ✅ — publicado en `subasta-futbolera.antoniofguardia01.workers.dev` (`npm run deploy`; los archivos estáticos van al KV `subasta-futbolera-archivos`). La partida se guarda sola en el almacenamiento del Durable Object (`Partida.exportar/importar`) y se restaura tras un reinicio; probado matando el servidor en plena puja.
 3. **Contenido** ✅ — 270 jugadores con foto (30 por posición, 15+15 laterales) y precio mínimo (`docs/precios.md`, `docs/precios.csv`); `npm run simulate` corre partidas de bots para calibrar. Pendiente: leyendas históricas (Maradona, Pelé…) sin fuente de retrato.
 4. **Administración** ✅ — panel `/admin` con PIN (trolls con foto/nombre/descripción/pendientes, jugadores y precios, mensajes y plantillas del ticker) y CLI `scripts/admin.mjs` para Claude.
-5. **Pulido** (en curso) — hecho: tribuna/silbato/uuuh, íconos SVG, modo liviano en Smart TV, escaneo de QR, diseño compacto para 7–10 participantes (probado con 9 bots: `diez.js` en el scratchpad de la sesión). Falta: repaso de animación pantalla por pantalla y prueba con celulares reales.
+5. **Pulido** (en curso) — hecho: tribuna/silbato/uuuh, íconos SVG, modo liviano en Smart TV, escaneo de QR, diseño compacto para 7–10 participantes (probado con 9 bots: `diez.js` en el scratchpad de la sesión). Repaso de animación hecho (pausa y avisos con salida animada). Falta: prueba con celulares reales del dueño.
 
 ## Pendientes conocidos
 
