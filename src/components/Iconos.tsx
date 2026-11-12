@@ -98,3 +98,13 @@ export function IconoMenos({ className, size }: P) {
     </svg>
   );
 }
+
+/** Pluma: modo liviano (menos efectos). */
+export function IconoLiviano({ className, size }: P) {
+  return (
+    <svg {...svg(size, className)}>
+      <path d="M20 3.5C11 4 6 9.5 5 19l2.2-2.4C9 16 13.5 15 16.5 11c-1.7.3-3 .2-4 0 2.4-.7 4.8-2 6.2-4.2C19.4 5.8 19.8 4.7 20 3.5z" fill="currentColor" />
+      <path d="M5 19l-1.5 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}

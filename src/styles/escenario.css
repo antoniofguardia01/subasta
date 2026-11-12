@@ -341,3 +341,8 @@
 .final-rota { position: relative; margin-top: 12px; padding: 8px 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.08); font-size: 18px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; overflow: hidden; color: rgba(255, 255, 255, 0.75); }
 .final-rota i { position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: var(--c); transform-origin: 0 50%; animation: rota-barra linear both; }
 @keyframes rota-barra { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.tv-botones button.tv-ico { width: 52px; padding: 0; justify-content: center; }
+/* Rótulos de la tira en dos líneas para que entren los botones aun con 10 participantes. */
+.tv-tira { gap: 22px; }
+.tv-tira .tira-rotulo { white-space: normal; max-width: 150px; line-height: 1.05; }
+.tv-tira .tira-rotulo:has(b) { white-space: nowrap; max-width: none; }

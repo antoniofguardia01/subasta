@@ -15,7 +15,8 @@ import { useEquipoEnPantalla } from '../lib/vistaFinal';
 import { activarSonido, alCambiarSonido, ambiente, sonar, sonidoActivo } from '../lib/sonido';
 import { TEMAS } from '../lib/temas';
 import { reducirMovimiento } from '../lib/util';
-import { IconoSonido } from '../components/Iconos';
+import { IconoLiviano, IconoSonido } from '../components/Iconos';
+import { alCambiarLite, esLite, ponerLite } from '../lib/rendimiento';
 
 type Panel = 'equipos' | 'saldos' | 'historial' | null;
 
@@ -90,6 +91,7 @@ export function Escenario({ codigo }: { codigo: string }) {
       else if (e.key === 'p' || e.key === 'P' || e.key === 'MediaPlayPause') pausarRef.current();
       else if (e.key === '2') setPanel((p) => (p === 'saldos' ? null : 'saldos'));
       else if (e.key === '3') setPanel((p) => (p === 'historial' ? null : 'historial'));
+      else if (e.key === 'l' || e.key === 'L') ponerLite(!esLite());
       else if (e.key === 'f' || e.key === 'F') void (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.());
       else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
         // Las flechas recorren los botones de la barra.
@@ -283,6 +285,8 @@ function Ofertas({ s }: { s: EstadoPublico }) {
 // ───────────── Tira inferior: candidatos de la ronda, pendientes y botones ─────────────
 
 function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; panel: Panel; setPanel: (p: Panel) => void; conSonido: boolean; pausar: () => void }) {
+  const [lite, setLite] = useState(esLite());
+  useEffect(() => alCambiarLite(() => setLite(esLite())), []);
   const r = s.ronda;
   const quedan = r ? r.cartas.filter((c) => c.estado === 'espera' || c.estado === 'actual').length : 0;
   const pend = r ? r.pendientes.map((id) => s.jugadores.find((j) => j.id === id)!).filter(Boolean) : [];
@@ -335,8 +339,11 @@ function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; pan
         <button data-on={panel === 'historial' ? '1' : '0'} onClick={() => setPanel(panel === 'historial' ? null : 'historial')}>
           <i className="num">3</i> Historial
         </button>
-        <button data-on={conSonido ? '1' : '0'} onClick={() => void activarSonido(!conSonido)}>
-          <IconoSonido on={conSonido} /> {conSonido ? 'Con sonido' : 'Silencio'}
+        <button className="tv-ico" data-on={conSonido ? '1' : '0'} onClick={() => void activarSonido(!conSonido)} title={conSonido ? 'Con sonido' : 'Silencio'} aria-label={conSonido ? 'Quitar sonido' : 'Poner sonido'}>
+          <IconoSonido on={conSonido} size={26} />
+        </button>
+        <button className="tv-ico" data-on={lite ? '1' : '0'} onClick={() => ponerLite(!lite)} title="Modo liviano (L): menos efectos para teles lentas" aria-label="Modo liviano">
+          <IconoLiviano size={26} />
         </button>
         <BotonPantalla corto />
         {!esTele() && (
