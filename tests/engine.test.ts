@@ -109,6 +109,15 @@ describe('mazo', () => {
       const m = generarMazo(pool(), trolls(), 6, { ...AJUSTES_DEFECTO, trollsMin: 1, trollsMax: 3 }, s);
       for (const r of m.rondas) for (const c of r.cartas) if (c.tipo === 'troll') precios.push(c.precioMinimo);
     }
+    // Cada troll sale disfrazado con la silueta de un futbolista real que no está en la partida.
+    const m1 = generarMazo(pool(), trolls(), 6, AJUSTES_DEFECTO, 5);
+    const reales = new Set(m1.rondas.flatMap((r) => r.cartas.filter((c) => c.tipo === 'jugador').map((c) => c.foto)));
+    for (const r of m1.rondas)
+      for (const c of r.cartas.filter((x) => x.tipo === 'troll')) {
+        expect(c.fotoSilueta).toMatch(new RegExp(`/img/${r.pos}-`));
+        expect(reales.has(c.fotoSilueta!)).toBe(false);
+        expect(c.tokenSilueta).not.toBe(c.token);
+      }
     expect(Math.min(...precios)).toBeGreaterThanOrEqual(5);
     expect(Math.max(...precios)).toBeGreaterThan(100); // a veces se disfrazan de estrella
     expect(precios.filter((p) => p > 30).length / precios.length).toBeGreaterThan(0.4);

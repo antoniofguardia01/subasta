@@ -78,7 +78,7 @@ export function generarMazo(
     foto: elegir(rng, j.fotos),
     token: tokenAleatorio(rng),
   });
-  const cartaDeTroll = (t: Troll, hueco: number): Carta => ({
+  const cartaDeTroll = (t: Troll, hueco: number, disfraz: Jugador | null): Carta => ({
     uid: `c${++serie}`,
     tipo: 'troll',
     refId: t.id,
@@ -91,9 +91,12 @@ export function generarMazo(
     rareza: 'troll',
     etiqueta: elegir(rng, ETIQUETAS_SORPRESA),
     dato: t.descripcion || 'Nadie sabe de dónde salió',
-    precioMinimo: precioTroll(t, FORMACION[hueco]),
+    // Sale con la silueta y el precio de un futbolista real; al revelarse aparece el troll.
+    precioMinimo: disfraz && ajustes.trollsCamuflados ? Math.max(1, Math.round(disfraz.precioMinimo)) : precioTroll(t, FORMACION[hueco]),
     foto: t.foto,
     token: tokenAleatorio(rng),
+    fotoSilueta: disfraz ? elegir(rng, disfraz.fotos) : undefined,
+    tokenSilueta: disfraz ? tokenAleatorio(rng) : undefined,
   });
 
   const rondas: RondaMazo[] = [];
@@ -117,7 +120,16 @@ export function generarMazo(
       const t = sacarTroll(trollsRonda);
       if (!t) break;
       trollsRonda.add(t.id);
-      cartas.push(cartaDeTroll(t, hueco));
+      // Disfraz: un futbolista de esa posición que no salga en la partida (si sobran); si no, cualquiera.
+      let disfraz: Jugador | null = null;
+      if (libres.length > nFut) {
+        disfraz = libres.splice(entero(rng, 0, libres.length - 1), 1)[0];
+        usados.add(disfraz.id);
+      } else {
+        const todos = porPos.get(pos) ?? [];
+        disfraz = todos.length ? elegir(rng, todos) : null;
+      }
+      cartas.push(cartaDeTroll(t, hueco, disfraz));
     }
 
     // Garantía de jugabilidad: asegurar cartas baratas (los trolls baratos cuentan).

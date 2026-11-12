@@ -108,6 +108,9 @@ export interface Carta {
   foto: string;
   /** Token opaco con el que el cliente pide la imagen sin conocer la identidad. */
   token: string;
+  /** Disfraz de un troll: foto de un futbolista real cuya silueta se muestra hasta la revelación. */
+  fotoSilueta?: string;
+  tokenSilueta?: string;
 }
 
 export interface RondaMazo {
@@ -277,6 +280,8 @@ export interface EstadoPublico {
   /** Cartas que nadie llegó a ver en la ronda recién terminada. */
   sobrantes?: CartaVista[];
   trollsDisponibles: number;
+  /** Panel que el anfitrión está mostrando a todos (TV y celulares). */
+  panel: 'equipos' | null;
 }
 
 // ───────────────────────── Eventos efímeros (disparan animaciones) ─────────────────────────
@@ -301,6 +306,7 @@ export type MsgCliente =
   | { t: 'ofertar'; uid: string }
   | { t: 'saltear'; uid: string }
   | { t: 'pausa'; on: boolean }
+  | { t: 'panel'; on: boolean }
   | { t: 'expulsar'; pid: string }
   | { t: 'anfitrion'; pid: string }
   | { t: 'revancha' }

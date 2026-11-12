@@ -89,6 +89,7 @@ export class Partida {
   fase: Fase = 'lobby';
   pausa = false;
   pausaResto = 0;
+  panel: 'equipos' | null = null;
 
   mazo: Mazo | null = null;
   pisos: number[] = [];
@@ -585,6 +586,11 @@ export class Partida {
     return `/c/${this.codigo}/${c.token}`;
   }
 
+  /** Imagen que se ve antes de la revelación (la silueta del disfraz, si la carta es un troll). */
+  imgMisterio(c: Carta) {
+    return `/c/${this.codigo}/${c.tokenSilueta ?? c.token}`;
+  }
+
   vistaCarta(c: Carta): CartaVista {
     return {
       uid: c.uid,
@@ -649,7 +655,7 @@ export class Partida {
       if (c) {
         carta = {
           uid: c.uid,
-          img: this.img(c),
+          img: this.imgMisterio(c),
           pos: c.pos,
           precioMinimo: c.precioMinimo,
           precio: this.precio,
@@ -668,9 +674,9 @@ export class Partida {
       // Precarga: la próxima carta en espera (o la primera de la ronda siguiente).
       const sig = r.cartas.find((_, i) => this.estados[i] === 'espera');
       const prox = sig ?? this.mazo!.rondas[this.rondaIdx + 1]?.cartas[0];
-      if (prox) proximaImg = this.img(prox);
+      if (prox) proximaImg = this.imgMisterio(prox);
     } else if (this.mazo && this.fase === 'intro') {
-      proximaImg = this.img(this.mazo.rondas[0].cartas[0]);
+      proximaImg = this.imgMisterio(this.mazo.rondas[0].cartas[0]);
     }
 
     return {
@@ -691,13 +697,18 @@ export class Partida {
       final: this.final,
       sobrantes: this.fase === 'finronda' ? this.sobrantes : undefined,
       trollsDisponibles,
+      panel: this.panel,
     };
   }
 
   /** Busca la foto real detrás de un token (para servir la imagen sin revelar la identidad en la URL). */
   fotoDeToken(token: string): string | null {
     if (!this.mazo) return null;
-    for (const r of this.mazo.rondas) for (const c of r.cartas) if (c.token === token) return c.foto;
+    for (const r of this.mazo.rondas)
+      for (const c of r.cartas) {
+        if (c.token === token) return c.foto;
+        if (c.tokenSilueta === token) return c.fotoSilueta ?? null;
+      }
     return null;
   }
 }

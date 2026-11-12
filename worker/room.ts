@@ -192,6 +192,9 @@ export class RoomDO implements DurableObject {
       case 'pausa':
         if (esAnfitrion) p.pausar(!!msg.on, ahora);
         break;
+      case 'panel':
+        if (esAnfitrion) p.panel = msg.on ? 'equipos' : null;
+        break;
       case 'expulsar':
         if (esAnfitrion && msg.pid !== pid) {
           p.expulsar(String(msg.pid), ahora);

@@ -175,7 +175,7 @@ export function Escenario({ codigo }: { codigo: string }) {
           {s.fase === 'final' && <FinalTV s={s} fx={fx} />}
         </div>
 
-        <PanelTV s={s} panel={enJuego ? panel : null} />
+        <PanelTV s={s} panel={enJuego ? (s.panel ?? panel) : null} />
         <div className="tv-ticker">
           <Ticker mensajes={s.ticker} pausa={pausarTicker} alto={64} />
         </div>
@@ -320,7 +320,9 @@ function PanelTV({ s, panel }: { s: EstadoPublico; panel: Panel }) {
               <header>
                 <Avatar src={j.avatar} color={j.color} />
                 <b>{j.nombre}</b>
-                <span className="num">{cuentaEquipo(j)}/11</span>
+                <span className="num">
+                  ${j.saldo}M · {cuentaEquipo(j)}/11
+                </span>
               </header>
               <CanchaMedida equipo={j.equipo} color={j.color} huecoActivo={s.ronda?.pendientes.includes(j.id) ? s.ronda.hueco : undefined} />
             </div>

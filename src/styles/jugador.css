@@ -287,3 +287,9 @@
   .ofertar[data-modo='activo'] .ofertar-cara, .lobby-empezar:not(:disabled) { animation: none; }
   .m-capa, .m-capa[data-on='1'] { transform: none; }
 }
+
+/* Botones del anfitrión: pausa y mostrar equipos/saldos a todos */
+.j-host { flex: none; height: 40px; padding: 0 12px; margin-left: 6px; border-radius: 12px; background: var(--bg2); color: var(--tinta); font-size: 13px; font-weight: 800; text-transform: uppercase; transition: transform 120ms var(--ease-out), background-color 180ms ease, color 180ms ease; }
+.j-host:active { transform: scale(0.94); }
+.j-host[data-on='1'] { background: var(--acento); color: var(--acento-tinta); }
+.j-cab .j-ronda { flex: 1; flex-wrap: wrap; row-gap: 0; }

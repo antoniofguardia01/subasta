@@ -582,6 +582,12 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
     [sala, yo.id, carta?.liderId],
   );
 
+  // El anfitrión muestra (u oculta) los equipos y saldos a todos.
+  useEffect(() => {
+    if (s.panel && !anfitrion) setHoja('equipo');
+    else if (!s.panel) setHoja((h) => (h === 'equipo' && !anfitrion ? null : h));
+  }, [s.panel, anfitrion]);
+
   // Me la llevé: festejo.
   useEffect(() => {
     if (s.fase === 'martillo' && carta?.compradorId === yo.id) vibrar([60, 40, 60, 40, 160]);
@@ -659,6 +665,16 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
             <em>Preparando la subasta</em>
           )}
         </div>
+        {anfitrion && (
+          <>
+            <button className="j-host" data-on={s.pausa ? '1' : '0'} onClick={() => (vibrar(12), sala.enviar({ t: 'pausa', on: !s.pausa }))}>
+              {s.pausa ? 'Seguir' : 'Pausa'}
+            </button>
+            <button className="j-host" data-on={s.panel ? '1' : '0'} onClick={() => (vibrar(12), sala.enviar({ t: 'panel', on: !s.panel }))}>
+              {s.panel ? 'Ocultar' : 'Equipos'}
+            </button>
+          </>
+        )}
         <button className="j-menu" onClick={() => setHoja('menu')} aria-label="Menú">
           <i />
           <i />
