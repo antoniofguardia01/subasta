@@ -4725,9 +4725,12 @@
   "precioMinimo": 26,
   "etiqueta": "COMÚN · EL DE LOS BAILES",
   "dato": "Festeja antes, durante y después. Jugar es un detalle.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/paul-pogba.webp"
+  ],
   "buscar": "Paul Pogba",
-  "wiki": "Paul Pogba"
+  "wiki": "Paul Pogba",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "tanguy-ndombele",
@@ -4981,9 +4984,12 @@
   "precioMinimo": 28,
   "etiqueta": "COMÚN · ¿POR QUÉ SIEMPRE YO?",
   "dato": "Fuegos artificiales dentro y fuera de la cancha.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/mario-balotelli.webp"
+  ],
   "buscar": "Mario Balotelli",
-  "wiki": "Mario Balotelli"
+  "wiki": "Mario Balotelli",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "david-luiz",
@@ -5014,9 +5020,12 @@
   "precioMinimo": 24,
   "etiqueta": "COMÚN · CHICHARITO",
   "dato": "Llega siempre al lugar exacto, como un buen mosquito.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/javier-hernandez.webp"
+  ],
   "buscar": "Javier Hernández",
-  "wiki": "Javier Hernández (footballer, born 1988)"
+  "wiki": "Javier Hernández (footballer, born 1988)",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "mykhailo-mudryk",
@@ -5065,9 +5074,12 @@
   "precioMinimo": 20,
   "etiqueta": "COMÚN · EL SALTITO DEL PENAL",
   "dato": "Para, mira al arquero y la mete. Como si fuera fácil.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/jorginho.webp"
+  ],
   "buscar": "Jorginho",
-  "wiki": "Jorginho (footballer, born 1991)"
+  "wiki": "Jorginho (footballer, born 1991)",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "victor-lindelof",
@@ -5080,9 +5092,12 @@
   "precioMinimo": 16,
   "etiqueta": "COMÚN · EL ROCOSO SUECO",
   "dato": "Sólido como un mueble de IKEA. Y igual de fácil de armar.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/victor-lindelof.webp"
+  ],
   "buscar": "Victor Lindelöf",
-  "wiki": "Victor Lindelöf"
+  "wiki": "Victor Lindelöf",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "jamie-vardy",

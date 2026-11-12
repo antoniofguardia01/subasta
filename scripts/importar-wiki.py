@@ -9,6 +9,7 @@ Guarda la fuente en "fotoFuente". Las fotos de Wikipedia/Commons tienen licencia
   python3 scripts/importar-wiki.py                 # todos los que tienen "wiki" y no tienen foto
   python3 scripts/importar-wiki.py pele zidane     # solo esos ids (reemplaza la foto si ya había)
   python3 scripts/importar-wiki.py --hoja out.png  # además arma una hoja de contactos para revisar a ojo
+  python3 scripts/importar-wiki.py --foto id=ruta.jpg[@x0,y0,x1,y1]   # foto propia (ej. enviada por el dueño), con recorte opcional en px
 
 Si el recorte sale mal (otra persona, mala luz), poner en "wikiImg" la URL de otra imagen de Commons y repetir.
 Desde las sesiones en la nube hace falta HTTPS_PROXY / SSL_CERT_FILE (ya vienen configurados).
@@ -82,16 +83,32 @@ def main():
         hoja = args[i + 1]
         del args[i : i + 2]
     jugadores = json.load(open(DATOS, encoding='utf-8'))
-    pendientes = [j for j in jugadores if j.get('wiki') and ((j['id'] in args) if args else not j['fotos'])]
+    # --foto id=ruta[@x0,y0,x1,y1]: imagen local en vez de Wikipedia (el recorte en píxeles es opcional).
+    locales = {}
+    while '--foto' in args:
+        i = args.index('--foto')
+        pid, _, ruta = args[i + 1].partition('=')
+        ruta, _, caja = ruta.partition('@')
+        locales[pid] = (ruta, tuple(int(n) for n in caja.split(',')) if caja else None)
+        del args[i : i + 2]
+    pendientes = [j for j in jugadores if (j['id'] in locales) or (j.get('wiki') and ((j['id'] in args) if args else not j['fotos']))]
     print(f'Importando {len(pendientes)} jugadores desde Wikipedia…')
     sesion = new_session('u2net')
     os.makedirs(SALIDA, exist_ok=True)
     hechos, fallos = [], []
     for j in pendientes:
-        time.sleep(4)
+        if j['id'] not in locales:
+            time.sleep(4)
         try:
-            url = j.get('wikiImg') or imagen_de_wikipedia(j['wiki'])
-            im = ImageOps.exif_transpose(Image.open(io.BytesIO(pedir(url)))).convert('RGB')
+            if j['id'] in locales:
+                ruta, caja = locales[j['id']]
+                url = 'foto enviada por el dueño'
+                im = ImageOps.exif_transpose(Image.open(ruta)).convert('RGB')
+                if caja:
+                    im = im.crop(caja)
+            else:
+                url = j.get('wikiImg') or imagen_de_wikipedia(j['wiki'])
+                im = ImageOps.exif_transpose(Image.open(io.BytesIO(pedir(url)))).convert('RGB')
             im.thumbnail((1400, 1400))
             if im.width < 400:
                 print(f'  aviso {j["id"]}: imagen chica ({im.width}px)')
