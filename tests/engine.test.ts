@@ -224,6 +224,22 @@ describe('subasta', () => {
     expect(p.vence - ahora()).toBe(15000);
   });
 
+  it('oferta personalizada: salta a la cifra elegida, pero nunca por debajo del mínimo ni por encima del tope', () => {
+    const { p, hasta, ahora } = sala(3);
+    hasta('puja');
+    const c = p.cartaActual()!;
+    expect(p.ofertar('p0', c.uid, ahora(), c.precioMinimo + 20)).toBe(true);
+    expect(p.precio).toBe(c.precioMinimo + 20);
+    expect(p.vence - ahora()).toBe(15000);
+    p.eventos = [];
+    expect(p.ofertar('p1', c.uid, ahora(), c.precioMinimo + 10)).toBe(false); // ya la pasaron
+    expect(p.eventos).toContainEqual({ e: 'rechazo', pid: 'p1', motivo: 'superado' });
+    expect(p.ofertar('p1', c.uid, ahora(), 99999)).toBe(false); // más que su tope
+    expect(p.eventos).toContainEqual({ e: 'rechazo', pid: 'p1', motivo: 'sin_saldo' });
+    expect(p.ofertar('p1', c.uid, ahora())).toBe(true); // el toque normal sigue sumando 1
+    expect(p.precio).toBe(c.precioMinimo + 21);
+  });
+
   it('ofertas simultáneas: se resuelven por orden de llegada, cada una +1M', () => {
     const { p, hasta, ahora } = sala(4);
     hasta('puja');
@@ -367,6 +383,18 @@ describe('subasta', () => {
       expect(j.equipo.every((f) => f)).toBe(true);
       expect(j.saldo).toBeGreaterThanOrEqual(0);
     }
+  });
+
+  it('el anfitrión puede terminar la partida a mitad: se calculan resultados con lo que hay', () => {
+    const { p, hasta, ir, ahora } = sala(3);
+    hasta('puja');
+    p.ofertar('p0', p.cartaActual()!.uid, ahora());
+    ir(15000);
+    hasta('puja');
+    p.terminar();
+    expect(p.fase).toBe('final');
+    expect(p.final!.puestos).toHaveLength(3);
+    expect(p.proximoVencimiento()).toBeNull();
   });
 
   it('pausa: congela el contador y lo retoma donde estaba', () => {

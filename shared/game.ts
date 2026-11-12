@@ -49,9 +49,9 @@ export const TIEMPOS: Tiempos = {
   ruleta: 5600,
   martillo: 2100,
   martilloMenor: 1500,
-  revela: 5200,
-  revelaGrande: 7400,
-  revelaCorta: 3600,
+  revela: 8500,
+  revelaGrande: 10500,
+  revelaCorta: 5500,
   finronda: 5200,
 };
 
@@ -266,6 +266,18 @@ export class Partida {
     return true;
   }
 
+  /** El anfitrión corta la partida: se muestran los resultados con lo que cada uno tiene hasta ahora. */
+  terminar() {
+    if (this.fase === 'lobby' || this.fase === 'final') return;
+    this.pausa = false;
+    this.panel = null;
+    this.limpiarCarta();
+    this.final = calcularFinal(this.jugadores, this.historial, this.ajustes);
+    this.fase = 'final';
+    const p = this.final.puestos;
+    if (p.length) this.hechos.push({ h: 'final', ganadorId: p[0].pid, ultimoId: p[p.length - 1].pid });
+  }
+
   revancha() {
     this.fase = 'lobby';
     this.pausa = false;
@@ -331,7 +343,8 @@ export class Partida {
 
   // ───────────── Acciones de los jugadores ─────────────
 
-  ofertar(pid: string, uid: string, ahora: number): boolean {
+  /** Oferta de un toque (+incremento) o, si viene `monto`, una cifra elegida (mayor que el precio actual). */
+  ofertar(pid: string, uid: string, ahora: number, monto?: number): boolean {
     const rechazar = (motivo: MotivoRechazo) => {
       this.eventos.push({ e: 'rechazo', pid, motivo });
       this.hechos.push({ h: 'rechazo', pid, motivo });
@@ -349,7 +362,10 @@ export class Partida {
     if (ahora >= this.vence) return rechazar('tarde');
     if (this.comproEnRonda.has(pid)) return rechazar('ya_compraste');
     if (this.liderId === pid) return rechazar('ya_lideras');
-    const nuevo = this.precio + this.ajustes.incremento;
+    const minimo = this.precio + this.ajustes.incremento;
+    // Si alguien ya pasó la cifra elegida mientras la escribía, se avisa en vez de ofertar algo distinto.
+    if (monto !== undefined && Math.round(monto) < minimo) return rechazar('superado');
+    const nuevo = monto !== undefined ? Math.round(monto) : minimo;
     if (nuevo > this.tope(j)) {
       if (!this.secos.has(pid)) {
         this.secos.add(pid);

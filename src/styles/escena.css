@@ -230,3 +230,13 @@
 
 /* Foto de troll sin fondo transparente: se recorta en óvalo */
 .esc-color[data-marco='1'] { clip-path: ellipse(44% 52% at 50% 50%); }
+
+/* ── Revelación: foco, palabra gigante y letras del apellido ── */
+.esc-foco { position: absolute; inset: 0; z-index: 1; opacity: 0; pointer-events: none; background: radial-gradient(ellipse 26% 46% at 70% 58%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 55%, rgba(4, 6, 5, 0.86) 100%); }
+.escena[data-compacta] .esc-foco { background: radial-gradient(ellipse 48% 44% at 62% 60%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 55%, rgba(4, 6, 5, 0.86) 100%); }
+.esc-gigante { position: absolute; left: -20%; right: -20%; top: 50%; transform: translateY(-50%); z-index: 0; opacity: 0; pointer-events: none; white-space: nowrap; text-align: center; overflow: visible; }
+.esc-gigante span { display: inline-block; font-size: calc(var(--u) * 30); font-weight: 900; font-stretch: 62%; line-height: 0.8; letter-spacing: 0.02em; color: transparent; -webkit-text-stroke: calc(var(--u) * 0.32) rgba(255, 255, 255, 0.55); }
+.escena[data-compacta] .esc-gigante span { font-size: calc(var(--u) * 46); }
+.esc-gigante[data-paleta='leyenda'] span, .esc-gigante[data-paleta='prime'] span { -webkit-text-stroke-color: rgba(255, 236, 160, 0.8); }
+.pn-apellido > span { perspective: 400px; }
+.pn-l { display: inline-block; transform-origin: 50% 100%; }

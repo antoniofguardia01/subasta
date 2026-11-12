@@ -24,6 +24,7 @@ interface Props {
 const SELLO: Record<Desenlace, string> = { vendido: '¡Vendido!', pasa: 'Pasa', salteada: 'Salteada', obligado: 'Obligado', ruleta: 'Le tocó' };
 const CUENTA = ['', 'A la una…', 'A las dos…', '¡A las tres!'];
 const CUENTA_SOLA = ['', '¿Nadie?', '¿Seguro?', 'Se va…'];
+const GIGANTE: Record<Rareza, string> = { comun: 'FICHAJE', plata: 'PLATA', oro: 'ORO', prime: 'PRIME', leyenda: 'LEYENDA', troll: 'SORPRESA' };
 const ICONO: Record<Rareza, string> = { comun: '●', plata: '●', oro: '◆', prime: '◆', leyenda: '★', troll: '☻' };
 
 type Q = (s: string) => Element[];
@@ -35,6 +36,8 @@ function reiniciar(q: Q) {
   gsap.set(q('.esc-destello'), { opacity: 0 });
   gsap.set(q('.esc-fondo2'), { clipPath: 'circle(0% at 70% 62%)' });
   gsap.set(q('.esc-rayos'), { opacity: 0 });
+  gsap.set(q('.esc-foco'), { opacity: 0 });
+  gsap.set(q('.esc-gigante'), { opacity: 0 });
   gsap.set(q('.placa-precio'), { xPercent: -115 });
   gsap.set(q('.placa-nombre'), { xPercent: -115 });
   gsap.set(q('.esc-sello'), { opacity: 0 });
@@ -181,6 +184,8 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
           .to(figura, { scale: 0.97, duration: 0.16, ease: 'power2.out' })
           .to(figura, { scale: 1.05, duration: 0.16, ease: 'power2.in' });
         F = 0.82;
+        // El escenario se oscurece y queda solo un foco sobre la silueta: redoble.
+        t.to(q('.esc-foco'), { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.05);
         if (troll) {
           // Los trolls tiemblan: algo anda mal…
           t.to(figura, { x: u * 1.4, duration: 0.05, repeat: 9, yoyo: true, ease: 'sine.inOut' }, F).set(figura, { x: 0 });
@@ -214,9 +219,24 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         .to(q('.esc-luz'), { opacity: 0, duration: 0.15 }, F + 0.55)
         .to(q('.placa-precio'), { xPercent: -115, duration: 0.3, ease: 'power2.in' }, F + 0.04)
         .fromTo(q('.placa-nombre'), { xPercent: -115 }, { xPercent: 0, duration: 0.6, ease: 'expo.out' }, F + 0.32)
-        .from(q('.pn-linea'), { yPercent: 70, opacity: 0, duration: 0.5, ease: 'expo.out', stagger: 0.08 }, F + 0.44)
-        .from(q('.pn-etiqueta'), { scaleX: 0, transformOrigin: '0% 50%', duration: 0.45, ease: 'expo.out' }, F + 0.66)
-        .from(q('.pn-dato'), { opacity: 0, y: 12, duration: 0.45, ease: 'power2.out' }, F + 0.9);
+        .from(q('.pn-nombre'), { yPercent: 70, opacity: 0, duration: 0.5, ease: 'expo.out' }, F + 0.44)
+        // El apellido cae letra por letra, como un marcador que se arma.
+        .from(q('.pn-l'), { yPercent: -130, rotationX: 80, opacity: 0, duration: 0.55, ease: 'back.out(2.2)', stagger: 0.035 }, F + 0.5)
+        .from(q('.pn-etiqueta'), { scaleX: 0, transformOrigin: '0% 50%', duration: 0.45, ease: 'expo.out' }, F + 0.8)
+        // El foco se apaga con el destello, los rayos giran (más fuertes cuanto más rara la carta) y la palabra gigante cruza detrás.
+        .to(q('.esc-foco'), { opacity: 0, duration: 0.5, ease: 'power2.out' }, F)
+        .to(q('.esc-rayos'), { opacity: vendida ? (troll ? 0.5 : [0.45, 0.85, 1][nivel]) : 0.25, duration: 0.6, ease: 'power2.out' }, F + 0.05)
+        .fromTo(q('.esc-gigante'), { opacity: 0, xPercent: 25 }, { opacity: 1, xPercent: -25, duration: Math.max(4, total - F - 1), ease: 'none' }, F + 0.1)
+        // Golpe de cámara: todo se acerca y vuelve.
+        .fromTo(q('.esc-capa'), { scale: 1.07 }, { scale: 1, duration: 0.9, ease: 'expo.out', immediateRender: false }, F);
+      // El puntaje cuenta desde cero.
+      const nota = el.querySelector<HTMLElement>('.pn-etiqueta b');
+      if (nota && !rm) {
+        const o = { v: 0 };
+        t.to(o, { v: rev.rating, duration: 0.9, ease: 'power2.out', onUpdate: () => (nota.textContent = String(Math.round(o.v))) }, F + 0.85);
+      }
+      // Mientras se lee, el jugador respira con un acercamiento muy lento.
+      if (!rm) t.to(figura, { scale: 1.035, duration: Math.max(3, total - F - 2.5), ease: 'sine.inOut' }, F + 1.2);
       if (!rm) {
         if (troll) {
           t.fromTo(figura, { rotation: -11, scale: 1.12 }, { rotation: 0, scale: 1, duration: 1.1, ease: 'elastic.out(1.1, 0.3)' }, F + 0.08)
@@ -230,6 +250,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         .to(q('.esc-venta'), { opacity: 0, y: 16, duration: 0.22, ease: 'power2.in' }, X)
         .to(q('.esc-troll'), { opacity: 0, scale: 0.7, duration: 0.22, ease: 'power2.in' }, X)
         .to(q('.esc-rayos'), { opacity: 0, duration: 0.3 }, X)
+        .to(q('.esc-gigante'), { opacity: 0, duration: 0.3 }, X)
         .to(q('.esc-fondo2'), { clipPath: 'circle(0% at 70% 62%)', duration: 0.6, ease: 'expo.inOut' }, X + 0.22);
       if (vendida && alVolar && !rm)
         t.add(() => {
@@ -268,6 +289,9 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         <div className="esc-fondo2">
           <Fondo paleta={rev?.rareza ?? 'misterio'} vel={1.4} />
         </div>
+        <div className="esc-gigante" aria-hidden data-paleta={rev?.rareza}>
+          <span>{rev ? (rev.tipo === 'troll' ? 'SORPRESA · SORPRESA' : `${GIGANTE[rev.rareza]} · ${GIGANTE[rev.rareza]}`) : ''}</span>
+        </div>
         <div className="esc-rayos" aria-hidden>
           <i />
         </div>
@@ -280,6 +304,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
           </div>
         )}
 
+        <div className="esc-foco" aria-hidden />
         <div className="esc-destello" />
 
         {carta && (
@@ -309,7 +334,13 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
                   )}
                   {/* Los nombres largos se achican en proporción para entrar siempre en la placa. */}
                   <span className="pn-linea pn-apellido" style={{ '--k': Math.min(1, 9.2 / (rev.apellido || rev.nombre).length) } as CSSProperties}>
-                    <span>{rev.apellido || rev.nombre}</span>
+                    <span>
+                      {(rev.apellido || rev.nombre).split('').map((l, i) => (
+                        <span className="pn-l" key={i}>
+                          {l === ' ' ? '\u00a0' : l}
+                        </span>
+                      ))}
+                    </span>
                   </span>
                 </div>
                 <div className="pn-etiqueta">
@@ -317,7 +348,6 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
                   <span>{rev.etiqueta}</span>
                   {rev.tipo === 'jugador' && <b className="num">{rev.rating}</b>}
                 </div>
-                <p className="pn-dato">{rev.dato}</p>
               </div>
             )}
           </div>

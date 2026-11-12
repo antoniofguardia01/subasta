@@ -239,16 +239,17 @@ export class RoomDO implements DurableObject {
         break;
       }
       case 'ofertar':
-        if (pid) p.ofertar(pid, String(msg.uid), ahora);
+        if (pid) p.ofertar(pid, String(msg.uid), ahora, typeof msg.monto === 'number' && Number.isFinite(msg.monto) ? msg.monto : undefined);
         break;
       case 'saltear':
         if (pid) p.saltear(pid, String(msg.uid), ahora);
         break;
+      // La TV (escenario) también puede pausar y mostrar los equipos.
       case 'pausa':
-        if (esAnfitrion) p.pausar(!!msg.on, ahora);
+        if (esAnfitrion || con.rol === 'escenario') p.pausar(!!msg.on, ahora);
         break;
       case 'panel':
-        if (esAnfitrion) p.panel = msg.on ? 'equipos' : null;
+        if (esAnfitrion || con.rol === 'escenario') p.panel = msg.on ? 'equipos' : null;
         break;
       case 'expulsar':
         if (esAnfitrion && msg.pid !== pid) {
@@ -259,6 +260,12 @@ export class RoomDO implements DurableObject {
         break;
       case 'anfitrion':
         if (esAnfitrion && p.jugador(String(msg.pid))) p.anfitrionId = String(msg.pid);
+        break;
+      case 'salir':
+        if (pid) p.expulsar(pid, ahora);
+        break;
+      case 'terminar':
+        if (esAnfitrion) p.terminar();
         break;
       case 'revancha':
         if (esAnfitrion && p.fase === 'final') p.revancha();

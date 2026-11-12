@@ -51,11 +51,26 @@ export function Escenario({ codigo }: { codigo: string }) {
     [sala],
   );
 
+  // Los equipos también se muestran en los celulares; saldos e historial quedan solo en esta pantalla.
+  const elegirPanel = (p: Panel) => {
+    setPanel(p);
+    if ((p === 'equipos') !== (s?.panel === 'equipos')) sala.enviar({ t: 'panel', on: p === 'equipos' });
+  };
+  const elegirRef = useRef(elegirPanel);
+  elegirRef.current = elegirPanel;
+  const panelRef = useRef<Panel>(null);
+  panelRef.current = s?.panel ?? panel;
+  const pausarRef = useRef(() => {});
+  pausarRef.current = () => {
+    if (s && s.fase !== 'lobby' && s.fase !== 'final') sala.enviar({ t: 'pausa', on: !s.pausa });
+  };
+
   // Control remoto / teclado.
   useEffect(() => {
     const tecla = (e: KeyboardEvent) => {
       if (e.key === 'Escape' || e.key === 'Backspace' || e.key === 'GoBack') setPanel(null);
-      else if (e.key === '1') setPanel((p) => (p === 'equipos' ? null : 'equipos'));
+      else if (e.key === '1') elegirRef.current(panelRef.current === 'equipos' ? null : 'equipos');
+      else if (e.key === 'p' || e.key === 'P' || e.key === 'MediaPlayPause') pausarRef.current();
       else if (e.key === '2') setPanel((p) => (p === 'saldos' ? null : 'saldos'));
       else if (e.key === '3') setPanel((p) => (p === 'historial' ? null : 'historial'));
       else if (e.key === 'f' || e.key === 'F') void (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.());
@@ -166,7 +181,7 @@ export function Escenario({ codigo }: { codigo: string }) {
                 <CartelRonda s={s} />
                 <FinRonda s={s} />
                 <Baraja s={s} sala={sala} />
-                <Tira s={s} panel={panel} setPanel={setPanel} conSonido={conSonido} />
+                <Tira s={s} panel={s.panel ?? panel} setPanel={elegirPanel} conSonido={conSonido} pausar={() => sala.enviar({ t: 'pausa', on: !s.pausa })} />
               </main>
             </>
           )}
@@ -250,7 +265,7 @@ function Ofertas({ s }: { s: EstadoPublico }) {
 
 // ───────────── Tira inferior: candidatos de la ronda, pendientes y botones ─────────────
 
-function Tira({ s, panel, setPanel, conSonido }: { s: EstadoPublico; panel: Panel; setPanel: (p: Panel) => void; conSonido: boolean }) {
+function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; panel: Panel; setPanel: (p: Panel) => void; conSonido: boolean; pausar: () => void }) {
   const r = s.ronda;
   const quedan = r ? r.cartas.filter((c) => c.estado === 'espera' || c.estado === 'actual').length : 0;
   const pend = r ? r.pendientes.map((id) => s.jugadores.find((j) => j.id === id)!).filter(Boolean) : [];
@@ -291,6 +306,9 @@ function Tira({ s, panel, setPanel, conSonido }: { s: EstadoPublico; panel: Pane
         </>
       )}
       <div className="tv-botones">
+        <button data-on={s.pausa ? '1' : '0'} onClick={pausar}>
+          <i className="num">P</i> {s.pausa ? 'Seguir' : 'Pausa'}
+        </button>
         <button data-on={panel === 'equipos' ? '1' : '0'} onClick={() => setPanel(panel === 'equipos' ? null : 'equipos')}>
           <i className="num">1</i> Equipos
         </button>

@@ -24,6 +24,7 @@ interface AvatarDato {
 const RECHAZO: Record<MotivoRechazo, string> = {
   tarde: '¡Llegaste tarde!',
   sin_saldo: 'No te alcanza',
+  superado: 'Ya te pasaron: sube la cifra',
   ya_compraste: 'Ya compraste en esta ronda',
   ya_lideras: 'Ya vas ganando, tranquilo',
   pausa: 'Está en pausa',
@@ -235,8 +236,8 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
           <button className="btn" onClick={() => setHoja('tema')}>
             Escenario
           </button>
-          <button className="btn" onClick={(e) => void irConTelon(`/stage/${s.codigo}`, { origen: { x: e.clientX, y: e.clientY }, cartel: 'Escenario' })}>
-            Usar como pantalla principal
+          <button className="btn" onClick={(e) => confirm('¿Salir de la sala?') && (sala.enviar({ t: 'salir' }), void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } }))}>
+            Salir de la sala
           </button>
           <BotonPantalla className="btn-pantalla--lobby" />
         </div>
@@ -554,7 +555,7 @@ function Hoja({ on, titulo, cerrar, children }: { on: boolean; titulo: string; c
 function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: JugadorSala; anfitrion: boolean }) {
   const fx = useRef<FxApi>(null);
   const [tic, setTic] = useState<Tic>({ tension: 0, cuenta: 0 });
-  const [hoja, setHoja] = useState<'equipo' | 'saldos' | 'historial' | 'menu' | 'tv' | 'tema' | null>(null);
+  const [hoja, setHoja] = useState<'equipo' | 'saldos' | 'historial' | 'menu' | 'tv' | 'tema' | 'monto' | null>(null);
   const [verA, setVerA] = useState(yo.id);
   const [aviso, setAviso] = useState<{ texto: string; n: number } | null>(null);
   const boton = useRef<HTMLButtonElement>(null);
@@ -586,10 +587,13 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
     [sala, yo.id, carta?.liderId],
   );
 
+  // Si la carta cambia o se cierra la puja, la hoja de cifra libre se cierra sola.
+  useEffect(() => setHoja((h) => (h === 'monto' ? null : h)), [carta?.uid, enPuja]);
+
   // El anfitrión muestra (u oculta) los equipos y saldos a todos.
   useEffect(() => {
-    if (s.panel && !anfitrion) setHoja('equipo');
-    else if (!s.panel) setHoja((h) => (h === 'equipo' && !anfitrion ? null : h));
+    if (s.panel) setHoja('equipo');
+    else setHoja((h) => (h === 'equipo' ? null : h));
   }, [s.panel, anfitrion]);
 
   // Me la llevé: festejo.
@@ -789,6 +793,10 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
             <small className={modo === 'activo' || modo === 'lider' ? 'num' : ''}>{bajada}</small>
           </span>
         </button>
+        <button className="j-monto" aria-disabled={!puedeOfertar} onClick={() => puedeOfertar && (vibrar(10), setHoja('monto'))}>
+          <b>$?</b>
+          <small>Otra cifra</small>
+        </button>
         {aviso && (
           <div className="j-aviso" key={aviso.n}>
             {aviso.texto}
@@ -844,6 +852,9 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
         </div>
       </Hoja>
 
+      <Hoja on={hoja === 'monto'} titulo="Ofertar otra cifra" cerrar={() => setHoja(null)}>
+        {hoja === 'monto' && carta && <OfertaLibre precio={carta.precio} incremento={s.ajustes.incremento} tope={yo.tope} enviar={(monto) => (vibrar(25), sala.enviar({ t: 'ofertar', uid: carta.uid, monto }), setHoja(null))} />}
+      </Hoja>
       <Hoja on={hoja === 'historial'} titulo="Compras" cerrar={() => setHoja(null)}>
         <div className="hoja-historial">
           {[...s.historial].reverse().map((h) => {
@@ -883,8 +894,13 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
           <button className="btn" onClick={() => setHoja('tema')}>
             Cambiar escenario
           </button>
-          <button className="btn" onClick={(e) => void irConTelon(`/stage/${s.codigo}`, { origen: { x: e.clientX, y: e.clientY }, cartel: 'Escenario' })}>
-            Usar esta pantalla como escenario
+          {anfitrion && (
+            <button className="btn btn-peligro" onClick={() => confirm('¿Terminar la partida ahora? Se muestran los resultados con lo que cada uno tiene.') && (sala.enviar({ t: 'terminar' }), setHoja(null))}>
+              Terminar partida
+            </button>
+          )}
+          <button className="btn" onClick={(e) => confirm('¿Salir de la sala? Tu equipo se pierde.') && (sala.enviar({ t: 'salir' }), void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } }))}>
+            Salir de la sala
           </button>
           <BotonPantalla className="btn-pantalla--menu" />
           <BotonSonido />
@@ -996,6 +1012,44 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
       </div>
       <Ticker mensajes={s.ticker} alto={32} />
       <Fx ref={fx} />
+    </div>
+  );
+}
+
+// ───────────── Oferta con cifra elegida ─────────────
+
+function OfertaLibre({ precio, incremento, tope, enviar }: { precio: number; incremento: number; tope: number; enviar: (monto: number) => void }) {
+  const minimo = precio + incremento;
+  const [monto, setMonto] = useState(Math.min(tope, precio + 10));
+  const valido = monto >= minimo && monto <= tope;
+  return (
+    <div className="oferta-libre">
+      <p>
+        Va en <b className="num">${precio}M</b>. Tu tope es <b className="num">${tope}M</b>.
+      </p>
+      <div className="ol-cifra">
+        <button onClick={() => setMonto((m) => Math.max(minimo, m - 5))} aria-label="Restar 5">
+          -5
+        </button>
+        <label>
+          <span>$</span>
+          <input className="num" type="number" inputMode="numeric" value={monto} min={minimo} max={tope} onChange={(e) => setMonto(Math.round(Number(e.target.value) || 0))} />
+          <span>M</span>
+        </label>
+        <button onClick={() => setMonto((m) => Math.min(tope, m + 5))} aria-label="Sumar 5">
+          +5
+        </button>
+      </div>
+      <div className="ol-saltos">
+        {[10, 25, 50, 100].map((n) => (
+          <button key={n} disabled={precio + n > tope} onClick={() => setMonto(Math.min(tope, precio + n))}>
+            +{n}
+          </button>
+        ))}
+      </div>
+      <button className="btn btn--acento ol-enviar" disabled={!valido} onClick={() => enviar(monto)}>
+        {monto < minimo ? `Mínimo $${minimo}M` : monto > tope ? 'No te alcanza' : `Ofertar $${monto}M`}
+      </button>
     </div>
   );
 }

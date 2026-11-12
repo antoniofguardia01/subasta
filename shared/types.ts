@@ -290,7 +290,7 @@ export interface EstadoPublico {
 
 // ───────────────────────── Eventos efímeros (disparan animaciones) ─────────────────────────
 
-export type MotivoRechazo = 'tarde' | 'sin_saldo' | 'ya_compraste' | 'ya_lideras' | 'pausa' | 'no_sobran' | 'sin_skips' | 'hay_ofertas';
+export type MotivoRechazo = 'superado' | 'tarde' | 'sin_saldo' | 'ya_compraste' | 'ya_lideras' | 'pausa' | 'no_sobran' | 'sin_skips' | 'hay_ofertas';
 
 export type Evento =
   | { e: 'oferta'; pid: string; precio: number }
@@ -307,13 +307,15 @@ export type MsgCliente =
   | { t: 'entrar'; nombre: string; avatar: string }
   | { t: 'ajustes'; ajustes: Partial<Ajustes> }
   | { t: 'empezar' }
-  | { t: 'ofertar'; uid: string }
+  | { t: 'ofertar'; uid: string; monto?: number }
   | { t: 'saltear'; uid: string }
   | { t: 'pausa'; on: boolean }
   | { t: 'panel'; on: boolean }
   | { t: 'expulsar'; pid: string }
   | { t: 'anfitrion'; pid: string }
   | { t: 'revancha' }
+  | { t: 'salir' }
+  | { t: 'terminar' }
   | { t: 'ping'; t0: number };
 
 export type MsgServidor =
