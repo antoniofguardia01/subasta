@@ -11,6 +11,10 @@
       {
         "name": "REGISTRY",
         "class_name": "RegistryDO"
+      },
+      {
+        "name": "CATALOG",
+        "class_name": "CatalogDO"
       }
     ]
   },
@@ -20,6 +24,12 @@
       "new_sqlite_classes": [
         "RoomDO",
         "RegistryDO"
+      ]
+    },
+    {
+      "tag": "v2",
+      "new_sqlite_classes": [
+        "CatalogDO"
       ]
     }
   ],
