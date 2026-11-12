@@ -212,28 +212,30 @@
 .baraja-cuenta { animation: cuenta-grande 900ms var(--ease-out) both; }
 @keyframes cuenta-grande { 0% { transform: scale(1.8); opacity: 0; } 25% { opacity: 1; } 100% { transform: scale(0.9); opacity: 0.85; } }
 
-/* ───────── Ruleta ───────── */
-.ruleta { position: absolute; inset: 0; z-index: 13; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; background: rgba(7, 9, 8, 0.86); color: #fff; --cas: 210px; }
+/* ───────── Ruleta (rueda circular) ───────── */
+.ruleta { position: absolute; inset: 0; z-index: 13; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: rgba(7, 9, 8, 0.86); color: #fff; --rd: 500px; }
 .rul-titulo { text-align: center; }
-.rul-titulo b { display: block; font-size: 110px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; color: #ffe14a; }
-.rul-titulo span { font-size: 28px; font-weight: 600; opacity: 0.8; }
-.rul-marco { position: relative; width: 100%; height: 250px; overflow: hidden; background: #0b0d0c; border-top: 8px solid #ffe14a; border-bottom: 8px solid #ffe14a; }
-.rul-cinta { position: absolute; left: calc(50% - var(--cas) / 2); top: 0; height: 100%; display: flex; will-change: transform; }
-.rul-casilla { flex: none; width: var(--cas); height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border-right: 3px solid rgba(255, 255, 255, 0.12); }
-.rul-casilla .avatar { font-size: 124px; }
-.rul-casilla span { font-size: 26px; font-weight: 900; font-stretch: 75%; text-transform: uppercase; color: var(--c); white-space: nowrap; }
-.rul-aguja { position: absolute; left: 50%; top: 0; bottom: 0; width: var(--cas); margin-left: calc(var(--cas) / -2); border: 8px solid #ffe14a; box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.42); pointer-events: none; }
-.rul-aguja::before { content: ''; position: absolute; left: 50%; top: -8px; margin-left: -18px; border: 18px solid transparent; border-top-color: #ffe14a; }
-.rul-veredicto { font-size: 84px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; opacity: 0; line-height: 1; }
+.rul-titulo b { display: block; font-size: 100px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; color: #ffe14a; }
+.rul-titulo span { font-size: 26px; font-weight: 600; opacity: 0.8; }
+.rul-rueda { position: relative; width: var(--rd); height: var(--rd); margin: calc(var(--rd) * 0.07) 0 calc(var(--rd) * 0.11); isolation: isolate; }
+/* El pie de la ruleta: cuello y base. */
+.rul-rueda::before { content: ''; position: absolute; left: 50%; bottom: -11%; width: 34%; height: 15%; margin-left: -17%; background: linear-gradient(90deg, #121416, #34383d 45%, #121416); clip-path: polygon(34% 0, 66% 0, 100% 100%, 0 100%); z-index: -1; }
+.rul-rueda::after { content: ''; position: absolute; left: 50%; bottom: -13.5%; width: 50%; height: 5%; margin-left: -25%; border-radius: 50%; background: linear-gradient(#2a2d31, #0e1012); box-shadow: 0 calc(var(--rd) * 0.04) calc(var(--rd) * 0.06) rgba(0, 0, 0, 0.6); z-index: -1; }
+.rul-disco { position: absolute; inset: 0; border-radius: 50%; border: calc(var(--rd) * 0.035) solid #15171a; box-shadow: 0 0 0 calc(var(--rd) * 0.012) #3a3e44, 0 calc(var(--rd) * 0.05) calc(var(--rd) * 0.09) rgba(0, 0, 0, 0.6); will-change: transform; }
+/* Lucecitas del borde. */
+.rul-disco::before { content: ''; position: absolute; inset: calc(var(--rd) * -0.0295); border-radius: 50%; background: repeating-conic-gradient(from -2.5deg, #f4f4f4 0 5deg, transparent 5deg 15deg); -webkit-mask: radial-gradient(circle, transparent calc(50% - var(--rd) * 0.012), #000 calc(50% - var(--rd) * 0.012 + 1px), #000 calc(50% - var(--rd) * 0.0035), transparent calc(50% - var(--rd) * 0.0035 + 1px)); mask: radial-gradient(circle, transparent calc(50% - var(--rd) * 0.012), #000 calc(50% - var(--rd) * 0.012 + 1px), #000 calc(50% - var(--rd) * 0.0035), transparent calc(50% - var(--rd) * 0.0035 + 1px)); pointer-events: none; }
+.rul-slot { position: absolute; inset: 0; rotate: var(--a); display: flex; justify-content: center; align-items: flex-start; padding-top: calc(var(--rd) * 0.045); pointer-events: none; }
+.rul-slot-in { display: flex; flex-direction: column; align-items: center; gap: calc(var(--rd) * 0.012); }
+.rul-slot-in .avatar { font-size: calc(var(--rd) * var(--k)); box-shadow: 0 0 0 calc(var(--rd) * 0.008) #fff, 0 calc(var(--rd) * 0.01) calc(var(--rd) * 0.02) rgba(0, 0, 0, 0.45); }
+.rul-slot-in span { max-width: calc(var(--rd) * 0.3); font-size: calc(var(--rd) * 0.04); font-weight: 900; font-stretch: 75%; text-transform: uppercase; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55), 0 0 6px rgba(0, 0, 0, 0.5); }
+.rul-eje { position: absolute; left: 50%; top: 50%; width: calc(var(--rd) * 0.13); height: calc(var(--rd) * 0.13); margin: calc(var(--rd) * -0.065) 0 0 calc(var(--rd) * -0.065); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #5a5f66, #15171a 65%); box-shadow: 0 0 0 calc(var(--rd) * 0.01) #3a3e44, 0 calc(var(--rd) * 0.015) calc(var(--rd) * 0.03) rgba(0, 0, 0, 0.6); }
+.rul-aguja { position: absolute; left: 50%; top: calc(var(--rd) * -0.045); width: 0; height: 0; margin-left: calc(var(--rd) * -0.045); border-left: calc(var(--rd) * 0.045) solid transparent; border-right: calc(var(--rd) * 0.045) solid transparent; border-top: calc(var(--rd) * 0.1) solid #ff3b3b; transform-origin: 50% 20%; filter: drop-shadow(0 calc(var(--rd) * 0.012) calc(var(--rd) * 0.012) rgba(0, 0, 0, 0.55)); z-index: 3; }
+.rul-veredicto { font-size: 80px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; opacity: 0; line-height: 1; }
 .rul-veredicto b { color: var(--c); }
-.ruleta[data-compacta] { --cas: 104px; gap: 14px; z-index: 6; }
-.ruleta[data-compacta] .rul-titulo b { font-size: 44px; }
-.ruleta[data-compacta] .rul-titulo span { font-size: 13px; display: block; padding: 0 12px; }
-.ruleta[data-compacta] .rul-marco { height: 124px; border-width: 4px; }
-.ruleta[data-compacta] .rul-casilla .avatar { font-size: 60px; }
-.ruleta[data-compacta] .rul-casilla span { font-size: 13px; }
-.ruleta[data-compacta] .rul-aguja { border-width: 4px; }
-.ruleta[data-compacta] .rul-veredicto { font-size: 34px; }
+.ruleta[data-compacta] { --rd: min(76vw, 300px); gap: 8px; z-index: 6; }
+.ruleta[data-compacta] .rul-titulo b { font-size: 40px; }
+.ruleta[data-compacta] .rul-titulo span { font-size: 12px; display: block; padding: 0 12px; }
+.ruleta[data-compacta] .rul-veredicto { font-size: 32px; }
 
 /* ───────── Ficha que vuela al equipo ───────── */
 .ficha-vuela { position: fixed; z-index: 900; pointer-events: none; clip-path: circle(75% at 50% 42%); will-change: transform; transform-origin: 50% 42%; }

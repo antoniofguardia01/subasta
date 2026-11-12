@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import type { CartaActualVista, Desenlace, EstadoPublico, Fase, JugadorSala, Rareza } from '../../shared/types';
 import { POS_NOMBRE } from '../../shared/types';
 import type { Sala } from '../lib/sala';
+import { esLite } from '../lib/rendimiento';
 import { sonar } from '../lib/sonido';
 import { reducirMovimiento, vibrar } from '../lib/util';
 import { Avatar, Fondo, Numero } from './comunes';
@@ -124,12 +125,14 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       } else colocar(q);
     }
 
-    const impacto = (colores: string[], fuerte: boolean) => {
+    const impacto = (colores: string[], fuerte: boolean, conSonido = true) => {
       fx.current?.onda(compacta ? 0.62 : 0.7, 0.6, colores[0], fuerte ? 0.75 : 0.4);
       fx.current?.estallar(compacta ? 0.62 : 0.7, 0.62, colores, fuerte ? 90 : 30, fuerte ? 1 : 0.6);
       if (fuerte) {
-        sonar.martillo();
-        vibrar([40, 30, 90]);
+        if (conSonido) {
+          sonar.martillo();
+          vibrar([40, 30, 90]);
+        }
       } else sonar.golpeSuave();
     };
 
@@ -141,7 +144,27 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       const color = comprador?.color ?? '#ffffff';
       const t = gsap.timeline();
       const capa = q('.esc-capa');
-      if (venta) {
+      const video = q('.esc-martillo-video')[0] as HTMLVideoElement | undefined;
+      if (venta && video && !rm) {
+        // ── Martillazo en video (solo TV): corte rápido con el martillo real; al desvanecerse cae el sello ──
+        t.add(() => {
+          video.currentTime = 0;
+          void video.play().catch(() => {});
+        }, 0)
+          .fromTo(video, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: 'power1.out' }, 0)
+          .add(() => {
+            sonar.martillo();
+            vibrar([40, 30, 90]);
+          }, 0.45)
+          .to(video, { opacity: 0, duration: 0.22, ease: 'power2.in' }, 0.95)
+          .add(() => impacto([color, '#ffffff', '#ffe27a'], true, false), 0.95)
+          .to(capa, { scaleY: 0.94, scaleX: 1.03, duration: 0.07, ease: 'power2.out' }, 0.95)
+          .to(capa, { scaleY: 1, scaleX: 1, duration: 0.7, ease: 'elastic.out(1, 0.35)' }, 1.02)
+          .fromTo(q('.esc-destello'), { opacity: 0.85 }, { opacity: 0, duration: 0.4, ease: 'power2.out' }, 0.95)
+          .fromTo(q('.esc-sello'), { opacity: 0, scale: 2.6, rotation: -20 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.34, ease: 'back.out(2.2)' }, 0.95)
+          .fromTo(q('.esc-venta'), { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.45, ease: 'expo.out' }, 1.0);
+        if (d !== 'vendido') t.fromTo(capa, { x: -14 }, { x: 0, duration: 0.5, ease: 'elastic.out(1.2, 0.2)' }, 1.0);
+      } else if (venta) {
         // ── Martillazo: baja en 160 ms, aplasta la escena, destello, onda y sello ──
         t.set(q('.esc-martillo'), { opacity: 1, rotation: 14, transformOrigin: '50% 94%' })
           .to(q('.esc-martillo'), { rotation: -88, duration: rm ? 0.01 : 0.16, ease: 'power4.in' })
@@ -390,6 +413,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
           <span>{carta?.compradorId ? '¡Caíste!' : '¡Se salvaron!'}</span>
         </div>
         <img className="esc-martillo" src="/media/martillo.webp" alt="" draggable={false} aria-hidden />
+        {!compacta && !esLite() && <video className="esc-martillo-video" src="/media/martillo.mp4" muted playsInline preload="auto" aria-hidden />}
       </div>
 
       <div className="esc-aviso" data-on={fase === 'ultima' ? '1' : '0'}>
