@@ -50,6 +50,7 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 ## Pendientes conocidos
 
 - El PIN de administración no está configurado en producción (falta `wrangler secret put ADMIN_PIN`).
+- `npm run deploy` sube a KV solo los archivos que cambiaron (manifiesto en la clave `__manifiesto`): el plan gratuito permite ~1000 escrituras por día y antes se subían los 323 archivos cada vez.
 - Desde las sesiones en la nube, publicar necesita `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` y un `CLOUDFLARE_API_TOKEN` cualquiera (el proxy pone el real).
 - Los trolls actuales son dibujos de muestra; faltan las fotos reales.
 - Revisar a ojo las fotos importadas (`docs/validacion-fotos.png`): alguna puede ser de otra persona con el mismo apellido.

@@ -30,6 +30,25 @@ const andar = (dir) => {
 };
 andar('dist');
 
+// Solo se suben los archivos que cambiaron (el plan gratuito de KV permite ~1000 escrituras por día).
+// La lista de lo ya subido (ruta → huella) vive en la clave __manifiesto.
+const { createHash } = await import('node:crypto');
+const huella = (p) => createHash('sha1').update(readFileSync(p)).digest('hex');
+let previo = {};
+try {
+  const r = await fetch(`${API}/storage/kv/namespaces/${ns.id}/values/__manifiesto`, { headers: { authorization: `Bearer ${token}` } });
+  if (r.ok) previo = await r.json();
+} catch {
+  /* primera vez */
+}
+const manifiesto = {};
+const cambiados = [];
+for (const p of archivos) {
+  const k = path.relative('dist', p).split(path.sep).join('/');
+  manifiesto[k] = huella(p);
+  if (previo[k] !== manifiesto[k]) cambiados.push(p);
+}
+
 let lote = [];
 let peso = 0;
 const enviar = async () => {
@@ -37,14 +56,15 @@ const enviar = async () => {
   lote = [];
   peso = 0;
 };
-for (const p of archivos) {
+for (const p of cambiados) {
   const v = readFileSync(p).toString('base64');
   if (peso + v.length > 20e6) await enviar();
   lote.push({ key: path.relative('dist', p).split(path.sep).join('/'), value: v, base64: true });
   peso += v.length;
 }
+lote.push({ key: '__manifiesto', value: JSON.stringify(manifiesto) });
 await enviar();
-console.log(`${archivos.length} archivos subidos al KV ${TITULO}`);
+console.log(`${cambiados.length} de ${archivos.length} archivos subidos al KV ${TITULO} (los demás no cambiaron)`);
 
 // Configuración de producción: igual a wrangler.jsonc pero con KV en lugar de assets.
 const cfg = JSON.parse(readFileSync('wrangler.jsonc', 'utf8').replace(/^\s*\/\/.*$/gm, ''));
