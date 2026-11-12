@@ -38,6 +38,38 @@ export const Fondo = memo(function Fondo({ paleta = 'misterio', vel = 1, classNa
   );
 });
 
+// ───────────── Pantalla completa ─────────────
+
+/** Botón de pantalla completa. No se muestra donde el navegador no lo permite (por ejemplo, iPhone). */
+export function BotonPantalla({ corto = false, className = '' }: { corto?: boolean; className?: string }) {
+  const doc = document as Document & { webkitFullscreenEnabled?: boolean; webkitFullscreenElement?: Element; webkitExitFullscreen?: () => void };
+  const raiz = document.documentElement as HTMLElement & { webkitRequestFullscreen?: () => void };
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const f = () => setOn(!!(doc.fullscreenElement || doc.webkitFullscreenElement));
+    document.addEventListener('fullscreenchange', f);
+    document.addEventListener('webkitfullscreenchange', f);
+    f();
+    return () => {
+      document.removeEventListener('fullscreenchange', f);
+      document.removeEventListener('webkitfullscreenchange', f);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!(doc.fullscreenEnabled || doc.webkitFullscreenEnabled)) return null;
+  const alternar = () => {
+    if (on) void (doc.exitFullscreen ? doc.exitFullscreen() : doc.webkitExitFullscreen?.());
+    else void (raiz.requestFullscreen ? raiz.requestFullscreen() : raiz.webkitRequestFullscreen?.());
+  };
+  return (
+    <button type="button" className={`btn-pantalla ${className}`} onClick={alternar} aria-pressed={on} aria-label={on ? 'Salir de pantalla completa' : 'Pantalla completa'} title={on ? 'Salir de pantalla completa' : 'Pantalla completa'}>
+      <svg viewBox="0 0 24 24" width="1.15em" height="1.15em" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        {on ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /> : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}
+      </svg>
+      {!corto && <span>{on ? 'Salir' : 'Pantalla completa'}</span>}
+    </button>
+  );
+}
+
 // ───────────── Avatar ─────────────
 
 export function Avatar({ src, color, off, className = '' }: { src: string; color?: string; off?: boolean; className?: string }) {

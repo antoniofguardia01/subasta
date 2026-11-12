@@ -224,3 +224,9 @@ h1, h2, h3, p { margin: 0; }
   .fondo i, .ticker-marca[data-flash='1'] b { animation: none !important; }
   .ticker-cinta { animation-duration: 120s !important; }
 }
+
+/* Botón de pantalla completa */
+.btn-pantalla { display: inline-flex; align-items: center; justify-content: center; gap: 0.5em; padding: 0.55em 0.8em; border-radius: 0.7em; background: rgba(127, 127, 127, 0.28); color: inherit; font-size: 14px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; line-height: 1; white-space: nowrap; transition: transform 120ms var(--ease-out), background-color 160ms ease; }
+.btn-pantalla:active { transform: scale(0.94); }
+.btn-pantalla[aria-pressed='true'] { background: var(--acento); color: var(--acento-tinta); }
+@media (hover: hover) and (pointer: fine) { .btn-pantalla:hover { background: rgba(127, 127, 127, 0.45); } }

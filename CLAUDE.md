@@ -23,6 +23,10 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 - `src/styles/fuentes.css` — generado. Cada escenario tiene una familia compuesta: `font-stretch: 62%` = titular, `100%` = texto, `125%` = placa.
 - `tests/engine.test.ts` — tests del motor. Correr `npm test` después de tocar `shared/`.
 
+## Pantallas
+
+- Celular, iPad y PC usan `/r/CODIGO` (columna centrada de hasta 680 px; en PC la barra espaciadora oferta). Cualquier dispositivo puede ser **escenario** (`/stage/CODIGO`, sin jugar): botón "Usar como pantalla principal" en el lobby y el menú. Todos tienen botón de pantalla completa (`BotonPantalla`; no existe en iPhone).
+
 ## Cómo probar en navegador
 
 `npm run dev` levanta todo en `:8787`. Para ver los resultados sin jugar 11 rondas: `POST /api/admin/avanzar` con `{"sala":"ABCD","hasta":"final"}` y la cabecera `x-admin-pin` (local: el de `.dev.vars`).
@@ -31,7 +35,7 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 
 - **Agregar o corregir un jugador:** editar `data/players.json` (id, nombre, apellido, pos, pais, rating, rareza, precioMinimo, etiqueta, dato, fotos). Dejar `fotos: []` y correr `npm run photos:import -- <id>`; si la búsqueda trae a otra persona, poner el campo `ea` con el id correcto y repetir.
 - **Cambiar un precio mínimo:** `precioMinimo` en `data/players.json`. Escala: leyenda 150–250, prime 100–150, oro 60–100, plata 30–60, común 10–30.
-- **Trolls, jugadores, precios y mensajes en producción:** panel web en `/admin` (PIN) o por línea de comandos con `SUBASTA_PIN=… node scripts/admin.mjs <comando>` (sin argumentos muestra la ayuda). Comandos: `troll:add <fotos…> --nombre --desc`, `troll:list`, `troll:set`, `troll:foto`, `troll:borrar`, `jugador:buscar`, `jugador:set <id> --precio N`, `jugador:reset`, `ticker "texto" --sala ABCD`. Las fotos que el dueño manda por el chat: guardarlas en el scratchpad y subirlas con `troll:add` (sin `--nombre` quedan en "Sin nombre / pendientes" para que él las nombre). Si hay fotos con fondo, intentar `--sin-fondo` (requiere `pip install rembg onnxruntime`); si no, se muestran en óvalo.
+- **Trolls, jugadores, precios y mensajes en producción:** panel web en `/admin` (PIN) o por línea de comandos con `SUBASTA_PIN=… node scripts/admin.mjs <comando>` (sin argumentos muestra la ayuda). Comandos: `troll:add <fotos…> --nombre --desc`, `troll:list`, `troll:set`, `troll:foto`, `troll:borrar`, `jugador:buscar`, `jugador:set <id> --precio N`, `jugador:reset`, `ticker "texto" --sala ABCD`. Las fotos que el dueño manda por el chat: guardarlas en el scratchpad y subirlas con `troll:add` (sin `--nombre` quedan en "Sin nombre / pendientes" para que él las nombre). Para quitar el fondo hay un script de ejemplo probado: `rembg` (`pip install rembg onnxruntime`, modelo u2net, descarga de GitHub) + recorte de busto; cortes de las fotos del dueño ya subidos. Con `--sin-fondo` el CLI lo hace solo; si no, se muestran en óvalo.
 - Los trolls del panel reemplazan a los dibujos de muestra de `data/trolls.json` apenas hay uno cargado. Todo lo editado vive en el Durable Object `CatalogDO` (`worker/catalog.ts`), no en el repo; `shared/catalogo.ts` lo mezcla con `data/*.json`.
 - **Agregar burlas al ticker:** `data/ticker.json` → `plantillas` (`disparador`, `intensidad` 1–3, `texto` con `{jugador}`, `{monto}`, `{carta}`, `{rival}`, `{troll}`, `{descripcion}`, `{posicion}`, `{ultimo}`).
 

@@ -157,3 +157,5 @@
   .ini-haz, .ini-desfile img, .tvm-radar i, .ini-btn--tv[data-sugerido] { animation: none; }
 }
 :root[data-lite='1'] .ini-haces, :root[data-lite='1'] .ini-desfile { display: none; }
+
+.ini-pantalla { flex: none; margin-left: 8px; background: rgba(var(--ini-velo), 0.6); color: var(--ini-tinta); }

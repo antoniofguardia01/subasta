@@ -3,13 +3,14 @@ import { CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef
 import gsap from 'gsap';
 import type { EstadoPublico, JugadorSala } from '../../shared/types';
 import { MAX_PARTICIPANTES, POS_NOMBRE } from '../../shared/types';
-import { Avatar, Cancha, Fondo, Numero, QR, Ticker, cuentaEquipo } from '../components/comunes';
+import { Avatar, BotonPantalla, Cancha, Fondo, Numero, QR, Ticker, cuentaEquipo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
 import { Reloj, Tic } from '../components/Reloj';
 import { Ruleta } from '../components/Ruleta';
 import { irConTelon } from '../lib/ruta';
 import { Sala, useSala } from '../lib/sala';
+import { esTele } from '../lib/tele';
 import { activarSonido, alCambiarSonido, sonar, sonidoActivo } from '../lib/sonido';
 import { TEMAS } from '../lib/temas';
 import { reducirMovimiento } from '../lib/util';
@@ -175,6 +176,11 @@ export function Escenario({ codigo }: { codigo: string }) {
           {s.fase === 'final' && <FinalTV s={s} fx={fx} />}
         </div>
 
+        {!enJuego && (
+          <div className="tv-pantalla">
+            <BotonPantalla />
+          </div>
+        )}
         <PanelTV s={s} panel={enJuego ? (s.panel ?? panel) : null} />
         <div className="tv-ticker">
           <Ticker mensajes={s.ticker} pausa={pausarTicker} alto={64} />
@@ -297,6 +303,10 @@ function Tira({ s, panel, setPanel, conSonido }: { s: EstadoPublico; panel: Pane
         <button data-on={conSonido ? '1' : '0'} onClick={() => void activarSonido(!conSonido)}>
           {conSonido ? '♪ Con sonido' : '♪ Silencio'}
         </button>
+        <BotonPantalla corto />
+        {!esTele() && (
+          <button onClick={(e) => void irConTelon(`/r/${s.codigo}`, { origen: { x: e.clientX, y: e.clientY } })}>Mi pantalla</button>
+        )}
       </div>
     </div>
   );

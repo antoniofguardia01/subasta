@@ -3,7 +3,7 @@ import { CSSProperties, FormEvent, useCallback, useEffect, useLayoutEffect, useR
 import gsap from 'gsap';
 import type { Ajustes, EstadoPublico, JugadorSala, MotivoRechazo } from '../../shared/types';
 import { MAX_PARTICIPANTES, POS_NOMBRE, rangoTrolls } from '../../shared/types';
-import { Avatar, Fondo, Numero, Ticker, cuentaEquipo } from '../components/comunes';
+import { Avatar, BotonPantalla, Fondo, Numero, Ticker, cuentaEquipo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
 import { Reloj, Tic } from '../components/Reloj';
@@ -235,6 +235,10 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
           <button className="btn" onClick={() => setHoja('tema')}>
             Escenario
           </button>
+          <button className="btn" onClick={(e) => void irConTelon(`/stage/${s.codigo}`, { origen: { x: e.clientX, y: e.clientY }, cartel: 'Escenario' })}>
+            Usar como pantalla principal
+          </button>
+          <BotonPantalla className="btn-pantalla--lobby" />
         </div>
       </div>
 
@@ -605,11 +609,25 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
     sala.enviar({ t: 'ofertar', uid: carta.uid });
   };
 
+  const alTocarRef = useRef<() => void>(() => {});
   const alTocar = () => {
     if (puedeOfertar) return ofertar();
     // Tocó cuando ya había caído el martillo: el servidor lo rechaza por tarde (y el ticker se burla).
     if (carta && s.fase === 'martillo' && carta.compradorId && carta.compradorId !== yo.id && !yo.equipo[r?.hueco ?? -1]) sala.enviar({ t: 'ofertar', uid: carta.uid });
   };
+
+  // En PC o iPad con teclado: la barra espaciadora oferta.
+  useEffect(() => {
+    const tecla = (e: KeyboardEvent) => {
+      if (e.code !== 'Space' || e.repeat || document.activeElement !== document.body) return;
+      e.preventDefault();
+      alTocarRef.current();
+    };
+    addEventListener('keydown', tecla);
+    return () => removeEventListener('keydown', tecla);
+  }, []);
+
+  alTocarRef.current = alTocar;
 
   const alVolar = useCallback((origen: DOMRect, img: string, pid: string) => {
     const chip = raiz.current?.querySelector<HTMLElement>(pid === yo.id ? '[data-destino="equipo"]' : `[data-chip="${pid}"]`);
@@ -675,6 +693,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
             </button>
           </>
         )}
+        <BotonPantalla corto className="j-pantalla" />
         <button className="j-menu" onClick={() => setHoja('menu')} aria-label="Menú">
           <i />
           <i />
@@ -864,6 +883,10 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
           <button className="btn" onClick={() => setHoja('tema')}>
             Cambiar escenario
           </button>
+          <button className="btn" onClick={(e) => void irConTelon(`/stage/${s.codigo}`, { origen: { x: e.clientX, y: e.clientY }, cartel: 'Escenario' })}>
+            Usar esta pantalla como escenario
+          </button>
+          <BotonPantalla className="btn-pantalla--menu" />
           <BotonSonido />
           {anfitrion && (
             <div className="menu-expulsar">

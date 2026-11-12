@@ -1,7 +1,7 @@
 // Pantalla de inicio: el estadio a oscuras, los reflectores se encienden, cae el martillo y se arma el logo.
 import { CSSProperties, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { Fondo, Ticker } from '../components/comunes';
+import { BotonPantalla, Fondo, Ticker } from '../components/comunes';
 import { Fx, FxApi } from '../components/Fx';
 import { irConTelon } from '../lib/ruta';
 import { activarSonido, sonar, sonidoPreferido } from '../lib/sonido';
@@ -290,6 +290,7 @@ export function Inicio() {
           ))}
           <em key={tema}>{TEMAS.find((t) => t.id === tema)?.nombre}</em>
         </div>
+        <BotonPantalla corto className="ini-pantalla" />
       </footer>
       <button className="ini-sonido ini-entra" data-on={sonido ? '1' : '0'} onClick={() => (setSonido(!sonido), void activarSonido(!sonido))}>
         ♪ {sonido ? 'Con sonido' : 'Silencio'}
