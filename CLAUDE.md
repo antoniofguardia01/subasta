@@ -57,6 +57,7 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 ## Pendientes conocidos
 
 - El PIN de administración de producción es un secreto del Worker (lo eligió el dueño; no escribirlo en el repo).
+- `scripts/publicar.mjs` tiene `--ver` (cuenta cuántos archivos subiría y sale sin escribir nada), se niega a subir más de 800 archivos sin `--forzar` (límite diario ~1000 escrituras) y guarda el manifiesto después de cada lote. Necesita `CLOUDFLARE_ACCOUNT_ID` (cuenta personal; confirmarlo con el dueño antes de publicar).
 - `npm run deploy` sube a KV solo los archivos que cambiaron (manifiesto en la clave `__manifiesto`): el plan gratuito permite ~1000 escrituras por día y antes se subían los 323 archivos cada vez.
 - Desde las sesiones en la nube, publicar necesita `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` y un `CLOUDFLARE_API_TOKEN` cualquiera (el proxy pone el real).
 - Pendiente al publicar: correr `scripts/rostros.py` en producción (los trolls de allá todavía no tienen `rostro`) y terminar de importar las fotos de Wikipedia (`python3 scripts/importar-wiki.py`) de los ~26 jugadores nuevos sin foto (Zlatan, Pelé, Ronaldinho, Cruyff, Buffon, Xavi, Iniesta…).

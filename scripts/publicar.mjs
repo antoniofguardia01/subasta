@@ -49,20 +49,40 @@ for (const p of archivos) {
   if (previo[k] !== manifiesto[k]) cambiados.push(p);
 }
 
+// Protecciones contra el límite diario de escrituras del plan gratuito de KV (~1000 por día).
+const LIMITE_SEGURO = 800;
+console.log(`${cambiados.length} de ${archivos.length} archivos cambiaron desde la última publicación.`);
+if (process.argv.includes('--ver')) {
+  console.log('(solo mirar: no se subió nada)');
+  process.exit(0);
+}
+if (cambiados.length > LIMITE_SEGURO && !process.argv.includes('--forzar')) {
+  console.error(`Son más de ${LIMITE_SEGURO} archivos: casi todo el límite diario del plan gratuito. Si de verdad quieres seguir: npm run deploy -- --forzar`);
+  process.exit(1);
+}
+
+// El manifiesto se guarda después de cada lote que sale bien: si se corta a la mitad, lo ya subido no se vuelve a escribir.
+const hecho = { ...previo };
 let lote = [];
+let claves = [];
 let peso = 0;
 const enviar = async () => {
-  if (lote.length) await cf(`/storage/kv/namespaces/${ns.id}/bulk`, { method: 'PUT', body: JSON.stringify(lote) });
+  if (!lote.length) return;
+  await cf(`/storage/kv/namespaces/${ns.id}/bulk`, { method: 'PUT', body: JSON.stringify(lote) });
+  for (const k of claves) hecho[k] = manifiesto[k];
+  await cf(`/storage/kv/namespaces/${ns.id}/bulk`, { method: 'PUT', body: JSON.stringify([{ key: '__manifiesto', value: JSON.stringify(hecho) }]) });
   lote = [];
+  claves = [];
   peso = 0;
 };
 for (const p of cambiados) {
   const v = readFileSync(p).toString('base64');
   if (peso + v.length > 20e6) await enviar();
-  lote.push({ key: path.relative('dist', p).split(path.sep).join('/'), value: v, base64: true });
+  const k = path.relative('dist', p).split(path.sep).join('/');
+  lote.push({ key: k, value: v, base64: true });
+  claves.push(k);
   peso += v.length;
 }
-lote.push({ key: '__manifiesto', value: JSON.stringify(manifiesto) });
 await enviar();
 console.log(`${cambiados.length} de ${archivos.length} archivos subidos al KV ${TITULO} (los demás no cambiaron)`);
 
