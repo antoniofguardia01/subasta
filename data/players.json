@@ -4771,9 +4771,12 @@
   "precioMinimo": 30,
   "etiqueta": "PLATA · EL PULPO JUBILADO",
   "dato": "Volvió de una pausa eterna. Los guantes también necesitaban vacaciones.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/david-de-gea.webp"
+  ],
   "buscar": "David de Gea",
-  "wiki": "David de Gea"
+  "wiki": "David de Gea",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/6/68/David_de_Gea_2017.jpg"
  },
  {
   "id": "jesse-lingard",
