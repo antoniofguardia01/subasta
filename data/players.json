@@ -5215,9 +5215,12 @@
   "precioMinimo": 170,
   "etiqueta": "LEYENDA · EL FLACO VOLADOR",
   "dato": "Inventó un giro, un estilo y media filosofía del fútbol.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/johan-cruyff.webp"
+  ],
   "buscar": "Johan Cruyff",
-  "wiki": "Johan Cruyff"
+  "wiki": "Johan Cruyff",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Johan_Cruijff_%281974%29.jpg"
  },
  {
   "id": "franz-beckenbauer",
