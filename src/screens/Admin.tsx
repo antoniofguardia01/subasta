@@ -1,5 +1,7 @@
 // Panel de administración (protegido con PIN): trolls con sus fotos, jugadores y precios, mensajes del ticker.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { IconoCerrar } from '../components/Iconos';
 import { Fondo } from '../components/comunes';
 import { irConTelon } from '../lib/ruta';
 import { Avatar } from '../components/comunes';
@@ -150,11 +152,11 @@ function Trolls({ est, api, recargar, avisar }: Props) {
       {pendientes.length > 0 && (
         <>
           <h2>Sin nombre / pendientes ({pendientes.length})</h2>
-          <div className="admin-grilla">{pendientes.map((t) => <TrollCard key={t.id + t.foto} t={t} api={api} recargar={recargar} avisar={avisar} />)}</div>
+          <div className="admin-grilla">{pendientes.map((t) => <TrollCard key={t.id + t.foto.replace(/&r=[^&]*/, '')} t={t} api={api} recargar={recargar} avisar={avisar} />)}</div>
         </>
       )}
       <h2>Galería ({listos.length})</h2>
-      <div className="admin-grilla">{listos.map((t) => <TrollCard key={t.id + t.foto} t={t} api={api} recargar={recargar} avisar={avisar} />)}</div>
+      <div className="admin-grilla">{listos.map((t) => <TrollCard key={t.id + t.foto.replace(/&r=[^&]*/, '')} t={t} api={api} recargar={recargar} avisar={avisar} />)}</div>
     </section>
   );
 }
@@ -166,6 +168,7 @@ function TrollCard({ t, api, recargar, avisar }: { t: TrollA } & Omit<Props, 'es
   const foto = useRef<HTMLInputElement>(null);
   const [ros, setRos] = useState<number[] | undefined>(t.rostro);
   const [ar, setAr] = useState(1);
+  const [enc, setEnc] = useState(false);
   const baseFoto = t.foto.replace(/&r=[^&]*/, '');
   const guardar = async (extra: object = {}) => {
     await api('c/troll/' + t.id, 'PUT', { nombre, descripcion: desc, precioMinimo: precio, ...extra });
@@ -187,37 +190,10 @@ function TrollCard({ t, api, recargar, avisar }: { t: TrollA } & Omit<Props, 'es
         Precio de salida suelto
         <input type="number" min={1} max={100} value={precio} onChange={(e) => setPrecio(Number(e.target.value))} onBlur={() => precio !== t.precioMinimo && void guardar()} />
       </label>
-      <details className="admin-enc">
-        <summary>Encuadre del avatar{ros ? '' : ' (sin ajustar)'}</summary>
-        <p>Toca la cara en la foto y ajusta el tamaño. Así se ve en el círculo:</p>
-        <div className="admin-enc-fila">
-          <Avatar src={ros ? `${baseFoto}&r=${ros.join(',')}` : baseFoto} className="admin-enc-prev" />
-          <input
-            type="range"
-            min={10}
-            max={90}
-            value={Math.round((ros?.[2] ?? 0.4) * 100)}
-            onChange={(e) => setRos([ros?.[0] ?? 0.5, ros?.[1] ?? 0.35, Number(e.target.value) / 100, ar])}
-            onPointerUp={() => ros && void guardar({ rostro: ros })}
-            onKeyUp={() => ros && void guardar({ rostro: ros })}
-            aria-label="Tamaño de la cara"
-          />
-        </div>
-        <div className="admin-enc-foto">
-          <img
-            src={baseFoto}
-            alt=""
-            onLoad={(e) => setAr(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight)}
-            onClick={(e) => {
-              const r = e.currentTarget.getBoundingClientRect();
-              const n = [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height, ros?.[2] ?? 0.4, ar];
-              setRos(n);
-              void guardar({ rostro: n });
-            }}
-          />
-          {ros && <i style={{ left: `${ros[0] * 100}%`, top: `${ros[1] * 100}%`, width: `${ros[2] * 100}%` }} />}
-        </div>
-      </details>
+      <button className="admin-enc-boton" data-ajustado={ros ? '1' : '0'} onClick={() => setEnc(true)}>
+        Vista previa y encuadre{ros ? '' : ' · sin ajustar'}
+      </button>
+      {enc && <EncuadreModal nombre={nombre} opaca={t.opaca} baseFoto={baseFoto} ros={ros} setRos={setRos} ar={ar} setAr={setAr} guardar={guardar} cerrar={() => setEnc(false)} />}
       <div className="admin-fila">
         <button onClick={() => void guardar({ activo: !t.activo })}>{t.activo ? 'Desactivar' : 'Activar'}</button>
         <button onClick={() => foto.current?.click()}>Cambiar foto</button>
@@ -367,5 +343,112 @@ function Mensajes({ est, api, recargar, avisar }: Props) {
         </div>
       ))}
     </section>
+  );
+}
+
+// ───────────── Vista previa y encuadre de un troll ─────────────
+
+function EncuadreModal({ nombre, opaca, baseFoto, ros, setRos, ar, setAr, guardar, cerrar }: {
+  nombre: string;
+  opaca: boolean;
+  baseFoto: string;
+  ros: number[] | undefined;
+  setRos: (r: number[] | undefined) => void;
+  ar: number;
+  setAr: (a: number) => void;
+  guardar: (extra?: object) => Promise<void>;
+  cerrar: () => void;
+}) {
+  useEffect(() => {
+    const tecla = (e: KeyboardEvent) => e.key === 'Escape' && cerrar();
+    addEventListener('keydown', tecla);
+    return () => removeEventListener('keydown', tecla);
+  }, [cerrar]);
+  const conRostro = ros ? `${baseFoto}&r=${ros.join(',')}` : baseFoto;
+  const tam = Math.round((ros?.[2] ?? 0.4) * 100);
+  const mostrar = (n: string, px: number) => (
+    <figure>
+      <span style={{ fontSize: px }}>
+        <Avatar src={conRostro} className="enc-av" />
+      </span>
+      <figcaption>{n}</figcaption>
+    </figure>
+  );
+  return createPortal(
+    <div className="enc-fondo" onClick={cerrar}>
+      <div className="enc-caja" role="dialog" aria-label="Vista previa y encuadre" onClick={(e) => e.stopPropagation()}>
+        <header>
+          <b>{nombre || 'Sin nombre'}</b>
+          <button onClick={cerrar} aria-label="Cerrar">
+            <IconoCerrar />
+          </button>
+        </header>
+        <div className="enc-cuerpo">
+          <div className="enc-izq">
+            <p>
+              <b>1.</b> Toca la cara en la foto
+            </p>
+            <div className="admin-enc-foto">
+              <img
+                src={baseFoto}
+                alt=""
+                onLoad={(e) => setAr(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight)}
+                onClick={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  const n = [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height, ros?.[2] ?? 0.4, ar];
+                  setRos(n);
+                  void guardar({ rostro: n });
+                }}
+              />
+              {ros && <i style={{ left: `${ros[0] * 100}%`, top: `${ros[1] * 100}%`, width: `${ros[2] * 100}%` }} />}
+            </div>
+            <p>
+              <b>2.</b> Ajusta el tamaño de la cara <span>{tam}%</span>
+            </p>
+            <input
+              type="range"
+              min={10}
+              max={90}
+              value={tam}
+              onChange={(e) => setRos([ros?.[0] ?? 0.5, ros?.[1] ?? 0.35, Number(e.target.value) / 100, ar])}
+              onPointerUp={() => ros && void guardar({ rostro: ros })}
+              onKeyUp={() => ros && void guardar({ rostro: ros })}
+              aria-label="Tamaño de la cara"
+            />
+          </div>
+          <div className="enc-der">
+            <p>Así se ve en el juego (elegir cara, fichas y lista)</p>
+            <div className="enc-avatares">
+              {mostrar('Grande', 96)}
+              {mostrar('Ficha', 56)}
+              {mostrar('Chico', 34)}
+            </div>
+            <p>Y cuando sale la carta</p>
+            <div className="enc-carta" data-opaca={opaca ? '1' : undefined}>
+              <img src={baseFoto} alt="" />
+              <div>
+                <small>Fichaje sorpresa</small>
+                <b>{nombre || 'Sin nombre'}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer>
+          <button
+            onClick={() => {
+              setRos(undefined);
+              void guardar({ rostro: null });
+            }}
+            disabled={!ros}
+          >
+            Quitar encuadre
+          </button>
+          <button className="admin-primario" onClick={cerrar}>
+            Listo
+          </button>
+        </footer>
+      </div>
+    </div>,
+    document.body,
   );
 }
