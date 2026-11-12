@@ -31,7 +31,8 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 
 - **Agregar o corregir un jugador:** editar `data/players.json` (id, nombre, apellido, pos, pais, rating, rareza, precioMinimo, etiqueta, dato, fotos). Dejar `fotos: []` y correr `npm run photos:import -- <id>`; si la búsqueda trae a otra persona, poner el campo `ea` con el id correcto y repetir.
 - **Cambiar un precio mínimo:** `precioMinimo` en `data/players.json`. Escala: leyenda 150–250, prime 100–150, oro 60–100, plata 30–60, común 10–30.
-- **Agregar un troll:** foto con fondo transparente en `public/img/trolls/` y una entrada en `data/trolls.json` (`id, nombre, descripcion, precioMinimo, rating, foto, activo`). `precioMinimo` solo se usa si la sala apaga "trolls camuflados". *(El comando `troll:add` y el panel web llegan en la etapa 4.)*
+- **Trolls, jugadores, precios y mensajes en producción:** panel web en `/admin` (PIN) o por línea de comandos con `SUBASTA_PIN=… node scripts/admin.mjs <comando>` (sin argumentos muestra la ayuda). Comandos: `troll:add <fotos…> --nombre --desc`, `troll:list`, `troll:set`, `troll:foto`, `troll:borrar`, `jugador:buscar`, `jugador:set <id> --precio N`, `jugador:reset`, `ticker "texto" --sala ABCD`. Las fotos que el dueño manda por el chat: guardarlas en el scratchpad y subirlas con `troll:add` (sin `--nombre` quedan en "Sin nombre / pendientes" para que él las nombre). Si hay fotos con fondo, intentar `--sin-fondo` (requiere `pip install rembg onnxruntime`); si no, se muestran en óvalo.
+- Los trolls del panel reemplazan a los dibujos de muestra de `data/trolls.json` apenas hay uno cargado. Todo lo editado vive en el Durable Object `CatalogDO` (`worker/catalog.ts`), no en el repo; `shared/catalogo.ts` lo mezcla con `data/*.json`.
 - **Agregar burlas al ticker:** `data/ticker.json` → `plantillas` (`disparador`, `intensidad` 1–3, `texto` con `{jugador}`, `{monto}`, `{carta}`, `{rival}`, `{troll}`, `{descripcion}`, `{posicion}`, `{ultimo}`).
 
 ## Plan por etapas
@@ -39,7 +40,7 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 1. **Slice jugable** ✅ — inicio, salas, emparejar TV, mazo, subasta completa, ruleta, resultados, 5 escenarios, 78 cartas con foto, trolls de muestra.
 2. **Publicación y robustez** ✅ — publicado en `subasta-futbolera.antoniofguardia01.workers.dev` (`npm run deploy`; los archivos estáticos van al KV `subasta-futbolera-archivos`). La partida se guarda sola en el almacenamiento del Durable Object (`Partida.exportar/importar`) y se restaura tras un reinicio; probado matando el servidor en plena puja.
 3. **Contenido** ✅ — 270 jugadores con foto (30 por posición, 15+15 laterales) y precio mínimo (`docs/precios.md`, `docs/precios.csv`); `npm run simulate` corre partidas de bots para calibrar. Pendiente: leyendas históricas (Maradona, Pelé…) sin fuente de retrato.
-4. **Administración** — panel web con PIN (trolls con nombre/descripción/pendientes, jugadores, precios, ticker) y la vía por Claude (`troll:add` + endpoints).
+4. **Administración** ✅ — panel `/admin` con PIN (trolls con foto/nombre/descripción/pendientes, jugadores y precios, mensajes y plantillas del ticker) y CLI `scripts/admin.mjs` para Claude.
 5. **Pulido** — repaso de animación pantalla por pantalla, sonido completo, íconos dibujados (hoy hay glifos), modo lite en TV real, escaneo de QR, prueba con 5–10 celulares.
 
 ## Pendientes conocidos

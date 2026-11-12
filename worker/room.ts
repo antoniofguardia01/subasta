@@ -4,6 +4,7 @@ import { Ticker, Plantilla } from '../shared/ticker';
 import type { EstadoPublico, Evento, Jugador, MsgCliente, MsgServidor, Troll } from '../shared/types';
 import jugadoresJson from '../data/players.json';
 import trollsJson from '../data/trolls.json';
+import { CatalogoDatos, jugadoresFinal, plantillasFinal, trollsFinal } from '../shared/catalogo';
 import tickerJson from '../data/ticker.json';
 
 interface Conexion {
@@ -33,14 +34,27 @@ export class RoomDO implements DurableObject {
 
   constructor(
     private state: DurableObjectState,
-    private env: unknown,
+    private env: { CATALOG?: DurableObjectNamespace },
   ) {}
 
+  private cat: CatalogoDatos | null = null;
+
+  /** Trae lo editado en el panel (trolls, precios, jugadores nuevos, plantillas). Si falla, juega con lo del repo. */
+  private async cargarCatalogo() {
+    try {
+      const c = this.env.CATALOG!;
+      this.cat = (await (await c.get(c.idFromName('global')).fetch('https://do/datos')).json()) as CatalogoDatos;
+    } catch {
+      this.cat = null;
+    }
+    this.ticker.setPlantillas(plantillasFinal((tickerJson as { plantillas: Plantilla[] }).plantillas, this.cat));
+  }
+
   private pool(): Jugador[] {
-    return jugadoresJson as unknown as Jugador[];
+    return jugadoresFinal(jugadoresJson as unknown as Jugador[], this.cat);
   }
   private trolls(): Troll[] {
-    return trollsJson as unknown as Troll[];
+    return trollsFinal(trollsJson as unknown as Troll[], this.cat);
   }
 
   async fetch(req: Request): Promise<Response> {
@@ -55,6 +69,7 @@ export class RoomDO implements DurableObject {
       this.partida = new Partida(codigo);
       this.claveCreador = clave ?? null;
       this.ticker = new Ticker((tickerJson as { plantillas: Plantilla[] }).plantillas);
+      await this.cargarCatalogo();
       this.programarLimpieza();
       return Response.json({ ok: true, codigo });
     }
@@ -71,9 +86,14 @@ export class RoomDO implements DurableObject {
 
     if (ruta === '/admin/ticker' && req.method === 'POST') {
       if (!this.partida) return Response.json({ ok: false, error: 'sala inexistente' }, { status: 404 });
-      const { texto, fijo } = (await req.json()) as { texto: string; fijo?: boolean };
-      this.ticker.manual(String(texto), !!fijo);
-      this.difundir();
+      const { texto, fijo, en } = (await req.json()) as { texto: string; fijo?: boolean; en?: number };
+      const mandar = () => {
+        this.ticker.manual(String(texto), !!fijo);
+        this.difundir();
+      };
+      // `en` = segundos de espera (mensaje programado)
+      if (en && en > 0) setTimeout(mandar, Math.min(en, 3600) * 1000);
+      else mandar();
       return Response.json({ ok: true });
     }
 
@@ -127,6 +147,7 @@ export class RoomDO implements DurableObject {
       await this.state.storage.deleteAll();
       return;
     }
+    await this.cargarCatalogo();
     this.codigo = copia.codigo;
     this.claveCreador = copia.claveCreador;
     this.partida = new Partida(copia.codigo);
@@ -211,6 +232,7 @@ export class RoomDO implements DurableObject {
         break;
       case 'empezar': {
         if (!esAnfitrion) return;
+        await this.cargarCatalogo();
         const semilla = crypto.getRandomValues(new Uint32Array(1))[0];
         if (!p.empezar(this.pool(), this.trolls(), semilla, ahora))
           return this.enviar(ws, { t: 'error', codigo: 'faltan', texto: 'Hacen falta al menos 2 participantes para empezar.' });

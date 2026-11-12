@@ -1,14 +1,18 @@
 // Entrada del Worker: API + enrutado a los Durable Objects. El frontend lo sirven los assets estáticos.
 import trollsJson from '../data/trolls.json';
 import jugadoresJson from '../data/players.json';
+import tickerJson from '../data/ticker.json';
+import { CatalogoDatos, jugadoresFinal, trollsFinal } from '../shared/catalogo';
 import type { Jugador, Troll } from '../shared/types';
 
 export { RoomDO } from './room';
 export { RegistryDO } from './registry';
+export { CatalogDO } from './catalog';
 
 interface Env {
   ROOM: DurableObjectNamespace;
   REGISTRY: DurableObjectNamespace;
+  CATALOG: DurableObjectNamespace;
   ASSETS?: Fetcher;
   /** En producción los archivos estáticos viven en KV (ver scripts/publicar.mjs). */
   ARCHIVOS?: KVNamespace;
@@ -41,6 +45,16 @@ const codigoValido = (c: string) => /^[A-Z]{4,5}$/.test(c);
 function sala(env: Env, codigo: string) {
   return env.ROOM.get(env.ROOM.idFromName(codigo));
 }
+function catalogo(env: Env) {
+  return env.CATALOG.get(env.CATALOG.idFromName('global'));
+}
+async function datosCatalogo(env: Env): Promise<CatalogoDatos | null> {
+  try {
+    return (await (await catalogo(env).fetch('https://do/datos')).json()) as CatalogoDatos;
+  } catch {
+    return null;
+  }
+}
 function registro(env: Env) {
   return env.REGISTRY.get(env.REGISTRY.idFromName('global'));
 }
@@ -58,10 +72,16 @@ export default {
       const r = await sala(env, codigo).fetch(`https://do/foto/${encodeURIComponent(partes[2])}`);
       if (!r.ok) return new Response('no', { status: 404 });
       const { foto } = (await r.json()) as { foto: string };
-      const img = await servir(env, new Request(new URL(foto, url.origin)));
+      const img = foto.startsWith('/catalogo/') ? await catalogo(env).fetch(`https://do/img/${foto.split('?')[0].slice(10).replace('.webp', '')}`) : await servir(env, new Request(new URL(foto, url.origin)));
       const h = new Headers(img.headers);
       h.set('cache-control', 'private, max-age=86400, immutable');
       return new Response(img.body, { status: img.status, headers: h });
+    }
+
+    // Fotos del catálogo (trolls y jugadores editados): públicas, con versión en la URL.
+    if (partes[0] === 'catalogo' && partes.length === 3) {
+      const r = await catalogo(env).fetch(`https://do/img/${partes[1]}/${partes[2].replace('.webp', '')}`);
+      return r;
     }
 
     if (partes[0] !== 'api') return servir(env, req);
@@ -86,9 +106,10 @@ export default {
 
     // ── Datos públicos del lobby (galería de avatares) ──
     if (partes[1] === 'datos') {
-      const trolls = (trollsJson as unknown as Troll[]).filter((t) => t.activo).map((t) => ({ id: t.id, nombre: t.nombre, foto: t.foto }));
+      const cat = await datosCatalogo(env);
+      const trolls = trollsFinal(trollsJson as unknown as Troll[], cat).filter((t) => t.activo).map((t) => ({ id: t.id, nombre: t.nombre || 'Sin nombre', foto: t.foto }));
       // Algunas fotos al azar para el desfile de siluetas de la pantalla de inicio.
-      const conFoto = (jugadoresJson as unknown as Jugador[]).filter((j) => j.fotos?.length);
+      const conFoto = jugadoresFinal(jugadoresJson as unknown as Jugador[], cat).filter((j) => j.fotos?.length);
       const siluetas: string[] = [];
       for (let i = 0; i < 9 && conFoto.length; i++) siluetas.push(conFoto.splice(Math.floor(Math.random() * conFoto.length), 1)[0].fotos[0]);
       return Response.json({ avatares: trolls, siluetas }, { headers: { 'cache-control': 'no-store' } });
@@ -119,6 +140,21 @@ export default {
         return sala(env, codigo).fetch('https://do/admin/avanzar', { method: 'POST', body: JSON.stringify(cuerpo) });
       }
       if (partes[2] === 'ping') return json({ ok: true });
+      // Estado completo para el panel: todo mezclado (repo + ediciones).
+      if (partes[2] === 'estado') {
+        const cat = await datosCatalogo(env);
+        const base = jugadoresJson as unknown as Jugador[];
+        const ids = new Set(base.map((j) => j.id));
+        return json({
+          jugadores: jugadoresFinal(base, cat).map((j) => ({ ...j, editado: !!cat?.overrides[j.id], propio: !ids.has(j.id) })),
+          trolls: (cat?.trolls ?? []).map((t) => ({ ...t, foto: `/catalogo/troll/${t.id}.webp?v=${t.v}` })),
+          muestras: !cat?.trolls.length,
+          plantillasBase: (tickerJson as { plantillas: unknown[] }).plantillas,
+          plantillas: cat?.plantillas ?? { custom: [], apagadas: [] },
+        });
+      }
+      // Todo lo demás de edición va directo al catálogo: /api/admin/c/troll, /api/admin/c/jugador/ID, /api/admin/c/plantillas…
+      if (partes[2] === 'c') return catalogo(env).fetch(new Request(`https://do/${partes.slice(3).join('/')}`, { method: req.method, body: req.method === 'GET' || req.method === 'DELETE' ? undefined : await req.text() }));
     }
 
     return json({ error: 'no encontrado' }, 404);

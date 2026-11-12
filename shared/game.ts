@@ -608,6 +608,7 @@ export class Partida {
       img: this.img(c),
       pos: c.pos,
       hueco: c.hueco,
+      marco: c.marco,
     };
   }
 

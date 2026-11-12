@@ -6,10 +6,12 @@ import './styles/escena.css';
 import './styles/escenario.css';
 import './styles/jugador.css';
 import './styles/inicio.css';
+import './styles/admin.css';
 import { Escenario } from './screens/Escenario';
 import { Inicio } from './screens/Inicio';
 import { Jugador } from './screens/Jugador';
 import { Tv } from './screens/Tv';
+import { Admin } from './screens/Admin';
 import { Vincular } from './screens/Vincular';
 import { ir, irConTelon, useRuta } from './lib/ruta';
 import { alLlamarTele, encenderTele, esTele, teleEnSala } from './lib/tele';
@@ -43,6 +45,7 @@ function App() {
   if (partes[0] === 'r' && codigo) return <Jugador key={codigo} codigo={codigo} />;
   if (partes[0] === 'v' && codigo) return <Vincular key={codigo} codigo={codigo} />;
   if (partes[0] === 'tv') return <Tv />;
+  if (partes[0] === 'admin') return <Admin />;
   return <Inicio />;
 }
 

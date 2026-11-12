@@ -13,7 +13,8 @@
     "photos:import": "tsx scripts/import-photos.ts",
     "deploy": "npm run build && node scripts/publicar.mjs",
     "fuentes": "node scripts/fuentes.mjs",
-    "fotos:hoja": "python3 scripts/hoja-validacion.py"
+    "fotos:hoja": "python3 scripts/hoja-validacion.py",
+    "admin": "node scripts/admin.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.1",

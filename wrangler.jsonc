@@ -1,5 +1,5 @@
 {
-  // Un solo Worker: sirve el frontend (dist/) y las salas en tiempo real (Durable Objects en memoria).
+  // Un solo Worker: sirve el frontend (dist/) y las salas en tiempo real (Durable Objects).
   "name": "subasta-futbolera",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
@@ -7,14 +7,18 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*", "/c/*"]
+    "run_worker_first": ["/api/*", "/c/*", "/catalogo/*"]
   },
   "durable_objects": {
     "bindings": [
       { "name": "ROOM", "class_name": "RoomDO" },
-      { "name": "REGISTRY", "class_name": "RegistryDO" }
+      { "name": "REGISTRY", "class_name": "RegistryDO" },
+      { "name": "CATALOG", "class_name": "CatalogDO" }
     ]
   },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RoomDO", "RegistryDO"] }]
-  // ADMIN_PIN no va acá: en local se lee de .dev.vars y en producción es un secreto (wrangler secret put ADMIN_PIN).
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["RoomDO", "RegistryDO"] },
+    { "tag": "v2", "new_sqlite_classes": ["CatalogDO"] }
+  ]
+  // ADMIN_PIN no va acá: en local se lee de .dev.vars y en producción es un secreto.
 }

@@ -95,6 +95,7 @@ export function generarMazo(
     precioMinimo: disfraz && ajustes.trollsCamuflados ? Math.max(1, Math.round(disfraz.precioMinimo)) : precioTroll(t, FORMACION[hueco]),
     foto: t.foto,
     token: tokenAleatorio(rng),
+    marco: !!t.opaca,
     fotoSilueta: disfraz ? elegir(rng, disfraz.fotos) : undefined,
     tokenSilueta: disfraz ? tokenAleatorio(rng) : undefined,
   });

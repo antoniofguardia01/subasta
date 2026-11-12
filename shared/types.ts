@@ -44,6 +44,8 @@ export interface Troll {
   rating: number;
   foto: string;
   activo: boolean;
+  /** La foto no tiene fondo transparente: se muestra dentro de un óvalo. */
+  opaca?: boolean;
   /** true mientras no tenga nombre/descripción puestos por el admin. */
   pendiente?: boolean;
 }
@@ -111,6 +113,7 @@ export interface Carta {
   /** Disfraz de un troll: foto de un futbolista real cuya silueta se muestra hasta la revelación. */
   fotoSilueta?: string;
   tokenSilueta?: string;
+  marco?: boolean;
 }
 
 export interface RondaMazo {
@@ -156,6 +159,7 @@ export interface CartaVista {
   img: string;
   pos: Pos;
   hueco: number;
+  marco?: boolean;
 }
 
 export interface FichaEquipo extends CartaVista {
