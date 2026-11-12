@@ -1,4 +1,4 @@
-// Pantalla de inicio: el estadio a oscuras, los reflectores se encienden, cae el martillo y se arma el logo.
+// Pantalla de inicio: el video del estadio se enciende, las letras se prenden con los reflectores y el logo queda haciendo la ola.
 import { CSSProperties, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { BotonPantalla, Fondo, Ticker } from '../components/comunes';
@@ -47,53 +47,72 @@ export function Inicio() {
 
   useEffect(() => usarFlechas('.inicio-menu'), []);
 
-  // ── Secuencia de entrada (≈4 s) ──
+  // ── Secuencia de entrada (≈5 s, sobre el video del estadio) ──
+  // El video arranca a oscuras y los reflectores se encienden solos; cada letra de SUBASTA "se prende"
+  // con ellos, después la placa FUTBOLERA entra de golpe y el logo queda vivo haciendo la ola.
   useLayoutEffect(() => {
     const el = raiz.current!;
     const q = gsap.utils.selector(el);
+    const letras = q('.ini-letra');
+    const placa = q('.ini-placa');
+    const placaLetras = q('.ini-placa span');
     const rm = reducirMovimiento();
-    const t = gsap.timeline({ defaults: { ease: 'expo.out' } });
-    gsap.set(q('.ini-martillo'), { rotation: 28, opacity: 0 });
-    gsap.set(q('.ini-letra'), { yPercent: 115 });
-    gsap.set(q('.ini-placa'), { scaleX: 0 });
-    gsap.set(q('.ini-placa span'), { opacity: 0 });
+    const v = video.current;
+    gsap.set(letras, { opacity: 0.08, scale: 1.5, yPercent: -40, rotation: () => gsap.utils.random(-14, 14), filter: 'blur(10px) brightness(0.4)' });
+    gsap.set(placa, { scaleX: 0, skewX: -25 });
+    gsap.set(placaLetras, { opacity: 0, rotationX: -90, yPercent: 40 });
     gsap.set(q('.ini-entra'), { y: 36, opacity: 0 });
     gsap.set(q('.ini-haz'), { opacity: 0 });
     if (rm) {
-      gsap.set(q('.ini-letra'), { yPercent: 0 });
-      gsap.set(q('.ini-placa'), { scaleX: 1 });
-      gsap.set(q('.ini-placa span, .ini-haz'), { opacity: 1 });
-      gsap.set(q('.ini-entra'), { y: 0, opacity: 1 });
+      gsap.set(letras, { opacity: 1, scale: 1, yPercent: 0, rotation: 0, filter: 'none' });
+      gsap.set(placa, { scaleX: 1, skewX: 0 });
+      gsap.set(placaLetras, { opacity: 1, rotationX: 0, yPercent: 0 });
+      gsap.set(q('.ini-entra, .ini-haz'), { y: 0, opacity: 1 });
       gsap.set(q('.ini-negro'), { opacity: 0 });
-      gsap.set(q('.ini-martillo'), { rotation: -90, opacity: 1 });
+      if (v) v.currentTime = 4.9;
       return;
     }
-    void video.current?.play().catch(() => {});
-    // 0.0–1.4 s: de negro al estadio; los reflectores se encienden uno a uno.
-    t.to(q('.ini-negro'), { opacity: 0, duration: 1.4, ease: 'power2.inOut' }, 0.15)
-      .to(q('.ini-haz'), { opacity: 1, duration: 0.18, ease: 'steps(3)', stagger: 0.24, onStart: () => sonar.tic(true) }, 0.35)
-      // 1.5 s: cae el martillo (acelera) y golpea.
-      .to(q('.ini-martillo'), { opacity: 1, duration: 0.1 }, 1.45)
-      .to(q('.ini-martillo'), { rotation: -90, duration: 0.42, ease: 'power3.in' }, 1.45)
+    if (v) {
+      v.currentTime = 0;
+      void v.play().catch(() => {});
+    }
+    const t = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    t.to(q('.ini-negro'), { opacity: 0, duration: 1.1, ease: 'power2.inOut' }, 0)
+      // 0.8–2.3 s: cada letra se enciende como un reflector (de borrosa y oscura a blanca con destello).
+      .to(letras, {
+        keyframes: [
+          { opacity: 1, scale: 0.92, yPercent: 6, rotation: 0, filter: 'blur(0px) brightness(2.2)', duration: 0.32, ease: 'power3.out' },
+          { scale: 1, yPercent: 0, filter: 'blur(0px) brightness(1)', duration: 0.5, ease: 'elastic.out(1, 0.45)' },
+        ],
+        stagger: { each: 0.19, onStart: () => sonar.tic(true) },
+      }, 0.8)
+      .to(q('.ini-haz'), { opacity: 1, duration: 1.2, ease: 'power2.out', stagger: 0.15 }, 1.6)
+      // 2.5 s: la placa FUTBOLERA entra de golpe con un barrido y sus letras giran en cascada.
+      .to(placa, { scaleX: 1, skewX: 0, duration: 0.55, ease: 'back.out(1.6)' }, 2.45)
       .add(() => {
-        sonar.martillo();
-        vibrar([40, 30, 90]);
-        fx.current?.onda(0.5, 0.42, '#ffffff', 0.9);
+        sonar.barrido();
+        vibrar(30);
+        const r = q('.ini-placa')[0].getBoundingClientRect();
         const p = getComputedStyle(document.documentElement);
-        fx.current?.estallar(0.5, 0.42, [p.getPropertyValue('--acento').trim(), '#ffffff', p.getPropertyValue('--m0').trim()], 110, 1.2);
-      }, 1.87)
-      .fromTo(q('.ini-flash'), { opacity: 1 }, { opacity: 0, duration: 0.5, ease: 'power2.out' }, 1.87)
-      .fromTo(q('.ini-marca'), { scaleY: 0.9, scaleX: 1.04 }, { scaleY: 1, scaleX: 1, duration: 0.8, ease: 'elastic.out(1, 0.35)' }, 1.87)
-      // Rebote del martillo: se levanta un poco y queda apoyado sobre el logo.
-      .to(q('.ini-martillo'), { rotation: -74, duration: 0.16, ease: 'power2.out' }, 1.89)
-      .to(q('.ini-martillo'), { rotation: -90, duration: 0.5, ease: 'bounce.out' }, 2.05)
-      // 1.9 s: el logo se arma letra por letra, con resorte.
-      .to(q('.ini-letra'), { yPercent: 0, duration: 0.7, ease: 'back.out(1.7)', stagger: 0.04 }, 1.9)
-      .to(q('.ini-placa'), { scaleX: 1, duration: 0.55 }, 2.35)
-      .to(q('.ini-placa span'), { opacity: 1, duration: 0.3, stagger: 0.03 }, 2.55)
-      // 2.8 s: entran los botones, escalonados.
-      .to(q('.ini-entra'), { y: 0, opacity: 1, duration: 0.6, stagger: 0.08 }, 2.8);
-    return () => void t.kill();
+        fx.current?.estallar((r.left + r.width / 2) / innerWidth, (r.top + r.height / 2) / innerHeight, [p.getPropertyValue('--acento').trim(), '#ffffff'], 70, 0.9);
+      }, 2.6)
+      .fromTo(q('.ini-flash'), { opacity: 0.55 }, { opacity: 0, duration: 0.6, ease: 'power2.out', immediateRender: false }, 2.6)
+      .to(placaLetras, { opacity: 1, rotationX: 0, yPercent: 0, duration: 0.6, ease: 'back.out(2)', stagger: 0.04 }, 2.62)
+      // 3.3 s: entran los botones.
+      .to(q('.ini-entra'), { y: 0, opacity: 1, duration: 0.6, stagger: 0.08 }, 3.3);
+
+    // Vida permanente: las letras flotan, la placa se balancea y cada 4 s el logo hace "la ola".
+    const flota = gsap.to(letras, { yPercent: -4, duration: 1.6, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: { each: 0.14, from: 'start' }, delay: 3.4 });
+    const balanceo = gsap.to(placa, { rotation: 1.6, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 3.4 });
+    const ola = gsap.timeline({ repeat: -1, repeatDelay: 3.2, delay: 4.6 });
+    ola.to(letras, { keyframes: [{ yPercent: -22, scaleY: 1.08, filter: 'brightness(1.5)', duration: 0.22, ease: 'power2.out' }, { yPercent: 0, scaleY: 1, filter: 'brightness(1)', duration: 0.5, ease: 'bounce.out' }], stagger: 0.07 })
+      .to(placaLetras, { keyframes: [{ yPercent: -30, duration: 0.18, ease: 'power2.out' }, { yPercent: 0, duration: 0.4, ease: 'bounce.out' }], stagger: 0.035 }, 0.4);
+    return () => {
+      t.kill();
+      flota.kill();
+      balanceo.kill();
+      ola.kill();
+    };
   }, []);
 
   // ── Parallax con el cursor o el giroscopio ──
@@ -212,7 +231,6 @@ export function Inicio() {
       <main className="ini-centro">
         <div className="ini-marca">
           <h1 className="ini-logo" aria-label="Subasta Futbolera">
-            <img className="ini-martillo" src="/media/martillo.webp" alt="" draggable={false} />
             <span className="ini-fila">
               {'SUBASTA'.split('').map((l, i) => (
                 <b className="ini-letra" key={i}>
@@ -226,7 +244,6 @@ export function Inicio() {
               ))}
             </span>
           </h1>
-          <p className="ini-bajada ini-entra">Arma tu equipo a los martillazos</p>
         </div>
 
         <div className="inicio-menu">

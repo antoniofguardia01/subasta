@@ -8,7 +8,7 @@
 .ini-fondo { position: absolute; inset: 0; overflow: hidden; }
 .ini-fondo > .fondo { position: absolute; inset: 0; opacity: 0.5; }
 /* Video del estadio: los reflectores se encienden solos; al terminar queda el último cuadro. */
-.ini-video { position: absolute; left: -3%; top: -3%; width: 106%; height: 106%; object-fit: cover; transform: translate3d(calc(var(--px) * -1.2%), calc(var(--py) * -1.2%), 0); will-change: transform; }
+.ini-video { animation: ken 22s ease-in-out 5s infinite alternate; position: absolute; left: -3%; top: -3%; width: 106%; height: 106%; object-fit: cover; transform: translate3d(calc(var(--px) * -1.2%), calc(var(--py) * -1.2%), 0); will-change: transform; }
 /* El video es verde; el tinte lo lleva a la paleta del escenario elegido. */
 .ini-tinte { position: absolute; inset: 0; background: var(--m0); mix-blend-mode: color; opacity: 0; transition: opacity 500ms ease, background-color 500ms ease; }
 :root[data-tema='copa'] .ini-tinte, :root[data-tema='miami'] .ini-tinte { opacity: 0.85; }
@@ -42,7 +42,7 @@
   position: absolute; right: 0; bottom: calc(100% + var(--mh) * 0.17); height: var(--mh); width: auto; margin-right: calc(var(--mh) * -0.2);
   transform-origin: 50% 96%; z-index: 2; filter: drop-shadow(0 calc(var(--mh) * 0.04) 0 rgba(0, 0, 0, 0.4)); pointer-events: none;
 }
-.ini-fila { display: flex; overflow: hidden; padding: 0.06em 0.08em 0.02em; }
+.ini-fila { display: flex; overflow: visible; padding: 0.06em 0.08em 0.02em; perspective: 600px; }
 .ini-letra { display: block; font-size: clamp(74px, 21vw, 250px); font-weight: 900; font-stretch: 62%; line-height: 0.84; color: var(--ini-tinta); letter-spacing: -0.012em; will-change: transform; text-shadow: 0 0.035em 0 rgba(0, 0, 0, 0.42); }
 :root[data-tema='album'] .ini-letra { text-shadow: 0 0.035em 0 rgba(239, 228, 204, 0.9); }
 .ini-placa {
@@ -159,3 +159,10 @@
 :root[data-lite='1'] .ini-haces, :root[data-lite='1'] .ini-desfile { display: none; }
 
 .ini-pantalla { flex: none; margin-left: 8px; background: rgba(var(--ini-velo), 0.6); color: var(--ini-tinta); }
+
+/* El video del estadio queda vivo con un zoom lento después de la entrada */
+@keyframes ken { from { scale: 1; } to { scale: 1.08; } }
+.ini-letra { transform-origin: 50% 100%; will-change: transform, filter; }
+.ini-placa { transform-origin: 50% 50%; perspective: 500px; }
+.ini-placa span { display: inline-block; transform-origin: 50% 100%; }
+@media (prefers-reduced-motion: reduce) { .ini-video { animation: none; } }
