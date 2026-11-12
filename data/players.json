@@ -4993,9 +4993,12 @@
   "precioMinimo": 22,
   "etiqueta": "COMÚN · EL PELUDO DEL FONDO",
   "dato": "Si sube, es un golazo. Si no, es un penal.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/david-luiz.webp"
+  ],
   "buscar": "David Luiz",
-  "wiki": "David Luiz"
+  "wiki": "David Luiz",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/5/51/David_Luiz_at_Baku_before_2019_UEFA_Europe_League_Final.jpg"
  },
  {
   "id": "javier-hernandez",
