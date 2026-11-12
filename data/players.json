@@ -4858,9 +4858,12 @@
   "precioMinimo": 14,
   "etiqueta": "COMÚN · EL LATERAL GOLEADOR",
   "dato": "Pega unos zapatazos de tiro libre que ni él espera.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/marcos-alonso.webp"
+  ],
   "buscar": "Marcos Alonso",
-  "wiki": "Marcos Alonso (footballer, born 1990)"
+  "wiki": "Marcos Alonso (footballer, born 1990)",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/7/76/Marcos_Alonso_Mendoza.jpg"
  },
  {
   "id": "chris-smalling",
