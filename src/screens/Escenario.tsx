@@ -220,12 +220,10 @@ export function Escenario({ codigo }: { codigo: string }) {
           <Ticker mensajes={s.ticker} pausa={pausarTicker} alto={64} />
         </div>
         <Fx ref={fx} />
-        {vista.conexion === 'reconectando' && (
-          <div className="tv-reconecta">
-            <i />
-            Se cayó la señal. Reconectando…
-          </div>
-        )}
+        <div className="tv-reconecta" data-on={vista.conexion === 'reconectando' ? '1' : '0'} aria-hidden={vista.conexion !== 'reconectando'}>
+          <i />
+          Se cayó la señal. Reconectando…
+        </div>
         {!conSonido && (s.fase === 'lobby' || s.fase === 'intro') && (
           <button className="tv-sonido" onClick={() => void activarSonido(true)} autoFocus>
             <i><IconoSonido on /></i> Pulsa OK para activar el sonido

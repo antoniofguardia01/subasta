@@ -396,12 +396,10 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       <div className="esc-cuenta" data-n={textoCuenta ? tic.cuenta : 0} key={`c${tic.cuenta}-${carta?.vence ?? 0}`}>
         {textoCuenta}
       </div>
-      {s.pausa && (
-        <div className="esc-pausa">
-          <b>Pausa</b>
-          <span>El anfitrión detuvo la subasta</span>
-        </div>
-      )}
+      <div className="esc-pausa" data-on={s.pausa ? '1' : '0'} aria-hidden={!s.pausa}>
+        <b>Pausa</b>
+        <span>El anfitrión detuvo la subasta</span>
+      </div>
     </div>
   );
 }

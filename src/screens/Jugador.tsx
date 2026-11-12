@@ -73,12 +73,10 @@ export function Jugador({ codigo }: { codigo: string }) {
       <Capa on={pantalla === 'lobby'}>{pantalla === 'lobby' && yo && <Lobby sala={sala} s={s} yo={yo} anfitrion={vista.anfitrion} />}</Capa>
       <Capa on={pantalla === 'juego'}>{pantalla === 'juego' && yo && <Juego sala={sala} s={s} yo={yo} anfitrion={vista.anfitrion} />}</Capa>
       <Capa on={pantalla === 'final'}>{pantalla === 'final' && yo && <Final sala={sala} s={s} yo={yo} anfitrion={vista.anfitrion} />}</Capa>
-      {vista.conexion === 'reconectando' && (
-        <div className="m-reconecta">
-          <i />
-          Reconectando… tu lugar está guardado
-        </div>
-      )}
+      <div className="m-reconecta" data-on={vista.conexion === 'reconectando' ? '1' : '0'} aria-hidden={vista.conexion !== 'reconectando'}>
+        <i />
+        Reconectando… tu lugar está guardado
+      </div>
     </div>
   );
 }
