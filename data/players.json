@@ -5676,5 +5676,422 @@
   "buscar": "Marcelo",
   "wiki": "Marcelo (footballer, born 1988)",
   "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Marcelo_Vieira_in_2022.jpg"
+ },
+ {
+  "id": "eric-davis",
+  "nombre": "Eric",
+  "apellido": "Davis",
+  "pos": "LI",
+  "pais": "Panamá",
+  "rating": 70,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL LATERAL DEL CANAL",
+  "dato": "Sube por la izquierda como si el canal fuera suyo. Y el peaje también.",
+  "fotos": [],
+  "buscar": "Eric Davis",
+  "wiki": "Éric Davis"
+ },
+ {
+  "id": "cecilio-waterman",
+  "nombre": "Cecilio",
+  "apellido": "Waterman",
+  "pos": "DC",
+  "pais": "Panamá",
+  "rating": 68,
+  "rareza": "comun",
+  "precioMinimo": 10,
+  "etiqueta": "COMÚN · EL ÁRBOL DE LA ÁREA",
+  "dato": "Grande, fuerte y con un cabezazo que ya pidió permiso para quedarse.",
+  "fotos": [],
+  "buscar": "Cecilio Waterman",
+  "wiki": "Cecilio Waterman"
+ },
+ {
+  "id": "franco-mastantuono",
+  "nombre": "Franco",
+  "apellido": "Mastantuono",
+  "pos": "ED",
+  "pais": "Argentina",
+  "rating": 77,
+  "rareza": "oro",
+  "precioMinimo": 72,
+  "etiqueta": "ORO · LA PROMESA DEL MONUMENTAL",
+  "dato": "Un pibe que ya trae la camiseta número 10 en la cabeza.",
+  "fotos": [
+   "/img/players/franco-mastantuono.webp"
+  ],
+  "buscar": "Franco Mastantuono",
+  "ea": 279173
+ },
+ {
+  "id": "mariano-diaz",
+  "nombre": "Mariano",
+  "apellido": "Díaz",
+  "pos": "DC",
+  "pais": "República Dominicana",
+  "rating": 70,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL SUPLENTE DE LUJO",
+  "dato": "Marcó el gol del título y luego pasó tres años calentando.",
+  "fotos": [],
+  "buscar": "Mariano Díaz",
+  "wiki": "Mariano Díaz Mejía"
+ },
+ {
+  "id": "martin-braithwaite",
+  "nombre": "Martin",
+  "apellido": "Braithwaite",
+  "pos": "DC",
+  "pais": "Dinamarca",
+  "rating": 75,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL FICHAJE DE EMERGENCIA",
+  "dato": "Lo ficharon por urgencia y todavía no sabemos de qué.",
+  "fotos": [],
+  "buscar": "Martin Braithwaite",
+  "wiki": "Martin Braithwaite"
+ },
+ {
+  "id": "luke-shaw",
+  "nombre": "Luke",
+  "apellido": "Shaw",
+  "pos": "LI",
+  "pais": "Inglaterra",
+  "rating": 79,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL ELÁSTICO",
+  "dato": "Un día es crack, al siguiente se lesiona. Como un rompecabezas.",
+  "fotos": [
+   "/img/players/luke-shaw.webp"
+  ],
+  "buscar": "Luke Shaw",
+  "ea": 205988
+ },
+ {
+  "id": "ben-chilwell",
+  "nombre": "Ben",
+  "apellido": "Chilwell",
+  "pos": "LI",
+  "pais": "Inglaterra",
+  "rating": 77,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · EL MILLONARIO SIN CANCHA",
+  "dato": "Fichado por una fortuna y utilizado como adorno.",
+  "fotos": [
+   "/img/players/ben-chilwell.webp"
+  ],
+  "buscar": "Ben Chilwell",
+  "ea": 229984
+ },
+ {
+  "id": "tyrick-mitchell",
+  "nombre": "Tyrick",
+  "apellido": "Mitchell",
+  "pos": "LI",
+  "pais": "Inglaterra",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL SOLDADO",
+  "dato": "Corre, marca, no se queja. Nadie lo pone en una lista de los mejores.",
+  "fotos": [
+   "/img/players/tyrick-mitchell.webp"
+  ],
+  "buscar": "Tyrick Mitchell",
+  "ea": 240947
+ },
+ {
+  "id": "raphael-guerreiro",
+  "nombre": "Raphaël",
+  "apellido": "Guerreiro",
+  "pos": "LI",
+  "pais": "Portugal",
+  "rating": 80,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL ZURDO FINO",
+  "dato": "Pie izquierdo de seda y rodillas de papel.",
+  "fotos": [
+   "/img/players/raphael-guerreiro.webp"
+  ],
+  "buscar": "Raphaël Guerreiro",
+  "ea": 209889
+ },
+ {
+  "id": "alejandro-balde",
+  "nombre": "Alejandro",
+  "apellido": "Balde",
+  "pos": "LI",
+  "pais": "España",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 58,
+  "etiqueta": "PLATA · EL COHETE CATALÁN",
+  "dato": "Rápido como un Fórmula 1. Frena como uno también.",
+  "fotos": [
+   "/img/players/alejandro-balde.webp"
+  ],
+  "buscar": "Alejandro Balde",
+  "ea": 263578
+ },
+ {
+  "id": "lucas-digne",
+  "nombre": "Lucas",
+  "apellido": "Digne",
+  "pos": "LI",
+  "pais": "Francia",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 18,
+  "etiqueta": "COMÚN · EL VETERANO DE LA BANDA",
+  "dato": "Cada centro suyo trae un poco de nostalgia.",
+  "fotos": [
+   "/img/players/lucas-digne.webp"
+  ],
+  "buscar": "Lucas Digne",
+  "ea": 200458
+ },
+ {
+  "id": "pervis-estupinan",
+  "nombre": "Pervis",
+  "apellido": "Estupiñán",
+  "pos": "LI",
+  "pais": "Ecuador",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 26,
+  "etiqueta": "COMÚN · EL ECUATORIANO DE HIERRO",
+  "dato": "Sube, baja y vuelve a subir. Sin quejarse del cansancio.",
+  "fotos": [
+   "/img/players/pervis-estupinan.webp"
+  ],
+  "buscar": "Pervis Estupiñán",
+  "ea": 237942
+ },
+ {
+  "id": "junior-firpo",
+  "nombre": "Junior",
+  "apellido": "Firpo",
+  "pos": "LI",
+  "pais": "República Dominicana",
+  "rating": 75,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL LATERAL ERRANTE",
+  "dato": "Ha jugado en tantos clubes que ya tiene una colección de camisetas.",
+  "fotos": [
+   "/img/players/junior-firpo.webp"
+  ],
+  "buscar": "Junior Firpo",
+  "ea": 241184
+ },
+ {
+  "id": "rayan-ait-nouri",
+  "nombre": "Rayan",
+  "apellido": "Aït-Nouri",
+  "pos": "LI",
+  "pais": "Argelia",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL ARGELINO VELOZ",
+  "dato": "Si lo dejan avanzar, llega hasta el córner contrario.",
+  "fotos": [
+   "/img/players/rayan-ait-nouri.webp"
+  ],
+  "buscar": "Rayan Aït-Nouri",
+  "ea": 242641
+ },
+ {
+  "id": "tyrell-malacia",
+  "nombre": "Tyrell",
+  "apellido": "Malacia",
+  "pos": "LI",
+  "pais": "Países Bajos",
+  "rating": 75,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL PERMANENTE LESIONADO",
+  "dato": "Un lateral de valor. Cuando está sano, claro.",
+  "fotos": [
+   "/img/players/tyrell-malacia.webp"
+  ],
+  "buscar": "Tyrell Malacia",
+  "ea": 238041
+ },
+ {
+  "id": "ben-white",
+  "nombre": "Ben",
+  "apellido": "White",
+  "pos": "LD",
+  "pais": "Inglaterra",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL ELEGANTE",
+  "dato": "Defiende con corbata y peinado perfecto.",
+  "fotos": [
+   "/img/players/ben-white.webp"
+  ],
+  "buscar": "Ben White",
+  "ea": 231936
+ },
+ {
+  "id": "diogo-dalot",
+  "nombre": "Diogo",
+  "apellido": "Dalot",
+  "pos": "LD",
+  "pais": "Portugal",
+  "rating": 79,
+  "rareza": "plata",
+  "precioMinimo": 42,
+  "etiqueta": "PLATA · EL INCOMPRENDIDO",
+  "dato": "Hace de lateral, de extremo, de mediocampista. Y de paraguas cuando llueve.",
+  "fotos": [
+   "/img/players/diogo-dalot.webp"
+  ],
+  "buscar": "Diogo Dalot",
+  "ea": 234574
+ },
+ {
+  "id": "matty-cash",
+  "nombre": "Matty",
+  "apellido": "Cash",
+  "pos": "LD",
+  "pais": "Polonia",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 26,
+  "etiqueta": "COMÚN · EL INGLÉS DE POLONIA",
+  "dato": "Nació inglés y juega por Polonia. Como los buenos negocios.",
+  "fotos": [
+   "/img/players/matty-cash.webp"
+  ],
+  "buscar": "Matty Cash",
+  "ea": 227174
+ },
+ {
+  "id": "aaron-wan-bissaka",
+  "nombre": "Aaron",
+  "apellido": "Wan-Bissaka",
+  "pos": "LD",
+  "pais": "RD Congo",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL PULPO",
+  "dato": "Te quita la pelota y no sabes cómo. Pasarla, ya es otra historia.",
+  "fotos": [
+   "/img/players/aaron-wan-bissaka.webp"
+  ],
+  "buscar": "Aaron Wan-Bissaka",
+  "ea": 229880
+ },
+ {
+  "id": "sergino-dest",
+  "nombre": "Sergiño",
+  "apellido": "Dest",
+  "pos": "LD",
+  "pais": "Estados Unidos",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 20,
+  "etiqueta": "COMÚN · EL AMERICANO ERRANTE",
+  "dato": "Fichado por un grande, prestado a otro, cuidado por un tercero.",
+  "fotos": [
+   "/img/players/sergino-dest.webp"
+  ],
+  "buscar": "Sergiño Dest",
+  "ea": 251804
+ },
+ {
+  "id": "yan-couto",
+  "nombre": "Yan",
+  "apellido": "Couto",
+  "pos": "LD",
+  "pais": "Brasil",
+  "rating": 77,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL JOVEN DE SAMBA",
+  "dato": "Un lateral que defiende cantando.",
+  "fotos": [
+   "/img/players/yan-couto.webp"
+  ],
+  "buscar": "Yan Couto",
+  "ea": 259075
+ },
+ {
+  "id": "vanderson",
+  "nombre": "Vanderson",
+  "apellido": "",
+  "pos": "LD",
+  "pais": "Brasil",
+  "rating": 77,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · EL TREN DE LA BANDA",
+  "dato": "No te lo imaginas en la cancha hasta que ya te pasó por el lado.",
+  "fotos": [
+   "/img/players/vanderson.webp"
+  ],
+  "buscar": "Vanderson",
+  "ea": 263781
+ },
+ {
+  "id": "daniel-munoz",
+  "nombre": "Daniel",
+  "apellido": "Muñoz",
+  "pos": "LD",
+  "pais": "Colombia",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL CAFETERO DE LA BANDA",
+  "dato": "Un lateral que va por la derecha y llega con aroma a café.",
+  "fotos": [
+   "/img/players/daniel-munoz.webp"
+  ],
+  "buscar": "Daniel Muñoz",
+  "ea": 237646
+ },
+ {
+  "id": "kenny-tete",
+  "nombre": "Kenny",
+  "apellido": "Tete",
+  "pos": "LD",
+  "pais": "Países Bajos",
+  "rating": 77,
+  "rareza": "comun",
+  "precioMinimo": 16,
+  "etiqueta": "COMÚN · EL CUMPLIDOR HOLANDÉS",
+  "dato": "No brilla, no molesta. Lo que todo equipo agradece.",
+  "fotos": [
+   "/img/players/kenny-tete.webp"
+  ],
+  "buscar": "Kenny Tete",
+  "ea": 216266
+ },
+ {
+  "id": "nelson-semedo",
+  "nombre": "Nélson",
+  "apellido": "Semedo",
+  "pos": "LD",
+  "pais": "Portugal",
+  "rating": 77,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL ELÉCTRICO",
+  "dato": "Un rayo por la derecha con cruzada de botines.",
+  "fotos": [
+   "/img/players/nelson-semedo.webp"
+  ],
+  "buscar": "Nélson Semedo",
+  "ea": 227928
  }
 ]
