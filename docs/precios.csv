@@ -1,0 +1,271 @@
+posicion,jugador,pais,rating,rareza,precio_minimo
+POR,Thibaut Courtois,Bélgica,90,prime,105
+POR,Manuel Neuer,Alemania,88,prime,105
+POR,Gianluigi Donnarumma,Italia,88,oro,90
+POR,Emiliano Martínez,Argentina,88,oro,88
+POR,Mike Maignan,Francia,87,oro,84
+POR,Alisson Becker,Brasil,89,oro,82
+POR,Jan Oblak,Eslovenia,88,oro,82
+POR,Ederson,Brasil,87,oro,78
+POR,Marc-André ter Stegen,Alemania,87,oro,70
+POR,David Raya,España,85,oro,62
+POR,Diogo Costa,Portugal,85,oro,62
+POR,Yassine Bounou,Marruecos,84,plata,55
+POR,Gregor Kobel,Suiza,85,plata,48
+POR,Hugo Lloris,Francia,82,plata,46
+POR,Yann Sommer,Suiza,84,plata,45
+POR,Wojciech Szczęsny,Polonia,82,plata,40
+POR,Jordan Pickford,Inglaterra,83,plata,40
+POR,Giorgi Mamardashvili,Georgia,83,plata,38
+POR,Édouard Mendy,Senegal,81,plata,34
+POR,Dominik Livaković,Croacia,81,comun,28
+POR,Kasper Schmeichel,Dinamarca,80,comun,28
+POR,Franco Armani,Argentina,80,comun,26
+POR,Guglielmo Vicario,Italia,82,comun,24
+POR,Alphonse Areola,Francia,81,comun,24
+POR,Sergio Rochet,Uruguay,79,comun,22
+POR,Gerónimo Rulli,Argentina,80,comun,20
+POR,Juan Musso,Argentina,79,comun,18
+POR,Kepa Arrizabalaga,España,80,comun,18
+POR,André Onana,Camerún,78,comun,16
+POR,Matt Turner,Estados Unidos,78,comun,12
+LD,Achraf Hakimi,Marruecos,88,prime,100
+LD,Trent Alexander-Arnold,Inglaterra,86,oro,76
+LD,Dani Carvajal,España,85,oro,70
+LD,Jules Koundé,Francia,86,oro,68
+LD,João Cancelo,Portugal,85,oro,62
+LD,Reece James,Inglaterra,85,oro,60
+LD,Jeremie Frimpong,Países Bajos,84,plata,58
+LD,Kyle Walker,Inglaterra,83,plata,55
+LD,Denzel Dumfries,Países Bajos,82,plata,40
+LD,Pedro Porro,España,82,plata,38
+LD,Kieran Trippier,Inglaterra,81,plata,32
+LD,Gonzalo Montiel,Argentina,78,comun,28
+LD,Nahuel Molina,Argentina,79,comun,22
+LD,Juan Cuadrado,Colombia,78,comun,22
+LD,Ricardo Pereira,Portugal,78,comun,14
+DFC,Virgil van Dijk,Países Bajos,90,prime,110
+DFC,Sergio Ramos,España,82,oro,90
+DFC,Rúben Dias,Portugal,88,oro,80
+DFC,William Saliba,Francia,87,oro,76
+DFC,Alessandro Bastoni,Italia,88,oro,74
+DFC,Cristian Romero,Argentina,86,oro,72
+DFC,Joško Gvardiol,Croacia,87,oro,70
+DFC,Marquinhos,Brasil,86,oro,68
+DFC,Raphaël Varane,Francia,84,oro,68
+DFC,Antonio Rüdiger,Alemania,86,oro,66
+DFC,Éder Militão,Brasil,87,oro,66
+DFC,Gabriel Magalhães,Brasil,87,oro,64
+DFC,Giorgio Chiellini,Italia,83,plata,58
+DFC,Pau Cubarsí,España,84,plata,56
+DFC,Lisandro Martínez,Argentina,84,plata,50
+DFC,Thiago Silva,Brasil,83,plata,48
+DFC,Matthijs de Ligt,Países Bajos,85,plata,46
+DFC,Ronald Araújo,Uruguay,84,plata,44
+DFC,Diego Godín,Uruguay,82,plata,44
+DFC,Mats Hummels,Alemania,83,plata,44
+DFC,Milan Škriniar,Eslovaquia,84,plata,40
+DFC,Pepe,Portugal,81,plata,40
+DFC,Dayot Upamecano,Francia,84,plata,38
+DFC,Nicolás Otamendi,Argentina,82,plata,36
+DFC,Jonathan Tah,Alemania,84,plata,36
+DFC,Kim Min-jae,Corea del Sur,83,plata,34
+DFC,Nico Schlotterbeck,Alemania,83,plata,30
+DFC,Yerry Mina,Colombia,77,comun,20
+DFC,Joel Matip,Camerún,80,comun,20
+DFC,Harry Maguire,Inglaterra,76,comun,14
+LI,Nuno Mendes,Portugal,87,oro,86
+LI,Alphonso Davies,Canadá,85,oro,70
+LI,Alejandro Grimaldo,España,87,oro,70
+LI,Andrew Robertson,Escocia,85,oro,66
+LI,Theo Hernández,Francia,85,oro,64
+LI,Federico Dimarco,Italia,85,plata,52
+LI,David Alaba,Austria,85,plata,48
+LI,Lucas Hernández,Francia,84,plata,44
+LI,Ferland Mendy,Francia,83,plata,42
+LI,Marc Cucurella,España,82,plata,40
+LI,Destiny Udogie,Italia,81,plata,36
+LI,Jordi Alba,España,82,plata,30
+LI,Nicolás Tagliafico,Argentina,80,comun,28
+LI,Marcos Acuña,Argentina,79,comun,22
+LI,Renan Lodi,Brasil,78,comun,18
+MCD,Rodri,España,91,prime,120
+MCD,Declan Rice,Inglaterra,87,oro,90
+MCD,Joshua Kimmich,Alemania,88,oro,85
+MCD,N'Golo Kanté,Francia,86,oro,84
+MCD,Bruno Guimarães,Brasil,86,oro,78
+MCD,Moisés Caicedo,Ecuador,86,oro,74
+MCD,Frenkie de Jong,Países Bajos,86,oro,74
+MCD,Martín Zubimendi,España,86,oro,70
+MCD,Casemiro,Brasil,84,oro,68
+MCD,Aurélien Tchouaméni,Francia,85,oro,66
+MCD,Sergio Busquets,España,83,oro,62
+MCD,Sandro Tonali,Italia,85,oro,60
+MCD,Javier Mascherano,Argentina,83,plata,56
+MCD,Granit Xhaka,Suiza,84,plata,44
+MCD,Mateo Kovačić,Croacia,83,plata,42
+MCD,Thomas Partey,Ghana,83,plata,40
+MCD,João Palhinha,Portugal,83,plata,38
+MCD,Marcelo Brozović,Croacia,82,plata,36
+MCD,Édson Álvarez,México,82,plata,36
+MCD,Fabinho,Brasil,80,plata,34
+MCD,Leandro Paredes,Argentina,80,plata,32
+MCD,Amadou Onana,Bélgica,81,plata,30
+MCD,Rodrigo Bentancur,Uruguay,82,plata,30
+MCD,Exequiel Palacios,Argentina,82,plata,30
+MCD,Rúben Neves,Portugal,81,comun,28
+MCD,Manuel Ugarte,Uruguay,79,comun,24
+MCD,Wilfred Ndidi,Nigeria,80,comun,24
+MCD,Lucas Torreira,Uruguay,78,comun,14
+MCD,Idrissa Gueye,Senegal,78,comun,14
+MCD,Kalvin Phillips,Inglaterra,76,comun,12
+MC,Luka Modrić,Croacia,89,leyenda,150
+MC,Jude Bellingham,Inglaterra,91,prime,135
+MC,Pedri,España,89,prime,110
+MC,Federico Valverde,Uruguay,89,prime,105
+MC,Toni Kroos,Alemania,89,prime,100
+MC,Bernardo Silva,Portugal,88,oro,96
+MC,Nicolò Barella,Italia,87,oro,82
+MC,Vitinha,Portugal,87,oro,80
+MC,Enzo Fernández,Argentina,85,oro,76
+MC,Alexis Mac Allister,Argentina,86,oro,72
+MC,João Neves,Portugal,85,oro,66
+MC,Hakan Çalhanoğlu,Turquía,85,oro,66
+MC,Marco Verratti,Italia,86,oro,62
+MC,Gavi,España,85,plata,58
+MC,Ryan Gravenberch,Países Bajos,85,plata,58
+MC,İlkay Gündoğan,Alemania,85,plata,50
+MC,Rodrigo De Paul,Argentina,83,plata,46
+MC,Fermín López,España,83,plata,44
+MC,Teun Koopmeiners,Países Bajos,84,plata,44
+MC,Thiago Alcântara,España,83,plata,40
+MC,Sergej Milinković-Savić,Serbia,83,plata,38
+MC,Ivan Rakitić,Croacia,82,plata,36
+MC,Giovani Lo Celso,Argentina,81,comun,28
+MC,Sofyan Amrabat,Marruecos,82,comun,28
+MC,Arturo Vidal,Chile,80,comun,26
+MC,Mason Mount,Inglaterra,80,comun,24
+MC,Weston McKennie,Estados Unidos,80,comun,24
+MC,Tyler Adams,Estados Unidos,79,comun,20
+MC,Guido Rodríguez,Argentina,78,comun,18
+MC,Charles Aránguiz,Chile,78,comun,14
+MCO,Kevin De Bruyne,Bélgica,90,prime,125
+MCO,Florian Wirtz,Alemania,88,prime,112
+MCO,Jamal Musiala,Alemania,88,prime,110
+MCO,Phil Foden,Inglaterra,88,prime,110
+MCO,Cole Palmer,Inglaterra,87,prime,100
+MCO,Antoine Griezmann,Francia,87,oro,88
+MCO,Bruno Fernandes,Portugal,87,oro,80
+MCO,Eden Hazard,Bélgica,87,oro,80
+MCO,Martin Ødegaard,Noruega,87,oro,78
+MCO,Dani Olmo,España,86,oro,72
+MCO,Paulo Dybala,Argentina,84,oro,62
+MCO,Arda Güler,Turquía,82,oro,60
+MCO,Dominik Szoboszlai,Hungría,85,plata,56
+MCO,Thomas Müller,Alemania,83,plata,54
+MCO,James Rodríguez,Colombia,81,plata,44
+MCO,Takefusa Kubo,Japón,82,plata,40
+MCO,Lucas Paquetá,Brasil,82,plata,38
+MCO,James Maddison,Inglaterra,84,plata,38
+MCO,Christian Eriksen,Dinamarca,82,plata,36
+MCO,Isco,España,82,plata,34
+MCO,Julian Brandt,Alemania,83,plata,34
+MCO,Lorenzo Pellegrini,Italia,82,comun,26
+MCO,Nico Paz,Argentina,80,comun,24
+MCO,Miguel Almirón,Paraguay,78,comun,22
+MCO,Hakim Ziyech,Marruecos,80,comun,22
+MCO,Dušan Tadić,Serbia,80,comun,18
+MCO,Ruben Loftus-Cheek,Inglaterra,79,comun,16
+MCO,Pablo Sarabia,España,79,comun,14
+MCO,Alejandro Gómez,Argentina,78,comun,14
+MCO,Giovanni Reyna,Estados Unidos,76,comun,12
+ED,Lionel Messi,Argentina,94,leyenda,220
+ED,Lamine Yamal,España,90,prime,140
+ED,Mohamed Salah,Egipto,90,prime,130
+ED,Bukayo Saka,Inglaterra,88,oro,90
+ED,Ousmane Dembélé,Francia,88,oro,88
+ED,Raphinha,Brasil,88,oro,86
+ED,Nico Williams,España,86,oro,82
+ED,Rodrygo,Brasil,86,oro,78
+ED,Ángel Di María,Argentina,85,oro,74
+ED,Michael Olise,Francia,86,oro,72
+ED,Franck Ribéry,Francia,85,oro,66
+ED,Leroy Sané,Alemania,85,oro,62
+ED,Kingsley Coman,Francia,85,oro,62
+ED,Marcus Rashford,Inglaterra,83,plata,46
+ED,Riyad Mahrez,Argelia,84,plata,44
+ED,Serge Gnabry,Alemania,84,plata,42
+ED,Mohammed Kudus,Ghana,83,plata,40
+ED,Jérémy Doku,Bélgica,84,plata,38
+ED,Pedro Neto,Portugal,83,plata,38
+ED,Jadon Sancho,Inglaterra,81,plata,32
+ED,Hirving Lozano,México,79,plata,30
+ED,Federico Chiesa,Italia,82,comun,28
+ED,Gerard Moreno,España,81,comun,24
+ED,Yannick Carrasco,Bélgica,81,comun,24
+ED,Ángel Correa,Argentina,80,comun,20
+ED,Xherdan Shaqiri,Suiza,78,comun,16
+ED,Gonçalo Guedes,Portugal,79,comun,16
+ED,Willian,Brasil,78,comun,14
+ED,Lucas Moura,Brasil,78,comun,14
+ED,Antony,Brasil,76,comun,12
+DC,Cristiano Ronaldo,Portugal,91,leyenda,200
+DC,Erling Haaland,Noruega,92,prime,145
+DC,Harry Kane,Inglaterra,90,prime,125
+DC,Robert Lewandowski,Polonia,89,prime,115
+DC,Karim Benzema,Francia,88,prime,110
+DC,Zlatan Ibrahimović,Suecia,86,prime,100
+DC,Sergio Agüero,Argentina,87,oro,95
+DC,Julián Álvarez,Argentina,88,oro,92
+DC,Alexander Isak,Suecia,87,oro,90
+DC,Lautaro Martínez,Argentina,88,oro,88
+DC,Victor Osimhen,Nigeria,87,oro,88
+DC,Luis Suárez,Uruguay,84,oro,66
+DC,Gonzalo Higuaín,Argentina,85,oro,60
+DC,Edinson Cavani,Uruguay,84,plata,58
+DC,Romelu Lukaku,Bélgica,84,plata,54
+DC,Dušan Vlahović,Serbia,84,plata,52
+DC,Marcus Thuram,Francia,83,plata,44
+DC,Olivier Giroud,Francia,83,plata,44
+DC,Ollie Watkins,Inglaterra,83,plata,44
+DC,Santiago Giménez,México,83,plata,40
+DC,Darwin Núñez,Uruguay,81,plata,34
+DC,Gabriel Jesus,Brasil,82,plata,34
+DC,Ivan Toney,Inglaterra,82,plata,30
+DC,Mauro Icardi,Argentina,81,plata,30
+DC,Álvaro Morata,España,81,plata,30
+DC,Edin Džeko,Bosnia,81,comun,28
+DC,Richarlison,Brasil,79,comun,24
+DC,Alexander Sørloth,Noruega,81,comun,22
+DC,Raúl Jiménez,México,79,comun,18
+DC,Wout Weghorst,Países Bajos,78,comun,12
+EI,Kylian Mbappé,Francia,92,leyenda,150
+EI,Vinícius Júnior,Brasil,91,prime,140
+EI,Neymar,Brasil,87,prime,115
+EI,Heung-min Son,Corea del Sur,86,oro,80
+EI,Gareth Bale,Gales,86,oro,80
+EI,Luis Díaz,Colombia,86,oro,78
+EI,Khvicha Kvaratskhelia,Georgia,86,oro,74
+EI,Sadio Mané,Senegal,86,oro,72
+EI,Rafael Leão,Portugal,85,oro,64
+EI,Christopher Nkunku,Francia,84,plata,56
+EI,Cody Gakpo,Países Bajos,85,plata,52
+EI,Gabriel Martinelli,Brasil,84,plata,52
+EI,João Félix,Portugal,83,plata,44
+EI,Anthony Gordon,Inglaterra,83,plata,40
+EI,Dejan Kulusevski,Suecia,83,plata,36
+EI,Jack Grealish,Inglaterra,81,plata,34
+EI,Lorenzo Insigne,Italia,82,plata,34
+EI,Kaoru Mitoma,Japón,82,plata,30
+EI,Raheem Sterling,Inglaterra,82,plata,30
+EI,Bryan Mbeumo,Camerún,82,plata,30
+EI,Rafa Silva,Portugal,82,comun,28
+EI,Christian Pulisic,Estados Unidos,82,comun,28
+EI,Alejandro Garnacho,Argentina,80,comun,26
+EI,Alexis Sánchez,Chile,80,comun,24
+EI,Wilfried Zaha,Costa de Marfil,80,comun,22
+EI,Carlos Vela,México,78,comun,14
+EI,Hwang Hee-chan,Corea del Sur,79,comun,14
+EI,Leon Bailey,Jamaica,78,comun,14
+EI,Brennan Johnson,Gales,78,comun,12
+EI,Takumi Minamino,Japón,78,comun,12

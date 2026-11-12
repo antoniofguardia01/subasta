@@ -1,18 +1,7 @@
 {
- "fecha": "2026-11-11T10:59:53.536Z",
- "total": 78,
- "conFoto": 76,
- "fallaron": [
-  {
-   "id": "keylor-navas",
-   "ok": false,
-   "motivo": "no encontrado en el buscador"
-  },
-  {
-   "id": "guillermo-ochoa",
-   "ok": false,
-   "motivo": "sin retrato (id 74555)"
-  }
- ],
+ "fecha": "2026-11-12T02:19:20.543Z",
+ "total": 270,
+ "conFoto": 270,
+ "fallaron": [],
  "flojos": []
 }

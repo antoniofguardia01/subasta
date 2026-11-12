@@ -51,34 +51,6 @@
   "ea": 212831
  },
  {
-  "id": "guillermo-ochoa",
-  "nombre": "Guillermo",
-  "apellido": "Ochoa",
-  "pos": "POR",
-  "pais": "México",
-  "rating": 79,
-  "rareza": "plata",
-  "precioMinimo": 34,
-  "etiqueta": "PLATA · CADA 4 AÑOS",
-  "dato": "Hiberna tres años y medio y despierta para el Mundial.",
-  "fotos": [],
-  "buscar": "Guillermo Ochoa"
- },
- {
-  "id": "keylor-navas",
-  "nombre": "Keylor",
-  "apellido": "Navas",
-  "pos": "POR",
-  "pais": "Costa Rica",
-  "rating": 80,
-  "rareza": "comun",
-  "precioMinimo": 26,
-  "etiqueta": "COMÚN · VETERANO",
-  "dato": "Tres Champions y todavía le discuten el puesto.",
-  "fotos": [],
-  "buscar": "Keylor Navas"
- },
- {
   "id": "andre-onana",
   "nombre": "André",
   "apellido": "Onana",
@@ -1173,9 +1145,9 @@
   "pos": "EI",
   "pais": "Francia",
   "rating": 92,
-  "rareza": "prime",
+  "rareza": "leyenda",
   "precioMinimo": 150,
-  "etiqueta": "PRIME · TORTUGA NINJA",
+  "etiqueta": "LEYENDA · TORTUGA NINJA",
   "dato": "Corre tan rápido que llega antes que el pase.",
   "fotos": [
    "/img/players/kylian-mbappe.webp"
@@ -1318,5 +1290,3303 @@
   ],
   "buscar": "Alejandro Garnacho",
   "ea": 268438
+ },
+ {
+  "id": "gianluigi-donnarumma",
+  "nombre": "Gianluigi",
+  "apellido": "Donnarumma",
+  "pos": "POR",
+  "pais": "Italia",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 90,
+  "etiqueta": "ORO · EL GIGANTE",
+  "dato": "Mide dos metros y lo critican igual.",
+  "fotos": [
+   "/img/players/gianluigi-donnarumma.webp"
+  ],
+  "buscar": "Gianluigi Donnarumma",
+  "ea": 230621
+ },
+ {
+  "id": "ederson",
+  "nombre": "Ederson",
+  "apellido": "",
+  "pos": "POR",
+  "pais": "Brasil",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 78,
+  "etiqueta": "ORO · EL PIE DE ORO",
+  "dato": "Pasa mejor que tu mediocampista.",
+  "fotos": [
+   "/img/players/ederson.webp"
+  ],
+  "buscar": "Ederson",
+  "ea": 210257
+ },
+ {
+  "id": "manuel-neuer",
+  "nombre": "Manuel",
+  "apellido": "Neuer",
+  "pos": "POR",
+  "pais": "Alemania",
+  "rating": 88,
+  "rareza": "prime",
+  "precioMinimo": 105,
+  "etiqueta": "PRIME · EL LÍBERO",
+  "dato": "Juega de arquero, defensa y lo que haga falta.",
+  "fotos": [
+   "/img/players/manuel-neuer.webp"
+  ],
+  "buscar": "Manuel Neuer",
+  "ea": 167495
+ },
+ {
+  "id": "marc-andre-ter-stegen",
+  "nombre": "Marc-André",
+  "apellido": "ter Stegen",
+  "pos": "POR",
+  "pais": "Alemania",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 70,
+  "etiqueta": "ORO · EL SUPLENTE DE LUJO",
+  "dato": "Mejor del mundo, siempre en el banco.",
+  "fotos": [
+   "/img/players/marc-andre-ter-stegen.webp"
+  ],
+  "buscar": "Marc-André ter Stegen",
+  "ea": 192448
+ },
+ {
+  "id": "jan-oblak",
+  "nombre": "Jan",
+  "apellido": "Oblak",
+  "pos": "POR",
+  "pais": "Eslovenia",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 82,
+  "etiqueta": "ORO · EL MURO ESLOVENO",
+  "dato": "Diez años sin que le entren los centros.",
+  "fotos": [
+   "/img/players/jan-oblak.webp"
+  ],
+  "buscar": "Jan Oblak",
+  "ea": 200389
+ },
+ {
+  "id": "mike-maignan",
+  "nombre": "Mike",
+  "apellido": "Maignan",
+  "pos": "POR",
+  "pais": "Francia",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 84,
+  "etiqueta": "ORO · EL TIGRE",
+  "dato": "Ataja con cara de pocos amigos.",
+  "fotos": [
+   "/img/players/mike-maignan.webp"
+  ],
+  "buscar": "Mike Maignan",
+  "ea": 215698
+ },
+ {
+  "id": "david-raya",
+  "nombre": "David",
+  "apellido": "Raya",
+  "pos": "POR",
+  "pais": "España",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 62,
+  "etiqueta": "ORO · EL ARQUERO LIBERO",
+  "dato": "Con los pies hace de volante.",
+  "fotos": [
+   "/img/players/david-raya.webp"
+  ],
+  "buscar": "David Raya",
+  "ea": 220901
+ },
+ {
+  "id": "yann-sommer",
+  "nombre": "Yann",
+  "apellido": "Sommer",
+  "pos": "POR",
+  "pais": "Suiza",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 45,
+  "etiqueta": "PLATA · EL FRÍO",
+  "dato": "Ataja sin que se note.",
+  "fotos": [
+   "/img/players/yann-sommer.webp"
+  ],
+  "buscar": "Yann Sommer",
+  "ea": 177683
+ },
+ {
+  "id": "gregor-kobel",
+  "nombre": "Gregor",
+  "apellido": "Kobel",
+  "pos": "POR",
+  "pais": "Suiza",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 48,
+  "etiqueta": "PLATA · EL ESCALADOR",
+  "dato": "Sube por los aires como si hubiera escalera.",
+  "fotos": [
+   "/img/players/gregor-kobel.webp"
+  ],
+  "buscar": "Gregor Kobel",
+  "ea": 235073
+ },
+ {
+  "id": "wojciech-szczesny",
+  "nombre": "Wojciech",
+  "apellido": "Szczęsny",
+  "pos": "POR",
+  "pais": "Polonia",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL RETIRADO QUE VOLVIÓ",
+  "dato": "Dejó el fútbol, vio el sueldo y regresó.",
+  "fotos": [
+   "/img/players/wojciech-szczesny.webp"
+  ],
+  "buscar": "Wojciech Szczęsny",
+  "ea": 186153
+ },
+ {
+  "id": "yassine-bounou",
+  "nombre": "Yassine",
+  "apellido": "Bounou",
+  "pos": "POR",
+  "pais": "Marruecos",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 55,
+  "etiqueta": "PLATA · BONO",
+  "dato": "Héroe de Qatar 2022. Se dice Bono.",
+  "fotos": [
+   "/img/players/yassine-bounou.webp"
+  ],
+  "buscar": "Bono",
+  "ea": 226786
+ },
+ {
+  "id": "jordan-pickford",
+  "nombre": "Jordan",
+  "apellido": "Pickford",
+  "pos": "POR",
+  "pais": "Inglaterra",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL DE LA BOTELLA",
+  "dato": "Tiene los penales anotados en la botella.",
+  "fotos": [
+   "/img/players/jordan-pickford.webp"
+  ],
+  "buscar": "Jordan Pickford",
+  "ea": 204935
+ },
+ {
+  "id": "dominik-livakovic",
+  "nombre": "Dominik",
+  "apellido": "Livaković",
+  "pos": "POR",
+  "pais": "Croacia",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL DE LOS PENALES",
+  "dato": "Qatar 2022: nueve penales, cero respeto.",
+  "fotos": [
+   "/img/players/dominik-livakovic.webp"
+  ],
+  "buscar": "Dominik Livaković",
+  "ea": 241671
+ },
+ {
+  "id": "hugo-lloris",
+  "nombre": "Hugo",
+  "apellido": "Lloris",
+  "pos": "POR",
+  "pais": "Francia",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 46,
+  "etiqueta": "PLATA · EL CAPITÁN CAMPEÓN",
+  "dato": "Levantó la copa del mundo.",
+  "fotos": [
+   "/img/players/hugo-lloris.webp"
+  ],
+  "buscar": "Hugo Lloris",
+  "ea": 167948
+ },
+ {
+  "id": "edouard-mendy",
+  "nombre": "Édouard",
+  "apellido": "Mendy",
+  "pos": "POR",
+  "pais": "Senegal",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · EL GIGANTE SENEGALÉS",
+  "dato": "Ganó la Champions sin que nadie se enterara.",
+  "fotos": [
+   "/img/players/edouard-mendy.webp"
+  ],
+  "buscar": "Édouard Mendy",
+  "ea": 234642
+ },
+ {
+  "id": "guglielmo-vicario",
+  "nombre": "Guglielmo",
+  "apellido": "Vicario",
+  "pos": "POR",
+  "pais": "Italia",
+  "rating": 82,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL SURTIDOR",
+  "dato": "Le tiran de todos lados y ataja igual.",
+  "fotos": [
+   "/img/players/guglielmo-vicario.webp"
+  ],
+  "buscar": "Guglielmo Vicario",
+  "ea": 240091
+ },
+ {
+  "id": "diogo-costa",
+  "nombre": "Diogo",
+  "apellido": "Costa",
+  "pos": "POR",
+  "pais": "Portugal",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 62,
+  "etiqueta": "ORO · EL PARAPENALES",
+  "dato": "Ataja penales como quien pide la cuenta.",
+  "fotos": [
+   "/img/players/diogo-costa.webp"
+  ],
+  "buscar": "Diogo Costa",
+  "ea": 234577
+ },
+ {
+  "id": "sergio-rochet",
+  "nombre": "Sergio",
+  "apellido": "Rochet",
+  "pos": "POR",
+  "pais": "Uruguay",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · EL CELESTE",
+  "dato": "Ataja con garra charrúa.",
+  "fotos": [
+   "/img/players/sergio-rochet.webp"
+  ],
+  "buscar": "Sergio Rochet",
+  "ea": 189511
+ },
+ {
+  "id": "franco-armani",
+  "nombre": "Franco",
+  "apellido": "Armani",
+  "pos": "POR",
+  "pais": "Argentina",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 26,
+  "etiqueta": "COMÚN · EL REY DE RIVER",
+  "dato": "Quince años atajando en el Monumental.",
+  "fotos": [
+   "/img/players/franco-armani.webp"
+  ],
+  "buscar": "Franco Armani",
+  "ea": 214584
+ },
+ {
+  "id": "geronimo-rulli",
+  "nombre": "Gerónimo",
+  "apellido": "Rulli",
+  "pos": "POR",
+  "pais": "Argentina",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 20,
+  "etiqueta": "COMÚN · EL SUPLENTE DEL DIBU",
+  "dato": "Si el Dibu se resfría, él ataja.",
+  "fotos": [
+   "/img/players/geronimo-rulli.webp"
+  ],
+  "buscar": "Gerónimo Rulli",
+  "ea": 215316
+ },
+ {
+  "id": "juan-musso",
+  "nombre": "Juan",
+  "apellido": "Musso",
+  "pos": "POR",
+  "pais": "Argentina",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 18,
+  "etiqueta": "COMÚN · EL ATLÉTICO",
+  "dato": "Pasó de Udinese al Atlético sin perder la calma.",
+  "fotos": [
+   "/img/players/juan-musso.webp"
+  ],
+  "buscar": "Juan Musso",
+  "ea": 214979
+ },
+ {
+  "id": "kasper-schmeichel",
+  "nombre": "Kasper",
+  "apellido": "Schmeichel",
+  "pos": "POR",
+  "pais": "Dinamarca",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL HIJO DEL MURO",
+  "dato": "Su papá era mejor, pero lo disimula.",
+  "fotos": [
+   "/img/players/kasper-schmeichel.webp"
+  ],
+  "buscar": "Kasper Schmeichel",
+  "ea": 163587
+ },
+ {
+  "id": "giorgi-mamardashvili",
+  "nombre": "Giorgi",
+  "apellido": "Mamardashvili",
+  "pos": "POR",
+  "pais": "Georgia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL JOVEN PULPO",
+  "dato": "A los 24 ya cuesta una fortuna.",
+  "fotos": [
+   "/img/players/giorgi-mamardashvili.webp"
+  ],
+  "buscar": "Giorgi Mamardashvili",
+  "ea": 262621
+ },
+ {
+  "id": "matt-turner",
+  "nombre": "Matt",
+  "apellido": "Turner",
+  "pos": "POR",
+  "pais": "Estados Unidos",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL DE NUEVA JERSEY",
+  "dato": "Saca las manos por los dos.",
+  "fotos": [
+   "/img/players/matt-turner.webp"
+  ],
+  "buscar": "Matt Turner",
+  "ea": 233267
+ },
+ {
+  "id": "kyle-walker",
+  "nombre": "Kyle",
+  "apellido": "Walker",
+  "pos": "LD",
+  "pais": "Inglaterra",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 55,
+  "etiqueta": "PLATA · EL COHETE",
+  "dato": "Corre más rápido de lo que piensa.",
+  "fotos": [
+   "/img/players/kyle-walker.webp"
+  ],
+  "buscar": "Kyle Walker",
+  "ea": 188377
+ },
+ {
+  "id": "joao-cancelo",
+  "nombre": "João",
+  "apellido": "Cancelo",
+  "pos": "LD",
+  "pais": "Portugal",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 62,
+  "etiqueta": "ORO · EL VIAJERO",
+  "dato": "Cambia de club cada año y cae parado.",
+  "fotos": [
+   "/img/players/joao-cancelo.webp"
+  ],
+  "buscar": "Joao Cancelo",
+  "ea": 210514
+ },
+ {
+  "id": "jeremie-frimpong",
+  "nombre": "Jeremie",
+  "apellido": "Frimpong",
+  "pos": "LD",
+  "pais": "Países Bajos",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 58,
+  "etiqueta": "PLATA · EL RAYO",
+  "dato": "Corre la banda con los pies encendidos.",
+  "fotos": [
+   "/img/players/jeremie-frimpong.webp"
+  ],
+  "buscar": "Jeremie Frimpong",
+  "ea": 253149
+ },
+ {
+  "id": "pedro-porro",
+  "nombre": "Pedro",
+  "apellido": "Porro",
+  "pos": "LD",
+  "pais": "España",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL INCANSABLE",
+  "dato": "Va y viene y no se despeina.",
+  "fotos": [
+   "/img/players/pedro-porro.webp"
+  ],
+  "buscar": "Pedro Porro",
+  "ea": 243576
+ },
+ {
+  "id": "jules-kounde",
+  "nombre": "Jules",
+  "apellido": "Koundé",
+  "pos": "LD",
+  "pais": "Francia",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 68,
+  "etiqueta": "ORO · EL TODOTERRENO",
+  "dato": "Lateral, central y lo que pidas.",
+  "fotos": [
+   "/img/players/jules-kounde.webp"
+  ],
+  "buscar": "Jules Kounde",
+  "ea": 241486
+ },
+ {
+  "id": "reece-james",
+  "nombre": "Reece",
+  "apellido": "James",
+  "pos": "LD",
+  "pais": "Inglaterra",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 60,
+  "etiqueta": "ORO · EL CAPITÁN DE CRISTAL",
+  "dato": "Cuando está sano es lo mejor del barrio.",
+  "fotos": [
+   "/img/players/reece-james.webp"
+  ],
+  "buscar": "Reece James",
+  "ea": 238074
+ },
+ {
+  "id": "kieran-trippier",
+  "nombre": "Kieran",
+  "apellido": "Trippier",
+  "pos": "LD",
+  "pais": "Inglaterra",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 32,
+  "etiqueta": "PLATA · EL CENTRO MILIMÉTRICO",
+  "dato": "Pone la pelota donde se la pidan.",
+  "fotos": [
+   "/img/players/kieran-trippier.webp"
+  ],
+  "buscar": "Kieran Trippier",
+  "ea": 186345
+ },
+ {
+  "id": "juan-cuadrado",
+  "nombre": "Juan",
+  "apellido": "Cuadrado",
+  "pos": "LD",
+  "pais": "Colombia",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · EL BAILARÍN",
+  "dato": "Baila con la pelota y con el marcador.",
+  "fotos": [
+   "/img/players/juan-cuadrado.webp"
+  ],
+  "buscar": "Juan Cuadrado",
+  "ea": 193082
+ },
+ {
+  "id": "andrew-robertson",
+  "nombre": "Andrew",
+  "apellido": "Robertson",
+  "pos": "LI",
+  "pais": "Escocia",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 66,
+  "etiqueta": "ORO · EL ESCOCÉS FUGAZ",
+  "dato": "Sube y baja sin descanso.",
+  "fotos": [
+   "/img/players/andrew-robertson.webp"
+  ],
+  "buscar": "Andrew Robertson",
+  "ea": 216267
+ },
+ {
+  "id": "ferland-mendy",
+  "nombre": "Ferland",
+  "apellido": "Mendy",
+  "pos": "LI",
+  "pais": "Francia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 42,
+  "etiqueta": "PLATA · EL DE LA BANDA",
+  "dato": "Defiende tan bien que nadie lo nota.",
+  "fotos": [
+   "/img/players/ferland-mendy.webp"
+  ],
+  "buscar": "Ferland Mendy",
+  "ea": 228618
+ },
+ {
+  "id": "lucas-hernandez",
+  "nombre": "Lucas",
+  "apellido": "Hernández",
+  "pos": "LI",
+  "pais": "Francia",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL CAMPEÓN DEL 2018",
+  "dato": "Sube sin permiso y vuelve con permiso.",
+  "fotos": [
+   "/img/players/lucas-hernandez.webp"
+  ],
+  "buscar": "Lucas Hernandez",
+  "ea": 220814
+ },
+ {
+  "id": "alejandro-grimaldo",
+  "nombre": "Alejandro",
+  "apellido": "Grimaldo",
+  "pos": "LI",
+  "pais": "España",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 70,
+  "etiqueta": "ORO · EL ZURDO MÁGICO",
+  "dato": "Cada centro suyo tiene dedicatoria.",
+  "fotos": [
+   "/img/players/alejandro-grimaldo.webp"
+  ],
+  "buscar": "Alejandro Grimaldo",
+  "ea": 210035
+ },
+ {
+  "id": "federico-dimarco",
+  "nombre": "Federico",
+  "apellido": "Dimarco",
+  "pos": "LI",
+  "pais": "Italia",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 52,
+  "etiqueta": "PLATA · EL ZURDAZO",
+  "dato": "Su pie izquierdo tiene seguro de vida.",
+  "fotos": [
+   "/img/players/federico-dimarco.webp"
+  ],
+  "buscar": "Federico Dimarco",
+  "ea": 226268
+ },
+ {
+  "id": "destiny-udogie",
+  "nombre": "Destiny",
+  "apellido": "Udogie",
+  "pos": "LI",
+  "pais": "Italia",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL CORREDOR",
+  "dato": "Sube la banda como si llegara tarde.",
+  "fotos": [
+   "/img/players/destiny-udogie.webp"
+  ],
+  "buscar": "Destiny Udogie",
+  "ea": 259583
+ },
+ {
+  "id": "jordi-alba",
+  "nombre": "Jordi",
+  "apellido": "Alba",
+  "pos": "LI",
+  "pais": "España",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL SOCIO DE MESSI",
+  "dato": "Se mueve al ritmo de Messi.",
+  "fotos": [
+   "/img/players/jordi-alba.webp"
+  ],
+  "buscar": "Jordi Alba",
+  "ea": 189332
+ },
+ {
+  "id": "david-alaba",
+  "nombre": "David",
+  "apellido": "Alaba",
+  "pos": "LI",
+  "pais": "Austria",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 48,
+  "etiqueta": "PLATA · EL POLIVALENTE",
+  "dato": "Juega de lateral, central, volante y cantante.",
+  "fotos": [
+   "/img/players/david-alaba.webp"
+  ],
+  "buscar": "David Alaba",
+  "ea": 197445
+ },
+ {
+  "id": "renan-lodi",
+  "nombre": "Renan",
+  "apellido": "Lodi",
+  "pos": "LI",
+  "pais": "Brasil",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 18,
+  "etiqueta": "COMÚN · EL DEL ESTILO",
+  "dato": "Juega de lateral con la cabeza en otro lado.",
+  "fotos": [
+   "/img/players/renan-lodi.webp"
+  ],
+  "buscar": "Renan Lodi",
+  "ea": 251573
+ },
+ {
+  "id": "gabriel-magalhaes",
+  "nombre": "Gabriel",
+  "apellido": "Magalhães",
+  "pos": "DFC",
+  "pais": "Brasil",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 64,
+  "etiqueta": "ORO · EL DE LA CABEZA",
+  "dato": "Cabecea todo lo que vuela por el área.",
+  "fotos": [
+   "/img/players/gabriel-magalhaes.webp"
+  ],
+  "buscar": "Gabriel Magalhaes",
+  "ea": 232580
+ },
+ {
+  "id": "eder-militao",
+  "nombre": "Éder",
+  "apellido": "Militão",
+  "pos": "DFC",
+  "pais": "Brasil",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 66,
+  "etiqueta": "ORO · EL ÁGIL",
+  "dato": "Cada lesión lo vuelve más fuerte, dicen.",
+  "fotos": [
+   "/img/players/eder-militao.webp"
+  ],
+  "buscar": "Eder Militao",
+  "ea": 240130
+ },
+ {
+  "id": "pau-cubarsi",
+  "nombre": "Pau",
+  "apellido": "Cubarsí",
+  "pos": "DFC",
+  "pais": "España",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 56,
+  "etiqueta": "PLATA · EL NENE DEL BARÇA",
+  "dato": "Con 17 jugaba como un veterano.",
+  "fotos": [
+   "/img/players/pau-cubarsi.webp"
+  ],
+  "buscar": "Pau Cubarsí",
+  "ea": 278046
+ },
+ {
+  "id": "alessandro-bastoni",
+  "nombre": "Alessandro",
+  "apellido": "Bastoni",
+  "pos": "DFC",
+  "pais": "Italia",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 74,
+  "etiqueta": "ORO · EL ELEGANTE",
+  "dato": "Sale jugando como un diez.",
+  "fotos": [
+   "/img/players/alessandro-bastoni.webp"
+  ],
+  "buscar": "Alessandro Bastoni",
+  "ea": 237383
+ },
+ {
+  "id": "milan-skriniar",
+  "nombre": "Milan",
+  "apellido": "Škriniar",
+  "pos": "DFC",
+  "pais": "Eslovaquia",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL ESLOVACO",
+  "dato": "Marca en cada metro del campo.",
+  "fotos": [
+   "/img/players/milan-skriniar.webp"
+  ],
+  "buscar": "Milan Škriniar",
+  "ea": 232363
+ },
+ {
+  "id": "josko-gvardiol",
+  "nombre": "Joško",
+  "apellido": "Gvardiol",
+  "pos": "DFC",
+  "pais": "Croacia",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 70,
+  "etiqueta": "ORO · EL ZURDO CENTRAL",
+  "dato": "Defiende bien y hace goles de lujo.",
+  "fotos": [
+   "/img/players/josko-gvardiol.webp"
+  ],
+  "buscar": "Joško Gvardiol",
+  "ea": 251517
+ },
+ {
+  "id": "matthijs-de-ligt",
+  "nombre": "Matthijs",
+  "apellido": "de Ligt",
+  "pos": "DFC",
+  "pais": "Países Bajos",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 46,
+  "etiqueta": "PLATA · EL PROMESA ETERNA",
+  "dato": "Fichó a los 19 por una fortuna.",
+  "fotos": [
+   "/img/players/matthijs-de-ligt.webp"
+  ],
+  "buscar": "Matthijs de Ligt",
+  "ea": 235243
+ },
+ {
+  "id": "dayot-upamecano",
+  "nombre": "Dayot",
+  "apellido": "Upamecano",
+  "pos": "DFC",
+  "pais": "Francia",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL GIGANTE FRANCÉS",
+  "dato": "Marca con el pecho y se disculpa con el cuerpo.",
+  "fotos": [
+   "/img/players/dayot-upamecano.webp"
+  ],
+  "buscar": "Dayot Upamecano",
+  "ea": 229558
+ },
+ {
+  "id": "jonathan-tah",
+  "nombre": "Jonathan",
+  "apellido": "Tah",
+  "pos": "DFC",
+  "pais": "Alemania",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL TORRE",
+  "dato": "Cabecea hasta los pensamientos del rival.",
+  "fotos": [
+   "/img/players/jonathan-tah.webp"
+  ],
+  "buscar": "Jonathan Tah",
+  "ea": 213331
+ },
+ {
+  "id": "nico-schlotterbeck",
+  "nombre": "Nico",
+  "apellido": "Schlotterbeck",
+  "pos": "DFC",
+  "pais": "Alemania",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL ZURDO ALEMÁN",
+  "dato": "Sale con la pelota y con ropa de moda.",
+  "fotos": [
+   "/img/players/nico-schlotterbeck.webp"
+  ],
+  "buscar": "Nico Schlotterbeck",
+  "ea": 247819
+ },
+ {
+  "id": "sergio-ramos",
+  "nombre": "Sergio",
+  "apellido": "Ramos",
+  "pos": "DFC",
+  "pais": "España",
+  "rating": 82,
+  "rareza": "oro",
+  "precioMinimo": 90,
+  "etiqueta": "ORO · EL CAPITÁN DEL FUEGO",
+  "dato": "Goles al 93 y expulsiones al 94.",
+  "fotos": [
+   "/img/players/sergio-ramos.webp"
+  ],
+  "buscar": "Sergio Ramos",
+  "ea": 204963
+ },
+ {
+  "id": "thiago-silva",
+  "nombre": "Thiago",
+  "apellido": "Silva",
+  "pos": "DFC",
+  "pais": "Brasil",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 48,
+  "etiqueta": "PLATA · EL MONSTRUO",
+  "dato": "A los 40 todavía manda en el área.",
+  "fotos": [
+   "/img/players/thiago-silva.webp"
+  ],
+  "buscar": "Thiago Silva",
+  "ea": 226890
+ },
+ {
+  "id": "raphael-varane",
+  "nombre": "Raphaël",
+  "apellido": "Varane",
+  "pos": "DFC",
+  "pais": "Francia",
+  "rating": 84,
+  "rareza": "oro",
+  "precioMinimo": 68,
+  "etiqueta": "ORO · EL CAMPEÓN SILENCIOSO",
+  "dato": "Ganó todo sin levantar la voz.",
+  "fotos": [
+   "/img/players/raphael-varane.webp"
+  ],
+  "buscar": "Raphael Varane",
+  "ea": 262072
+ },
+ {
+  "id": "pepe",
+  "nombre": "Pepe",
+  "apellido": "",
+  "pos": "DFC",
+  "pais": "Portugal",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL ETERNO",
+  "dato": "Juega a los 41 con la cara de 25.",
+  "fotos": [
+   "/img/players/pepe.webp"
+  ],
+  "buscar": "Pepe",
+  "ea": 226110
+ },
+ {
+  "id": "giorgio-chiellini",
+  "nombre": "Giorgio",
+  "apellido": "Chiellini",
+  "pos": "DFC",
+  "pais": "Italia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 58,
+  "etiqueta": "PLATA · EL DUELISTA",
+  "dato": "Mordió a Suárez y sigue jugando.",
+  "fotos": [
+   "/img/players/giorgio-chiellini.webp"
+  ],
+  "buscar": "Giorgio Chiellini",
+  "ea": 265188
+ },
+ {
+  "id": "diego-godin",
+  "nombre": "Diego",
+  "apellido": "Godín",
+  "pos": "DFC",
+  "pais": "Uruguay",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL LÍDER DE LA GARRA",
+  "dato": "Ganó con la camiseta rota y la frente abierta.",
+  "fotos": [
+   "/img/players/diego-godin.webp"
+  ],
+  "buscar": "Diego Godin",
+  "ea": 235573
+ },
+ {
+  "id": "mats-hummels",
+  "nombre": "Mats",
+  "apellido": "Hummels",
+  "pos": "DFC",
+  "pais": "Alemania",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL CEREBRO DE LA ZAGA",
+  "dato": "Pasa mejor que algunos creativos.",
+  "fotos": [
+   "/img/players/mats-hummels.webp"
+  ],
+  "buscar": "Mats Hummels",
+  "ea": 248793
+ },
+ {
+  "id": "declan-rice",
+  "nombre": "Declan",
+  "apellido": "Rice",
+  "pos": "MCD",
+  "pais": "Inglaterra",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 90,
+  "etiqueta": "ORO · EL MOTOR INGLÉS",
+  "dato": "Hizo la fortuna del Arsenal pasando bien.",
+  "fotos": [
+   "/img/players/declan-rice.webp"
+  ],
+  "buscar": "Declan Rice",
+  "ea": 234378
+ },
+ {
+  "id": "joshua-kimmich",
+  "nombre": "Joshua",
+  "apellido": "Kimmich",
+  "pos": "MCD",
+  "pais": "Alemania",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 85,
+  "etiqueta": "ORO · EL CORAZÓN DEL BAYERN",
+  "dato": "Juega de cinco, de lateral y de capitán.",
+  "fotos": [
+   "/img/players/joshua-kimmich.webp"
+  ],
+  "buscar": "Joshua Kimmich",
+  "ea": 212622
+ },
+ {
+  "id": "martin-zubimendi",
+  "nombre": "Martín",
+  "apellido": "Zubimendi",
+  "pos": "MCD",
+  "pais": "España",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 70,
+  "etiqueta": "ORO · EL GUARDIÁN",
+  "dato": "Lo quisieron media docena de clubes.",
+  "fotos": [
+   "/img/players/martin-zubimendi.webp"
+  ],
+  "buscar": "Martin Zubimendi",
+  "ea": 248148
+ },
+ {
+  "id": "bruno-guimaraes",
+  "nombre": "Bruno",
+  "apellido": "Guimarães",
+  "pos": "MCD",
+  "pais": "Brasil",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 78,
+  "etiqueta": "ORO · EL ARTISTA",
+  "dato": "Pone la pelota donde quiere.",
+  "fotos": [
+   "/img/players/bruno-guimaraes.webp"
+  ],
+  "buscar": "Bruno Guimaraes",
+  "ea": 247851
+ },
+ {
+  "id": "fabinho",
+  "nombre": "Fabinho",
+  "apellido": "",
+  "pos": "MCD",
+  "pais": "Brasil",
+  "rating": 80,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · EL QUE SIGUE",
+  "dato": "¿Sigue jugando? Sigue jugando.",
+  "fotos": [
+   "/img/players/fabinho.webp"
+  ],
+  "buscar": "Fabinho",
+  "ea": 209499
+ },
+ {
+  "id": "sandro-tonali",
+  "nombre": "Sandro",
+  "apellido": "Tonali",
+  "pos": "MCD",
+  "pais": "Italia",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 60,
+  "etiqueta": "ORO · EL REGISTA",
+  "dato": "Entrena como mediocampista, vive como italiano.",
+  "fotos": [
+   "/img/players/sandro-tonali.webp"
+  ],
+  "buscar": "Sandro Tonali",
+  "ea": 241096
+ },
+ {
+  "id": "marcelo-brozovic",
+  "nombre": "Marcelo",
+  "apellido": "Brozović",
+  "pos": "MCD",
+  "pais": "Croacia",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL MURO CROATA",
+  "dato": "Hace lo que piden sin que nadie lo vea.",
+  "fotos": [
+   "/img/players/marcelo-brozovic.webp"
+  ],
+  "buscar": "Marcelo Brozović",
+  "ea": 216352
+ },
+ {
+  "id": "n-golo-kante",
+  "nombre": "N'Golo",
+  "apellido": "Kanté",
+  "pos": "MCD",
+  "pais": "Francia",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 84,
+  "etiqueta": "ORO · EL ASPIRADORA",
+  "dato": "Está en todos lados al mismo tiempo.",
+  "fotos": [
+   "/img/players/n-golo-kante.webp"
+  ],
+  "buscar": "N'Golo Kante",
+  "ea": 215914
+ },
+ {
+  "id": "sergio-busquets",
+  "nombre": "Sergio",
+  "apellido": "Busquets",
+  "pos": "MCD",
+  "pais": "España",
+  "rating": 83,
+  "rareza": "oro",
+  "precioMinimo": 62,
+  "etiqueta": "ORO · EL PIVOTE MÁGICO",
+  "dato": "Parece que no hace nada hasta que lo apagan.",
+  "fotos": [
+   "/img/players/sergio-busquets.webp"
+  ],
+  "buscar": "Sergio Busquets",
+  "ea": 189511
+ },
+ {
+  "id": "wilfred-ndidi",
+  "nombre": "Wilfred",
+  "apellido": "Ndidi",
+  "pos": "MCD",
+  "pais": "Nigeria",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL ESCUDO NIGERIANO",
+  "dato": "Si él no recupera la pelota, nadie.",
+  "fotos": [
+   "/img/players/wilfred-ndidi.webp"
+  ],
+  "buscar": "Wilfred Ndidi",
+  "ea": 226790
+ },
+ {
+  "id": "granit-xhaka",
+  "nombre": "Granit",
+  "apellido": "Xhaka",
+  "pos": "MCD",
+  "pais": "Suiza",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL CAPITÁN DE TARJETAS",
+  "dato": "Cada partido es una lección de disciplina.",
+  "fotos": [
+   "/img/players/granit-xhaka.webp"
+  ],
+  "buscar": "Granit Xhaka",
+  "ea": 199503
+ },
+ {
+  "id": "kalvin-phillips",
+  "nombre": "Kalvin",
+  "apellido": "Phillips",
+  "pos": "MCD",
+  "pais": "Inglaterra",
+  "rating": 76,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL ROBOT RETIRADO",
+  "dato": "Jugó una Euro y se cree titular.",
+  "fotos": [
+   "/img/players/kalvin-phillips.webp"
+  ],
+  "buscar": "Kalvin Phillips",
+  "ea": 224081
+ },
+ {
+  "id": "edson-alvarez",
+  "nombre": "Édson",
+  "apellido": "Álvarez",
+  "pos": "MCD",
+  "pais": "México",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL AZTECA",
+  "dato": "Defiende al Tri con el pecho.",
+  "fotos": [
+   "/img/players/edson-alvarez.webp"
+  ],
+  "buscar": "Edson Alvarez",
+  "ea": 235844
+ },
+ {
+  "id": "thomas-partey",
+  "nombre": "Thomas",
+  "apellido": "Partey",
+  "pos": "MCD",
+  "pais": "Ghana",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL ASPIRADOR AFRICANO",
+  "dato": "Barre el mediocampo con una sonrisa.",
+  "fotos": [
+   "/img/players/thomas-partey.webp"
+  ],
+  "buscar": "Thomas Partey",
+  "ea": 209989
+ },
+ {
+  "id": "amadou-onana",
+  "nombre": "Amadou",
+  "apellido": "Onana",
+  "pos": "MCD",
+  "pais": "Bélgica",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL GIGANTE BELGA",
+  "dato": "Casi dos metros de pivote.",
+  "fotos": [
+   "/img/players/amadou-onana.webp"
+  ],
+  "buscar": "Amadou Onana",
+  "ea": 257057
+ },
+ {
+  "id": "frenkie-de-jong",
+  "nombre": "Frenkie",
+  "apellido": "de Jong",
+  "pos": "MCD",
+  "pais": "Países Bajos",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 74,
+  "etiqueta": "ORO · EL ELEGANTE",
+  "dato": "Conduce como un auto de lujo.",
+  "fotos": [
+   "/img/players/frenkie-de-jong.webp"
+  ],
+  "buscar": "Frenkie de Jong",
+  "ea": 228702
+ },
+ {
+  "id": "joao-palhinha",
+  "nombre": "João",
+  "apellido": "Palhinha",
+  "pos": "MCD",
+  "pais": "Portugal",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL CARNICERO PORTUGUÉS",
+  "dato": "Gana todas las pelotas divididas.",
+  "fotos": [
+   "/img/players/joao-palhinha.webp"
+  ],
+  "buscar": "Joao Palhinha",
+  "ea": 229391
+ },
+ {
+  "id": "rodrigo-bentancur",
+  "nombre": "Rodrigo",
+  "apellido": "Bentancur",
+  "pos": "MCD",
+  "pais": "Uruguay",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL TÉCNICO CELESTE",
+  "dato": "Pone la pausa que necesita Uruguay.",
+  "fotos": [
+   "/img/players/rodrigo-bentancur.webp"
+  ],
+  "buscar": "Rodrigo Bentancur",
+  "ea": 227535
+ },
+ {
+  "id": "mateo-kovacic",
+  "nombre": "Mateo",
+  "apellido": "Kovačić",
+  "pos": "MCD",
+  "pais": "Croacia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 42,
+  "etiqueta": "PLATA · EL ELÁSTICO",
+  "dato": "Se escapa de tres marcas con un giro.",
+  "fotos": [
+   "/img/players/mateo-kovacic.webp"
+  ],
+  "buscar": "Mateo Kovacic",
+  "ea": 207410
+ },
+ {
+  "id": "javier-mascherano",
+  "nombre": "Javier",
+  "apellido": "Mascherano",
+  "pos": "MCD",
+  "pais": "Argentina",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 56,
+  "etiqueta": "PLATA · EL JEFECITO",
+  "dato": "Jugó de defensor y de capitán con la misma cara.",
+  "fotos": [
+   "/img/players/javier-mascherano.webp"
+  ],
+  "buscar": "Javier Mascherano",
+  "ea": 231591
+ },
+ {
+  "id": "exequiel-palacios",
+  "nombre": "Exequiel",
+  "apellido": "Palacios",
+  "pos": "MCD",
+  "pais": "Argentina",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL TEQUILA",
+  "dato": "Corre, marca y hace goles bonitos.",
+  "fotos": [
+   "/img/players/exequiel-palacios.webp"
+  ],
+  "buscar": "Exequiel Palacios",
+  "ea": 231521
+ },
+ {
+  "id": "lucas-torreira",
+  "nombre": "Lucas",
+  "apellido": "Torreira",
+  "pos": "MCD",
+  "pais": "Uruguay",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL CORREDOR",
+  "dato": "Corre tanto que cansa hasta a la pelota.",
+  "fotos": [
+   "/img/players/lucas-torreira.webp"
+  ],
+  "buscar": "Lucas Torreira",
+  "ea": 223959
+ },
+ {
+  "id": "idrissa-gueye",
+  "nombre": "Idrissa",
+  "apellido": "Gueye",
+  "pos": "MCD",
+  "pais": "Senegal",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL ESCUDERO",
+  "dato": "Corta pelotas con el mismo gesto desde 2013.",
+  "fotos": [
+   "/img/players/idrissa-gueye.webp"
+  ],
+  "buscar": "Idrissa Gueye",
+  "ea": 193474
+ },
+ {
+  "id": "toni-kroos",
+  "nombre": "Toni",
+  "apellido": "Kroos",
+  "pos": "MC",
+  "pais": "Alemania",
+  "rating": 89,
+  "rareza": "prime",
+  "precioMinimo": 100,
+  "etiqueta": "PRIME · EL METRÓNOMO",
+  "dato": "Pasa sin mirar y acierta siempre.",
+  "fotos": [
+   "/img/players/toni-kroos.webp"
+  ],
+  "buscar": "Toni Kroos",
+  "ea": 237383
+ },
+ {
+  "id": "ilkay-gundogan",
+  "nombre": "İlkay",
+  "apellido": "Gündoğan",
+  "pos": "MC",
+  "pais": "Alemania",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 50,
+  "etiqueta": "PLATA · EL CAPITÁN ELEGANTE",
+  "dato": "Siempre llega al área cuando nadie lo espera.",
+  "fotos": [
+   "/img/players/ilkay-gundogan.webp"
+  ],
+  "buscar": "Ilkay Gundogan",
+  "ea": 186942
+ },
+ {
+  "id": "gavi",
+  "nombre": "Gavi",
+  "apellido": "",
+  "pos": "MC",
+  "pais": "España",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 58,
+  "etiqueta": "PLATA · EL GAVI",
+  "dato": "Juega con la furia de un nene de 12.",
+  "fotos": [
+   "/img/players/gavi.webp"
+  ],
+  "buscar": "Gavi",
+  "ea": 264240
+ },
+ {
+  "id": "fermin-lopez",
+  "nombre": "Fermín",
+  "apellido": "López",
+  "pos": "MC",
+  "pais": "España",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL JOVEN SORPRESA",
+  "dato": "Con 20 ya metía goles en la Champions.",
+  "fotos": [
+   "/img/players/fermin-lopez.webp"
+  ],
+  "buscar": "Fermin Lopez",
+  "ea": 277179
+ },
+ {
+  "id": "marco-verratti",
+  "nombre": "Marco",
+  "apellido": "Verratti",
+  "pos": "MC",
+  "pais": "Italia",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 62,
+  "etiqueta": "ORO · EL PEQUEÑO MAGO",
+  "dato": "Pasa con la zurda y se queja con la derecha.",
+  "fotos": [
+   "/img/players/marco-verratti.webp"
+  ],
+  "buscar": "Marco Verratti",
+  "ea": 207865
+ },
+ {
+  "id": "nicolo-barella",
+  "nombre": "Nicolò",
+  "apellido": "Barella",
+  "pos": "MC",
+  "pais": "Italia",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 82,
+  "etiqueta": "ORO · EL INCANSABLE",
+  "dato": "Corre por tres y juega por cuatro.",
+  "fotos": [
+   "/img/players/nicolo-barella.webp"
+  ],
+  "buscar": "Nicolo Barella",
+  "ea": 224232
+ },
+ {
+  "id": "sergej-milinkovic-savic",
+  "nombre": "Sergej",
+  "apellido": "Milinković-Savić",
+  "pos": "MC",
+  "pais": "Serbia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL SERGENTE",
+  "dato": "Mide dos metros y la toca como un enano.",
+  "fotos": [
+   "/img/players/sergej-milinkovic-savic.webp"
+  ],
+  "buscar": "Sergej Milinkovic-Savic",
+  "ea": 223848
+ },
+ {
+  "id": "mason-mount",
+  "nombre": "Mason",
+  "apellido": "Mount",
+  "pos": "MC",
+  "pais": "Inglaterra",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL RUBIO DEL CHELSEA",
+  "dato": "Fue una promesa. Sigue siéndolo.",
+  "fotos": [
+   "/img/players/mason-mount.webp"
+  ],
+  "buscar": "Mason Mount",
+  "ea": 233064
+ },
+ {
+  "id": "vitinha",
+  "nombre": "Vitinha",
+  "apellido": "",
+  "pos": "MC",
+  "pais": "Portugal",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 80,
+  "etiqueta": "ORO · EL CEREBRO PORTUGUÉS",
+  "dato": "Desde que llegó el PSG juega a otro ritmo.",
+  "fotos": [
+   "/img/players/vitinha.webp"
+  ],
+  "buscar": "Vitinha",
+  "ea": 255253
+ },
+ {
+  "id": "joao-neves",
+  "nombre": "João",
+  "apellido": "Neves",
+  "pos": "MC",
+  "pais": "Portugal",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 66,
+  "etiqueta": "ORO · EL JOVEN CAPITÁN",
+  "dato": "A los 19 ya mandaba en el mediocampo.",
+  "fotos": [
+   "/img/players/joao-neves.webp"
+  ],
+  "buscar": "Joao Neves",
+  "ea": 272834
+ },
+ {
+  "id": "bernardo-silva",
+  "nombre": "Bernardo",
+  "apellido": "Silva",
+  "pos": "MC",
+  "pais": "Portugal",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 96,
+  "etiqueta": "ORO · EL ENANO GENIAL",
+  "dato": "Hace un partido por tres y no se queja.",
+  "fotos": [
+   "/img/players/bernardo-silva.webp"
+  ],
+  "buscar": "Bernardo Silva",
+  "ea": 218667
+ },
+ {
+  "id": "hakan-calhanoglu",
+  "nombre": "Hakan",
+  "apellido": "Çalhanoğlu",
+  "pos": "MC",
+  "pais": "Turquía",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 66,
+  "etiqueta": "ORO · EL DE LOS TIROS LIBRES",
+  "dato": "Patea las faltas como si fueran penales.",
+  "fotos": [
+   "/img/players/hakan-calhanoglu.webp"
+  ],
+  "buscar": "Hakan Calhanoglu",
+  "ea": 208128
+ },
+ {
+  "id": "teun-koopmeiners",
+  "nombre": "Teun",
+  "apellido": "Koopmeiners",
+  "pos": "MC",
+  "pais": "Países Bajos",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL ZURDO HOLANDÉS",
+  "dato": "Marca de penal y de cabeza.",
+  "fotos": [
+   "/img/players/teun-koopmeiners.webp"
+  ],
+  "buscar": "Teun Koopmeiners",
+  "ea": 240679
+ },
+ {
+  "id": "ryan-gravenberch",
+  "nombre": "Ryan",
+  "apellido": "Gravenberch",
+  "pos": "MC",
+  "pais": "Países Bajos",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 58,
+  "etiqueta": "PLATA · EL FLACO ELEGANTE",
+  "dato": "Cuando conduce, parece que patina.",
+  "fotos": [
+   "/img/players/ryan-gravenberch.webp"
+  ],
+  "buscar": "Ryan Gravenberch",
+  "ea": 246104
+ },
+ {
+  "id": "giovani-lo-celso",
+  "nombre": "Giovani",
+  "apellido": "Lo Celso",
+  "pos": "MC",
+  "pais": "Argentina",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL BALIJO DE LA SELECCIÓN",
+  "dato": "Tiene un aire a Riquelme.",
+  "fotos": [
+   "/img/players/giovani-lo-celso.webp"
+  ],
+  "buscar": "Giovani Lo Celso",
+  "ea": 226226
+ },
+ {
+  "id": "thiago-alcantara",
+  "nombre": "Thiago",
+  "apellido": "Alcântara",
+  "pos": "MC",
+  "pais": "España",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL FINO",
+  "dato": "Toca con una elegancia que ya nadie usa.",
+  "fotos": [
+   "/img/players/thiago-alcantara.webp"
+  ],
+  "buscar": "Thiago Alcantara",
+  "ea": 71977
+ },
+ {
+  "id": "ivan-rakitic",
+  "nombre": "Ivan",
+  "apellido": "Rakitić",
+  "pos": "MC",
+  "pais": "Croacia",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL ELEGANTE CROATA",
+  "dato": "Se retiró con el Barça en el corazón.",
+  "fotos": [
+   "/img/players/ivan-rakitic.webp"
+  ],
+  "buscar": "Ivan Rakitic",
+  "ea": 267238
+ },
+ {
+  "id": "arturo-vidal",
+  "nombre": "Arturo",
+  "apellido": "Vidal",
+  "pos": "MC",
+  "pais": "Chile",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 26,
+  "etiqueta": "COMÚN · EL GUERRERO",
+  "dato": "Corre, patea, protesta y mete goles.",
+  "fotos": [
+   "/img/players/arturo-vidal.webp"
+  ],
+  "buscar": "Arturo Vidal",
+  "ea": 181872
+ },
+ {
+  "id": "charles-aranguiz",
+  "nombre": "Charles",
+  "apellido": "Aránguiz",
+  "pos": "MC",
+  "pais": "Chile",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL ARQUITECTO CHILENO",
+  "dato": "Ordena el mediocampo con un solo toque.",
+  "fotos": [
+   "/img/players/charles-aranguiz.webp"
+  ],
+  "buscar": "Charles Aranguiz",
+  "ea": 199042
+ },
+ {
+  "id": "weston-mckennie",
+  "nombre": "Weston",
+  "apellido": "McKennie",
+  "pos": "MC",
+  "pais": "Estados Unidos",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL VAQUERO",
+  "dato": "Lleva sombrero de cowboy aunque no haya sol.",
+  "fotos": [
+   "/img/players/weston-mckennie.webp"
+  ],
+  "buscar": "Weston McKennie",
+  "ea": 238744
+ },
+ {
+  "id": "tyler-adams",
+  "nombre": "Tyler",
+  "apellido": "Adams",
+  "pos": "MC",
+  "pais": "Estados Unidos",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 20,
+  "etiqueta": "COMÚN · EL MOTOR AMERICANO",
+  "dato": "Corre sin parar con la bandera.",
+  "fotos": [
+   "/img/players/tyler-adams.webp"
+  ],
+  "buscar": "Tyler Adams",
+  "ea": 232999
+ },
+ {
+  "id": "sofyan-amrabat",
+  "nombre": "Sofyan",
+  "apellido": "Amrabat",
+  "pos": "MC",
+  "pais": "Marruecos",
+  "rating": 82,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL LEÓN DEL ATLAS",
+  "dato": "En Qatar 2022 fue el mejor mediocampista.",
+  "fotos": [
+   "/img/players/sofyan-amrabat.webp"
+  ],
+  "buscar": "Sofyan Amrabat",
+  "ea": 224158
+ },
+ {
+  "id": "phil-foden",
+  "nombre": "Phil",
+  "apellido": "Foden",
+  "pos": "MCO",
+  "pais": "Inglaterra",
+  "rating": 88,
+  "rareza": "prime",
+  "precioMinimo": 110,
+  "etiqueta": "PRIME · EL NIÑO DE STOCKPORT",
+  "dato": "Cara de chico bueno y pies de crack.",
+  "fotos": [
+   "/img/players/phil-foden.webp"
+  ],
+  "buscar": "Phil Foden",
+  "ea": 237692
+ },
+ {
+  "id": "florian-wirtz",
+  "nombre": "Florian",
+  "apellido": "Wirtz",
+  "pos": "MCO",
+  "pais": "Alemania",
+  "rating": 88,
+  "rareza": "prime",
+  "precioMinimo": 112,
+  "etiqueta": "PRIME · EL CEREBRO JOVEN",
+  "dato": "A los 21 ya manda como un capitán.",
+  "fotos": [
+   "/img/players/florian-wirtz.webp"
+  ],
+  "buscar": "Florian Wirtz",
+  "ea": 256630
+ },
+ {
+  "id": "cole-palmer",
+  "nombre": "Cole",
+  "apellido": "Palmer",
+  "pos": "MCO",
+  "pais": "Inglaterra",
+  "rating": 87,
+  "rareza": "prime",
+  "precioMinimo": 100,
+  "etiqueta": "PRIME · EL FRÍO",
+  "dato": "Mete un penal y mira al cielo como si nada.",
+  "fotos": [
+   "/img/players/cole-palmer.webp"
+  ],
+  "buscar": "Cole Palmer",
+  "ea": 257534
+ },
+ {
+  "id": "arda-guler",
+  "nombre": "Arda",
+  "apellido": "Güler",
+  "pos": "MCO",
+  "pais": "Turquía",
+  "rating": 82,
+  "rareza": "oro",
+  "precioMinimo": 60,
+  "etiqueta": "ORO · EL NUEVO MESSI TURCO",
+  "dato": "Lo llaman así para que sienta presión.",
+  "fotos": [
+   "/img/players/arda-guler.webp"
+  ],
+  "buscar": "Arda Guler",
+  "ea": 264309
+ },
+ {
+  "id": "christian-eriksen",
+  "nombre": "Christian",
+  "apellido": "Eriksen",
+  "pos": "MCO",
+  "pais": "Dinamarca",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL RENACIDO",
+  "dato": "Volvió de lo imposible y sigue asistiendo.",
+  "fotos": [
+   "/img/players/christian-eriksen.webp"
+  ],
+  "buscar": "Christian Eriksen",
+  "ea": 267685
+ },
+ {
+  "id": "thomas-muller",
+  "nombre": "Thomas",
+  "apellido": "Müller",
+  "pos": "MCO",
+  "pais": "Alemania",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 54,
+  "etiqueta": "PLATA · EL RAUMDEUTER",
+  "dato": "Juega en los espacios que no existen.",
+  "fotos": [
+   "/img/players/thomas-muller.webp"
+  ],
+  "buscar": "Thomas Muller",
+  "ea": 189596
+ },
+ {
+  "id": "dani-olmo",
+  "nombre": "Dani",
+  "apellido": "Olmo",
+  "pos": "MCO",
+  "pais": "España",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 72,
+  "etiqueta": "ORO · EL CAMPEÓN DE EUROPA",
+  "dato": "Ganó la Euro y fichó por el Barça.",
+  "fotos": [
+   "/img/players/dani-olmo.webp"
+  ],
+  "buscar": "Dani Olmo",
+  "ea": 244260
+ },
+ {
+  "id": "antoine-griezmann",
+  "nombre": "Antoine",
+  "apellido": "Griezmann",
+  "pos": "MCO",
+  "pais": "Francia",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 88,
+  "etiqueta": "ORO · EL PRÍNCIPE",
+  "dato": "Marca en la final y festeja con un bailecito.",
+  "fotos": [
+   "/img/players/antoine-griezmann.webp"
+  ],
+  "buscar": "Antoine Griezmann",
+  "ea": 194765
+ },
+ {
+  "id": "eden-hazard",
+  "nombre": "Eden",
+  "apellido": "Hazard",
+  "pos": "MCO",
+  "pais": "Bélgica",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 80,
+  "etiqueta": "ORO · EL BAILARÍN BELGA",
+  "dato": "Con la pelota genio, con la balanza no tanto.",
+  "fotos": [
+   "/img/players/eden-hazard.webp"
+  ],
+  "buscar": "Eden Hazard",
+  "ea": 203486
+ },
+ {
+  "id": "isco",
+  "nombre": "Isco",
+  "apellido": "",
+  "pos": "MCO",
+  "pais": "España",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · EL MAGO DE MÁLAGA",
+  "dato": "Pasaba la pelota entre tres sin tocarla.",
+  "fotos": [
+   "/img/players/isco.webp"
+  ],
+  "buscar": "Isco",
+  "ea": 197781
+ },
+ {
+  "id": "julian-brandt",
+  "nombre": "Julian",
+  "apellido": "Brandt",
+  "pos": "MCO",
+  "pais": "Alemania",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · EL ALEMÁN DE LA BANDA",
+  "dato": "Un día mete tres, al otro no aparece.",
+  "fotos": [
+   "/img/players/julian-brandt.webp"
+  ],
+  "buscar": "Julian Brandt",
+  "ea": 212194
+ },
+ {
+  "id": "takefusa-kubo",
+  "nombre": "Takefusa",
+  "apellido": "Kubo",
+  "pos": "MCO",
+  "pais": "Japón",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL MESSI JAPONÉS",
+  "dato": "Lo llaman así y no le queda mal.",
+  "fotos": [
+   "/img/players/takefusa-kubo.webp"
+  ],
+  "buscar": "Takefusa Kubo",
+  "ea": 237681
+ },
+ {
+  "id": "dusan-tadic",
+  "nombre": "Dušan",
+  "apellido": "Tadić",
+  "pos": "MCO",
+  "pais": "Serbia",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 18,
+  "etiqueta": "COMÚN · EL SERBIO DE LAS ASISTENCIAS",
+  "dato": "Con 35 sigue tirando pases sin mirar.",
+  "fotos": [
+   "/img/players/dusan-tadic.webp"
+  ],
+  "buscar": "Dusan Tadic",
+  "ea": 246430
+ },
+ {
+  "id": "ruben-loftus-cheek",
+  "nombre": "Ruben",
+  "apellido": "Loftus-Cheek",
+  "pos": "MCO",
+  "pais": "Inglaterra",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 16,
+  "etiqueta": "COMÚN · EL GIGANTE DEL MEDIO",
+  "dato": "Corre con la pelota pegada al pie.",
+  "fotos": [
+   "/img/players/ruben-loftus-cheek.webp"
+  ],
+  "buscar": "Ruben Loftus-Cheek",
+  "ea": 213666
+ },
+ {
+  "id": "james-maddison",
+  "nombre": "James",
+  "apellido": "Maddison",
+  "pos": "MCO",
+  "pais": "Inglaterra",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL DARTS",
+  "dato": "Festeja jugando a los dardos.",
+  "fotos": [
+   "/img/players/james-maddison.webp"
+  ],
+  "buscar": "James Maddison",
+  "ea": 220697
+ },
+ {
+  "id": "lorenzo-pellegrini",
+  "nombre": "Lorenzo",
+  "apellido": "Pellegrini",
+  "pos": "MCO",
+  "pais": "Italia",
+  "rating": 82,
+  "rareza": "comun",
+  "precioMinimo": 26,
+  "etiqueta": "COMÚN · EL CAPITÁN ROMANO",
+  "dato": "Lleva la Roma en la sangre.",
+  "fotos": [
+   "/img/players/lorenzo-pellegrini.webp"
+  ],
+  "buscar": "Lorenzo Pellegrini",
+  "ea": 228251
+ },
+ {
+  "id": "dominik-szoboszlai",
+  "nombre": "Dominik",
+  "apellido": "Szoboszlai",
+  "pos": "MCO",
+  "pais": "Hungría",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 56,
+  "etiqueta": "PLATA · EL CAPITÁN HÚNGARO",
+  "dato": "Tiros libres de 30 metros.",
+  "fotos": [
+   "/img/players/dominik-szoboszlai.webp"
+  ],
+  "buscar": "Dominik Szoboszlai",
+  "ea": 236772
+ },
+ {
+  "id": "pablo-sarabia",
+  "nombre": "Pablo",
+  "apellido": "Sarabia",
+  "pos": "MCO",
+  "pais": "España",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL DEL BARRIO",
+  "dato": "Juega con la zurda, con la derecha y con ganas.",
+  "fotos": [
+   "/img/players/pablo-sarabia.webp"
+  ],
+  "buscar": "Pablo Sarabia",
+  "ea": 264240
+ },
+ {
+  "id": "nico-paz",
+  "nombre": "Nico",
+  "apellido": "Paz",
+  "pos": "MCO",
+  "pais": "Argentina",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL NENE DEL REAL",
+  "dato": "Es hijo de Pablo Paz y ya juega por el padre.",
+  "fotos": [
+   "/img/players/nico-paz.webp"
+  ],
+  "buscar": "Nico Paz",
+  "ea": 277846
+ },
+ {
+  "id": "rodrygo",
+  "nombre": "Rodrygo",
+  "apellido": "",
+  "pos": "ED",
+  "pais": "Brasil",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 78,
+  "etiqueta": "ORO · EL NIÑO DE ORO",
+  "dato": "Dos goles en dos minutos y a dormir.",
+  "fotos": [
+   "/img/players/rodrygo.webp"
+  ],
+  "buscar": "Rodrygo",
+  "ea": 243812
+ },
+ {
+  "id": "federico-chiesa",
+  "nombre": "Federico",
+  "apellido": "Chiesa",
+  "pos": "ED",
+  "pais": "Italia",
+  "rating": 82,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL CAMPEÓN DE EUROPA",
+  "dato": "Cada lesión lo hace más fuerte, dicen.",
+  "fotos": [
+   "/img/players/federico-chiesa.webp"
+  ],
+  "buscar": "Federico Chiesa",
+  "ea": 235805
+ },
+ {
+  "id": "jeremy-doku",
+  "nombre": "Jérémy",
+  "apellido": "Doku",
+  "pos": "ED",
+  "pais": "Bélgica",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL DE VELOCIDAD",
+  "dato": "Se escapa de tres como si hubiera un dron.",
+  "fotos": [
+   "/img/players/jeremy-doku.webp"
+  ],
+  "buscar": "Jeremy Doku",
+  "ea": 246420
+ },
+ {
+  "id": "ousmane-dembele",
+  "nombre": "Ousmane",
+  "apellido": "Dembélé",
+  "pos": "ED",
+  "pais": "Francia",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 88,
+  "etiqueta": "ORO · EL BALÓN DE ORO",
+  "dato": "Campeón de todo, finalmente.",
+  "fotos": [
+   "/img/players/ousmane-dembele.webp"
+  ],
+  "buscar": "Ousmane Dembele",
+  "ea": 231443
+ },
+ {
+  "id": "michael-olise",
+  "nombre": "Michael",
+  "apellido": "Olise",
+  "pos": "ED",
+  "pais": "Francia",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 72,
+  "etiqueta": "ORO · EL ZURDO DE OLISE",
+  "dato": "Cuando pisa la pelota ya empezó la jugada.",
+  "fotos": [
+   "/img/players/michael-olise.webp"
+  ],
+  "buscar": "Michael Olise",
+  "ea": 247827
+ },
+ {
+  "id": "leroy-sane",
+  "nombre": "Leroy",
+  "apellido": "Sané",
+  "pos": "ED",
+  "pais": "Alemania",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 62,
+  "etiqueta": "ORO · EL VELOZ",
+  "dato": "Si no se lesiona, es el mejor.",
+  "fotos": [
+   "/img/players/leroy-sane.webp"
+  ],
+  "buscar": "Leroy Sane",
+  "ea": 222492
+ },
+ {
+  "id": "riyad-mahrez",
+  "nombre": "Riyad",
+  "apellido": "Mahrez",
+  "pos": "ED",
+  "pais": "Argelia",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL ELEGANTE",
+  "dato": "Pisa la pelota con gracia de mago.",
+  "fotos": [
+   "/img/players/riyad-mahrez.webp"
+  ],
+  "buscar": "Riyad Mahrez",
+  "ea": 204485
+ },
+ {
+  "id": "mohammed-kudus",
+  "nombre": "Mohammed",
+  "apellido": "Kudus",
+  "pos": "ED",
+  "pais": "Ghana",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL BAILARÍN DE GHANA",
+  "dato": "Festeja con el famoso paso de baile.",
+  "fotos": [
+   "/img/players/mohammed-kudus.webp"
+  ],
+  "buscar": "Mohammed Kudus",
+  "ea": 245155
+ },
+ {
+  "id": "nico-williams",
+  "nombre": "Nico",
+  "apellido": "Williams",
+  "pos": "ED",
+  "pais": "España",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 82,
+  "etiqueta": "ORO · EL NIÑO TERRIBLE",
+  "dato": "Campeón de Europa con 22 años.",
+  "fotos": [
+   "/img/players/nico-williams.webp"
+  ],
+  "buscar": "Nico Williams",
+  "ea": 256516
+ },
+ {
+  "id": "serge-gnabry",
+  "nombre": "Serge",
+  "apellido": "Gnabry",
+  "pos": "ED",
+  "pais": "Alemania",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 42,
+  "etiqueta": "PLATA · EL MENSAJERO",
+  "dato": "Cuando se enchufa, mete tres.",
+  "fotos": [
+   "/img/players/serge-gnabry.webp"
+  ],
+  "buscar": "Serge Gnabry",
+  "ea": 206113
+ },
+ {
+  "id": "kingsley-coman",
+  "nombre": "Kingsley",
+  "apellido": "Coman",
+  "pos": "ED",
+  "pais": "Francia",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 62,
+  "etiqueta": "ORO · EL VELOZ DEL BAYERN",
+  "dato": "Cuando juega, el Bayern gana.",
+  "fotos": [
+   "/img/players/kingsley-coman.webp"
+  ],
+  "buscar": "Kingsley Coman",
+  "ea": 213345
+ },
+ {
+  "id": "xherdan-shaqiri",
+  "nombre": "Xherdan",
+  "apellido": "Shaqiri",
+  "pos": "ED",
+  "pais": "Suiza",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 16,
+  "etiqueta": "COMÚN · EL ENANO DEL BARRIO",
+  "dato": "Un zurdazo suyo vale tres partidos.",
+  "fotos": [
+   "/img/players/xherdan-shaqiri.webp"
+  ],
+  "buscar": "Xherdan Shaqiri",
+  "ea": 193348
+ },
+ {
+  "id": "franck-ribery",
+  "nombre": "Franck",
+  "apellido": "Ribéry",
+  "pos": "ED",
+  "pais": "Francia",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 66,
+  "etiqueta": "ORO · EL DE LA CICATRIZ",
+  "dato": "Con la cara marcada y el alma limpia.",
+  "fotos": [
+   "/img/players/franck-ribery.webp"
+  ],
+  "buscar": "Franck Ribery",
+  "ea": 227236
+ },
+ {
+  "id": "pedro-neto",
+  "nombre": "Pedro",
+  "apellido": "Neto",
+  "pos": "ED",
+  "pais": "Portugal",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 38,
+  "etiqueta": "PLATA · EL VELOZ DE WOLVES",
+  "dato": "Rápido, brillante e inconstante.",
+  "fotos": [
+   "/img/players/pedro-neto.webp"
+  ],
+  "buscar": "Pedro Neto",
+  "ea": 238616
+ },
+ {
+  "id": "jadon-sancho",
+  "nombre": "Jadon",
+  "apellido": "Sancho",
+  "pos": "ED",
+  "pais": "Inglaterra",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 32,
+  "etiqueta": "PLATA · EL PRIMER ELEGIDO",
+  "dato": "Fue el mejor del mundo… en el FIFA.",
+  "fotos": [
+   "/img/players/jadon-sancho.webp"
+  ],
+  "buscar": "Jadon Sancho",
+  "ea": 233049
+ },
+ {
+  "id": "marcus-rashford",
+  "nombre": "Marcus",
+  "apellido": "Rashford",
+  "pos": "ED",
+  "pais": "Inglaterra",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 46,
+  "etiqueta": "PLATA · EL DE LAS COMIDAS",
+  "dato": "Mete goles y alimenta niños.",
+  "fotos": [
+   "/img/players/marcus-rashford.webp"
+  ],
+  "buscar": "Marcus Rashford",
+  "ea": 231677
+ },
+ {
+  "id": "willian",
+  "nombre": "Willian",
+  "apellido": "",
+  "pos": "ED",
+  "pais": "Brasil",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL ETERNO",
+  "dato": "Cambia de club como de remera.",
+  "fotos": [
+   "/img/players/willian.webp"
+  ],
+  "buscar": "Willian",
+  "ea": 256196
+ },
+ {
+  "id": "angel-correa",
+  "nombre": "Ángel",
+  "apellido": "Correa",
+  "pos": "ED",
+  "pais": "Argentina",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 20,
+  "etiqueta": "COMÚN · EL TUCU",
+  "dato": "Cuando se escapa, no hay quien lo alcance.",
+  "fotos": [
+   "/img/players/angel-correa.webp"
+  ],
+  "buscar": "Angel Correa",
+  "ea": 207865
+ },
+ {
+  "id": "gerard-moreno",
+  "nombre": "Gerard",
+  "apellido": "Moreno",
+  "pos": "ED",
+  "pais": "España",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL AMARILLO",
+  "dato": "Mete goles con una calma sospechosa.",
+  "fotos": [
+   "/img/players/gerard-moreno.webp"
+  ],
+  "buscar": "Gerard Moreno",
+  "ea": 208093
+ },
+ {
+  "id": "karim-benzema",
+  "nombre": "Karim",
+  "apellido": "Benzema",
+  "pos": "DC",
+  "pais": "Francia",
+  "rating": 88,
+  "rareza": "prime",
+  "precioMinimo": 110,
+  "etiqueta": "PRIME · EL BALÓN DE ORO DEL 2022",
+  "dato": "Un gol suyo vale tres de cualquiera.",
+  "fotos": [
+   "/img/players/karim-benzema.webp"
+  ],
+  "buscar": "Karim Benzema",
+  "ea": 165153
+ },
+ {
+  "id": "victor-osimhen",
+  "nombre": "Victor",
+  "apellido": "Osimhen",
+  "pos": "DC",
+  "pais": "Nigeria",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 88,
+  "etiqueta": "ORO · EL BATIDO",
+  "dato": "Sale a la cancha y los centrales sudan.",
+  "fotos": [
+   "/img/players/victor-osimhen.webp"
+  ],
+  "buscar": "Victor Osimhen",
+  "ea": 232293
+ },
+ {
+  "id": "marcus-thuram",
+  "nombre": "Marcus",
+  "apellido": "Thuram",
+  "pos": "DC",
+  "pais": "Francia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL HIJO DEL CAMPEÓN",
+  "dato": "Heredó la altura y la velocidad de su padre.",
+  "fotos": [
+   "/img/players/marcus-thuram.webp"
+  ],
+  "buscar": "Marcus Thuram",
+  "ea": 228093
+ },
+ {
+  "id": "alexander-isak",
+  "nombre": "Alexander",
+  "apellido": "Isak",
+  "pos": "DC",
+  "pais": "Suecia",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 90,
+  "etiqueta": "ORO · EL FLACO ELEGANTE",
+  "dato": "Dos metros y regatea como un enano.",
+  "fotos": [
+   "/img/players/alexander-isak.webp"
+  ],
+  "buscar": "Alexander Isak",
+  "ea": 233731
+ },
+ {
+  "id": "ivan-toney",
+  "nombre": "Ivan",
+  "apellido": "Toney",
+  "pos": "DC",
+  "pais": "Inglaterra",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL REY DEL PENAL",
+  "dato": "Falla uno cada diez años.",
+  "fotos": [
+   "/img/players/ivan-toney.webp"
+  ],
+  "buscar": "Ivan Toney",
+  "ea": 212228
+ },
+ {
+  "id": "dusan-vlahovic",
+  "nombre": "Dušan",
+  "apellido": "Vlahović",
+  "pos": "DC",
+  "pais": "Serbia",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 52,
+  "etiqueta": "PLATA · EL TORO SERBIO",
+  "dato": "Mete goles de cabeza, de pie y de rodilla.",
+  "fotos": [
+   "/img/players/dusan-vlahovic.webp"
+  ],
+  "buscar": "Dusan Vlahovic",
+  "ea": 246430
+ },
+ {
+  "id": "romelu-lukaku",
+  "nombre": "Romelu",
+  "apellido": "Lukaku",
+  "pos": "DC",
+  "pais": "Bélgica",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 54,
+  "etiqueta": "PLATA · EL GIGANTE BELGA",
+  "dato": "Corre como locomotora y mete como tren.",
+  "fotos": [
+   "/img/players/romelu-lukaku.webp"
+  ],
+  "buscar": "Romelu Lukaku",
+  "ea": 192505
+ },
+ {
+  "id": "sergio-aguero",
+  "nombre": "Sergio",
+  "apellido": "Agüero",
+  "pos": "DC",
+  "pais": "Argentina",
+  "rating": 87,
+  "rareza": "oro",
+  "precioMinimo": 95,
+  "etiqueta": "ORO · EL KUN",
+  "dato": "Su gol al 93 detuvo a toda una ciudad.",
+  "fotos": [
+   "/img/players/sergio-aguero.webp"
+  ],
+  "buscar": "Sergio Aguero",
+  "ea": 208093
+ },
+ {
+  "id": "gonzalo-higuain",
+  "nombre": "Gonzalo",
+  "apellido": "Higuaín",
+  "pos": "DC",
+  "pais": "Argentina",
+  "rating": 85,
+  "rareza": "oro",
+  "precioMinimo": 60,
+  "etiqueta": "ORO · EL PIPITA",
+  "dato": "36 goles en una Liga y falló en las finales.",
+  "fotos": [
+   "/img/players/gonzalo-higuain.webp"
+  ],
+  "buscar": "Gonzalo Higuain",
+  "ea": 231340
+ },
+ {
+  "id": "zlatan-ibrahimovic",
+  "nombre": "Zlatan",
+  "apellido": "Ibrahimović",
+  "pos": "DC",
+  "pais": "Suecia",
+  "rating": 86,
+  "rareza": "prime",
+  "precioMinimo": 100,
+  "etiqueta": "PRIME · EL DIOS SUECO",
+  "dato": "Dice que es el mejor y a veces lo demuestra.",
+  "fotos": [
+   "/img/players/zlatan-ibrahimovic.webp"
+  ],
+  "buscar": "Zlatan Ibrahimovic",
+  "ea": 266236
+ },
+ {
+  "id": "olivier-giroud",
+  "nombre": "Olivier",
+  "apellido": "Giroud",
+  "pos": "DC",
+  "pais": "Francia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL ELEGANTE",
+  "dato": "Con una chilena a los 36 ganó el premio.",
+  "fotos": [
+   "/img/players/olivier-giroud.webp"
+  ],
+  "buscar": "Olivier Giroud",
+  "ea": 178509
+ },
+ {
+  "id": "mauro-icardi",
+  "nombre": "Mauro",
+  "apellido": "Icardi",
+  "pos": "DC",
+  "pais": "Argentina",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL ESPOSO DE WANDA",
+  "dato": "Mete goles en Turquía y en la tele.",
+  "fotos": [
+   "/img/players/mauro-icardi.webp"
+  ],
+  "buscar": "Mauro Icardi",
+  "ea": 201399
+ },
+ {
+  "id": "edin-dzeko",
+  "nombre": "Edin",
+  "apellido": "Džeko",
+  "pos": "DC",
+  "pais": "Bosnia",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL DIAMANTE",
+  "dato": "Con 39 sigue siendo referencia.",
+  "fotos": [
+   "/img/players/edin-dzeko.webp"
+  ],
+  "buscar": "Edin Dzeko",
+  "ea": 180930
+ },
+ {
+  "id": "gabriel-jesus",
+  "nombre": "Gabriel",
+  "apellido": "Jesus",
+  "pos": "DC",
+  "pais": "Brasil",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · EL DE LA LESIÓN",
+  "dato": "Mete goles cuando está sano. O sea, nunca.",
+  "fotos": [
+   "/img/players/gabriel-jesus.webp"
+  ],
+  "buscar": "Gabriel Jesus",
+  "ea": 230666
+ },
+ {
+  "id": "ollie-watkins",
+  "nombre": "Ollie",
+  "apellido": "Watkins",
+  "pos": "DC",
+  "pais": "Inglaterra",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL DEL GOL DECISIVO",
+  "dato": "Marcó el gol que ganó la semifinal.",
+  "fotos": [
+   "/img/players/ollie-watkins.webp"
+  ],
+  "buscar": "Ollie Watkins",
+  "ea": 221697
+ },
+ {
+  "id": "alvaro-morata",
+  "nombre": "Álvaro",
+  "apellido": "Morata",
+  "pos": "DC",
+  "pais": "España",
+  "rating": 81,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL EXPERTO EN FALLAR",
+  "dato": "Falla tres y mete el cuarto.",
+  "fotos": [
+   "/img/players/alvaro-morata.webp"
+  ],
+  "buscar": "Alvaro Morata",
+  "ea": 201153
+ },
+ {
+  "id": "alexander-srloth",
+  "nombre": "Alexander",
+  "apellido": "Sørloth",
+  "pos": "DC",
+  "pais": "Noruega",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · EL OTRO NORUEGO",
+  "dato": "Marca con cara de resfrío permanente.",
+  "fotos": [
+   "/img/players/alexander-srloth.webp"
+  ],
+  "buscar": "Alexander Sorloth",
+  "ea": 216549
+ },
+ {
+  "id": "santiago-gimenez",
+  "nombre": "Santiago",
+  "apellido": "Giménez",
+  "pos": "DC",
+  "pais": "México",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL BEBOTE",
+  "dato": "28 goles en Feyenoord y figura.",
+  "fotos": [
+   "/img/players/santiago-gimenez.webp"
+  ],
+  "buscar": "Santiago Gimenez",
+  "ea": 245152
+ },
+ {
+  "id": "edinson-cavani",
+  "nombre": "Edinson",
+  "apellido": "Cavani",
+  "pos": "DC",
+  "pais": "Uruguay",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 58,
+  "etiqueta": "PLATA · EL MATADOR",
+  "dato": "Corre, ataca, defiende y es un guerrero.",
+  "fotos": [
+   "/img/players/edinson-cavani.webp"
+  ],
+  "buscar": "Edinson Cavani",
+  "ea": 179813
+ },
+ {
+  "id": "christopher-nkunku",
+  "nombre": "Christopher",
+  "apellido": "Nkunku",
+  "pos": "EI",
+  "pais": "Francia",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 56,
+  "etiqueta": "PLATA · EL FRANCÉS DEL RÓDANO",
+  "dato": "Se lesiona siempre antes de brillar.",
+  "fotos": [
+   "/img/players/christopher-nkunku.webp"
+  ],
+  "buscar": "Christopher Nkunku",
+  "ea": 232411
+ },
+ {
+  "id": "kaoru-mitoma",
+  "nombre": "Kaoru",
+  "apellido": "Mitoma",
+  "pos": "EI",
+  "pais": "Japón",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL MAESTRO DEL REGATE",
+  "dato": "Hizo el gol imposible en el Mundial.",
+  "fotos": [
+   "/img/players/kaoru-mitoma.webp"
+  ],
+  "buscar": "Kaoru Mitoma",
+  "ea": 255565
+ },
+ {
+  "id": "cody-gakpo",
+  "nombre": "Cody",
+  "apellido": "Gakpo",
+  "pos": "EI",
+  "pais": "Países Bajos",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 52,
+  "etiqueta": "PLATA · EL ESTILO HOLANDÉS",
+  "dato": "Marca en el Mundial y cuesta fortunas.",
+  "fotos": [
+   "/img/players/cody-gakpo.webp"
+  ],
+  "buscar": "Cody Gakpo",
+  "ea": 242516
+ },
+ {
+  "id": "anthony-gordon",
+  "nombre": "Anthony",
+  "apellido": "Gordon",
+  "pos": "EI",
+  "pais": "Inglaterra",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL DEL NEWCASTLE",
+  "dato": "Corre, patea, mete y vuelve a correr.",
+  "fotos": [
+   "/img/players/anthony-gordon.webp"
+  ],
+  "buscar": "Anthony Gordon",
+  "ea": 242964
+ },
+ {
+  "id": "gabriel-martinelli",
+  "nombre": "Gabriel",
+  "apellido": "Martinelli",
+  "pos": "EI",
+  "pais": "Brasil",
+  "rating": 84,
+  "rareza": "plata",
+  "precioMinimo": 52,
+  "etiqueta": "PLATA · EL CASI PUNTERO",
+  "dato": "Con 23 ya jugaba la Champions.",
+  "fotos": [
+   "/img/players/gabriel-martinelli.webp"
+  ],
+  "buscar": "Gabriel Martinelli",
+  "ea": 251566
+ },
+ {
+  "id": "lorenzo-insigne",
+  "nombre": "Lorenzo",
+  "apellido": "Insigne",
+  "pos": "EI",
+  "pais": "Italia",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 34,
+  "etiqueta": "PLATA · EL ENANO NAPOLITANO",
+  "dato": "Con la zurda hace magia y goles.",
+  "fotos": [
+   "/img/players/lorenzo-insigne.webp"
+  ],
+  "buscar": "Lorenzo Insigne",
+  "ea": 212381
+ },
+ {
+  "id": "raheem-sterling",
+  "nombre": "Raheem",
+  "apellido": "Sterling",
+  "pos": "EI",
+  "pais": "Inglaterra",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL VELOZ DEL FRACASO",
+  "dato": "Ganó todo con City, nada con Inglaterra.",
+  "fotos": [
+   "/img/players/raheem-sterling.webp"
+  ],
+  "buscar": "Raheem Sterling",
+  "ea": 202652
+ },
+ {
+  "id": "sadio-mane",
+  "nombre": "Sadio",
+  "apellido": "Mané",
+  "pos": "EI",
+  "pais": "Senegal",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 72,
+  "etiqueta": "ORO · EL LEÓN DE TERANGA",
+  "dato": "Metió el gol de la clasificación con Senegal.",
+  "fotos": [
+   "/img/players/sadio-mane.webp"
+  ],
+  "buscar": "Sadio Mane",
+  "ea": 208722
+ },
+ {
+  "id": "joao-felix",
+  "nombre": "João",
+  "apellido": "Félix",
+  "pos": "EI",
+  "pais": "Portugal",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 44,
+  "etiqueta": "PLATA · EL CARO DEL ATLÉTICO",
+  "dato": "Costó 126 millones y no entiende por qué.",
+  "fotos": [
+   "/img/players/joao-felix.webp"
+  ],
+  "buscar": "Joao Felix",
+  "ea": 242444
+ },
+ {
+  "id": "rafa-silva",
+  "nombre": "Rafa",
+  "apellido": "Silva",
+  "pos": "EI",
+  "pais": "Portugal",
+  "rating": 82,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL PLATA DEL BENFICA",
+  "dato": "Ganó todo con el Benfica y no se cansó.",
+  "fotos": [
+   "/img/players/rafa-silva.webp"
+  ],
+  "buscar": "Rafa Silva",
+  "ea": 216547
+ },
+ {
+  "id": "dejan-kulusevski",
+  "nombre": "Dejan",
+  "apellido": "Kulusevski",
+  "pos": "EI",
+  "pais": "Suecia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 36,
+  "etiqueta": "PLATA · EL SUECO DE LA JUVENTUD",
+  "dato": "Con 25 ya pasa mejor que algunos.",
+  "fotos": [
+   "/img/players/dejan-kulusevski.webp"
+  ],
+  "buscar": "Dejan Kulusevski",
+  "ea": 247394
+ },
+ {
+  "id": "brennan-johnson",
+  "nombre": "Brennan",
+  "apellido": "Johnson",
+  "pos": "EI",
+  "pais": "Gales",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL GALÉS",
+  "dato": "Un goleador de Gales que nadie conoce.",
+  "fotos": [
+   "/img/players/brennan-johnson.webp"
+  ],
+  "buscar": "Brennan Johnson",
+  "ea": 251421
+ },
+ {
+  "id": "gareth-bale",
+  "nombre": "Gareth",
+  "apellido": "Bale",
+  "pos": "EI",
+  "pais": "Gales",
+  "rating": 86,
+  "rareza": "oro",
+  "precioMinimo": 80,
+  "etiqueta": "ORO · EL DE LA CHILENA",
+  "dato": "Marcó en la final de Champions y se retiró a jugar golf.",
+  "fotos": [
+   "/img/players/gareth-bale.webp"
+  ],
+  "buscar": "Gareth Bale",
+  "ea": 272500
+ },
+ {
+  "id": "takumi-minamino",
+  "nombre": "Takumi",
+  "apellido": "Minamino",
+  "pos": "EI",
+  "pais": "Japón",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL JAPONÉS DE LA ESCUELA",
+  "dato": "Pasó por Liverpool sin que nadie lo notara.",
+  "fotos": [
+   "/img/players/takumi-minamino.webp"
+  ],
+  "buscar": "Takumi Minamino",
+  "ea": 226627
+ },
+ {
+  "id": "carlos-vela",
+  "nombre": "Carlos",
+  "apellido": "Vela",
+  "pos": "EI",
+  "pais": "México",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL ARTISTA DE LA MLS",
+  "dato": "Con él, el fútbol parecía una pintura.",
+  "fotos": [
+   "/img/players/carlos-vela.webp"
+  ],
+  "buscar": "Carlos Vela",
+  "ea": 268941
+ },
+ {
+  "id": "hwang-hee-chan",
+  "nombre": "Hwang",
+  "apellido": "Hee-chan",
+  "pos": "EI",
+  "pais": "Corea del Sur",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL TORO",
+  "dato": "Marcó el gol del 2-1 en Qatar 2022.",
+  "fotos": [
+   "/img/players/hwang-hee-chan.webp"
+  ],
+  "buscar": "Hwang Hee-chan",
+  "ea": 226380
+ },
+ {
+  "id": "christian-pulisic",
+  "nombre": "Christian",
+  "apellido": "Pulisic",
+  "pos": "EI",
+  "pais": "Estados Unidos",
+  "rating": 82,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL CAPITÁN AMÉRICA",
+  "dato": "Gana partidos con el Milan y los pierde con la selección.",
+  "fotos": [
+   "/img/players/christian-pulisic.webp"
+  ],
+  "buscar": "Christian Pulisic",
+  "ea": 227796
+ },
+ {
+  "id": "leon-bailey",
+  "nombre": "Leon",
+  "apellido": "Bailey",
+  "pos": "EI",
+  "pais": "Jamaica",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL JAMAICANO",
+  "dato": "Corre como Bolt y mete como delantero.",
+  "fotos": [
+   "/img/players/leon-bailey.webp"
+  ],
+  "buscar": "Leon Bailey",
+  "ea": 229906
+ },
+ {
+  "id": "bryan-mbeumo",
+  "nombre": "Bryan",
+  "apellido": "Mbeumo",
+  "pos": "EI",
+  "pais": "Camerún",
+  "rating": 82,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL DE LOS GOLES DE PENAL",
+  "dato": "Marca cada vez que se lo piden.",
+  "fotos": [
+   "/img/players/bryan-mbeumo.webp"
+  ],
+  "buscar": "Bryan Mbeumo",
+  "ea": 243014
+ },
+ {
+  "id": "wilfried-zaha",
+  "nombre": "Wilfried",
+  "apellido": "Zaha",
+  "pos": "EI",
+  "pais": "Costa de Marfil",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · EL VELOZ DEL EXILIO",
+  "dato": "Jugó en un club grande y se volvió a ir.",
+  "fotos": [
+   "/img/players/wilfried-zaha.webp"
+  ],
+  "buscar": "Wilfried Zaha",
+  "ea": 198717
+ },
+ {
+  "id": "joel-matip",
+  "nombre": "Joel",
+  "apellido": "Matip",
+  "pos": "DFC",
+  "pais": "Camerún",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 20,
+  "etiqueta": "COMÚN · EL SILENCIOSO",
+  "dato": "Defendía tan bien que nadie lo notaba.",
+  "fotos": [
+   "/img/players/joel-matip.webp"
+  ],
+  "buscar": "Joel Matip",
+  "ea": 223334
+ },
+ {
+  "id": "raul-jimenez",
+  "nombre": "Raúl",
+  "apellido": "Jiménez",
+  "pos": "DC",
+  "pais": "México",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 18,
+  "etiqueta": "COMÚN · EL DE LA CASCO",
+  "dato": "Volvió de una lesión y sigue siendo el 9 del Tri.",
+  "fotos": [
+   "/img/players/raul-jimenez.webp"
+  ],
+  "buscar": "Raul Jimenez",
+  "ea": 204838
+ },
+ {
+  "id": "alphonse-areola",
+  "nombre": "Alphonse",
+  "apellido": "Areola",
+  "pos": "POR",
+  "pais": "Francia",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL SUPLENTE VIAJERO",
+  "dato": "Atajó en cinco países sin quejarse.",
+  "fotos": [
+   "/img/players/alphonse-areola.webp"
+  ],
+  "buscar": "Alphonse Areola",
+  "ea": 193105
+ },
+ {
+  "id": "kepa-arrizabalaga",
+  "nombre": "Kepa",
+  "apellido": "Arrizabalaga",
+  "pos": "POR",
+  "pais": "España",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 18,
+  "etiqueta": "COMÚN · EL MÁS CARO",
+  "dato": "Fue el arquero más caro del mundo. Ya fue.",
+  "fotos": [
+   "/img/players/kepa-arrizabalaga.webp"
+  ],
+  "buscar": "Kepa Arrizabalaga",
+  "ea": 206585
+ },
+ {
+  "id": "ricardo-pereira",
+  "nombre": "Ricardo",
+  "apellido": "Pereira",
+  "pos": "LD",
+  "pais": "Portugal",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL CORREDOR",
+  "dato": "Sube, baja y vuelve a subir.",
+  "fotos": [
+   "/img/players/ricardo-pereira.webp"
+  ],
+  "buscar": "Ricardo Pereira",
+  "ea": 210243
+ },
+ {
+  "id": "ruben-neves",
+  "nombre": "Rúben",
+  "apellido": "Neves",
+  "pos": "MCD",
+  "pais": "Portugal",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL DEL TIRO LIBRE",
+  "dato": "Pasa largo y patea fuerte.",
+  "fotos": [
+   "/img/players/ruben-neves.webp"
+  ],
+  "buscar": "Rúben Neves",
+  "ea": 224293
+ },
+ {
+  "id": "hakim-ziyech",
+  "nombre": "Hakim",
+  "apellido": "Ziyech",
+  "pos": "MCO",
+  "pais": "Marruecos",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · EL MAGO MARROQUÍ",
+  "dato": "Zurdazo suyo, gol seguro.",
+  "fotos": [
+   "/img/players/hakim-ziyech.webp"
+  ],
+  "buscar": "Hakim Ziyech",
+  "ea": 235212
+ },
+ {
+  "id": "alejandro-gomez",
+  "nombre": "Alejandro",
+  "apellido": "Gómez",
+  "pos": "MCO",
+  "pais": "Argentina",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL PAPU",
+  "dato": "Baila con la pelota y celebra con un baile.",
+  "fotos": [
+   "/img/players/alejandro-gomez.webp"
+  ],
+  "buscar": "Alejandro Gómez",
+  "ea": 256303
+ },
+ {
+  "id": "giovanni-reyna",
+  "nombre": "Giovanni",
+  "apellido": "Reyna",
+  "pos": "MCO",
+  "pais": "Estados Unidos",
+  "rating": 76,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL HIJO DEL CAPITÁN",
+  "dato": "Hereda el talento y las lesiones.",
+  "fotos": [
+   "/img/players/giovanni-reyna.webp"
+  ],
+  "buscar": "Giovanni Reyna",
+  "ea": 245541
+ },
+ {
+  "id": "yannick-carrasco",
+  "nombre": "Yannick",
+  "apellido": "Carrasco",
+  "pos": "ED",
+  "pais": "Bélgica",
+  "rating": 81,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL BELGA VELOZ",
+  "dato": "Corre más de lo que juega.",
+  "fotos": [
+   "/img/players/yannick-carrasco.webp"
+  ],
+  "buscar": "Yannick Carrasco",
+  "ea": 208418
+ },
+ {
+  "id": "goncalo-guedes",
+  "nombre": "Gonçalo",
+  "apellido": "Guedes",
+  "pos": "ED",
+  "pais": "Portugal",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 16,
+  "etiqueta": "COMÚN · EL EXTREMO PORTUGUÉS",
+  "dato": "Gana partidos con una gambeta.",
+  "fotos": [
+   "/img/players/goncalo-guedes.webp"
+  ],
+  "buscar": "Gonçalo Guedes",
+  "ea": 224411
+ },
+ {
+  "id": "lucas-moura",
+  "nombre": "Lucas",
+  "apellido": "Moura",
+  "pos": "ED",
+  "pais": "Brasil",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL BRASILEÑO DEL TRIPLETE",
+  "dato": "Triplete en Champions y sigue sonriendo.",
+  "fotos": [
+   "/img/players/lucas-moura.webp"
+  ],
+  "buscar": "Lucas Moura",
+  "ea": 247851
+ },
+ {
+  "id": "alexis-sanchez",
+  "nombre": "Alexis",
+  "apellido": "Sánchez",
+  "pos": "EI",
+  "pais": "Chile",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL NIÑO MARAVILLA",
+  "dato": "Corre, patea y se queja de todo.",
+  "fotos": [
+   "/img/players/alexis-sanchez.webp"
+  ],
+  "buscar": "Alexis Sánchez",
+  "ea": 184941
+ },
+ {
+  "id": "wout-weghorst",
+  "nombre": "Wout",
+  "apellido": "Weghorst",
+  "pos": "DC",
+  "pais": "Países Bajos",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL ALTO",
+  "dato": "Mete goles de cabeza desde el banco.",
+  "fotos": [
+   "/img/players/wout-weghorst.webp"
+  ],
+  "buscar": "Wout Weghorst",
+  "ea": 223689
  }
 ]
