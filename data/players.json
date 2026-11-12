@@ -5125,9 +5125,12 @@
   "precioMinimo": 250,
   "etiqueta": "LEYENDA · EL REY",
   "dato": "Tres Mundiales. Los otros solo tienen sillones.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/pele.webp"
+  ],
   "buscar": "Pelé",
-  "wiki": "Pelé"
+  "wiki": "Pelé",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Pele_con_brasil_%28cropped%29.jpg"
  },
  {
   "id": "diego-maradona",
@@ -5176,9 +5179,12 @@
   "precioMinimo": 180,
   "etiqueta": "LEYENDA · LA SONRISA",
   "dato": "Jugaba al fútbol como quien se divierte. Y él sí se divertía.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/ronaldinho.webp"
+  ],
   "buscar": "Ronaldinho",
-  "wiki": "Ronaldinho"
+  "wiki": "Ronaldinho",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Ronaldinho_in_2019.jpg"
  },
  {
   "id": "ronaldo-nazario",
