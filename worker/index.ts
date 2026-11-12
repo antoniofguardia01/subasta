@@ -9,8 +9,30 @@ export { RegistryDO } from './registry';
 interface Env {
   ROOM: DurableObjectNamespace;
   REGISTRY: DurableObjectNamespace;
-  ASSETS: Fetcher;
+  ASSETS?: Fetcher;
+  /** En producción los archivos estáticos viven en KV (ver scripts/publicar.mjs). */
+  ARCHIVOS?: KVNamespace;
   ADMIN_PIN: string;
+}
+
+const TIPOS: Record<string, string> = { html: 'text/html; charset=utf-8', js: 'text/javascript', css: 'text/css', json: 'application/json', svg: 'image/svg+xml', webp: 'image/webp', jpg: 'image/jpeg', png: 'image/png', mp4: 'video/mp4', mp3: 'audio/mpeg', woff2: 'font/woff2' };
+
+/** Sirve un archivo estático: en local desde los assets de wrangler, en producción desde KV. */
+async function servir(env: Env, req: Request): Promise<Response> {
+  if (env.ASSETS) return env.ASSETS.fetch(req);
+  if (!env.ARCHIVOS) return new Response('sin archivos', { status: 500 });
+  let ruta = decodeURIComponent(new URL(req.url).pathname).replace(/^\/+/, '');
+  let cuerpo = ruta ? await env.ARCHIVOS.get(ruta, 'arrayBuffer') : null;
+  if (!cuerpo) {
+    // Cualquier ruta que no sea un archivo es una pantalla de la app.
+    if (/\.[a-z0-9]+$/i.test(ruta)) return new Response('no encontrado', { status: 404 });
+    ruta = 'index.html';
+    cuerpo = await env.ARCHIVOS.get(ruta, 'arrayBuffer');
+    if (!cuerpo) return new Response('no encontrado', { status: 404 });
+  }
+  const ext = ruta.split('.').pop() ?? '';
+  const cache = ruta.startsWith('assets/') ? 'public, max-age=31536000, immutable' : ruta === 'index.html' ? 'no-cache' : 'public, max-age=3600';
+  return new Response(cuerpo, { headers: { 'content-type': TIPOS[ext] ?? 'application/octet-stream', 'cache-control': cache } });
 }
 
 const LETRAS = 'ABCDEFGHJKLMNPRSTUVWXYZ'; // sin I, O ni Q: se confunden al dictarlas
@@ -36,13 +58,13 @@ export default {
       const r = await sala(env, codigo).fetch(`https://do/foto/${encodeURIComponent(partes[2])}`);
       if (!r.ok) return new Response('no', { status: 404 });
       const { foto } = (await r.json()) as { foto: string };
-      const img = await env.ASSETS.fetch(new Request(new URL(foto, url.origin)));
+      const img = await servir(env, new Request(new URL(foto, url.origin)));
       const h = new Headers(img.headers);
       h.set('cache-control', 'private, max-age=86400, immutable');
       return new Response(img.body, { status: img.status, headers: h });
     }
 
-    if (partes[0] !== 'api') return env.ASSETS.fetch(req);
+    if (partes[0] !== 'api') return servir(env, req);
 
     // ── Salas ──
     if (partes[1] === 'salas') {
