@@ -331,3 +331,51 @@
 .ol-enviar { font-size: 26px; padding: 0.7em; }
 .btn-peligro { background: #b3122b !important; color: #fff !important; }
 @media (min-width: 720px) { .j-monto { height: 120px; } }
+
+/* ───────── PC e iPad en horizontal: todo el ancho, escena grande a la izquierda y controles a la derecha ───────── */
+@media (min-width: 900px) and (min-aspect-ratio: 4/3) {
+  .m-capa { left: 0; right: 0; width: auto; min-width: 0; margin-left: 0; box-shadow: none; }
+  .movil { background: var(--bg); }
+
+  .m-juego {
+    display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 30vw, 460px); grid-template-rows: auto minmax(0, 1fr) auto auto auto auto;
+    grid-template-areas: 'cab cab' 'escena rivales' 'escena progreso' 'escena accion' 'escena pie' 'ticker ticker';
+    column-gap: 18px;
+  }
+  .m-juego > .j-cab { grid-area: cab; padding-top: 12px; }
+  .m-juego > .j-escena { grid-area: escena; margin: 0 0 12px 18px; min-height: 0; border-radius: 22px; }
+  .m-juego > .j-rivales { grid-area: rivales; display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); align-content: start; overflow-y: auto; padding: 0 18px 8px 0; }
+  .m-juego > .j-rivales .rival { max-width: none; }
+  .m-juego > .j-rivales .rival .avatar { font-size: 44px; }
+  .m-juego > .j-rivales .rival-n { font-size: 13px; }
+  .m-juego > .j-rivales .rival-s { font-size: 15px; }
+  .m-juego > .j-progreso { grid-area: progreso; padding: 8px 18px 0 0; flex-wrap: wrap; row-gap: 6px; }
+  .m-juego > .j-accion { grid-area: accion; padding: 10px 18px 8px 0; }
+  .m-juego > .j-pie { grid-area: pie; padding: 0 18px 12px 0; }
+  .m-juego > .ticker { grid-area: ticker; }
+  .j-accion .ofertar { height: 128px; }
+  .j-accion .j-monto { height: 128px; }
+  .j-reloj { --reloj: 96px; }
+
+  /* Hojas (equipo, compras, menú…) como panel centrado en vez de ocupar todo el ancho */
+  .hoja-panel { left: 50%; right: auto; width: min(720px, 92vw); transform: translate(-50%, 104%); }
+  .hoja[data-on='1'] .hoja-panel { transform: translate(-50%, 0); }
+
+  /* Lobby: tarjeta ancha con los jugadores en grilla */
+  .m-lobby .lobby-cab, .m-lobby .lobby-pie { width: min(1100px, 94vw); margin: 0 auto; }
+  .m-lobby .lobby-cuerpo { width: min(1100px, 94vw); margin: 0 auto; }
+  .lobby-jugs { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .lobby-acciones .btn, .btn-pantalla--lobby { flex: 1 1 180px; }
+  .lobby-empezar { max-width: 640px; }
+
+  /* Resultados: tabla a la izquierda, equipo y premios a la derecha */
+  .f-scroll { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-content: start; width: min(1300px, 96vw); margin: 0 auto; }
+  .f-scroll .f-titulo { grid-column: 1 / -1; }
+  .f-resto { margin-top: 0; }
+  .f-resto .cancha-caja { max-width: 520px; }
+  .f-fila { height: 62px; }
+  .f-fila[data-puesto='1'] { height: 76px; }
+}
+
+/* Título de resultados legible cuando el fondo es oscuro (no campeón) */
+.f-titulo[data-campeon='0'] h1 { color: var(--tinta); text-shadow: none; }

@@ -555,6 +555,7 @@ function Hoja({ on, titulo, cerrar, children }: { on: boolean; titulo: string; c
 
 function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: JugadorSala; anfitrion: boolean }) {
   const fx = useRef<FxApi>(null);
+  const ancho = usePantallaAncha();
   const [tic, setTic] = useState<Tic>({ tension: 0, cuenta: 0 });
   const [hoja, setHoja] = useState<'equipo' | 'saldos' | 'historial' | 'menu' | 'tv' | 'tema' | 'monto' | null>(null);
   const [verA, setVerA] = useState(yo.id);
@@ -731,7 +732,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
       </div>
 
       <div className="j-escena">
-        <Escena sala={sala} s={s} tic={tic} fx={fx} compacta alVolar={alVolar} />
+        <Escena sala={sala} s={s} tic={tic} fx={fx} compacta={!ancho} alVolar={alVolar} />
         {s.fase === 'ruleta' && <Ruleta sala={sala} s={s} compacta />}
         <div className="j-cartel" data-on={s.fase === 'ronda' || s.fase === 'intro' || s.fase === 'finronda' ? '1' : '0'}>
           <Fondo paleta="oscuro" vel={1.6} />
@@ -981,7 +982,7 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
     <div className="m-final" ref={raiz}>
       <Fondo paleta={miPuesto === 1 ? 'oro' : 'oscuro'} />
       <div className="f-scroll">
-        <div className="f-titulo">
+        <div className="f-titulo" data-campeon={miPuesto === 1 ? "1" : "0"}>
           <span>Se bajó el martillo</span>
           <h1 data-largo={miPuesto === puestos.length && miPuesto !== 1 ? '1' : undefined}>{miPuesto === 1 ? '¡Campeón!' : miPuesto === puestos.length ? 'Descendiste' : `Puesto ${miPuesto}`}</h1>
         </div>
@@ -1070,4 +1071,17 @@ function OfertaLibre({ precio, incremento, tope, enviar }: { precio: number; inc
       </button>
     </div>
   );
+}
+
+/** PC o iPad en horizontal: se usa el diseño a dos columnas (escena grande + controles). */
+export const CONSULTA_ANCHA = '(min-width: 900px) and (min-aspect-ratio: 4/3)';
+function usePantallaAncha() {
+  const [ancho, setAncho] = useState(() => matchMedia(CONSULTA_ANCHA).matches);
+  useEffect(() => {
+    const m = matchMedia(CONSULTA_ANCHA);
+    const f = () => setAncho(m.matches);
+    m.addEventListener('change', f);
+    return () => m.removeEventListener('change', f);
+  }, []);
+  return ancho;
 }
