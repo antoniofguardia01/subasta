@@ -1,7 +1,33 @@
 {
- "fecha": "2026-11-12T02:19:20.543Z",
- "total": 270,
- "conFoto": 270,
- "fallaron": [],
+ "fecha": "2026-11-12T11:34:08.436Z",
+ "total": 332,
+ "conFoto": 287,
+ "fallaron": [
+  {
+   "id": "marco-reus",
+   "ok": false,
+   "motivo": "muy chica (180px)"
+  },
+  {
+   "id": "paul-pogba",
+   "ok": false,
+   "motivo": "muy chica (180px)"
+  },
+  {
+   "id": "david-de-gea",
+   "ok": false,
+   "motivo": "sin retrato (id 193080)"
+  },
+  {
+   "id": "loris-karius",
+   "ok": false,
+   "motivo": "muy chica (180px)"
+  },
+  {
+   "id": "marcos-alonso",
+   "ok": false,
+   "motivo": "muy chica (180px)"
+  }
+ ],
  "flojos": []
 }

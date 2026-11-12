@@ -2173,7 +2173,8 @@
    "/img/players/sergio-ramos.webp"
   ],
   "buscar": "Sergio Ramos",
-  "ea": 204963
+  "wiki": "Sergio Ramos",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Sergio_Ramos_Interview_2021_%28cropped%29.jpg"
  },
  {
   "id": "thiago-silva",
@@ -2683,7 +2684,8 @@
    "/img/players/toni-kroos.webp"
   ],
   "buscar": "Toni Kroos",
-  "ea": 237383
+  "wiki": "Toni Kroos",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/6/64/Toni_Kroos_Real_Madrid_2021.jpg"
  },
  {
   "id": "ilkay-gundogan",
@@ -3193,7 +3195,8 @@
    "/img/players/eden-hazard.webp"
   ],
   "buscar": "Eden Hazard",
-  "ea": 203486
+  "wiki": "Eden Hazard",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/4/46/Eden_Hazard_at_Baku_before_2019_UEFA_Europe_League_Final.jpg"
  },
  {
   "id": "isco",
@@ -3822,7 +3825,8 @@
    "/img/players/sergio-aguero.webp"
   ],
   "buscar": "Sergio Aguero",
-  "ea": 208093
+  "wiki": "Sergio Agüero",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Ag%C3%BCero_in_2018.jpg"
  },
  {
   "id": "gonzalo-higuain",
@@ -3856,7 +3860,7 @@
    "/img/players/zlatan-ibrahimovic.webp"
   ],
   "buscar": "Zlatan Ibrahimovic",
-  "ea": 266236
+  "wiki": "Zlatan Ibrahimović"
  },
  {
   "id": "olivier-giroud",
@@ -4230,7 +4234,8 @@
    "/img/players/gareth-bale.webp"
   ],
   "buscar": "Gareth Bale",
-  "ea": 272500
+  "wiki": "Gareth Bale",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/1/1e/2022_FIFA_World_Cup_United_States_1%E2%80%931_Wales_-_%2832%29_%28cropped%29.jpg"
  },
  {
   "id": "takumi-minamino",
@@ -4588,5 +4593,1026 @@
   ],
   "buscar": "Wout Weghorst",
   "ea": 223689
+ },
+ {
+  "id": "gianluca-prestianni",
+  "nombre": "Gianluca",
+  "apellido": "Prestianni",
+  "pos": "ED",
+  "pais": "Argentina",
+  "rating": 71,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL PIBE DEL SCANDAL",
+  "dato": "Llegó con fama de crack y se fue con fama de otra cosa.",
+  "fotos": [
+   "/img/players/gianluca-prestianni.webp"
+  ],
+  "buscar": "Gianluca Prestianni",
+  "ea": 269292
+ },
+ {
+  "id": "loris-karius",
+  "nombre": "Loris",
+  "apellido": "Karius",
+  "pos": "POR",
+  "pais": "Alemania",
+  "rating": 70,
+  "rareza": "comun",
+  "precioMinimo": 10,
+  "etiqueta": "COMÚN · EL ATAJADOR DISTRAÍDO",
+  "dato": "Una final de Champions le dura toda la vida. A vos también.",
+  "fotos": [],
+  "buscar": "Loris Karius",
+  "wiki": "Loris Karius"
+ },
+ {
+  "id": "julian-araujo",
+  "nombre": "Julián",
+  "apellido": "Araujo",
+  "pos": "LD",
+  "pais": "México",
+  "rating": 74,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · LATERAL DE MEMORIA",
+  "dato": "Sube, baja y se pierde en el camino. Como tu tío en la cancha.",
+  "fotos": [
+   "/img/players/julian-araujo.webp"
+  ],
+  "buscar": "Julián Araujo",
+  "ea": 247678
+ },
+ {
+  "id": "jesus-vallejo",
+  "nombre": "Jesús",
+  "apellido": "Vallejo",
+  "pos": "DFC",
+  "pais": "España",
+  "rating": 72,
+  "rareza": "comun",
+  "precioMinimo": 10,
+  "etiqueta": "COMÚN · EL CENTRAL INVISIBLE",
+  "dato": "Seis años en un club y nadie lo vio jugar. Es una técnica.",
+  "fotos": [
+   "/img/players/jesus-vallejo.webp"
+  ],
+  "buscar": "Jesús Vallejo",
+  "ea": 225161
+ },
+ {
+  "id": "jose-fajardo",
+  "nombre": "José",
+  "apellido": "Fajardo",
+  "pos": "DC",
+  "pais": "Panamá",
+  "rating": 68,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL ORGULLO DEL ISTMO",
+  "dato": "Marca goles en Panamá y en la imaginación de sus amigos.",
+  "fotos": [
+   "/img/players/jose-fajardo.webp"
+  ],
+  "buscar": "José Fajardo",
+  "ea": 243545
+ },
+ {
+  "id": "kai-havertz",
+  "nombre": "Kai",
+  "apellido": "Havertz",
+  "pos": "DC",
+  "pais": "Alemania",
+  "rating": 82,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL FALSO NUEVE",
+  "dato": "Marca goles importantes. Y también se los pierde, que no se diga.",
+  "fotos": [
+   "/img/players/kai-havertz.webp"
+  ],
+  "buscar": "Kai Havertz",
+  "ea": 235790
+ },
+ {
+  "id": "timo-werner",
+  "nombre": "Timo",
+  "apellido": "Werner",
+  "pos": "EI",
+  "pais": "Alemania",
+  "rating": 77,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL VELOCISTA SIN PUNTERÍA",
+  "dato": "Corre como el viento. Remata como la brisa.",
+  "fotos": [
+   "/img/players/timo-werner.webp"
+  ],
+  "buscar": "Timo Werner",
+  "ea": 212188
+ },
+ {
+  "id": "paul-pogba",
+  "nombre": "Paul",
+  "apellido": "Pogba",
+  "pos": "MC",
+  "pais": "Francia",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 26,
+  "etiqueta": "COMÚN · EL DE LOS BAILES",
+  "dato": "Festeja antes, durante y después. Jugar es un detalle.",
+  "fotos": [],
+  "buscar": "Paul Pogba",
+  "wiki": "Paul Pogba"
+ },
+ {
+  "id": "tanguy-ndombele",
+  "nombre": "Tanguy",
+  "apellido": "Ndombele",
+  "pos": "MC",
+  "pais": "Francia",
+  "rating": 74,
+  "rareza": "comun",
+  "precioMinimo": 10,
+  "etiqueta": "COMÚN · EL FICHAJE FALLIDO",
+  "dato": "Costó una fortuna y rindió un quinto. Gran negocio, para el vendedor.",
+  "fotos": [
+   "/img/players/tanguy-ndombele.webp"
+  ],
+  "buscar": "Tanguy Ndombele",
+  "ea": 235569
+ },
+ {
+  "id": "nicolas-pepe",
+  "nombre": "Nicolas",
+  "apellido": "Pépé",
+  "pos": "ED",
+  "pais": "Costa de Marfil",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL CARÍSIMO",
+  "dato": "80 millones por un amague que no volvió a salir.",
+  "fotos": [
+   "/img/players/nicolas-pepe.webp"
+  ],
+  "buscar": "Nicolas Pépé",
+  "ea": 226110
+ },
+ {
+  "id": "david-de-gea",
+  "nombre": "David",
+  "apellido": "de Gea",
+  "pos": "POR",
+  "pais": "España",
+  "rating": 85,
+  "rareza": "plata",
+  "precioMinimo": 30,
+  "etiqueta": "PLATA · EL PULPO JUBILADO",
+  "dato": "Volvió de una pausa eterna. Los guantes también necesitaban vacaciones.",
+  "fotos": [],
+  "buscar": "David de Gea",
+  "wiki": "David de Gea"
+ },
+ {
+  "id": "jesse-lingard",
+  "nombre": "Jesse",
+  "apellido": "Lingard",
+  "pos": "MCO",
+  "pais": "Inglaterra",
+  "rating": 74,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL DEL GOLAZO Y EL BAILE",
+  "dato": "Mejor en las redes que en el pasto. Pero qué paso de baile.",
+  "fotos": [
+   "/img/players/jesse-lingard.webp"
+  ],
+  "buscar": "Jesse Lingard",
+  "ea": 207494
+ },
+ {
+  "id": "marco-reus",
+  "nombre": "Marco",
+  "apellido": "Reus",
+  "pos": "MCO",
+  "pais": "Alemania",
+  "rating": 79,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL ETERNO LESIONADO",
+  "dato": "Talento de sobra. Rodillas de abuelo.",
+  "fotos": [],
+  "buscar": "Marco Reus",
+  "wiki": "Marco Reus"
+ },
+ {
+  "id": "jordan-henderson",
+  "nombre": "Jordan",
+  "apellido": "Henderson",
+  "pos": "MCD",
+  "pais": "Inglaterra",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 16,
+  "etiqueta": "COMÚN · EL CAPITÁN DE TODOS",
+  "dato": "Levantó copas y se fue a Arabia a levantar billetes.",
+  "fotos": [
+   "/img/players/jordan-henderson.webp"
+  ],
+  "buscar": "Jordan Henderson",
+  "ea": 183711
+ },
+ {
+  "id": "aaron-ramsdale",
+  "nombre": "Aaron",
+  "apellido": "Ramsdale",
+  "pos": "POR",
+  "pais": "Inglaterra",
+  "rating": 77,
+  "rareza": "comun",
+  "precioMinimo": 18,
+  "etiqueta": "COMÚN · EL ARQUERO CANTANTE",
+  "dato": "Más seguro en las fotos que en los centros.",
+  "fotos": [
+   "/img/players/aaron-ramsdale.webp"
+  ],
+  "buscar": "Aaron Ramsdale",
+  "ea": 233934
+ },
+ {
+  "id": "marcos-alonso",
+  "nombre": "Marcos",
+  "apellido": "Alonso",
+  "pos": "LI",
+  "pais": "España",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL LATERAL GOLEADOR",
+  "dato": "Pega unos zapatazos de tiro libre que ni él espera.",
+  "fotos": [],
+  "buscar": "Marcos Alonso",
+  "wiki": "Marcos Alonso (footballer, born 1990)"
+ },
+ {
+  "id": "chris-smalling",
+  "nombre": "Chris",
+  "apellido": "Smalling",
+  "pos": "DFC",
+  "pais": "Inglaterra",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL ROMANO",
+  "dato": "Defiende como si cada despeje fuera su último.",
+  "fotos": [
+   "/img/players/chris-smalling.webp"
+  ],
+  "buscar": "Chris Smalling",
+  "ea": 189881
+ },
+ {
+  "id": "eric-bailly",
+  "nombre": "Eric",
+  "apellido": "Bailly",
+  "pos": "DFC",
+  "pais": "Costa de Marfil",
+  "rating": 74,
+  "rareza": "comun",
+  "precioMinimo": 10,
+  "etiqueta": "COMÚN · EL CRISTAL",
+  "dato": "Más tiempo en la camilla que en la cancha.",
+  "fotos": [
+   "/img/players/eric-bailly.webp"
+  ],
+  "buscar": "Eric Bailly",
+  "ea": 225508
+ },
+ {
+  "id": "adrien-rabiot",
+  "nombre": "Adrien",
+  "apellido": "Rabiot",
+  "pos": "MC",
+  "pais": "Francia",
+  "rating": 83,
+  "rareza": "plata",
+  "precioMinimo": 40,
+  "etiqueta": "PLATA · EL DE LA MAMÁ",
+  "dato": "Tiene el talento, el pelazo y una representante implacable.",
+  "fotos": [
+   "/img/players/adrien-rabiot.webp"
+  ],
+  "buscar": "Adrien Rabiot",
+  "ea": 210008
+ },
+ {
+  "id": "cristian-arango",
+  "nombre": "Cristian",
+  "apellido": "Arango",
+  "pos": "DC",
+  "pais": "Colombia",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 10,
+  "etiqueta": "COMÚN · EL COLOMBIANO DE LA MLS",
+  "dato": "Hace goles lejos de las cámaras. Por eso nadie lo conoce.",
+  "fotos": [
+   "/img/players/cristian-arango.webp"
+  ],
+  "buscar": "Cristian Arango",
+  "ea": 217998
+ },
+ {
+  "id": "edwin-cardona",
+  "nombre": "Edwin",
+  "apellido": "Cardona",
+  "pos": "MCO",
+  "pais": "Colombia",
+  "rating": 74,
+  "rareza": "comun",
+  "precioMinimo": 14,
+  "etiqueta": "COMÚN · EL DIEZ DEL BARRIO",
+  "dato": "Pase largo, tiro libre y una charla interminable.",
+  "fotos": [
+   "/img/players/edwin-cardona.webp"
+  ],
+  "buscar": "Edwin Cardona",
+  "ea": 192342
+ },
+ {
+  "id": "anibal-godoy",
+  "nombre": "Aníbal",
+  "apellido": "Godoy",
+  "pos": "MCD",
+  "pais": "Panamá",
+  "rating": 70,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL MOTOR DEL CANAL",
+  "dato": "Corre por todos. Alguien tiene que hacerlo.",
+  "fotos": [
+   "/img/players/anibal-godoy.webp"
+  ],
+  "buscar": "Aníbal Godoy",
+  "ea": 217047
+ },
+ {
+  "id": "mario-balotelli",
+  "nombre": "Mario",
+  "apellido": "Balotelli",
+  "pos": "DC",
+  "pais": "Italia",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · ¿POR QUÉ SIEMPRE YO?",
+  "dato": "Fuegos artificiales dentro y fuera de la cancha.",
+  "fotos": [],
+  "buscar": "Mario Balotelli",
+  "wiki": "Mario Balotelli"
+ },
+ {
+  "id": "david-luiz",
+  "nombre": "David",
+  "apellido": "Luiz",
+  "pos": "DFC",
+  "pais": "Brasil",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 22,
+  "etiqueta": "COMÚN · EL PELUDO DEL FONDO",
+  "dato": "Si sube, es un golazo. Si no, es un penal.",
+  "fotos": [],
+  "buscar": "David Luiz",
+  "wiki": "David Luiz"
+ },
+ {
+  "id": "javier-hernandez",
+  "nombre": "Javier",
+  "apellido": "Hernández",
+  "pos": "DC",
+  "pais": "México",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · CHICHARITO",
+  "dato": "Llega siempre al lugar exacto, como un buen mosquito.",
+  "fotos": [],
+  "buscar": "Javier Hernández",
+  "wiki": "Javier Hernández (footballer, born 1988)"
+ },
+ {
+  "id": "mykhailo-mudryk",
+  "nombre": "Mykhailo",
+  "apellido": "Mudryk",
+  "pos": "EI",
+  "pais": "Ucrania",
+  "rating": 76,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · LA PROMESA ROTA",
+  "dato": "El hype lo corrió más rápido que él.",
+  "fotos": [
+   "/img/players/mykhailo-mudryk.webp"
+  ],
+  "buscar": "Mykhailo Mudryk",
+  "wiki": "Mykhailo Mudryk",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/3/35/%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB_%D0%9C%D1%83%D0%B4%D1%80%D0%B8%D0%BA._26_%D0%BC%D0%B0%D1%8F_2021_%D0%B3%D0%BE%D0%B4%D0%B0_%E2%80%94_1233123_%28cropped%29.jpg"
+ },
+ {
+  "id": "dele-alli",
+  "nombre": "Dele",
+  "apellido": "Alli",
+  "pos": "MCO",
+  "pais": "Inglaterra",
+  "rating": 76,
+  "rareza": "comun",
+  "precioMinimo": 12,
+  "etiqueta": "COMÚN · EL QUE SE PERDIÓ",
+  "dato": "Fue crack a los 20. Después le perdieron el rastro.",
+  "fotos": [],
+  "buscar": "Dele Alli",
+  "wiki": "Dele Alli"
+ },
+ {
+  "id": "jorginho",
+  "nombre": "Jorginho",
+  "apellido": "",
+  "pos": "MCD",
+  "pais": "Italia",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 20,
+  "etiqueta": "COMÚN · EL SALTITO DEL PENAL",
+  "dato": "Para, mira al arquero y la mete. Como si fuera fácil.",
+  "fotos": [],
+  "buscar": "Jorginho",
+  "wiki": "Jorginho (footballer, born 1991)"
+ },
+ {
+  "id": "victor-lindelof",
+  "nombre": "Victor",
+  "apellido": "Lindelöf",
+  "pos": "DFC",
+  "pais": "Suecia",
+  "rating": 80,
+  "rareza": "comun",
+  "precioMinimo": 16,
+  "etiqueta": "COMÚN · EL ROCOSO SUECO",
+  "dato": "Sólido como un mueble de IKEA. Y igual de fácil de armar.",
+  "fotos": [],
+  "buscar": "Victor Lindelöf",
+  "wiki": "Victor Lindelöf"
+ },
+ {
+  "id": "jamie-vardy",
+  "nombre": "Jamie",
+  "apellido": "Vardy",
+  "pos": "DC",
+  "pais": "Inglaterra",
+  "rating": 79,
+  "rareza": "comun",
+  "precioMinimo": 28,
+  "etiqueta": "COMÚN · EL FIESTERO DE LEICESTER",
+  "dato": "Campeón con un equipo de mentira. Y la liga de verdad.",
+  "fotos": [],
+  "buscar": "Jamie Vardy",
+  "wiki": "Jamie Vardy"
+ },
+ {
+  "id": "guillermo-ochoa",
+  "nombre": "Guillermo",
+  "apellido": "Ochoa",
+  "pos": "POR",
+  "pais": "México",
+  "rating": 78,
+  "rareza": "comun",
+  "precioMinimo": 24,
+  "etiqueta": "COMÚN · EL MURO DE LOS MUNDIALES",
+  "dato": "Contra Brasil se vuelve Dios. El resto del año, no tanto.",
+  "fotos": [
+   "/img/players/guillermo-ochoa.webp"
+  ],
+  "buscar": "Guillermo Ochoa",
+  "wiki": "Guillermo Ochoa",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Mex-Kor_%281%29_%28cropped%29.jpg"
+ },
+ {
+  "id": "pele",
+  "nombre": "Pelé",
+  "apellido": "",
+  "pos": "MCO",
+  "pais": "Brasil",
+  "rating": 98,
+  "rareza": "leyenda",
+  "precioMinimo": 250,
+  "etiqueta": "LEYENDA · EL REY",
+  "dato": "Tres Mundiales. Los otros solo tienen sillones.",
+  "fotos": [],
+  "buscar": "Pelé",
+  "wiki": "Pelé"
+ },
+ {
+  "id": "diego-maradona",
+  "nombre": "Diego",
+  "apellido": "Maradona",
+  "pos": "MCO",
+  "pais": "Argentina",
+  "rating": 97,
+  "rareza": "leyenda",
+  "precioMinimo": 240,
+  "etiqueta": "LEYENDA · EL DIEGOL",
+  "dato": "La mano de Dios y el gol del siglo en el mismo partido.",
+  "fotos": [
+   "/img/players/diego-maradona.webp"
+  ],
+  "buscar": "Diego Maradona",
+  "wiki": "Diego Maradona",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/4/48/Argentina_celebrando_copa_%28cropped%29.jpg"
+ },
+ {
+  "id": "zinedine-zidane",
+  "nombre": "Zinedine",
+  "apellido": "Zidane",
+  "pos": "MC",
+  "pais": "Francia",
+  "rating": 96,
+  "rareza": "leyenda",
+  "precioMinimo": 190,
+  "etiqueta": "LEYENDA · ZIZOU",
+  "dato": "Hacía bailar la pelota. Y a veces, a los rivales con un cabezazo.",
+  "fotos": [
+   "/img/players/zinedine-zidane.webp"
+  ],
+  "buscar": "Zinedine Zidane",
+  "wiki": "Zinedine Zidane",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Zinedine_Zidane_by_Tasnim_03.jpg"
+ },
+ {
+  "id": "ronaldinho",
+  "nombre": "Ronaldinho",
+  "apellido": "",
+  "pos": "MCO",
+  "pais": "Brasil",
+  "rating": 95,
+  "rareza": "leyenda",
+  "precioMinimo": 180,
+  "etiqueta": "LEYENDA · LA SONRISA",
+  "dato": "Jugaba al fútbol como quien se divierte. Y él sí se divertía.",
+  "fotos": [],
+  "buscar": "Ronaldinho",
+  "wiki": "Ronaldinho"
+ },
+ {
+  "id": "ronaldo-nazario",
+  "nombre": "Ronaldo",
+  "apellido": "Nazário",
+  "pos": "DC",
+  "pais": "Brasil",
+  "rating": 96,
+  "rareza": "leyenda",
+  "precioMinimo": 190,
+  "etiqueta": "LEYENDA · EL FENÓMENO",
+  "dato": "Dos rodillas rotas y aun así ganó un Mundial. Respeto.",
+  "fotos": [
+   "/img/players/ronaldo-nazario.webp"
+  ],
+  "buscar": "Ronaldo Nazário",
+  "wiki": "Ronaldo (Brazilian footballer)",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/3/36/12.12.2025_%E2%80%93_Cerim%C3%B4nia_de_lan%C3%A7amento_do_SBT_News_-_54980664160_%28cropped2%29.jpg"
+ },
+ {
+  "id": "johan-cruyff",
+  "nombre": "Johan",
+  "apellido": "Cruyff",
+  "pos": "DC",
+  "pais": "Países Bajos",
+  "rating": 95,
+  "rareza": "leyenda",
+  "precioMinimo": 170,
+  "etiqueta": "LEYENDA · EL FLACO VOLADOR",
+  "dato": "Inventó un giro, un estilo y media filosofía del fútbol.",
+  "fotos": [],
+  "buscar": "Johan Cruyff",
+  "wiki": "Johan Cruyff"
+ },
+ {
+  "id": "franz-beckenbauer",
+  "nombre": "Franz",
+  "apellido": "Beckenbauer",
+  "pos": "DFC",
+  "pais": "Alemania",
+  "rating": 95,
+  "rareza": "leyenda",
+  "precioMinimo": 160,
+  "etiqueta": "LEYENDA · EL KAISER",
+  "dato": "Defendía con elegancia. Como si pasear por el área fuera un deporte.",
+  "fotos": [
+   "/img/players/franz-beckenbauer.webp"
+  ],
+  "buscar": "Franz Beckenbauer",
+  "wiki": "Franz Beckenbauer",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/5/56/Franz_Beckenbauer_%281975%29.jpg"
+ },
+ {
+  "id": "paolo-maldini",
+  "nombre": "Paolo",
+  "apellido": "Maldini",
+  "pos": "LI",
+  "pais": "Italia",
+  "rating": 94,
+  "rareza": "leyenda",
+  "precioMinimo": 165,
+  "etiqueta": "LEYENDA · IL CAPITANO",
+  "dato": "25 años en el mismo club y jamás le hicieron un caño.",
+  "fotos": [
+   "/img/players/paolo-maldini.webp"
+  ],
+  "buscar": "Paolo Maldini",
+  "wiki": "Paolo Maldini",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Paolo_Maldini_AC_Milan_Technical_director_2018.jpg"
+ },
+ {
+  "id": "gianluigi-buffon",
+  "nombre": "Gianluigi",
+  "apellido": "Buffon",
+  "pos": "POR",
+  "pais": "Italia",
+  "rating": 91,
+  "rareza": "leyenda",
+  "precioMinimo": 150,
+  "etiqueta": "LEYENDA · GIGI",
+  "dato": "Ataja desde que tus papás iban a la escuela.",
+  "fotos": [],
+  "buscar": "Gianluigi Buffon",
+  "wiki": "Gianluigi Buffon"
+ },
+ {
+  "id": "iker-casillas",
+  "nombre": "Iker",
+  "apellido": "Casillas",
+  "pos": "POR",
+  "pais": "España",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 135,
+  "etiqueta": "PRIME · SAN IKER",
+  "dato": "Con los pies, las manos y la cara. Todo sirve.",
+  "fotos": [
+   "/img/players/iker-casillas.webp"
+  ],
+  "buscar": "Iker Casillas",
+  "wiki": "Iker Casillas",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Iker-Casillas-SportsTrade-2021-cropped.jpg"
+ },
+ {
+  "id": "marcos-cafu",
+  "nombre": "Marcos",
+  "apellido": "Cafú",
+  "pos": "LD",
+  "pais": "Brasil",
+  "rating": 91,
+  "rareza": "prime",
+  "precioMinimo": 110,
+  "etiqueta": "PRIME · EL PENDULAR",
+  "dato": "Corría los 90 minutos por la banda sin despeinarse.",
+  "fotos": [
+   "/img/players/marcos-cafu.webp"
+  ],
+  "buscar": "Marcos Cafú",
+  "wiki": "Cafu",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/6/64/Cafu_-_26.02.2026_-_Cerim%C3%B4nia_de_apresenta%C3%A7%C3%A3o_das_ta%C3%A7as_da_Copa_do_Mundo_de_2026.jpg"
+ },
+ {
+  "id": "roberto-carlos",
+  "nombre": "Roberto",
+  "apellido": "Carlos",
+  "pos": "LI",
+  "pais": "Brasil",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 120,
+  "etiqueta": "PRIME · EL CAÑONERO",
+  "dato": "Un tiro libre que dobló la física y a cuatro defensores.",
+  "fotos": [],
+  "buscar": "Roberto Carlos",
+  "wiki": "Roberto Carlos"
+ },
+ {
+  "id": "xavi-hernandez",
+  "nombre": "Xavi",
+  "apellido": "Hernández",
+  "pos": "MC",
+  "pais": "España",
+  "rating": 91,
+  "rareza": "prime",
+  "precioMinimo": 125,
+  "etiqueta": "PRIME · EL METRÓNOMO",
+  "dato": "Tocó 100 pases en un partido y ninguno se perdió.",
+  "fotos": [],
+  "buscar": "Xavi Hernández",
+  "wiki": "Xavi Hernández"
+ },
+ {
+  "id": "andres-iniesta",
+  "nombre": "Andrés",
+  "apellido": "Iniesta",
+  "pos": "MC",
+  "pais": "España",
+  "rating": 92,
+  "rareza": "leyenda",
+  "precioMinimo": 150,
+  "etiqueta": "LEYENDA · EL ILUSIONISTA",
+  "dato": "Un gol en una final del Mundial. El mundo entero se quedó mudo.",
+  "fotos": [],
+  "buscar": "Andrés Iniesta",
+  "wiki": "Andrés Iniesta"
+ },
+ {
+  "id": "andrea-pirlo",
+  "nombre": "Andrea",
+  "apellido": "Pirlo",
+  "pos": "MCD",
+  "pais": "Italia",
+  "rating": 91,
+  "rareza": "prime",
+  "precioMinimo": 120,
+  "etiqueta": "PRIME · EL ARQUITECTO",
+  "dato": "Pasa la pelota como quien sirve un buen vino.",
+  "fotos": [
+   "/img/players/andrea-pirlo.webp"
+  ],
+  "buscar": "Andrea Pirlo",
+  "wiki": "Andrea Pirlo",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/6/6e/20150616_-_Portugal_-_Italie_-_Gen%C3%A8ve_-_Andrea_Pirlo_%28cropped%29.jpg"
+ },
+ {
+  "id": "thierry-henry",
+  "nombre": "Thierry",
+  "apellido": "Henry",
+  "pos": "EI",
+  "pais": "Francia",
+  "rating": 93,
+  "rareza": "prime",
+  "precioMinimo": 140,
+  "etiqueta": "PRIME · EL REY DEL ARSENAL",
+  "dato": "Un gol suyo parecía una obra de arte de museo.",
+  "fotos": [
+   "/img/players/thierry-henry.webp"
+  ],
+  "buscar": "Thierry Henry",
+  "wiki": "Thierry Henry",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Thierry_Henry_%2851649035951%29_%28cropped%29.jpg"
+ },
+ {
+  "id": "kaka",
+  "nombre": "Kaká",
+  "apellido": "",
+  "pos": "MCO",
+  "pais": "Brasil",
+  "rating": 91,
+  "rareza": "prime",
+  "precioMinimo": 115,
+  "etiqueta": "PRIME · EL ÁNGEL",
+  "dato": "Balón de Oro con cara de buen yerno.",
+  "fotos": [
+   "/img/players/kaka.webp"
+  ],
+  "buscar": "Kaká",
+  "wiki": "Kaká",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Kak%C3%A1_visited_Stadium_St._Petersburg.jpg"
+ },
+ {
+  "id": "francesco-totti",
+  "nombre": "Francesco",
+  "apellido": "Totti",
+  "pos": "MCO",
+  "pais": "Italia",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 105,
+  "etiqueta": "PRIME · EL GLADIADOR",
+  "dato": "Un solo club, una sola ciudad y un cucchiaio eterno.",
+  "fotos": [
+   "/img/players/francesco-totti.webp"
+  ],
+  "buscar": "Francesco Totti",
+  "wiki": "Francesco Totti",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/4/42/KL-2018_%284%29.jpg"
+ },
+ {
+  "id": "david-beckham",
+  "nombre": "David",
+  "apellido": "Beckham",
+  "pos": "ED",
+  "pais": "Inglaterra",
+  "rating": 90,
+  "rareza": "prime",
+  "precioMinimo": 100,
+  "etiqueta": "PRIME · EL ZURDO DE ORO",
+  "dato": "Su tiro libre doblaba la pelota. Y los comerciales.",
+  "fotos": [
+   "/img/players/david-beckham.webp"
+  ],
+  "buscar": "David Beckham",
+  "wiki": "David Beckham",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/7/73/David_Beckham_UNICEF_%28cropped2%29.jpg"
+ },
+ {
+  "id": "didier-drogba",
+  "nombre": "Didier",
+  "apellido": "Drogba",
+  "pos": "DC",
+  "pais": "Costa de Marfil",
+  "rating": 90,
+  "rareza": "oro",
+  "precioMinimo": 90,
+  "etiqueta": "ORO · EL ELEFANTE",
+  "dato": "Cuando había una final, él aparecía como por arte de magia.",
+  "fotos": [],
+  "buscar": "Didier Drogba",
+  "wiki": "Didier Drogba"
+ },
+ {
+  "id": "carles-puyol",
+  "nombre": "Carles",
+  "apellido": "Puyol",
+  "pos": "DFC",
+  "pais": "España",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 85,
+  "etiqueta": "ORO · LA MELENA",
+  "dato": "Defendía con el corazón. Y con el pelo.",
+  "fotos": [],
+  "buscar": "Carles Puyol",
+  "wiki": "Carles Puyol"
+ },
+ {
+  "id": "fabio-cannavaro",
+  "nombre": "Fabio",
+  "apellido": "Cannavaro",
+  "pos": "DFC",
+  "pais": "Italia",
+  "rating": 90,
+  "rareza": "oro",
+  "precioMinimo": 80,
+  "etiqueta": "ORO · EL MURO AZZURRO",
+  "dato": "Ganó un Balón de Oro siendo defensor. Casi un milagro.",
+  "fotos": [],
+  "buscar": "Fabio Cannavaro",
+  "wiki": "Fabio Cannavaro"
+ },
+ {
+  "id": "juan-roman-riquelme",
+  "nombre": "Juan Román",
+  "apellido": "Riquelme",
+  "pos": "MCO",
+  "pais": "Argentina",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 70,
+  "etiqueta": "ORO · EL ÚLTIMO DIEZ",
+  "dato": "Jugaba despacio para que el resto se lo pierda.",
+  "fotos": [],
+  "buscar": "Juan Román Riquelme",
+  "wiki": "Juan Román Riquelme"
+ },
+ {
+  "id": "gabriel-batistuta",
+  "nombre": "Gabriel",
+  "apellido": "Batistuta",
+  "pos": "DC",
+  "pais": "Argentina",
+  "rating": 91,
+  "rareza": "oro",
+  "precioMinimo": 90,
+  "etiqueta": "ORO · BATIGOL",
+  "dato": "Pegaba tan fuerte que las redes pedían perdón.",
+  "fotos": [
+   "/img/players/gabriel-batistuta.webp"
+  ],
+  "buscar": "Gabriel Batistuta",
+  "wiki": "Gabriel Batistuta",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/1/13/Omar_Batistuta_%282%29.jpg"
+ },
+ {
+  "id": "steven-gerrard",
+  "nombre": "Steven",
+  "apellido": "Gerrard",
+  "pos": "MC",
+  "pais": "Inglaterra",
+  "rating": 91,
+  "rareza": "prime",
+  "precioMinimo": 105,
+  "etiqueta": "PRIME · EL CAPITÁN DE ANFIELD",
+  "dato": "Metió un gol de 40 metros por un puñado de lágrimas.",
+  "fotos": [
+   "/img/players/steven-gerrard.webp"
+  ],
+  "buscar": "Steven Gerrard",
+  "wiki": "Steven Gerrard",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Steven_Gerrard_2018.jpg"
+ },
+ {
+  "id": "luis-figo",
+  "nombre": "Luís",
+  "apellido": "Figo",
+  "pos": "ED",
+  "pais": "Portugal",
+  "rating": 91,
+  "rareza": "oro",
+  "precioMinimo": 95,
+  "etiqueta": "ORO · EL TRAIDOR DORADO",
+  "dato": "Cambió de camiseta y de bando. Y le tiraron un cerdo.",
+  "fotos": [
+   "/img/players/luis-figo.webp"
+  ],
+  "buscar": "Luís Figo",
+  "wiki": "Luís Figo",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/1/15/Luis_Figo_2023.jpg"
+ },
+ {
+  "id": "romario",
+  "nombre": "Romário",
+  "apellido": "",
+  "pos": "DC",
+  "pais": "Brasil",
+  "rating": 91,
+  "rareza": "oro",
+  "precioMinimo": 85,
+  "etiqueta": "ORO · EL BAIXINHO",
+  "dato": "Bajito, rápido y descarado. Y con 1000 goles.",
+  "fotos": [],
+  "buscar": "Romário",
+  "wiki": "Romário"
+ },
+ {
+  "id": "dani-alves",
+  "nombre": "Dani",
+  "apellido": "Alves",
+  "pos": "LD",
+  "pais": "Brasil",
+  "rating": 89,
+  "rareza": "oro",
+  "precioMinimo": 90,
+  "etiqueta": "ORO · EL ALEGRE",
+  "dato": "Ganó más títulos que nadie y festejó cada uno como si fuera el primero.",
+  "fotos": [
+   "/img/players/dani-alves.webp"
+  ],
+  "buscar": "Dani Alves",
+  "wiki": "Dani Alves",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/d/dd/07_07_2019_Final_da_Copa_Am%C3%A9rica_2019_%2848226649586%29_%28cropped%29.jpg"
+ },
+ {
+  "id": "philipp-lahm",
+  "nombre": "Philipp",
+  "apellido": "Lahm",
+  "pos": "LD",
+  "pais": "Alemania",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 80,
+  "etiqueta": "ORO · EL CAPITÁN SIN FOCO",
+  "dato": "Jugaba bien en cualquier puesto. Y casi nadie se daba cuenta.",
+  "fotos": [],
+  "buscar": "Philipp Lahm",
+  "wiki": "Philipp Lahm"
+ },
+ {
+  "id": "gerard-pique",
+  "nombre": "Gerard",
+  "apellido": "Piqué",
+  "pos": "DFC",
+  "pais": "España",
+  "rating": 88,
+  "rareza": "oro",
+  "precioMinimo": 60,
+  "etiqueta": "ORO · EL SHAKIRO",
+  "dato": "Jugaba de central y de empresario, y las dos le salían bien.",
+  "fotos": [
+   "/img/players/gerard-pique.webp"
+  ],
+  "buscar": "Gerard Piqué",
+  "wiki": "Gerard Piqué",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Gerard_Piqu%C3%A9_Euro_2012_vs_France_01.jpg"
+ },
+ {
+  "id": "marcelo",
+  "nombre": "Marcelo",
+  "apellido": "",
+  "pos": "LI",
+  "pais": "Brasil",
+  "rating": 82,
+  "rareza": "oro",
+  "precioMinimo": 75,
+  "etiqueta": "ORO · EL BAILARÍN",
+  "dato": "Un lateral que quería ser mediocampista, extremo y delantero.",
+  "fotos": [],
+  "buscar": "Marcelo",
+  "wiki": "Marcelo (footballer, born 1988)"
  }
 ]

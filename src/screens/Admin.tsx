@@ -113,8 +113,12 @@ function Trolls({ est, api, recargar, avisar }: Props) {
   const [arrastra, setArrastra] = useState(false);
   const entrada = useRef<HTMLInputElement>(null);
   const activos = est.trolls.filter((t) => t.activo).length;
-  const pendientes = est.trolls.filter((t) => t.pendiente);
-  const listos = est.trolls.filter((t) => !t.pendiente);
+  // Cada troll queda en la sección donde apareció por primera vez en esta visita: así, al ponerle nombre,
+  // su tarjeta no salta de "Sin nombre" a la galería mientras todavía estás escribiendo lo demás.
+  const seccion = useRef(new Map<string, boolean>());
+  for (const t of est.trolls) if (!seccion.current.has(t.id)) seccion.current.set(t.id, !!t.pendiente);
+  const pendientes = est.trolls.filter((t) => seccion.current.get(t.id));
+  const listos = est.trolls.filter((t) => !seccion.current.get(t.id));
 
   const subir = async (archivos: FileList | File[]) => {
     const lista = [...archivos].filter((f) => f.type.startsWith('image/'));
