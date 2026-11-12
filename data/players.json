@@ -4622,9 +4622,12 @@
   "precioMinimo": 10,
   "etiqueta": "COMÚN · EL ATAJADOR DISTRAÍDO",
   "dato": "Una final de Champions le dura toda la vida. A vos también.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/loris-karius.webp"
+  ],
   "buscar": "Loris Karius",
-  "wiki": "Loris Karius"
+  "wiki": "Loris Karius",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Loris_Karius.jpg"
  },
  {
   "id": "julian-araujo",
