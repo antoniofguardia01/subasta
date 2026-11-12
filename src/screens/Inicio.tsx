@@ -7,6 +7,7 @@ import { irConTelon } from '../lib/ruta';
 import { activarSonido, sonar, sonidoPreferido } from '../lib/sonido';
 import { TEMAS, aplicarTema, elegirTemaPropio, temaActual } from '../lib/temas';
 import { claveDispositivo, pareceTV, reducirMovimiento, usarFlechas, vibrar } from '../lib/util';
+import { IconoSonido } from '../components/Iconos';
 
 const TITULARES = [
   'Bienvenidos a la Subasta Futbolera: 1000 millones por cabeza y once huecos que llenar',
@@ -310,7 +311,7 @@ export function Inicio() {
         <BotonPantalla corto className="ini-pantalla" />
       </footer>
       <button className="ini-sonido ini-entra" data-on={sonido ? '1' : '0'} onClick={() => (setSonido(!sonido), void activarSonido(!sonido))}>
-        ♪ {sonido ? 'Con sonido' : 'Silencio'}
+        <IconoSonido on={sonido} /> {sonido ? 'Con sonido' : 'Silencio'}
       </button>
       <div className="ini-ticker">
         <Ticker mensajes={TITULARES} alto={36} />

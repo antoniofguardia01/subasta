@@ -187,7 +187,7 @@
 .rival-n { max-width: 100%; font-size: 11px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--tinta2); }
 .rival-s { font-size: 12px; font-weight: 800; }
 .rival[data-yo] .rival-n { color: var(--tinta); }
-.rival[data-pendiente='0']::after { content: '✓'; position: absolute; right: 3px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--c); color: #0b0d0c; font-size: 11px; font-weight: 900; line-height: 16px; text-align: center; animation: ficha-cae 420ms var(--ease-rebote) both; }
+.rival[data-pendiente='0']::after { content: ''; position: absolute; right: 3px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--c); color: #0b0d0c; font-size: 11px; font-weight: 900; line-height: 16px; text-align: center; animation: ficha-cae 420ms var(--ease-rebote) both; }
 .rival[data-lider='1'] { background: var(--c); transform: translateY(-3px) scale(1.06); }
 .rival[data-lider='1'] .rival-n, .rival[data-lider='1'] .rival-s { color: #0b0d0c; }
 
@@ -379,3 +379,5 @@
 
 /* Título de resultados legible cuando el fondo es oscuro (no campeón) */
 .f-titulo[data-campeon='0'] h1 { color: var(--tinta); text-shadow: none; }
+
+.rival[data-pendiente='0']::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.5 12.5l3.5 3.5 7.5-8' fill='none' stroke='%230b0d0c' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-size: 100%; }

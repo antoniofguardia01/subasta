@@ -110,7 +110,7 @@ function ruido(dur: number, vol = 0.3, filtro = 1200, cuando = 0, tipo: BiquadFi
   src.start(t);
 }
 
-export const sonar = {
+const sonarBase = {
   /** Oferta: sube de tono con el sobreprecio, así se oye cómo se calienta la puja. */
   oferta(sobre = 0) {
     const f = 520 + Math.min(40, sobre) * 14;
@@ -179,5 +179,116 @@ export const sonar = {
   },
   toque() {
     tono(700, 0.04, 'sine', 0.1);
+  },
+};
+
+// ───────────── Ambiente de estadio ─────────────
+// Murmullo continuo de hinchada (ruido rosa filtrado con oleadas lentas). Solo lo usa la pantalla principal.
+// `nivel` 0 = tribuna tranquila, 1 = puja caliente / última oportunidad.
+let amb: { g: GainNode; f: BiquadFilterNode; src: AudioBufferSourceNode } | null = null;
+
+function bufferRosa(seg: number): AudioBuffer {
+  const n = Math.floor(ctx!.sampleRate * seg);
+  const buf = ctx!.createBuffer(2, n, ctx!.sampleRate);
+  for (let c = 0; c < 2; c++) {
+    const d = buf.getChannelData(c);
+    let b0 = 0, b1 = 0, b2 = 0;
+    for (let i = 0; i < n; i++) {
+      const w = Math.random() * 2 - 1;
+      b0 = 0.997 * b0 + w * 0.029591;
+      b1 = 0.985 * b1 + w * 0.032534;
+      b2 = 0.95 * b2 + w * 0.048056;
+      // Oleadas de voces: modulación lenta e irregular.
+      const ola = 0.65 + 0.35 * Math.sin((i / n) * Math.PI * 2 * 3 + c) * Math.sin((i / n) * Math.PI * 2 * 7.3);
+      d[i] = (b0 + b1 + b2 + w * 0.05) * ola;
+    }
+    // Funde los extremos para que el bucle no haga clic.
+    const fade = Math.floor(ctx!.sampleRate * 0.05);
+    for (let i = 0; i < fade; i++) {
+      d[i] *= i / fade;
+      d[n - 1 - i] *= i / fade;
+    }
+  }
+  return buf;
+}
+
+export function ambiente(nivel: number | null) {
+  if (!ctx || !maestro) return;
+  const t = ctx.currentTime;
+  if (nivel === null || !sonidoActivo()) {
+    if (amb) {
+      const a = amb;
+      a.g.gain.setTargetAtTime(0, t, 0.4);
+      a.src.stop(t + 2);
+      amb = null;
+    }
+    return;
+  }
+  if (!amb) {
+    const src = ctx.createBufferSource();
+    src.buffer = bufferRosa(6);
+    src.loop = true;
+    const f = ctx.createBiquadFilter();
+    f.type = 'bandpass';
+    f.Q.value = 0.6;
+    const g = ctx.createGain();
+    g.gain.value = 0;
+    src.connect(f).connect(g).connect(maestro);
+    src.start();
+    amb = { g, f, src };
+  }
+  const k = Math.max(0, Math.min(1, nivel));
+  amb.g.gain.setTargetAtTime(0.16 + k * 0.34, t, 0.8);
+  amb.f.frequency.setTargetAtTime(520 + k * 700, t, 0.8);
+}
+
+export const sonar = {
+  ...sonarBase,
+  /** Silbato de árbitro: dos pitadas cortas (o una larga). */
+  silbato(largo = false) {
+    if (!sonidoActivo() || !ctx || !maestro) return;
+    const pitadas = largo ? [[0, 0.9]] : [[0, 0.18], [0.26, 0.42]];
+    for (const [ini, dur] of pitadas) {
+      const t = ctx.currentTime + ini;
+      const o = ctx.createOscillator();
+      const vib = ctx.createOscillator();
+      const vg = ctx.createGain();
+      const g = ctx.createGain();
+      o.frequency.value = 2900;
+      vib.frequency.value = 38; // el "trino" de la bolita
+      vg.gain.value = 140;
+      vib.connect(vg).connect(o.frequency);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.13, t + 0.02);
+      g.gain.setValueAtTime(0.13, t + dur - 0.04);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g).connect(maestro);
+      o.start(t);
+      vib.start(t);
+      o.stop(t + dur + 0.02);
+      vib.stop(t + dur + 0.02);
+    }
+  },
+  /** "¡Uuuuh!" de la tribuna cuando nadie oferta o salió una sorpresa. */
+  uuuh() {
+    if (!sonidoActivo() || !ctx || !maestro) return;
+    const t = ctx.currentTime;
+    const n = Math.floor(ctx.sampleRate * 1.6);
+    const buf = ctx.createBuffer(1, n, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const f = ctx.createBiquadFilter();
+    f.type = 'bandpass';
+    f.Q.value = 5;
+    f.frequency.setValueAtTime(420, t);
+    f.frequency.exponentialRampToValueAtTime(260, t + 1.5);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.9, t + 0.25);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+    src.connect(f).connect(g).connect(maestro);
+    src.start(t);
   },
 };

@@ -230,3 +230,6 @@ h1, h2, h3, p { margin: 0; }
 .btn-pantalla:active { transform: scale(0.94); }
 .btn-pantalla[aria-pressed='true'] { background: var(--acento); color: var(--acento-tinta); }
 @media (hover: hover) and (pointer: fine) { .btn-pantalla:hover { background: rgba(127, 127, 127, 0.45); } }
+
+/* Íconos SVG: se alinean con el texto como si fueran una letra. */
+.icono { display: inline-block; vertical-align: -0.14em; flex: none; }

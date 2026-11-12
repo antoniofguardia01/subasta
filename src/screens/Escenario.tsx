@@ -12,9 +12,10 @@ import { irConTelon } from '../lib/ruta';
 import { Sala, useSala } from '../lib/sala';
 import { esTele } from '../lib/tele';
 import { useEquipoEnPantalla } from '../lib/vistaFinal';
-import { activarSonido, alCambiarSonido, sonar, sonidoActivo } from '../lib/sonido';
+import { activarSonido, alCambiarSonido, ambiente, sonar, sonidoActivo } from '../lib/sonido';
 import { TEMAS } from '../lib/temas';
 import { reducirMovimiento } from '../lib/util';
+import { IconoSonido } from '../components/Iconos';
 
 type Panel = 'equipos' | 'saldos' | 'historial' | null;
 
@@ -40,6 +41,21 @@ export function Escenario({ codigo }: { codigo: string }) {
   }, [!!s]);
 
   useEffect(() => alCambiarSonido(() => setConSonido(sonidoActivo())), []);
+
+  // Tribuna de fondo: se calienta con la puja y explota en la última oportunidad.
+  const fase = s?.fase;
+  const pausa = s?.pausa;
+  useEffect(() => {
+    if (!fase || !conSonido) return ambiente(null);
+    const NIVEL: Partial<Record<string, number>> = { lobby: 0.05, intro: 0.3, ronda: 0.25, presenta: 0.35, puja: 0.5, ultima: 0.9, ruleta: 0.85, martillo: 0.75, revela: 0.6, finronda: 0.3, final: 0.55 };
+    ambiente(pausa ? 0 : (NIVEL[fase] ?? 0.25));
+  }, [fase, pausa, conSonido]);
+  useEffect(() => () => ambiente(null), []);
+  useEffect(() => {
+    if (!conSonido) return;
+    if (fase === 'intro') sonar.silbato();
+    else if (fase === 'final') sonar.silbato(true);
+  }, [fase === 'intro', fase === 'final']);
 
   // Sonidos de eventos sueltos.
   useEffect(
@@ -210,7 +226,7 @@ export function Escenario({ codigo }: { codigo: string }) {
         )}
         {!conSonido && (s.fase === 'lobby' || s.fase === 'intro') && (
           <button className="tv-sonido" onClick={() => void activarSonido(true)} autoFocus>
-            <i>♪</i> Pulsa OK para activar el sonido
+            <i><IconoSonido on /></i> Pulsa OK para activar el sonido
           </button>
         )}
       </div>
@@ -320,7 +336,7 @@ function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; pan
           <i className="num">3</i> Historial
         </button>
         <button data-on={conSonido ? '1' : '0'} onClick={() => void activarSonido(!conSonido)}>
-          {conSonido ? '♪ Con sonido' : '♪ Silencio'}
+          <IconoSonido on={conSonido} /> {conSonido ? 'Con sonido' : 'Silencio'}
         </button>
         <BotonPantalla corto />
         {!esTele() && (

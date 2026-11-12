@@ -10,6 +10,7 @@ import { reducirMovimiento, vibrar } from '../lib/util';
 import { Avatar, Fondo, Numero } from './comunes';
 import type { FxApi } from './Fx';
 import type { Tic } from './Reloj';
+import { IconoRareza } from './Iconos';
 
 interface Props {
   sala: Sala;
@@ -25,7 +26,6 @@ const SELLO: Record<Desenlace, string> = { vendido: '¡Vendido!', pasa: 'Pasa', 
 const CUENTA = ['', 'A la una…', 'A las dos…', '¡A las tres!'];
 const CUENTA_SOLA = ['', '¿Nadie?', '¿Seguro?', 'Se va…'];
 const GIGANTE: Record<Rareza, string> = { comun: 'FICHAJE', plata: 'PLATA', oro: 'ORO', prime: 'PRIME', leyenda: 'LEYENDA', troll: 'SORPRESA' };
-const ICONO: Record<Rareza, string> = { comun: '●', plata: '●', oro: '◆', prime: '◆', leyenda: '★', troll: '☻' };
 
 type Q = (s: string) => Element[];
 
@@ -155,7 +155,10 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         if (d !== 'vendido' && !rm) t.fromTo(capa, { x: -14 }, { x: 0, duration: 0.5, ease: 'elastic.out(1.2, 0.2)' }, 0.18);
       } else {
         // ── Pasa / salteada: sin martillo; la silueta se apaga y cae el sello ──
-        t.add(() => impacto(['#ffffff'], false), 0.05)
+        t.add(() => {
+          impacto(['#ffffff'], false);
+          sonar.uuuh();
+        }, 0.05)
           .to(figura, { opacity: 0.45, yPercent: 4, rotation: d === 'salteada' ? 5 : 0, duration: 0.5, ease: 'power2.out' }, 0)
           .fromTo(q('.esc-sello'), { opacity: 0, scale: rm ? 1 : 1.8, rotation: 8 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.4, ease: 'back.out(1.8)' }, 0.05)
           .fromTo(q('.esc-venta'), { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.45, ease: 'expo.out' }, 0.3);
@@ -344,7 +347,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
                   </span>
                 </div>
                 <div className="pn-etiqueta">
-                  <i>{ICONO[rev.rareza]}</i>
+                  <i><IconoRareza rareza={rev.rareza} /></i>
                   <span>{rev.etiqueta}</span>
                   {rev.tipo === 'jugador' && <b className="num">{rev.rating}</b>}
                 </div>

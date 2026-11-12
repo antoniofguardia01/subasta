@@ -15,6 +15,7 @@ import { TEMAS, elegirTemaPropio, temaPropio } from '../lib/temas';
 import { guardar, leer, vibrar } from '../lib/util';
 import { CanchaMedida, Cargando, SinSala } from './Escenario';
 import { useEquipoEnPantalla } from '../lib/vistaFinal';
+import { IconoCerrar, IconoLapiz, IconoMenos } from '../components/Iconos';
 
 interface AvatarDato {
   id: string;
@@ -285,7 +286,7 @@ function Paso({ rotulo, valor, min, max, paso = 1, sufijo = '', cambiar, editabl
       <div className="regla-ctrl">
         {editable && (
           <button disabled={valor <= min} onClick={() => (vibrar(6), cambiar(Math.max(min, valor - paso)))} aria-label="Menos">
-            −
+            <IconoMenos />
           </button>
         )}
         <b className="num">
@@ -502,10 +503,10 @@ function ConectarTV({ codigo }: { codigo: string }) {
                 </span>
               </button>
               <button className="ctv-mini" onClick={() => renombrar(t)} aria-label="Renombrar">
-                ✎
+                <IconoLapiz />
               </button>
               <button className="ctv-mini" onClick={() => guardarTvs(tvs.filter((x) => x.tvId !== t.tvId))} aria-label="Desvincular">
-                ×
+                <IconoCerrar />
               </button>
             </div>
           ))}
