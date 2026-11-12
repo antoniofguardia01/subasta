@@ -270,6 +270,9 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
   }, [carta?.uid, fase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => () => void tl.current?.kill(), []);
+  useEffect(() => {
+    if (s.pausa) sonar.silbato(true);
+  }, [s.pausa]);
 
   const enPuja = fase === 'puja' || fase === 'ultima';
   const vel = enPuja ? (tic.tension === 2 ? 3.2 : tic.tension === 1 ? 2 : 1.15) : fase === 'revela' ? 1.6 : 1;
@@ -397,6 +400,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         {textoCuenta}
       </div>
       <div className="esc-pausa" data-on={s.pausa ? '1' : '0'} aria-hidden={!s.pausa}>
+        <img className="esc-pausa-icono" src="/img/iconos/silbato.webp" alt="" />
         <b>Pausa</b>
         <span>El anfitrión detuvo la subasta</span>
       </div>

@@ -243,3 +243,31 @@ h1, h2, h3, p { margin: 0; }
 .esc-pausa > * { transition: transform 420ms var(--ease-rebote, cubic-bezier(.34,1.56,.64,1)); }
 .esc-pausa[data-on='0'] > * { transform: scale(0.7) translateY(20px); }
 .esc-pausa[data-on='0'] b { animation-play-state: paused; }
+
+/* ── Íconos 3D (public/img/iconos) y confeti en video ── */
+.confeti-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 6; }
+
+/* Trofeo en los resultados */
+.final-titulo { position: relative; }
+.final-trofeo { position: absolute; right: 0; top: -10px; height: 150px; width: auto; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45)); animation: trofeo-brilla 2.6s ease-in-out infinite alternate; }
+.f-titulo { position: relative; }
+.f-trofeo { position: absolute; right: 4px; top: -6px; height: 86px; width: auto; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4)); animation: trofeo-brilla 2.6s ease-in-out infinite alternate; }
+.f-titulo:not([data-campeon='1']) .f-trofeo { display: none; }
+@keyframes trofeo-brilla { from { transform: rotate(-4deg) scale(1); } to { transform: rotate(4deg) scale(1.07); } }
+
+/* Tarjeta en el aviso de rechazo del celular */
+.j-aviso img { height: 1.5em; width: auto; vertical-align: -0.3em; margin-right: 8px; transform: rotate(-12deg); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)); }
+
+/* Silbato en la pausa */
+.esc-pausa-icono { height: calc(var(--u) * 12); width: auto; margin: 0 auto; filter: drop-shadow(0 calc(var(--u) * 0.8) calc(var(--u) * 1.4) rgba(0, 0, 0, 0.5)); animation: silbato-vibra 0.5s ease-in-out infinite alternate; }
+.escena[data-compacta] .esc-pausa-icono { height: calc(var(--u) * 22); }
+@keyframes silbato-vibra { from { transform: rotate(-7deg) translateY(0); } to { transform: rotate(7deg) translateY(-4px); } }
+
+/* Ícono de la posición en el cartel de ronda */
+.cartel-icono { position: absolute; right: 150px; top: 50%; height: 520px; width: auto; transform: translateY(-50%); filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.55)); animation: cartel-icono-entra 700ms 250ms var(--ease-out) both; }
+@keyframes cartel-icono-entra { from { opacity: 0; transform: translateY(-30%) rotate(-24deg) scale(0.6); } to { opacity: 1; transform: translateY(-50%) rotate(0) scale(1); } }
+
+/* Sobre de cartas que se abre al empezar a barajar */
+.baraja-sobre { position: absolute; left: 50%; top: 50%; height: 420px; width: auto; margin: -210px 0 0 -160px; z-index: 4; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.6)); }
+.confeti-video { opacity: 0.95; animation: confeti-fuera 5s linear forwards; }
+@keyframes confeti-fuera { 0%, 75% { opacity: 0.95; } 100% { opacity: 0; } }

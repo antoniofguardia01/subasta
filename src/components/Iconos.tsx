@@ -46,12 +46,7 @@ export function IconoRareza({ rareza, className, size }: P & { rareza: Rareza })
         </svg>
       );
     case 'leyenda':
-      return (
-        <svg {...p}>
-          <path d="M12 1.8l3.1 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.6l-6.4 3.6 1.5-7.1-5.4-4.9 7.2-.8z" fill="currentColor" strokeLinejoin="round" />
-          <path d="M12 6.5l1.6 3.4 3.7.4-2.8 2.5" fill="none" stroke="#fff8" strokeWidth="1.1" strokeLinecap="round" />
-        </svg>
-      );
+      return <img className={`icono ${className ?? ''}`} src="/img/iconos/estrella.webp" alt="" style={{ width: size ?? '1em', height: size ?? '1em', objectFit: 'contain' }} />;
     default:
       return (
         <svg {...p}>

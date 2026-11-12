@@ -3,7 +3,7 @@ import { CSSProperties, FormEvent, useCallback, useEffect, useLayoutEffect, useR
 import gsap from 'gsap';
 import type { Ajustes, EstadoPublico, JugadorSala, MotivoRechazo } from '../../shared/types';
 import { MAX_PARTICIPANTES, POS_NOMBRE, rangoTrolls } from '../../shared/types';
-import { Avatar, BotonPantalla, Fondo, Numero, Ticker, cuentaEquipo } from '../components/comunes';
+import { Avatar, BotonPantalla, Fondo, Numero, Ticker, cuentaEquipo, ConfetiVideo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
 import { Reloj, Tic } from '../components/Reloj';
@@ -578,7 +578,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   const [tic, setTic] = useState<Tic>({ tension: 0, cuenta: 0 });
   const [hoja, setHoja] = useState<'equipo' | 'saldos' | 'historial' | 'menu' | 'tv' | 'tema' | 'monto' | null>(null);
   const [verA, setVerA] = useState(yo.id);
-  const [aviso, setAviso] = useState<{ texto: string; n: number } | null>(null);
+  const [aviso, setAviso] = useState<{ texto: string; n: number; roja?: boolean } | null>(null);
   const boton = useRef<HTMLButtonElement>(null);
   const raiz = useRef<HTMLDivElement>(null);
 
@@ -596,7 +596,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
     () =>
       sala.alEvento((ev) => {
         if (ev.e === 'rechazo' && ev.pid === yo.id) {
-          setAviso((a) => ({ texto: RECHAZO[ev.motivo], n: (a?.n ?? 0) + 1 }));
+          setAviso((a) => ({ texto: RECHAZO[ev.motivo], n: (a?.n ?? 0) + 1, roja: ev.motivo === 'sin_saldo' || ev.motivo === 'sin_skips' }));
           vibrar([30, 50, 30]);
           sonar.rechazo();
           if (boton.current) gsap.fromTo(boton.current, { x: -9 }, { x: 0, duration: 0.45, ease: 'elastic.out(1.2, 0.25)' });
@@ -832,6 +832,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
         </button>
         {aviso && (
           <div className="j-aviso" key={aviso.n}>
+            <img src={aviso.roja ? '/img/iconos/roja.webp' : '/img/iconos/amarilla.webp'} alt="" />
             {aviso.texto}
           </div>
         )}
@@ -1012,8 +1013,10 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   return (
     <div className="m-final" ref={raiz}>
       <Fondo paleta={miPuesto === 1 ? 'oro' : 'oscuro'} />
+      {miPuesto === 1 && <ConfetiVideo />}
       <div className="f-scroll">
         <div className="f-titulo" data-campeon={miPuesto === 1 ? "1" : "0"}>
+          {miPuesto === 1 && <img className="f-trofeo" src="/img/iconos/trofeo.webp" alt="" />}
           <span>Se bajó el martillo</span>
           <h1 data-largo={miPuesto === puestos.length && miPuesto !== 1 ? '1' : undefined}>{miPuesto === 1 ? '¡Campeón!' : miPuesto === puestos.length ? 'Descendiste' : `Puesto ${miPuesto}`}</h1>
         </div>

@@ -5,6 +5,7 @@ import qrcode from 'qrcode-generator';
 import type { FichaEquipo, JugadorSala, MensajeTicker, Pos } from '../../shared/types';
 import { FORMACION } from '../../shared/types';
 import { alCambiarTema, temaActual } from '../lib/temas';
+import { esLite } from '../lib/rendimiento';
 import { reducirMovimiento } from '../lib/util';
 
 // ───────────── Fondo animado ─────────────
@@ -68,6 +69,23 @@ export function BotonPantalla({ corto = false, className = '' }: { corto?: boole
       {!corto && <span>{on ? 'Salir' : 'Pantalla completa'}</span>}
     </button>
   );
+}
+
+// ───────────── Confeti en video (con transparencia) ─────────────
+
+/** WebM con canal alfa: lo reproducen bien Chrome, Edge y Firefox. Safari lo dibuja con fondo negro, así que ahí no se usa. */
+function puedeConfeti(): boolean {
+  if (esLite() || reducirMovimiento()) return false;
+  const ua = navigator.userAgent;
+  if (/iPhone|iPad|iPod|Macintosh/.test(ua) && !/Chrome|Chromium|CriOS|Edg|Firefox|FxiOS/.test(ua)) return false;
+  return !!document.createElement('video').canPlayType('video/webm; codecs="vp9"');
+}
+
+export function ConfetiVideo() {
+  const [ok, setOk] = useState(puedeConfeti);
+  if (!ok) return null;
+  // Una sola ráfaga de 5 s que se desvanece: en bucle tapaba los equipos.
+  return <video className="confeti-video" src="/media/confeti.webm" autoPlay muted playsInline preload="auto" aria-hidden onEnded={() => setOk(false)} />;
 }
 
 // ───────────── Avatar ─────────────

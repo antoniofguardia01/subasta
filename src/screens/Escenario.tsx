@@ -3,7 +3,7 @@ import { CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef
 import gsap from 'gsap';
 import type { EstadoPublico, JugadorSala } from '../../shared/types';
 import { MAX_PARTICIPANTES, POS_NOMBRE } from '../../shared/types';
-import { Avatar, BotonPantalla, Cancha, Fondo, Numero, QR, Ticker, cuentaEquipo } from '../components/comunes';
+import { Avatar, BotonPantalla, Cancha, ConfetiVideo, Fondo, Numero, QR, Ticker, cuentaEquipo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
 import { Reloj, Tic } from '../components/Reloj';
@@ -465,6 +465,9 @@ export function CanchaMedida(props: Parameters<typeof Cancha>[0]) {
 
 // ───────────── Cartel de ronda ─────────────
 
+const ICONO_POS: Record<string, string> = { POR: '/img/iconos/guante.webp', DC: '/img/iconos/botin.webp', ED: '/img/iconos/botin.webp', EI: '/img/iconos/botin.webp' };
+for (const p of ['DFC', 'LD', 'LI', 'MCD', 'MC', 'MCO']) ICONO_POS[p] = '/img/iconos/camiseta.webp';
+
 function CartelRonda({ s }: { s: EstadoPublico }) {
   const r = s.ronda;
   const on = s.fase === 'ronda';
@@ -486,6 +489,7 @@ function CartelRonda({ s }: { s: EstadoPublico }) {
           </p>
         </div>
       )}
+      {r && <img className="cartel-icono" key={`i${r.indice}`} src={ICONO_POS[r.pos]} alt="" />}
     </div>
   );
 }
@@ -560,8 +564,17 @@ function Baraja({ s, sala }: { s: EstadoPublico; sala: Sala }) {
     const rm = reducirMovimiento();
     const t = gsap.timeline();
     sonar.barrido();
-    t.from(q('.baraja-titulo > *'), { yPercent: 120, opacity: 0, duration: 0.6, ease: 'expo.out', stagger: 0.08 }, 0)
-      .from(cartas, { y: 700, rotation: () => gsap.utils.random(-50, 50), duration: 0.7, ease: 'expo.out', stagger: 0.035 }, 0.1);
+    t.from(q('.baraja-titulo > *'), { yPercent: 120, opacity: 0, duration: 0.6, ease: 'expo.out', stagger: 0.08 }, 0);
+    const sobre = q('.baraja-sobre');
+    const apertura = rm ? 0.1 : 1.15; // el sobre cae, tiembla y revienta; recién ahí salen las cartas
+    if (!rm) {
+      t.fromTo(sobre, { y: -900, rotation: -14, scale: 1, opacity: 1 }, { y: 0, rotation: 0, duration: 0.5, ease: 'bounce.out' }, 0)
+        .to(sobre, { x: 14, rotation: 4, duration: 0.06, repeat: 7, yoyo: true, ease: 'sine.inOut' }, 0.5)
+        .add(() => sonar.martillo(), 0.52)
+        .to(sobre, { scale: 2.4, opacity: 0, duration: 0.35, ease: 'power3.out' }, 1.0)
+        .add(() => sonar.barrido(), 1.0);
+    } else gsap.set(sobre, { opacity: 0 });
+    t.from(cartas, { y: 700, rotation: () => gsap.utils.random(-50, 50), duration: 0.7, ease: 'expo.out', stagger: 0.035 }, apertura);
     if (!rm) {
       // Mezcla: las cartas se abren en dos pilas y se entrelazan, tres veces.
       for (let v = 0; v < 3; v++) {
@@ -606,6 +619,7 @@ function Baraja({ s, sala }: { s: EstadoPublico; sala: Sala }) {
               11 rondas · {total} cartas por ronda · ${s.ajustes.presupuesto}M por cabeza
             </p>
           </div>
+          <img className="baraja-sobre" src="/img/iconos/sobre.webp" alt="" />
           <div className="baraja-mazo">
             {Array.from({ length: 12 }, (_, i) => (
               <i className="baraja-carta" key={i} />
@@ -739,8 +753,10 @@ function FinalTV({ s, fx, sala }: { s: EstadoPublico; fx: React.RefObject<FxApi 
   return (
     <div className="tv-final" ref={raiz}>
       <Fondo paleta={ganador ? 'oro' : 'oscuro'} vel={1.6} />
+      {ganador && <ConfetiVideo />}
       <div className="final-izq">
         <div className="final-titulo">
+          <img className="final-trofeo" src="/img/iconos/trofeo.webp" alt="" />
           <span>Se bajó el martillo</span>
           <h1>Resultados</h1>
         </div>
