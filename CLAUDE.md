@@ -25,7 +25,7 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 
 ## Pantallas
 
-- Celular, iPad y PC usan `/r/CODIGO` (columna centrada de hasta 680 px; en PC la barra espaciadora oferta). Cualquier dispositivo puede ser **escenario** (`/stage/CODIGO`, sin jugar): botón "Usar como pantalla principal" en el lobby y el menú. Todos tienen botón de pantalla completa (`BotonPantalla`; no existe en iPhone).
+- Celular, iPad y PC usan `/r/CODIGO` (columna centrada de hasta 680 px; en PC la barra espaciadora oferta). En PC e iPad horizontal hay un diseño a dos columnas (escena grande + controles). El escenario (`/stage/CODIGO`) se abre desde Modo TV; el dueño pidió quitar el botón de pantalla principal para los jugadores. Todos tienen botón de pantalla completa (`BotonPantalla`; no existe en iPhone).
 
 ## Cómo probar en navegador
 
@@ -49,9 +49,9 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 
 ## Pendientes conocidos
 
-- El PIN de administración no está configurado en producción (falta `wrangler secret put ADMIN_PIN`).
+- El PIN de administración de producción es un secreto del Worker (lo eligió el dueño; no escribirlo en el repo).
 - `npm run deploy` sube a KV solo los archivos que cambiaron (manifiesto en la clave `__manifiesto`): el plan gratuito permite ~1000 escrituras por día y antes se subían los 323 archivos cada vez.
 - Desde las sesiones en la nube, publicar necesita `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` y un `CLOUDFLARE_API_TOKEN` cualquiera (el proxy pone el real).
-- Los trolls actuales son dibujos de muestra; faltan las fotos reales.
+- Hay 27 trolls reales cargados en el panel (fotos de la carpeta de Drive "Guilles", 4 con fondo a pedido del dueño); faltan sus nombres y descripciones.
 - Revisar a ojo las fotos importadas (`docs/validacion-fotos.png`): alguna puede ser de otra persona con el mismo apellido.
 - Hay solo 4 leyendas (150M+): Messi, Cristiano, Modrić y Zlatan/Benzema en prime; la fuente de retratos no tiene jugadores históricos.
