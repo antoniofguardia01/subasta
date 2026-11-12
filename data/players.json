@@ -5338,9 +5338,12 @@
   "precioMinimo": 125,
   "etiqueta": "PRIME · EL METRÓNOMO",
   "dato": "Tocó 100 pases en un partido y ninguno se perdió.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/xavi-hernandez.webp"
+  ],
   "buscar": "Xavi Hernández",
-  "wiki": "Xavi Hernández"
+  "wiki": "Xavi Hernández",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Xavi%2C_Persepolis_vs._Al_Sadd%2C_20190520_02_%28cropped%29.jpg"
  },
  {
   "id": "andres-iniesta",
