@@ -346,3 +346,36 @@
 .tv-tira { gap: 22px; }
 .tv-tira .tira-rotulo { white-space: normal; max-width: 150px; line-height: 1.05; }
 .tv-tira .tira-rotulo:has(b) { white-space: nowrap; max-width: none; }
+
+/* ── Muchos participantes (7–10): fichas de arriba y tira de abajo más compactas ── */
+.tv-chips { min-width: 0; }
+.tv-chips[data-n='varios'] { gap: 8px; padding-right: 20px; }
+.tv-chips[data-n='varios'] .chip .avatar { font-size: 48px; }
+.tv-chips[data-n='varios'] .chip-saldo { font-size: 24px; }
+.tv-top:has(.tv-chips[data-n='muchos']) .tv-marca { width: 300px; padding-left: 28px; }
+.tv-top:has(.tv-chips[data-n='muchos']) .tv-ronda em { font-size: 44px; }
+.tv-chips[data-n='muchos'] { gap: 7px; padding-right: 16px; }
+.tv-chips[data-n='muchos'] .chip { flex-direction: column; justify-content: center; gap: 3px; padding: 8px 6px 6px; height: 120px; }
+.tv-chips[data-n='muchos'] .chip .avatar { font-size: 40px; }
+.tv-chips[data-n='muchos'] .chip-datos { width: 100%; align-items: center; text-align: center; }
+.tv-chips[data-n='muchos'] .chip-nombre { font-size: 17px; max-width: 100%; }
+.tv-chips[data-n='muchos'] .chip-saldo { font-size: 21px; }
+.tv-chips[data-n='muchos'] .chip-equipo { width: 100%; height: 12px; }
+.tv-chips[data-n='muchos'] .chip-equipo b { font-size: 10px; line-height: 12px; }
+
+.tv-tira[data-lleno='1'] { gap: 18px; padding: 0 22px; }
+.tv-tira[data-lleno='1'] .mini { width: 40px; height: 56px; border-width: 2px; border-radius: 6px; }
+.tv-tira[data-lleno='1'] .mini b { font-size: 24px; }
+.tv-tira[data-lleno='1'] .tira-cartas { gap: 5px; }
+.tv-tira[data-lleno='1'] .tira-pend .avatar { font-size: 44px; margin-left: -18px; }
+.tv-tira[data-lleno='1'] .tira-pend .avatar:first-child { margin-left: 0; }
+.tv-tira[data-lleno='1'] .tira-rotulo { font-size: 17px; max-width: 120px; }
+.tv-tira[data-lleno='1'] .tira-desc > b { font-size: 38px; }
+.tv-tira[data-lleno='1'] .tv-botones button:has(> i.num) > span { display: none; }
+.tv-tira[data-lleno='1'] .tv-botones button:has(> i.num) { width: 52px; padding: 0; justify-content: center; }
+.tv-tira[data-lleno='1'] .tira-rotulo:has(b) { max-width: none; }
+.tv-tira[data-lleno='1'] .tira-rotulo b { font-size: 24px; }
+.tv-tira[data-lleno='1'] .mini { width: 36px; height: 52px; }
+.tv-tira[data-lleno='1'] .tira-cartas { gap: 4px; }
+.tv-tira[data-lleno='1'] .tv-botones { gap: 5px; }
+.tv-tira[data-lleno='1'] .tira-pend .avatar { font-size: 40px; margin-left: -20px; }

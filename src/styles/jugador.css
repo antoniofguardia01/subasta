@@ -392,3 +392,8 @@
 .escaner button { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); padding: 8px 16px; border-radius: 999px; background: rgba(0, 0, 0, 0.6); color: #fff; font-weight: 800; }
 @keyframes escaner-barre { to { top: 88%; } }
 @keyframes escaner-abre { from { opacity: 0; transform: scale(0.94); } }
+/* Con muchas cartas (8+ participantes) las cartitas se achican para que entren los contadores. */
+.j-cartas { flex: 1 1 auto; min-width: 0; flex-wrap: nowrap; }
+.j-cartas i { flex: 0 1 13px; min-width: 5px; }
+.j-progreso { gap: 10px; }
+.j-cartas { overflow: hidden; padding: 4px 2px; margin: -4px 0; }

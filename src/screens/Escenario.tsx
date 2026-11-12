@@ -175,7 +175,7 @@ export function Escenario({ codigo }: { codigo: string }) {
                     )}
                   </div>
                 </div>
-                <div className="tv-chips">
+                <div className="tv-chips" data-n={s.jugadores.length >= 9 ? 'muchos' : s.jugadores.length >= 7 ? 'varios' : 'pocos'}>
                   {s.jugadores.map((j) => (
                     <Chip key={j.id} j={j} s={s} />
                   ))}
@@ -291,7 +291,7 @@ function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; pan
   const quedan = r ? r.cartas.filter((c) => c.estado === 'espera' || c.estado === 'actual').length : 0;
   const pend = r ? r.pendientes.map((id) => s.jugadores.find((j) => j.id === id)!).filter(Boolean) : [];
   return (
-    <div className="tv-tira" data-on={r && s.fase !== 'ronda' && s.fase !== 'finronda' ? '1' : '0'}>
+    <div className="tv-tira" data-lleno={r && r.cartas.length + pend.length > 11 ? '1' : '0'} data-on={r && s.fase !== 'ronda' && s.fase !== 'finronda' ? '1' : '0'}>
       {r && (
         <>
           <div className="tira-bloque">
@@ -328,16 +328,16 @@ function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; pan
       )}
       <div className="tv-botones">
         <button data-on={s.pausa ? '1' : '0'} onClick={pausar}>
-          <i className="num">P</i> {s.pausa ? 'Seguir' : 'Pausa'}
+          <i className="num">P</i> <span>{s.pausa ? 'Seguir' : 'Pausa'}</span>
         </button>
         <button data-on={panel === 'equipos' ? '1' : '0'} onClick={() => setPanel(panel === 'equipos' ? null : 'equipos')}>
-          <i className="num">1</i> Equipos
+          <i className="num">1</i> <span>Equipos</span>
         </button>
         <button data-on={panel === 'saldos' ? '1' : '0'} onClick={() => setPanel(panel === 'saldos' ? null : 'saldos')}>
-          <i className="num">2</i> Saldos
+          <i className="num">2</i> <span>Saldos</span>
         </button>
         <button data-on={panel === 'historial' ? '1' : '0'} onClick={() => setPanel(panel === 'historial' ? null : 'historial')}>
-          <i className="num">3</i> Historial
+          <i className="num">3</i> <span>Historial</span>
         </button>
         <button className="tv-ico" data-on={conSonido ? '1' : '0'} onClick={() => void activarSonido(!conSonido)} title={conSonido ? 'Con sonido' : 'Silencio'} aria-label={conSonido ? 'Quitar sonido' : 'Poner sonido'}>
           <IconoSonido on={conSonido} size={26} />
