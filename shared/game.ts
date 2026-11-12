@@ -90,6 +90,8 @@ export class Partida {
   pausa = false;
   pausaResto = 0;
   panel: 'equipos' | null = null;
+  finalVista: string | null = null;
+  finalDesde = 0;
 
   mazo: Mazo | null = null;
   pisos: number[] = [];
@@ -274,6 +276,8 @@ export class Partida {
     this.limpiarCarta();
     this.final = calcularFinal(this.jugadores, this.historial, this.ajustes);
     this.fase = 'final';
+    this.finalVista = null;
+    this.finalDesde = Date.now();
     const p = this.final.puestos;
     if (p.length) this.hechos.push({ h: 'final', ganadorId: p[0].pid, ultimoId: p[p.length - 1].pid });
   }
@@ -529,6 +533,8 @@ export class Partida {
         if (this.rondaIdx + 1 < this.mazo!.rondas.length) return this.iniciarRonda(this.rondaIdx + 1, t);
         this.final = calcularFinal(this.jugadores, this.historial, this.ajustes);
         this.fase = 'final';
+    this.finalVista = null;
+    this.finalDesde = Date.now();
         const p = this.final.puestos;
         if (p.length) this.hechos.push({ h: 'final', ganadorId: p[0].pid, ultimoId: p[p.length - 1].pid });
         return;
@@ -717,12 +723,14 @@ export class Partida {
       sobrantes: this.fase === 'finronda' ? this.sobrantes : undefined,
       trollsDisponibles,
       panel: this.panel,
+      finalVista: this.finalVista,
+      finalDesde: this.finalDesde,
     };
   }
 
   // ───────────── Copia de seguridad ─────────────
 
-  private static CAMPOS = ['ajustes', 'jugadores', 'anfitrionId', 'fase', 'pausa', 'pausaResto', 'panel', 'mazo', 'pisos', 'rondaIdx', 'cartaIdx', 'estados', 'compradores', 'preciosVenta', 'precio', 'liderId', 'ofertas', 'totalOfertas', 'vence', 'duracion', 'desenlace', 'compradorId', 'pagado', 'salteadaPor', 'ruleta', 'sobrantes', 'final', 'historial', 'ruletas'] as const;
+  private static CAMPOS = ['ajustes', 'jugadores', 'anfitrionId', 'fase', 'pausa', 'pausaResto', 'panel', 'mazo', 'pisos', 'rondaIdx', 'cartaIdx', 'estados', 'compradores', 'preciosVenta', 'precio', 'liderId', 'ofertas', 'totalOfertas', 'vence', 'duracion', 'desenlace', 'compradorId', 'pagado', 'salteadaPor', 'ruleta', 'sobrantes', 'final', 'historial', 'ruletas', 'finalVista', 'finalDesde'] as const;
 
   /** Estado completo en un objeto plano (para guardarlo y restaurarlo si el servidor se reinicia). */
   exportar(): Record<string, unknown> {

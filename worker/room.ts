@@ -264,6 +264,9 @@ export class RoomDO implements DurableObject {
       case 'salir':
         if (pid) p.expulsar(pid, ahora);
         break;
+      case 'verEquipo':
+        if (esAnfitrion && p.fase === 'final') p.finalVista = msg.pid && p.jugador(String(msg.pid)) ? String(msg.pid) : null;
+        break;
       case 'terminar':
         if (esAnfitrion) p.terminar();
         break;

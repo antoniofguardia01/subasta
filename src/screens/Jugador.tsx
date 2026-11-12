@@ -14,6 +14,7 @@ import { activarSonido, desbloquearSonido, sonar, sonidoPreferido } from '../lib
 import { TEMAS, elegirTemaPropio, temaPropio } from '../lib/temas';
 import { guardar, leer, vibrar } from '../lib/util';
 import { CanchaMedida, Cargando, SinSala } from './Escenario';
+import { useEquipoEnPantalla } from '../lib/vistaFinal';
 
 interface AvatarDato {
   id: string;
@@ -947,7 +948,15 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   const f = s.final;
   const puestos = f ? f.puestos.map((p) => ({ ...p, j: s.jugadores.find((j) => j.id === p.pid)! })).filter((p) => p.j) : [];
   const miPuesto = puestos.findIndex((p) => p.pid === yo.id) + 1;
-  const [verA, setVerA] = useState(yo.id);
+  const vista = useEquipoEnPantalla(sala, s);
+  // Lo que se muestra en la TV manda; quien no es anfitrión puede mirar otro equipo tocándolo (solo en su pantalla).
+  const [propio, setPropio] = useState<string | null>(null);
+  useEffect(() => setPropio(null), [vista.pid]);
+  const verA = (anfitrion ? vista.pid : (propio ?? vista.pid)) ?? yo.id;
+  const setVerA = (pid: string) => {
+    if (anfitrion) sala.enviar({ t: 'verEquipo', pid: s.finalVista === pid ? null : pid });
+    else setPropio(pid);
+  };
   const visto = s.jugadores.find((j) => j.id === verA) ?? yo;
 
   useLayoutEffect(() => {
@@ -991,6 +1000,15 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
             Equipo de <b>{visto.id === yo.id ? 'ti' : visto.nombre}</b>
           </h3>
           <CanchaMedida equipo={visto.equipo} color={visto.color} />
+          <p className="f-nota f-rota">
+            {anfitrion
+              ? s.finalVista
+                ? 'Lo elegiste tú: tócalo de nuevo para volver a la rotación automática.'
+                : 'Toca un jugador para mostrar su equipo en la TV y en todos los celulares. Si no, cambia solo cada 15 s.'
+              : vista.auto
+                ? 'Los equipos van cambiando cada 15 s. Toca uno para verlo tú.'
+                : 'El anfitrión está mostrando este equipo.'}
+          </p>
           <h3>Premios de la noche</h3>
           {f.premios.map((pr) => {
             const j = s.jugadores.find((x) => x.id === pr.pid);

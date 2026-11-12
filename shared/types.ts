@@ -286,6 +286,9 @@ export interface EstadoPublico {
   trollsDisponibles: number;
   /** Panel que el anfitrión está mostrando a todos (TV y celulares). */
   panel: 'equipos' | null;
+  /** Resultados: equipo elegido por el anfitrión (null = rotación automática cada 15 s desde finalDesde). */
+  finalVista: string | null;
+  finalDesde: number;
 }
 
 // ───────────────────────── Eventos efímeros (disparan animaciones) ─────────────────────────
@@ -315,6 +318,7 @@ export type MsgCliente =
   | { t: 'anfitrion'; pid: string }
   | { t: 'revancha' }
   | { t: 'salir' }
+  | { t: 'verEquipo'; pid: string | null }
   | { t: 'terminar' }
   | { t: 'ping'; t0: number };
 

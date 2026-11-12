@@ -334,3 +334,10 @@
 
 .tv-pantalla { position: absolute; right: 30px; bottom: 84px; z-index: 60; font-size: 22px; }
 .tv-botones .btn-pantalla { height: 52px; padding: 0 14px; border-radius: 10px; font-size: 17px; }
+
+/* Resultados: equipo en pantalla y barra de rotación */
+.final-campeon { animation: carta-sube 600ms var(--ease-out) both; }
+.final-fila[data-on='1'] { box-shadow: 0 0 0 5px #fff; }
+.final-rota { position: relative; margin-top: 12px; padding: 8px 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.08); font-size: 18px; font-weight: 800; font-stretch: 75%; text-transform: uppercase; overflow: hidden; color: rgba(255, 255, 255, 0.75); }
+.final-rota i { position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: var(--c); transform-origin: 0 50%; animation: rota-barra linear both; }
+@keyframes rota-barra { from { transform: scaleX(0); } to { transform: scaleX(1); } }

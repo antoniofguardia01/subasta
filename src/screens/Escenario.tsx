@@ -11,6 +11,7 @@ import { Ruleta } from '../components/Ruleta';
 import { irConTelon } from '../lib/ruta';
 import { Sala, useSala } from '../lib/sala';
 import { esTele } from '../lib/tele';
+import { useEquipoEnPantalla } from '../lib/vistaFinal';
 import { activarSonido, alCambiarSonido, sonar, sonidoActivo } from '../lib/sonido';
 import { TEMAS } from '../lib/temas';
 import { reducirMovimiento } from '../lib/util';
@@ -188,7 +189,7 @@ export function Escenario({ codigo }: { codigo: string }) {
         </div>
 
         <div className="tv-capa" data-on={s.fase === 'final' ? '1' : '0'}>
-          {s.fase === 'final' && <FinalTV s={s} fx={fx} />}
+          {s.fase === 'final' && <FinalTV s={s} fx={fx} sala={sala} />}
         </div>
 
         {!enJuego && (
@@ -647,12 +648,15 @@ function LobbyTV({ s }: { s: EstadoPublico }) {
 
 // ───────────── Final ─────────────
 
-function FinalTV({ s, fx }: { s: EstadoPublico; fx: React.RefObject<FxApi | null> }) {
+function FinalTV({ s, fx, sala }: { s: EstadoPublico; fx: React.RefObject<FxApi | null>; sala: Sala }) {
   const raiz = useRef<HTMLDivElement>(null);
   const f = s.final;
   const puestos = useMemo(() => (f ? f.puestos.map((p) => ({ ...p, j: s.jugadores.find((j) => j.id === p.pid)! })).filter((p) => p.j) : []), [f, s.jugadores]);
   const [premio, setPremio] = useState(0);
   const ganador = puestos[0]?.j;
+  const vista = useEquipoEnPantalla(sala, s);
+  const mostrado = puestos.find((p) => p.pid === vista.pid) ?? puestos[0];
+  const puestoMostrado = puestos.indexOf(mostrado) + 1;
 
   useLayoutEffect(() => {
     if (!raiz.current || !puestos.length) return;
@@ -694,7 +698,7 @@ function FinalTV({ s, fx }: { s: EstadoPublico; fx: React.RefObject<FxApi | null
         </div>
         <div className="final-tabla">
           {puestos.map((p, i) => (
-            <div className="final-fila" key={p.pid} data-puesto={i + 1} style={{ '--c': p.j.color } as CSSProperties}>
+            <div className="final-fila" key={p.pid} data-puesto={i + 1} data-on={mostrado?.pid === p.pid ? '1' : '0'} style={{ '--c': p.j.color } as CSSProperties}>
               <b className="num final-pos">{i + 1}</b>
               <Avatar src={p.j.avatar} color={p.j.color} />
               <span className="final-nombre">{p.j.nombre}</span>
@@ -719,16 +723,26 @@ function FinalTV({ s, fx }: { s: EstadoPublico; fx: React.RefObject<FxApi | null
           </div>
         )}
       </div>
-      {ganador && (
-        <div className="final-campeon" style={{ '--c': ganador.color } as CSSProperties}>
+      {mostrado && (
+        <div className="final-campeon" key={mostrado.pid} style={{ '--c': mostrado.j.color } as CSSProperties}>
           <header>
-            <Avatar src={ganador.avatar} color={ganador.color} />
+            <Avatar src={mostrado.j.avatar} color={mostrado.j.color} />
             <span>
-              Mejor equipo
-              <b>{ganador.nombre}</b>
+              {puestoMostrado === 1 ? 'Mejor equipo' : `Puesto ${puestoMostrado}`}
+              <b>{mostrado.j.nombre}</b>
             </span>
           </header>
-          <CanchaMedida equipo={ganador.equipo} color={ganador.color} />
+          <CanchaMedida equipo={mostrado.j.equipo} color={mostrado.j.color} />
+          <footer className="final-rota" data-auto={vista.auto ? '1' : '0'}>
+            {vista.auto ? (
+              <>
+                <i key={mostrado.pid} style={{ animationDuration: `${vista.resto}ms` }} />
+                Cambia solo cada 15 s
+              </>
+            ) : (
+              'Elegido por el anfitrión'
+            )}
+          </footer>
         </div>
       )}
     </div>

@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#06100c"/><path d="M14 42l20-20 8 8-20 20z" fill="#c6f432"/><rect x="33" y="8" width="24" height="15" rx="4" transform="rotate(45 45 15.5)" fill="#f2fff6"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#06100c"/>
+  <!-- dos cartas en abanico -->
+  <g transform="rotate(-16 22 30)">
+    <rect x="8" y="8" width="25" height="35" rx="4" fill="#0fbf57" stroke="#f2fff6" stroke-width="2.4"/>
+    <rect x="12" y="12" width="17" height="9" rx="2" fill="#0a5a3c"/>
+  </g>
+  <g transform="rotate(12 38 26)">
+    <rect x="26" y="5" width="25" height="35" rx="4" fill="#c6f432" stroke="#f2fff6" stroke-width="2.4"/>
+    <rect x="30" y="9" width="17" height="9" rx="2" fill="#7fa318"/>
+  </g>
+  <!-- balón -->
+  <clipPath id="b"><circle cx="36" cy="41" r="17"/></clipPath>
+  <circle cx="36" cy="41" r="17" fill="#ffffff"/>
+  <g clip-path="url(#b)" fill="#06100c"><polygon points="36.00,35.40 41.33,39.27 39.29,45.53 32.71,45.53 30.67,39.27"/><polygon points="36.00,30.20 31.05,26.61 32.94,20.79 39.06,20.79 40.95,26.61"/><polygon points="46.27,37.66 48.16,31.85 54.27,31.85 56.16,37.66 51.22,41.26"/><polygon points="42.35,49.74 48.46,49.74 50.35,55.55 45.40,59.14 40.46,55.55"/><polygon points="29.65,49.74 31.54,55.55 26.60,59.14 21.65,55.55 23.54,49.74"/><polygon points="25.73,37.66 20.78,41.26 15.84,37.66 17.73,31.85 23.84,31.85"/></g>
+  <g stroke="#06100c" stroke-width="1.6" stroke-linecap="round"><line x1="36.00" y1="35.40" x2="36.00" y2="29.40"/><line x1="41.33" y1="39.27" x2="47.03" y2="37.42"/><line x1="39.29" y1="45.53" x2="42.82" y2="50.38"/><line x1="32.71" y1="45.53" x2="29.18" y2="50.38"/><line x1="30.67" y1="39.27" x2="24.97" y2="37.42"/></g>
+  <circle cx="36" cy="41" r="17" fill="none" stroke="#06100c" stroke-width="2.4"/>
+</svg>
