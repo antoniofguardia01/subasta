@@ -5320,9 +5320,12 @@
   "precioMinimo": 120,
   "etiqueta": "PRIME · EL CAÑONERO",
   "dato": "Un tiro libre que dobló la física y a cuatro defensores.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/roberto-carlos.webp"
+  ],
   "buscar": "Roberto Carlos",
-  "wiki": "Roberto Carlos"
+  "wiki": "Roberto Carlos",
+  "fotoFuente": "https://upload.wikimedia.org/wikipedia/commons/a/a8/LS3_1288_%2853332367864%29_%28cropped%29.jpg"
  },
  {
   "id": "xavi-hernandez",
