@@ -122,7 +122,7 @@
 
 /* ───────── Paneles ───────── */
 .tv-panel {
-  position: absolute; left: 0; top: 150px; width: 1920px; height: 748px; z-index: 12; padding: 30px 40px; overflow: hidden;
+  position: absolute; left: 0; top: 150px; width: 1920px; height: 748px; z-index: 18; padding: 30px 40px; overflow: hidden;
   background: rgba(7, 9, 8, 0.93); color: #fff; visibility: hidden; clip-path: inset(100% 0 0 0); transition: clip-path 520ms var(--ease-out), visibility 0s 520ms;
 }
 .tv-panel[data-on='1'] { visibility: visible; clip-path: inset(0 0 0 0); transition: clip-path 520ms var(--ease-out), visibility 0s; }
@@ -409,3 +409,8 @@
   .ruleta[data-compacta] { container-type: size; }
   .ruleta[data-compacta] .rul-rueda { --rd: min(70cqw, 46cqh); }
 }
+
+/* Modo tragos */
+.lobby-reglas .lobby-tragos { display: inline-flex; align-items: center; gap: 10px; background: #ffc233; color: #14161a; padding-left: 10px; }
+.lobby-tragos img { height: 34px; width: auto; }
+.final-trago { height: 28px; width: auto; vertical-align: middle; margin-right: 4px; }

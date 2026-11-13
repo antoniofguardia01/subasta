@@ -60,9 +60,9 @@ export const TIEMPOS: Tiempos = {
 
 /** Hechos del juego: materia prima del ticker de burlas. */
 export type Hecho =
-  | { h: 'vendido'; pid: string; carta: Carta; precio: number; rivalId?: string; ofertas: number }
-  | { h: 'obligado'; pid: string; carta: Carta; precio: number }
-  | { h: 'ruleta'; pid: string; carta: Carta; precio: number; liquidacion: boolean }
+  | { h: 'vendido'; pid: string; carta: Carta; precio: number; rivalId?: string; ofertas: number; tragos?: number }
+  | { h: 'obligado'; pid: string; carta: Carta; precio: number; tragos?: number }
+  | { h: 'ruleta'; pid: string; carta: Carta; precio: number; liquidacion: boolean; tragos?: number }
   | { h: 'pasa'; carta: Carta }
   | { h: 'salteada'; pid: string; carta: Carta }
   | { h: 'rechazo'; pid: string; motivo: MotivoRechazo }
@@ -83,6 +83,8 @@ interface Participante {
   skips: number;
   equipo: (FichaEquipo | null)[];
   gastado: number;
+  trolls: number;
+  tragos: number;
 }
 
 export class Partida {
@@ -92,7 +94,7 @@ export class Partida {
   fase: Fase = 'lobby';
   pausa = false;
   pausaResto = 0;
-  panel: 'equipos' | null = null;
+  panel: 'equipos' | 'saldos' | null = null;
   finalVista: string | null = null;
   finalDesde = 0;
 
@@ -114,6 +116,8 @@ export class Partida {
   desenlace: Desenlace | undefined;
   compradorId: string | undefined;
   pagado: number | undefined;
+  /** Modo tragos: tragos de la carta en curso (0 si no es troll o el modo está apagado). */
+  tragosCarta = 0;
   salteadaPor: string | undefined;
   ruleta: { candidatos: string[]; ganador: string; liquidacion: boolean } | undefined;
   sobrantes: CartaVista[] | undefined;
@@ -163,6 +167,8 @@ export class Partida {
       skips: this.ajustes.skips,
       equipo: FORMACION.map(() => null),
       gastado: 0,
+      trolls: 0,
+      tragos: 0,
     });
     if (!this.anfitrionId) this.anfitrionId = id;
     this.ajustarTrolls();
@@ -224,6 +230,7 @@ export class Partida {
     if ((parcial.trollsMin !== undefined || parcial.trollsMax !== undefined) && parcial.trollsAuto === undefined) a.trollsAuto = false;
     a.ultimaOportunidad = lim(a.ultimaOportunidad, 3, 30);
     a.forzar = !!a.forzar;
+    a.tragos = !!a.tragos;
     a.intensidad = 3; // las burlas siempre van sin filtro
     const ordenOk =
       Array.isArray(a.orden) && a.orden.length === FORMACION.length && new Set(a.orden).size === FORMACION.length && a.orden.every((n) => n >= 0 && n < FORMACION.length);
@@ -265,6 +272,8 @@ export class Partida {
       j.skips = this.ajustes.skips;
       j.equipo = FORMACION.map(() => null);
       j.gastado = 0;
+      j.trolls = 0;
+      j.tragos = 0;
     }
     this.historial = [];
     this.final = undefined;
@@ -307,6 +316,8 @@ export class Partida {
       j.skips = this.ajustes.skips;
       j.equipo = FORMACION.map(() => null);
       j.gastado = 0;
+      j.trolls = 0;
+      j.tragos = 0;
     }
   }
 
@@ -461,6 +472,7 @@ export class Partida {
     this.desenlace = undefined;
     this.compradorId = undefined;
     this.pagado = undefined;
+    this.tragosCarta = 0;
     this.salteadaPor = undefined;
     this.ruleta = undefined;
   }
@@ -521,7 +533,7 @@ export class Partida {
           const j = this.jugador(this.compradorId);
           if (j) j.equipo[carta.hueco] = { ...vista, pagado: this.pagado! };
         }
-        this.historial.push({ ronda: this.rondaIdx, desenlace: this.desenlace!, carta: vista, compradorId: this.compradorId, precio: this.pagado, t });
+        this.historial.push({ ronda: this.rondaIdx, desenlace: this.desenlace!, carta: vista, compradorId: this.compradorId, precio: this.pagado, t, tragos: this.tragosCarta || undefined });
         const grande = carta.rareza === 'prime' || carta.rareza === 'leyenda' || carta.rareza === 'troll';
         const ms = this.compradorId ? (grande ? this.tiempos.revelaGrande : this.tiempos.revela) : this.tiempos.revelaCorta;
         return this.fijarFase('revela', ms, t);
@@ -591,11 +603,19 @@ export class Partida {
     this.pagado = pago;
     this.compradores[this.cartaIdx] = j.id;
     this.preciosVenta[this.cartaIdx] = pago;
+    // Modo tragos: el n-ésimo troll de un participante vale n tragos (1, 2, 3…; con tres trolls lleva 6).
+    this.tragosCarta = 0;
+    if (this.ajustes.tragos && carta.tipo === 'troll') {
+      j.trolls += 1;
+      this.tragosCarta = j.trolls;
+      j.tragos += j.trolls;
+    }
+    const tragos = this.tragosCarta || undefined;
     if (desenlace === 'vendido') {
       const rival = [...this.ofertas].reverse().find((o) => o.pid !== j.id)?.pid;
-      this.hechos.push({ h: 'vendido', pid: j.id, carta, precio: pago, rivalId: rival, ofertas: this.totalOfertas });
-    } else if (desenlace === 'obligado') this.hechos.push({ h: 'obligado', pid: j.id, carta, precio: pago });
-    else this.hechos.push({ h: 'ruleta', pid: j.id, carta, precio: pago, liquidacion: !!this.ruleta?.liquidacion });
+      this.hechos.push({ h: 'vendido', pid: j.id, carta, precio: pago, rivalId: rival, ofertas: this.totalOfertas, tragos });
+    } else if (desenlace === 'obligado') this.hechos.push({ h: 'obligado', pid: j.id, carta, precio: pago, tragos });
+    else this.hechos.push({ h: 'ruleta', pid: j.id, carta, precio: pago, liquidacion: !!this.ruleta?.liquidacion, tragos });
     this.fijarFase('martillo', this.tiempos.martillo, t);
   }
 
@@ -660,6 +680,8 @@ export class Partida {
       tope: this.mazo ? this.tope(j) : j.saldo,
       equipo: j.equipo,
       gastado: j.gastado,
+      trolls: j.trolls ?? 0,
+      tragos: j.tragos ?? 0,
     }));
 
     let ronda: EstadoPublico['ronda'] = null;
@@ -703,6 +725,8 @@ export class Partida {
           desenlace: this.desenlace,
           compradorId: this.compradorId,
           pagado: this.pagado,
+          tragos: this.tragosCarta || undefined,
+          tragosTotal: this.tragosCarta ? this.jugador(this.compradorId ?? '')?.tragos : undefined,
           salteadaPor: this.salteadaPor,
           ruleta: this.fase === 'ruleta' || this.desenlace === 'ruleta' ? this.ruleta : undefined,
           revelada: this.fase === 'revela' ? this.vistaCarta(c) : undefined,
@@ -742,7 +766,7 @@ export class Partida {
 
   // ───────────── Copia de seguridad ─────────────
 
-  private static CAMPOS = ['ajustes', 'jugadores', 'anfitrionId', 'fase', 'pausa', 'pausaResto', 'panel', 'mazo', 'pisos', 'rondaIdx', 'cartaIdx', 'estados', 'compradores', 'preciosVenta', 'precio', 'liderId', 'ofertas', 'totalOfertas', 'vence', 'duracion', 'desenlace', 'compradorId', 'pagado', 'salteadaPor', 'ruleta', 'sobrantes', 'final', 'historial', 'ruletas', 'finalVista', 'finalDesde'] as const;
+  private static CAMPOS = ['ajustes', 'jugadores', 'anfitrionId', 'fase', 'pausa', 'pausaResto', 'panel', 'mazo', 'pisos', 'rondaIdx', 'cartaIdx', 'estados', 'compradores', 'preciosVenta', 'precio', 'liderId', 'ofertas', 'totalOfertas', 'vence', 'duracion', 'desenlace', 'compradorId', 'pagado', 'tragosCarta', 'salteadaPor', 'ruleta', 'sobrantes', 'final', 'historial', 'ruletas', 'finalVista', 'finalDesde'] as const;
 
   /** Estado completo en un objeto plano (para guardarlo y restaurarlo si el servidor se reinicia). */
   exportar(): Record<string, unknown> {
@@ -757,6 +781,12 @@ export class Partida {
     for (const k of Partida.CAMPOS) if (k in o) (this as Record<string, unknown>)[k] = o[k];
     this.comproEnRonda = new Set((o.comproEnRonda as string[]) ?? []);
     this.secos = new Set((o.secos as string[]) ?? []);
+    for (const j of this.jugadores) {
+      j.trolls ??= 0;
+      j.tragos ??= 0;
+    }
+    this.tragosCarta ??= 0;
+    this.ajustes.tragos = !!this.ajustes.tragos;
     this.ajustes.intensidad = 3; // partidas guardadas con otro nivel también pasan a sin filtro
     if (this.mazo) this.reponer = crearReponedor(pool, trolls, this.mazo, this.mazo.semilla);
     // Nadie está conectado todavía, y la fase en curso retoma con un respiro.

@@ -81,6 +81,12 @@ export class Ticker {
     return this.emitir(texto, 'auto');
   }
 
+  /** Variables del modo tragos para las plantillas: tragos de este troll y total del jugador. */
+  private tragosVars(partida: Partida, h: { pid: string; tragos?: number }) {
+    const n = h.tragos ?? 0;
+    return { tragos: n, trago: n === 1 ? 'trago' : 'tragos', total: partida.jugador(h.pid)?.tragos ?? n };
+  }
+
   /** Procesa los hechos acumulados por el motor. */
   procesar(partida: Partida, hechos: Hecho[]) {
     const n = partida.ajustes.intensidad;
@@ -114,7 +120,7 @@ export class Ticker {
             posicion: POS_NOMBRE[c.pos].toLowerCase(),
           };
           const sobre = h.precio - c.precioMinimo;
-          if (c.tipo === 'troll') this.decir('troll', vars, n);
+          if (c.tipo === 'troll') this.decir(h.tragos ? 'trago' : 'troll', { ...vars, ...this.tragosVars(partida, h) }, n);
           else if (sobre >= 25 && h.rivalId) this.decir('vendido_caro', vars, n);
           else if (c.rareza === 'prime' || c.rareza === 'leyenda') this.decir('estrella', vars, n);
           else if (sobre <= 2 && c.precioMinimo > UMBRAL_BARATO && c.rating >= 84) this.decir('robo', vars, n);
@@ -126,6 +132,7 @@ export class Ticker {
           const c = h.carta;
           const vars = { jugador: nombre(h.pid), monto: h.precio, carta: c.apellido || c.nombre, troll: c.nombre, descripcion: c.dato, posicion: POS_NOMBRE[c.pos].toLowerCase() };
           if (h.h === 'ruleta' && h.liquidacion) this.decir('liquidacion', vars, n);
+          else if (c.tipo === 'troll' && h.tragos) this.decir('trago', { ...vars, ...this.tragosVars(partida, h) }, n);
           else if (c.tipo === 'troll' && this.azar() < 0.5) this.decir('troll', vars, n);
           else this.decir(h.h, vars, n);
           break;

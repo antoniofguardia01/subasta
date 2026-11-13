@@ -584,3 +584,80 @@ describe('sala', () => {
     }
   });
 });
+
+describe('modo tragos', () => {
+  /** Juega la partida completa; los participantes ofertan al azar. Devuelve los eventos de troll por comprador. */
+  function jugar(ajustes: Partial<Ajustes>, semilla = 5, n = 4) {
+    const { p, ir, ahora } = sala(n, { forzar: true, ...ajustes }, semilla);
+    let r = semilla * 7919;
+    const azar = () => ((r = (r * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+    const porTroll: { pid: string; tragos: number | undefined; total: number | undefined }[] = [];
+    for (let paso = 0; paso < 200000 && p.fase !== 'final'; paso++) {
+      if (p.fase === 'martillo' && p.cartaActual()?.tipo === 'troll' && p.compradorId) {
+        const v = p.vista().carta!;
+        if (!porTroll.some((x) => (x as { uid?: string }).uid === v.uid)) porTroll.push({ pid: p.compradorId, tragos: v.tragos, total: v.tragosTotal, uid: v.uid } as never);
+      }
+      if (p.fase === 'puja' || p.fase === 'ultima') {
+        const c = p.cartaActual()!;
+        const pend = p.pendientes();
+        const quien = pend[Math.floor(azar() * pend.length)];
+        if (azar() < 0.75) p.ofertar(quien.id, c.uid, ahora());
+        ir(azar() > 0.93 ? p.vence - ahora() : 50);
+      } else ir(Math.max(1, p.vence - ahora()));
+    }
+    expect(p.fase).toBe('final');
+    return { p, porTroll };
+  }
+
+  it('apagado: nadie toma nada', () => {
+    const { p, porTroll } = jugar({ tragos: false });
+    expect(porTroll.every((x) => x.tragos === undefined)).toBe(true);
+    for (const j of p.jugadores) expect(j.tragos).toBe(0);
+    expect(p.final!.puestos.every((x) => x.tragos === 0)).toBe(true);
+    expect(p.final!.premios.some((x) => x.clave === 'sediento')).toBe(false);
+  });
+
+  it('prendido: el n-ésimo troll de un participante vale n tragos (1, 2, 3…) y el total es triangular', () => {
+    let vistos = 0;
+    for (const semilla of [3, 5, 8, 13]) {
+      const { p, porTroll } = jugar({ tragos: true }, semilla);
+      const cuenta = new Map<string, number>();
+      for (const e of porTroll) {
+        const k = (cuenta.get(e.pid) ?? 0) + 1;
+        cuenta.set(e.pid, k);
+        expect(e.tragos).toBe(k);
+        expect(e.total).toBe((k * (k + 1)) / 2);
+        vistos++;
+      }
+      for (const j of p.jugadores) {
+        const k = cuenta.get(j.id) ?? 0;
+        expect(j.trolls).toBe(k);
+        expect(j.tragos).toBe((k * (k + 1)) / 2);
+      }
+      const total = p.jugadores.reduce((s, j) => s + j.tragos, 0);
+      expect(p.final!.puestos.reduce((s, x) => s + x.tragos, 0)).toBe(total);
+      if (total > 0) expect(p.final!.premios.some((x) => x.clave === 'sediento')).toBe(true);
+    }
+    expect(vistos).toBeGreaterThan(0);
+  });
+
+  it('se ajusta solo en el lobby, la revancha lo reinicia y sobrevive a una copia de seguridad', () => {
+    const { p, hasta } = sala(3, { tragos: true });
+    expect(p.ajustes.tragos).toBe(true);
+    p.cambiarAjustes({ tragos: false });
+    expect(p.ajustes.tragos).toBe(true); // en plena partida no se puede cambiar
+    hasta('puja');
+    p.jugadores[0].tragos = 3;
+    p.jugadores[0].trolls = 2;
+    const copia = JSON.parse(JSON.stringify(p.exportar()));
+    const q = new Partida('TEST');
+    q.importar(copia, pool(), trolls(), 5000);
+    expect(q.jugadores[0].tragos).toBe(3);
+    expect(q.ajustes.tragos).toBe(true);
+    q.terminar();
+    q.revancha();
+    expect(q.jugadores.every((j) => j.tragos === 0 && j.trolls === 0)).toBe(true);
+    q.cambiarAjustes({ tragos: false });
+    expect(q.ajustes.tragos).toBe(false);
+  });
+});

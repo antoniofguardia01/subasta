@@ -78,6 +78,8 @@ export interface Ajustes {
   intensidad: 1 | 2 | 3;
   /** Escenario (fondo + paleta) de la sala. */
   tema: string;
+  /** Modo tragos: cada troll que te toca es un trago, y el siguiente suma uno más (1, 2, 3…). */
+  tragos: boolean;
 }
 
 export const AJUSTES_DEFECTO: Ajustes = {
@@ -95,6 +97,7 @@ export const AJUSTES_DEFECTO: Ajustes = {
   orden: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   intensidad: 3, // fijo: las burlas siempre van sin filtro (ya no se puede elegir)
   tema: 'estadio',
+  tragos: false,
 };
 
 /** Carta ya sorteada dentro de un mazo (solo servidor: contiene la identidad). */
@@ -191,6 +194,9 @@ export interface JugadorSala {
   tope: number;
   equipo: (FichaEquipo | null)[];
   gastado: number;
+  /** Modo tragos: trolls que le tocaron y tragos acumulados. */
+  trolls: number;
+  tragos: number;
 }
 
 export type EstadoCartaRonda = 'espera' | 'actual' | 'vendida' | 'pasada' | 'salteada' | 'sobrante';
@@ -240,6 +246,9 @@ export interface CartaActualVista {
   pagado?: number;
   salteadaPor?: string;
   ruleta?: { candidatos: string[]; ganador: string; liquidacion: boolean };
+  /** Modo tragos: cuántos tragos toma el comprador por este troll (1, 2, 3…) y el total que lleva. */
+  tragos?: number;
+  tragosTotal?: number;
   /** Presente desde la fase 'revela'. */
   revelada?: CartaVista;
 }
@@ -251,6 +260,7 @@ export interface Historial {
   compradorId?: string;
   precio?: number;
   t: number;
+  tragos?: number;
 }
 
 export interface Premio {
@@ -263,6 +273,7 @@ export interface Premio {
 export interface PuestoFinal {
   pid: string;
   puntos: number;
+  tragos: number;
   desglose: { rating: number; rareza: number; completo: number; trolls: number; ahorro: number };
 }
 
@@ -297,7 +308,7 @@ export interface EstadoPublico {
   sobrantes?: CartaVista[];
   trollsDisponibles: number;
   /** Panel que el anfitrión está mostrando a todos (TV y celulares). */
-  panel: 'equipos' | null;
+  panel: 'equipos' | 'saldos' | null;
   /** Resultados: equipo elegido por el anfitrión (null = rotación automática cada 15 s desde finalDesde). */
   finalVista: string | null;
   finalDesde: number;
@@ -325,7 +336,7 @@ export type MsgCliente =
   | { t: 'ofertar'; uid: string; monto?: number }
   | { t: 'saltear'; uid: string }
   | { t: 'pausa'; on: boolean }
-  | { t: 'panel'; on: boolean }
+  | { t: 'panel'; on: boolean; cual?: 'equipos' | 'saldos' }
   | { t: 'expulsar'; pid: string }
   | { t: 'anfitrion'; pid: string }
   | { t: 'revancha' }

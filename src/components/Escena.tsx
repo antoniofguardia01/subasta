@@ -44,6 +44,7 @@ function reiniciar(q: Q) {
   gsap.set(q('.esc-sello'), { opacity: 0 });
   gsap.set(q('.esc-martillo'), { opacity: 0 });
   gsap.set(q('.esc-venta'), { opacity: 0 });
+  gsap.set(q('.esc-trago'), { opacity: 0 });
   gsap.set(q('.esc-capa'), { scaleX: 1, scaleY: 1, x: 0 });
 }
 
@@ -255,6 +256,9 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         .from(q('.pn-l'), { yPercent: -130, rotationX: 80, opacity: 0, duration: 0.55, ease: 'back.out(2.2)', stagger: 0.035 }, F + 0.5)
         .from(q('.pn-etiqueta'), { scaleX: 0, transformOrigin: '0% 50%', duration: 0.45, ease: 'expo.out' }, F + 0.8)
         .from(q('.pn-troll'), { opacity: 0, y: 14, duration: 0.5, ease: 'expo.out' }, F + 1.1)
+        // Modo tragos: el cartel del trago cae desde arriba y las copas chocan.
+        .fromTo(q('.esc-trago'), { opacity: 0, y: -50, scale: 0.7, rotation: rm ? 0 : -5 }, { opacity: 1, y: 0, scale: 1, rotation: 0, duration: rm ? 0.2 : 0.7, ease: 'back.out(2.2)' }, F + 1.25)
+        .fromTo(q('.esc-trago-copas'), { rotation: rm ? 0 : -18, scale: 0.8 }, { rotation: 0, scale: 1, duration: rm ? 0.1 : 0.9, ease: 'elastic.out(1.1, 0.35)' }, F + 1.45)
         // El foco se apaga con el destello, los rayos giran (más fuertes cuanto más rara la carta) y la palabra gigante cruza detrás.
         .to(q('.esc-foco'), { opacity: 0, duration: 0.5, ease: 'power2.out' }, F)
         .to(q('.esc-rayos'), { opacity: vendida ? (troll ? 0.5 : [0.45, 0.85, 1][nivel]) : 0.25, duration: 0.6, ease: 'power2.out' }, F + 0.05)
@@ -263,6 +267,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         .fromTo(q('.esc-capa'), { scale: 1.07 }, { scale: 1, duration: 0.9, ease: 'expo.out', immediateRender: false }, F);
       // El troll no se ve hasta el destello (si no, se ve la foto real detrás de la silueta del disfraz) y aparece con un rebote.
       if (troll) t.fromTo(q('.esc-color'), { opacity: 0, scale: rm ? 1 : 0.84 }, { opacity: 1, scale: 1, duration: rm ? 0.15 : 0.55, ease: 'back.out(2)' }, F + 0.05);
+      if (carta.tragos) t.add(() => sonar.trago(carta.tragos), F + 1.4);
       // El puntaje cuenta desde cero.
       const nota = el.querySelector<HTMLElement>('.pn-etiqueta b');
       if (nota && !rm) {
@@ -281,6 +286,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       const X = Math.max(F + 1.4, total - 1.05);
       t.to(q('.placa-nombre'), { xPercent: -115, duration: 0.36, ease: 'power2.in' }, X)
         .to(q('.esc-venta'), { opacity: 0, y: 16, duration: 0.22, ease: 'power2.in' }, X)
+        .to(q('.esc-trago'), { opacity: 0, y: -24, duration: 0.25, ease: 'power2.in' }, X)
         .to(q('.esc-rayos'), { opacity: 0, duration: 0.3 }, X)
         .to(q('.esc-gigante'), { opacity: 0, duration: 0.3 }, X)
         .to(q('.esc-fondo2'), { clipPath: 'circle(0% at 70% 62%)', duration: 0.6, ease: 'expo.inOut' }, X + 0.22);
@@ -393,6 +399,19 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
                 {rev.tipo === 'troll' && <span className="pn-troll">{carta?.compradorId ? '¡Caíste!' : '¡Se salvaron!'}</span>}
               </div>
             )}
+          </div>
+        )}
+
+        {carta?.tragos && comprador && (
+          <div className="esc-trago" style={{ '--comprador': comprador.color } as CSSProperties}>
+            <img className="esc-trago-copas" src="/img/iconos/trago.webp" alt="" />
+            <span className="esc-trago-texto">
+              <small>¡{comprador.nombre} toma!</small>
+              <b className="num">
+                {carta.tragos} <i>{carta.tragos === 1 ? 'trago' : 'tragos'}</i>
+              </b>
+              <em>Lleva {carta.tragosTotal ?? carta.tragos} en total</em>
+            </span>
           </div>
         )}
 

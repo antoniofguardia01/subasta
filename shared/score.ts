@@ -16,10 +16,11 @@ interface ParaPuntaje {
   nombre: string;
   saldo: number;
   gastado: number;
+  tragos?: number;
   equipo: (FichaEquipo | null)[];
 }
 
-export function calcularFinal(jugadores: readonly ParaPuntaje[], historial: readonly Historial[], _ajustes: Ajustes): NonNullable<EstadoPublico['final']> {
+export function calcularFinal(jugadores: readonly ParaPuntaje[], historial: readonly Historial[], ajustes: Ajustes): NonNullable<EstadoPublico['final']> {
   const puestos: PuestoFinal[] = jugadores.map((j) => {
     const fichas = j.equipo.filter((f): f is FichaEquipo => !!f);
     const rating = fichas.reduce((s, f) => s + f.rating, 0);
@@ -27,13 +28,27 @@ export function calcularFinal(jugadores: readonly ParaPuntaje[], historial: read
     const completo = fichas.length === j.equipo.length ? PUNTAJE.equipoCompleto : 0;
     const trolls = fichas.filter((f) => f.tipo === 'troll').length * PUNTAJE.porTroll;
     const ahorro = Math.floor(j.saldo / PUNTAJE.millonesPorPunto);
-    return { pid: j.id, puntos: rating + rareza + completo + trolls + ahorro, desglose: { rating, rareza, completo, trolls, ahorro } };
+    return { pid: j.id, puntos: rating + rareza + completo + trolls + ahorro, tragos: j.tragos ?? 0, desglose: { rating, rareza, completo, trolls, ahorro } };
   });
   puestos.sort((a, b) => b.puntos - a.puntos);
 
   const premios: Premio[] = [];
   const nombre = (pid: string) => jugadores.find((j) => j.id === pid)?.nombre ?? '?';
   const compras = historial.filter((h) => h.compradorId && h.precio !== undefined);
+
+  // Modo tragos: el premio principal es para quien más tomó.
+  if (ajustes.tragos) {
+    const total = jugadores.reduce((s, j) => s + (j.tragos ?? 0), 0);
+    const sediento = [...jugadores].sort((a, b) => (b.tragos ?? 0) - (a.tragos ?? 0))[0];
+    if (sediento && (sediento.tragos ?? 0) > 0)
+      premios.push({
+        clave: 'sediento',
+        titulo: 'El más sediento',
+        detalle: `${sediento.nombre} tomó ${sediento.tragos} ${sediento.tragos === 1 ? 'trago' : 'tragos'} (en total la mesa se tomó ${total}). Que alguien le pase agua.`,
+        pid: sediento.id,
+      });
+    else premios.push({ clave: 'sediento', titulo: 'Mesa sobria', detalle: 'Nadie tomó un solo trago. Increíble, o muy aburridos.', pid: jugadores[0]?.id ?? '' });
+  }
 
   const masCara = [...compras].sort((a, b) => b.precio! - a.precio!)[0];
   if (masCara)

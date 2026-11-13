@@ -262,7 +262,7 @@ export class RoomDO implements DurableObject {
         if (esAnfitrion || con.rol === 'escenario') p.pausar(!!msg.on, ahora);
         break;
       case 'panel':
-        if (esAnfitrion || con.rol === 'escenario') p.panel = msg.on ? 'equipos' : null;
+        if (esAnfitrion || con.rol === 'escenario') p.panel = msg.on ? (msg.cual === 'saldos' ? 'saldos' : 'equipos') : null;
         break;
       case 'expulsar':
         if (esAnfitrion && msg.pid !== pid) {

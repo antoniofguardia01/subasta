@@ -74,11 +74,15 @@ export function Escenario({ codigo }: { codigo: string }) {
     [sala],
   );
 
-  // Los equipos también se muestran en los celulares; saldos e historial quedan solo en esta pantalla.
+  // Equipos y saldos se muestran en todas las pantallas (los manda el servidor); el historial queda solo en esta.
   const elegirPanel = (p: Panel) => {
     setPanel(p);
-    if ((p === 'equipos') !== (s?.panel === 'equipos')) sala.enviar({ t: 'panel', on: p === 'equipos' });
+    const comun = p === 'equipos' || p === 'saldos' ? p : null;
+    if (comun !== (s?.panel ?? null)) sala.enviar({ t: 'panel', on: !!comun, cual: comun ?? undefined });
   };
+  // Si el anfitrión (u otra pantalla) abre o cierra un panel compartido, esta pantalla lo sigue.
+  const panelServidor = s?.panel ?? null;
+  useEffect(() => setPanel((p) => panelServidor ?? (p === 'historial' ? p : null)), [panelServidor]);
   const elegirRef = useRef(elegirPanel);
   elegirRef.current = elegirPanel;
   const panelRef = useRef<Panel>(null);
@@ -91,11 +95,11 @@ export function Escenario({ codigo }: { codigo: string }) {
   // Control remoto / teclado.
   useEffect(() => {
     const tecla = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.key === 'Backspace' || e.key === 'GoBack') setPanel(null);
+      if (e.key === 'Escape' || e.key === 'Backspace' || e.key === 'GoBack') elegirRef.current(null);
       else if (e.key === '1') elegirRef.current(panelRef.current === 'equipos' ? null : 'equipos');
       else if (e.key === 'p' || e.key === 'P' || e.key === 'MediaPlayPause') pausarRef.current();
-      else if (e.key === '2') setPanel((p) => (p === 'saldos' ? null : 'saldos'));
-      else if (e.key === '3') setPanel((p) => (p === 'historial' ? null : 'historial'));
+      else if (e.key === '2') elegirRef.current(panelRef.current === 'saldos' ? null : 'saldos');
+      else if (e.key === '3') elegirRef.current(panelRef.current === 'historial' ? null : 'historial');
       else if (e.key === 'l' || e.key === 'L') ponerLite(!esLite());
       else if (e.key === 'm' || e.key === 'M') ponerMusica(!musicaPreferida());
       else if (e.key === 'f' || e.key === 'F') void (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.());
@@ -678,6 +682,11 @@ function LobbyTV({ s }: { s: EstadoPublico }) {
             trolls por ronda
           </span>
           <span>{tema?.nombre}</span>
+          {s.ajustes.tragos && (
+            <span className="lobby-tragos">
+              <img src="/img/iconos/trago.webp" alt="" /> Modo tragos
+            </span>
+          )}
         </div>
       </div>
       <div className="lobby-qr">
@@ -769,6 +778,12 @@ function FinalTV({ s, fx, sala }: { s: EstadoPublico; fx: React.RefObject<FxApi 
               <Avatar src={p.j.avatar} color={p.j.color} />
               <span className="final-nombre">{p.j.nombre}</span>
               <span className="final-detalle">
+                {s.ajustes.tragos && (
+                  <>
+                    <img className="final-trago" src="/img/iconos/trago.webp" alt="" />
+                    <b className="num">{p.tragos}</b> ·{' '}
+                  </>
+                )}
                 media <b className="num">{Math.round(p.desglose.rating / 11)}</b> · sobró <b className="num">${p.j.saldo}M</b>
                 {p.desglose.trolls < 0 && (
                   <>

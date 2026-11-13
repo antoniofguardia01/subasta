@@ -167,6 +167,16 @@ const sonarBase = {
     tono(165, 0.5, 'sawtooth', 0.24, 82, 0.36);
     tono(620, 0.08, 'square', 0.1, 1200, 0.9);
   },
+  /** Brindis: dos copas que chocan y un par de tragos. */
+  trago(n = 1) {
+    tono(2350, 0.22, 'sine', 0.16, 2300);
+    tono(3100, 0.16, 'sine', 0.1, 3000, 0.01);
+    ruido(0.05, 0.12, 5000, 0, 'highpass');
+    for (let i = 0; i < Math.min(3, n); i++) {
+      tono(190, 0.11, 'sine', 0.2, 120, 0.42 + i * 0.2);
+      ruido(0.1, 0.07, 700, 0.42 + i * 0.2);
+    }
+  },
   ruletaTic() {
     tono(1400, 0.03, 'square', 0.08);
   },

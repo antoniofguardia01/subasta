@@ -657,6 +657,76 @@
    "intensidad": 3,
    "texto": "Se informa que no se aceptan devoluciones ni reclamos.",
    "activo": true
+  },
+  {
+   "id": "t095",
+   "disparador": "trago",
+   "intensidad": 1,
+   "texto": "¡Fondo blanco, {jugador}! {troll} te cuesta {tragos} {trago}. Salud.",
+   "activo": true
+  },
+  {
+   "id": "t096",
+   "disparador": "trago",
+   "intensidad": 1,
+   "texto": "{jugador} compró a {troll} y ahora toma {tragos} {trago}. El que paga, brinda.",
+   "activo": true
+  },
+  {
+   "id": "t097",
+   "disparador": "trago",
+   "intensidad": 1,
+   "texto": "Trago obligatorio: {jugador}, {tragos} {trago} por {troll}. Ya van {total} en total.",
+   "activo": true
+  },
+  {
+   "id": "t098",
+   "disparador": "trago",
+   "intensidad": 2,
+   "texto": "{troll} le sale caro a {jugador}: {tragos} {trago}. Y todavía quedan rondas…",
+   "activo": true
+  },
+  {
+   "id": "t099",
+   "disparador": "trago",
+   "intensidad": 2,
+   "texto": "¡A tomar, {jugador}! {tragos} {trago} por andar comprando trolls.",
+   "activo": true
+  },
+  {
+   "id": "t100",
+   "disparador": "trago",
+   "intensidad": 2,
+   "texto": "{jugador} lleva {total} en la cuenta. {troll} sumó {tragos} {trago} más.",
+   "activo": true
+  },
+  {
+   "id": "t101",
+   "disparador": "trago",
+   "intensidad": 3,
+   "texto": "Atención mesa: {jugador} se toma {tragos} {trago}. Nadie lo ayuda, es personal.",
+   "activo": true
+  },
+  {
+   "id": "t102",
+   "disparador": "trago",
+   "intensidad": 3,
+   "texto": "El hígado de {jugador} manda un mensaje: {troll}, {tragos} {trago}. Y van {total}.",
+   "activo": true
+  },
+  {
+   "id": "t103",
+   "disparador": "trago",
+   "intensidad": 3,
+   "texto": "Se cayó {jugador} con {troll}: {tragos} {trago} y a seguir pujando, que hay que ir con calma.",
+   "activo": true
+  },
+  {
+   "id": "t104",
+   "disparador": "trago",
+   "intensidad": 3,
+   "texto": "{troll} no perdona: {jugador} toma {tragos} {trago}. Así se aprende.",
+   "activo": true
   }
  ],
  "manuales": []

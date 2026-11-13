@@ -304,7 +304,6 @@ h1, h2, h3, p { margin: 0; }
 .tv-tira[data-cambio='1'] { z-index: 20; background: none; pointer-events: none; }
 .tv-tira[data-cambio='1'] .tira-bloque { display: none; }
 .tv-tira[data-cambio='1'] .tv-botones { pointer-events: auto; }
-.tv-panel { z-index: 18; }
 
 /* Trofeo: sin margen negativo, para que no lo corte el borde. */
 .final-trofeo { top: 14px; height: 118px; }
@@ -331,7 +330,7 @@ h1, h2, h3, p { margin: 0; }
 
 /* Pausa en la TV: por encima del cartel de ronda y del resumen (el aviso dentro de la escena quedaba tapado). */
 .escena:not([data-compacta]) .esc-pausa { display: none; }
-.tv-pausa { position: absolute; left: 0; right: 0; top: 150px; bottom: 118px; z-index: 17; display: grid; place-content: center; justify-items: center; text-align: center; gap: 6px; background: rgba(6, 8, 7, 0.8); color: #fff; opacity: 0; pointer-events: none; transition: opacity 260ms ease; }
+.tv-pausa { position: absolute; left: 0; right: 0; top: 150px; bottom: 160px; z-index: 17; display: grid; place-content: center; justify-items: center; text-align: center; gap: 6px; background: rgba(6, 8, 7, 0.8); color: #fff; opacity: 0; pointer-events: none; transition: opacity 260ms ease; }
 .tv-pausa[data-on='1'] { opacity: 1; }
 .tv-pausa > * { transition: transform 420ms var(--ease-rebote, cubic-bezier(0.34, 1.56, 0.64, 1)); }
 .tv-pausa[data-on='0'] > * { transform: scale(0.7) translateY(24px); }

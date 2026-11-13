@@ -99,6 +99,24 @@
 .esc-venta b { color: var(--comprador); font-weight: 900; }
 .esc-venta em { font-style: normal; font-weight: 800; background: var(--comprador); color: #0c0e0d; padding: 0.15em 0.55em; border-radius: 99em; }
 
+/* Modo tragos: cartel que cae arriba a la izquierda (no tapa la cara del troll). */
+.esc-trago {
+  position: absolute; left: calc(var(--u) * 3.5); top: calc(var(--v) * 5); z-index: 6; opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: calc(var(--u) * 1.2); padding: calc(var(--u) * 0.9) calc(var(--u) * 3) calc(var(--u) * 0.9) calc(var(--u) * 1.2);
+  background: #0c0e0d; color: #fff; border-radius: calc(var(--u) * 1.4); box-shadow: 0 0 0 calc(var(--u) * 0.3) #ffc233, 0 calc(var(--u) * 0.9) calc(var(--u) * 2.2) rgba(0, 0, 0, 0.45);
+}
+.esc-trago-copas { height: calc(var(--u) * 11); width: auto; flex: none; transform-origin: 50% 90%; filter: drop-shadow(0 calc(var(--u) * 0.4) calc(var(--u) * 0.6) rgba(0, 0, 0, 0.5)); }
+.esc-trago-texto { display: flex; flex-direction: column; line-height: 1; }
+.esc-trago-texto small { font-size: calc(var(--u) * 2.3); font-weight: 800; font-stretch: 100%; color: var(--comprador); max-width: calc(var(--u) * 26); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.esc-trago-texto b { font-size: calc(var(--u) * 6.2); font-weight: 900; font-stretch: 62%; color: #ffc233; text-transform: uppercase; margin: calc(var(--u) * 0.3) 0; white-space: nowrap; }
+.esc-trago-texto b i { font-style: normal; font-size: 0.62em; }
+.esc-trago-texto em { font-style: normal; font-size: calc(var(--u) * 1.8); font-weight: 600; opacity: 0.8; }
+.escena[data-compacta] .esc-trago { left: calc(var(--u) * 3); top: calc(var(--v) * 3.5); }
+.escena[data-compacta] .esc-trago-copas { height: calc(var(--u) * 14); }
+.escena[data-compacta] .esc-trago-texto small { font-size: calc(var(--u) * 3.4); max-width: calc(var(--u) * 40); }
+.escena[data-compacta] .esc-trago-texto b { font-size: calc(var(--u) * 9); }
+.escena[data-compacta] .esc-trago-texto em { font-size: calc(var(--u) * 2.7); }
+
 /* Última oportunidad */
 .esc-aviso {
   position: absolute; left: 0; right: 0; top: 0; z-index: 8; display: flex; align-items: baseline; justify-content: center; gap: 1em; padding: calc(var(--u) * 0.9) 1em;

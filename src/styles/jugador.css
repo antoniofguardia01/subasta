@@ -410,3 +410,23 @@
 
 /* Confirmación de dos toques (terminar partida, salir de la sala) */
 .btn[data-armado='1'] { background: #ff3b4e; color: #fff; animation: late 0.6s ease-in-out infinite alternate; }
+
+/* Modo tragos */
+.regla-tragos { justify-content: flex-start; }
+.regla-tragos > span { flex: 1; }
+.regla-trago-img { height: 38px; width: auto; flex: none; transition: transform 380ms var(--ease-rebote, cubic-bezier(0.34, 1.56, 0.64, 1)), filter 200ms ease; filter: grayscale(1) opacity(0.55); }
+.regla-tragos[data-on='1'] .regla-trago-img { transform: rotate(-8deg) scale(1.12); filter: none; }
+.f-tragos { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; opacity: 0.95; }
+.f-tragos img { height: 24px; width: auto; }
+.f-tragos b { font-size: 16px; color: #ffc233; }
+.f-fila .f-tragos + em { margin-left: 8px; }
+.f-fila > span:not(.f-tragos) { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* Saldos compartidos por el anfitrión */
+.hoja-saldos { display: flex; flex-direction: column; gap: 10px; padding-bottom: 8px; }
+.hs-fila { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'a n m' 'a b m'; align-items: center; column-gap: 12px; row-gap: 4px; }
+.hs-fila .avatar { grid-area: a; font-size: 44px; }
+.hs-nombre { grid-area: n; font-weight: 800; color: var(--c); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hs-barra { grid-area: b; height: 10px; border-radius: 6px; background: rgba(255, 255, 255, 0.12); overflow: hidden; }
+.hs-barra i { display: block; height: 100%; background: var(--c); transform-origin: 0 50%; transition: transform 600ms var(--ease-out); }
+.hs-fila > b { grid-area: m; font-size: 20px; }

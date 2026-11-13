@@ -343,6 +343,16 @@ function Reglas({ sala, s, editable }: { sala: Sala; s: EstadoPublico; editable:
           <i />
         </button>
       </div>
+      <div className="regla regla-tragos" data-on={a.tragos ? '1' : '0'}>
+        <img className="regla-trago-img" src="/img/iconos/trago.webp" alt="" />
+        <span>
+          Modo tragos
+          <small>Cada troll que te toca es un trago, y el siguiente suma uno más: 1, 2, 3…</small>
+        </span>
+        <button className="interruptor" data-on={a.tragos ? '1' : '0'} disabled={!editable} onClick={() => (vibrar(8), poner({ tragos: !a.tragos }))} aria-pressed={a.tragos}>
+          <i />
+        </button>
+      </div>
       {s.trollsDisponibles < necesarios && (
         <p className="reglas-aviso">
           Hay {s.trollsDisponibles} trolls cargados y esta partida puede usar hasta {necesarios}: se van a repetir.
@@ -638,8 +648,8 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
 
   // El anfitrión muestra (u oculta) los equipos y saldos a todos.
   useEffect(() => {
-    if (s.panel) setHoja('equipo');
-    else setHoja((h) => (h === 'equipo' ? null : h));
+    if (s.panel) setHoja(s.panel === 'saldos' ? 'saldos' : 'equipo');
+    else setHoja((h) => (h === 'equipo' || h === 'saldos' ? null : h));
   }, [s.panel, anfitrion]);
 
   // Me la llevé: festejo.
@@ -738,8 +748,11 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
             <button className="j-host" data-on={s.pausa ? '1' : '0'} onClick={() => (vibrar(12), sala.enviar({ t: 'pausa', on: !s.pausa }))}>
               {s.pausa ? 'Seguir' : 'Pausa'}
             </button>
-            <button className="j-host" data-on={s.panel ? '1' : '0'} onClick={() => (vibrar(12), sala.enviar({ t: 'panel', on: !s.panel }))}>
-              {s.panel ? 'Ocultar' : 'Equipos'}
+            <button className="j-host" data-on={s.panel === 'equipos' ? '1' : '0'} onClick={() => (vibrar(12), sala.enviar({ t: 'panel', on: s.panel !== 'equipos', cual: 'equipos' }))}>
+              {s.panel === 'equipos' ? 'Ocultar' : 'Equipos'}
+            </button>
+            <button className="j-host" data-on={s.panel === 'saldos' ? '1' : '0'} onClick={() => (vibrar(12), sala.enviar({ t: 'panel', on: s.panel !== 'saldos', cual: 'saldos' }))}>
+              {s.panel === 'saldos' ? 'Ocultar' : 'Saldos'}
             </button>
           </>
         )}
@@ -904,6 +917,23 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
         </div>
       </Hoja>
 
+      <Hoja on={hoja === 'saldos'} titulo="Saldos" cerrar={() => setHoja(null)}>
+        <div className="hoja-saldos">
+          {[...s.jugadores]
+            .sort((a, b) => b.saldo - a.saldo)
+            .map((j) => (
+              <div className="hs-fila" key={j.id} style={{ '--c': j.color } as CSSProperties}>
+                <Avatar src={j.avatar} color={j.color} />
+                <span className="hs-nombre">{j.id === yo.id ? 'Tú' : j.nombre}</span>
+                <div className="hs-barra">
+                  <i style={{ transform: `scaleX(${Math.max(0.02, j.saldo / Math.max(1, ...s.jugadores.map((x) => x.saldo + x.gastado)))})` }} />
+                </div>
+                <b className="num">${j.saldo}M</b>
+              </div>
+            ))}
+          <p className="f-nota">Reserva actual: ${s.jugadores[0]?.reserva ?? 0}M por cabeza, para poder completar el equipo.</p>
+        </div>
+      </Hoja>
       <Hoja on={hoja === 'monto'} titulo="Ofertar otra cifra" cerrar={() => setHoja(null)}>
         {hoja === 'monto' && carta && <OfertaLibre precio={carta.precio} incremento={s.ajustes.incremento} tope={yo.tope} enviar={(monto) => (vibrar(25), sala.enviar({ t: 'ofertar', uid: carta.uid, monto }), setHoja(null))} />}
       </Hoja>
@@ -1039,6 +1069,12 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
               <b className="num">{i + 1}</b>
               <Avatar src={p.j.avatar} color={p.j.color} />
               <span>{p.j.nombre}</span>
+              {s.ajustes.tragos && (
+                <small className="f-tragos">
+                  <img src="/img/iconos/trago.webp" alt="" />
+                  <b className="num">{p.tragos}</b>
+                </small>
+              )}
               <em className="num">{p.puntos}</em>
             </button>
           ))}

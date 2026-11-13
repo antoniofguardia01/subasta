@@ -13,7 +13,7 @@ interface Plant { id: string; disparador: string; intensidad: number; texto: str
 interface Estado { jugadores: JugA[]; trolls: TrollA[]; muestras: boolean; plantillasBase: Plant[]; plantillas: { custom: Plant[]; apagadas: string[] } }
 
 const POS = ['POR', 'LD', 'DFC', 'LI', 'MCD', 'MC', 'MCO', 'ED', 'DC', 'EI'];
-const DISPARADORES = ['vendido', 'vendido_caro', 'robo', 'estrella', 'troll', 'obligado', 'ruleta', 'pasa', 'salteada', 'tarde', 'sin_saldo', 'guerra', 'ultima', 'ronda', 'entra', 'sale', 'inicio', 'final', 'relleno'];
+const DISPARADORES = ['vendido', 'vendido_caro', 'robo', 'estrella', 'troll', 'trago', 'obligado', 'ruleta', 'pasa', 'salteada', 'tarde', 'sin_saldo', 'guerra', 'ultima', 'ronda', 'entra', 'sale', 'inicio', 'final', 'relleno'];
 
 /** Achica la foto (máx. 720 px de ancho) y la guarda en WebP conservando la transparencia. */
 async function comprimir(archivo: File): Promise<{ imagen: string; opaca: boolean }> {
