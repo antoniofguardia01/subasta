@@ -28,6 +28,8 @@ export interface Jugador {
   rating: number;
   rareza: Exclude<Rareza, 'troll'>;
   precioMinimo: number;
+  /** Banda de precio [mínimo, máximo] para sortearlo en cada partida. Si falta, se calcula alrededor de `precioMinimo` (ver `rangoPrecio`). */
+  precioRango?: [number, number];
   /** Etiqueta corta bajo el nombre, estilo "2026 PRIME WC". */
   etiqueta: string;
   /** Dato curioso o chiste que acompaña la revelación. */

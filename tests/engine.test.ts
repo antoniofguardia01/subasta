@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Partida, TIEMPOS } from '../shared/game';
-import { generarMazo, pisosDeRonda, UMBRAL_BARATO } from '../shared/deck';
+import { generarMazo, pisosDeRonda, rangoPrecio, SENUELO_HASTA, SENUELO_MAX, SENUELO_MIN, UMBRAL_BARATO } from '../shared/deck';
 import { AJUSTES_DEFECTO, Ajustes, FORMACION, Jugador, Pos, Troll, rangoTrolls } from '../shared/types';
 
 // ───────────── Datos de prueba: 270 jugadores (30 por posición, laterales 15 + 15) ─────────────
@@ -177,6 +177,40 @@ describe('mazo', () => {
       const t = r.cartas.filter((c) => c.tipo === 'troll').map((c) => c.refId);
       expect(new Set(t).size).toBe(t.length);
     }
+  });
+
+  it('el precio de cada carta se sortea en una banda alrededor del precio base y cambia entre partidas', () => {
+    expect(rangoPrecio({ precioMinimo: 100 })).toEqual([80, 120]);
+    expect(rangoPrecio({ precioMinimo: 40 })).toEqual([28, 52]);
+    expect(rangoPrecio({ precioMinimo: 15 })).toEqual([9, 21]);
+    expect(rangoPrecio({ precioMinimo: 100, precioRango: [90, 130] })).toEqual([90, 130]);
+    const base = new Map(pool().map((j) => [j.id, j]));
+    const vistos = new Map<string, Set<number>>();
+    let senuelos = 0;
+    for (let semilla = 1; semilla <= 40; semilla++) {
+      const m = generarMazo(pool(), trolls(), 6, AJUSTES_DEFECTO, semilla);
+      for (const r of m.rondas)
+        for (const c of r.cartas) {
+          if (c.tipo !== 'jugador') continue;
+          const j = base.get(c.refId)!;
+          const [lo, hi] = rangoPrecio(j);
+          const enBanda = c.precioMinimo >= lo && c.precioMinimo <= hi;
+          const esSenuelo = j.precioMinimo <= SENUELO_HASTA && c.precioMinimo >= SENUELO_MIN && c.precioMinimo <= SENUELO_MAX;
+          expect(enBanda || esSenuelo).toBe(true);
+          if (esSenuelo && !enBanda) senuelos++;
+          if (j.precioMinimo > SENUELO_HASTA) expect(enBanda).toBe(true); // los buenos nunca llevan señuelo
+          if (!vistos.has(c.refId)) vistos.set(c.refId, new Set());
+          vistos.get(c.refId)!.add(c.precioMinimo);
+        }
+    }
+    expect(senuelos).toBeGreaterThan(0); // a veces un flojo sale caro
+    // Un mismo jugador no sale siempre al mismo precio.
+    const variados = [...vistos.values()].filter((s) => s.size >= 3).length;
+    expect(variados).toBeGreaterThan(vistos.size * 0.5);
+    // La misma semilla repite los mismos precios.
+    const a = generarMazo(pool(), trolls(), 6, AJUSTES_DEFECTO, 9).rondas.flatMap((r) => r.cartas.map((c) => c.precioMinimo));
+    const b = generarMazo(pool(), trolls(), 6, AJUSTES_DEFECTO, 9).rondas.flatMap((r) => r.cartas.map((c) => c.precioMinimo));
+    expect(a).toEqual(b);
   });
 
   it('dos partidas seguidas son distintas y la misma semilla repite el mazo', () => {

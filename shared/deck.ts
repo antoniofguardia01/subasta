@@ -10,6 +10,31 @@ export const BARATAS_POR_RONDA = 2;
 /** Rótulos de la placa cuando sale un troll: lo presentan como un fichaje más, sin delatarlo con la palabra. */
 export const ETIQUETAS_SORPRESA = ['FICHAJE BOMBA', 'REFUERZO DE LUJO', 'JOYA DEL BARRIO', 'CRACK DE POTRERO', 'ÍDOLO LOCAL', 'PROMESA ETERNA', 'LEYENDA DEL ASADO', 'TAPADO DEL MERCADO'];
 
+/**
+ * Banda de precio de un jugador. `precioMinimo` es el precio BASE; en cada partida cada carta sale con un precio
+ * sorteado dentro de esta banda, para que no se pueda memorizar (los de ~100M salen entre 80 y 120, por ejemplo).
+ * Más ancho en términos relativos cuanto más barato. Se puede fijar a mano con `precioRango: [min, max]`.
+ */
+export function rangoPrecio(j: Pick<Jugador, 'precioMinimo' | 'precioRango'>): [number, number] {
+  const r = j.precioRango;
+  if (r && r.length === 2 && r[0] >= 1 && r[1] >= r[0]) return [Math.round(r[0]), Math.round(r[1])];
+  const base = j.precioMinimo;
+  const k = base >= 60 ? 0.2 : base >= 30 ? 0.3 : 0.4;
+  return [Math.max(1, Math.round(base * (1 - k))), Math.max(1, Math.round(base * (1 + k)))];
+}
+
+/** Señuelos: de vez en cuando un jugador flojo sale con precio de "bueno" (50–60) para que el precio no delate la calidad. */
+export const SENUELO_HASTA = 40; // solo jugadores con precio base hasta aquí
+export const SENUELO_PROB = 0.22;
+export const SENUELO_MIN = 50;
+export const SENUELO_MAX = 60;
+
+export function sortearPrecio(rng: Rng, j: Pick<Jugador, 'precioMinimo' | 'precioRango'>, senuelo = true): number {
+  if (senuelo && !j.precioRango && j.precioMinimo <= SENUELO_HASTA && rng() < SENUELO_PROB) return entero(rng, SENUELO_MIN, SENUELO_MAX);
+  const [lo, hi] = rangoPrecio(j);
+  return entero(rng, lo, hi);
+}
+
 export function cartasPorRonda(participantes: number, ajustes: Ajustes): number {
   return participantes + ajustes.extra;
 }
@@ -30,6 +55,11 @@ export function generarMazo(
     if (!porPos.has(j.pos)) porPos.set(j.pos, []);
     porPos.get(j.pos)!.push(j);
   }
+
+  // El precio de cada jugador se sortea una vez por partida (determinista con la semilla).
+  const precioDe = new Map<string, number>();
+  for (const lista of porPos.values()) for (const j of lista) precioDe.set(j.id, sortearPrecio(rng, j));
+  const precio = (j: Jugador) => precioDe.get(j.id) ?? Math.max(1, Math.round(j.precioMinimo));
 
   const trollsActivos = trolls.filter((t) => t.activo && t.foto);
   let bolsaTrolls = barajar(rng, trollsActivos);
@@ -56,7 +86,7 @@ export function generarMazo(
   const precioTroll = (t: Troll, pos: Pos): number => {
     const reales = porPos.get(pos) ?? [];
     if (!ajustes.trollsCamuflados || !reales.length) return Math.max(1, Math.round(t.precioMinimo));
-    const base = elegir(rng, reales).precioMinimo;
+    const base = precio(elegir(rng, reales));
     return Math.max(5, Math.round(base + entero(rng, -3, 3)));
   };
 
@@ -74,7 +104,7 @@ export function generarMazo(
     rareza: j.rareza,
     etiqueta: j.etiqueta,
     dato: j.dato,
-    precioMinimo: Math.max(1, Math.round(j.precioMinimo)),
+    precioMinimo: precio(j),
     foto: elegir(rng, j.fotos),
     token: tokenAleatorio(rng),
   });
@@ -92,7 +122,7 @@ export function generarMazo(
     etiqueta: elegir(rng, ETIQUETAS_SORPRESA),
     dato: t.descripcion || 'Nadie sabe de dónde salió',
     // Sale con la silueta y el precio de un futbolista real; al revelarse aparece el troll.
-    precioMinimo: disfraz && ajustes.trollsCamuflados ? Math.max(1, Math.round(disfraz.precioMinimo)) : precioTroll(t, FORMACION[hueco]),
+    precioMinimo: disfraz && ajustes.trollsCamuflados ? precio(disfraz) : precioTroll(t, FORMACION[hueco]),
     foto: t.foto,
     token: tokenAleatorio(rng),
     marco: !!t.opaca,
@@ -139,9 +169,17 @@ export function generarMazo(
     const elegidos: Jugador[] = [];
     const faltanBaratas = Math.max(0, Math.min(BARATAS_POR_RONDA, total) - baratasYa);
     // Primero los que están bajo el umbral (al azar); si no alcanzan, los más baratos que queden.
+    // La garantía se decide por el precio BASE (no por el sorteado): los señuelos y la banda no pueden dejar una ronda sin baratas.
     const baratos = libres.filter((j) => j.precioMinimo <= UMBRAL_BARATO);
     const resto = libres.filter((j) => j.precioMinimo > UMBRAL_BARATO).sort((a, b) => a.precioMinimo - b.precioMinimo);
-    for (const j of [...baratos, ...resto].slice(0, Math.min(faltanBaratas, nFut))) elegidos.push(j);
+    for (const j of [...baratos, ...resto].slice(0, Math.min(faltanBaratas, nFut))) {
+      elegidos.push(j);
+      // Las cartas salvavidas nunca llevan señuelo ni se pasan del umbral.
+      if (j.precioMinimo <= UMBRAL_BARATO && precio(j) > UMBRAL_BARATO) {
+        const [lo, hi] = rangoPrecio(j);
+        precioDe.set(j.id, entero(rng, Math.min(lo, UMBRAL_BARATO), Math.min(Math.max(hi, lo), UMBRAL_BARATO)));
+      }
+    }
     for (const j of libres) {
       if (elegidos.length >= nFut) break;
       if (!elegidos.includes(j)) elegidos.push(j);
@@ -195,7 +233,7 @@ export function crearReponedor(pool: readonly Jugador[], trolls: readonly Troll[
         rareza: j.rareza,
         etiqueta: j.etiqueta,
         dato: j.dato,
-        precioMinimo: Math.max(1, Math.round(j.precioMinimo)),
+        precioMinimo: sortearPrecio(rng, j, false),
         foto: elegir(rng, j.fotos),
       };
     }
