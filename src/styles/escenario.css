@@ -414,3 +414,5 @@
 .lobby-reglas .lobby-tragos { display: inline-flex; align-items: center; gap: 10px; background: #ffc233; color: #14161a; padding-left: 10px; }
 .lobby-tragos img { height: 34px; width: auto; }
 .final-trago { height: 28px; width: auto; vertical-align: middle; margin-right: 4px; }
+.lobby-reglas .lobby-tragos > span { display: flex; flex-direction: column; padding: 0; background: none; animation: none; line-height: 1.05; }
+.lobby-tragos small { font-size: 15px; font-weight: 600; text-transform: none; opacity: 0.8; max-width: 330px; }

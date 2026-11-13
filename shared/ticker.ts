@@ -100,6 +100,7 @@ export class Ticker {
       switch (h.h) {
         case 'inicio':
           this.decir('inicio', {}, n);
+          if (partida.ajustes.tragos) this.decir('inicio_tragos', {}, n);
           break;
         case 'ronda':
           this.decir('ronda', { posicion: pos(), ultimo: nombre(ultimoSaldo()?.id) }, n);

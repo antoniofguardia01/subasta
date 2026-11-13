@@ -727,6 +727,27 @@
    "intensidad": 3,
    "texto": "{troll} no perdona: {jugador} toma {tragos} {trago}. Así se aprende.",
    "activo": true
+  },
+  {
+   "id": "t105",
+   "disparador": "inicio_tragos",
+   "intensidad": 1,
+   "texto": "Modo tragos activado: tu 1.er troll es 1 trago, el 2.º son 2, el 3.º son 3… Que nadie maneje.",
+   "activo": true
+  },
+  {
+   "id": "t106",
+   "disparador": "inicio_tragos",
+   "intensidad": 1,
+   "texto": "Reglas de la barra: cada troll que te toque suma un trago más que el anterior. 1, 2, 3… Salud.",
+   "activo": true
+  },
+  {
+   "id": "t107",
+   "disparador": "inicio_tragos",
+   "intensidad": 1,
+   "texto": "Ojo, modo tragos: 1.er troll, 1 trago; 2.º troll, 2 tragos; 3.º, 3. Quien avisa no es traidor.",
+   "activo": true
   }
  ],
  "manuales": []

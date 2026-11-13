@@ -684,7 +684,11 @@ function LobbyTV({ s }: { s: EstadoPublico }) {
           <span>{tema?.nombre}</span>
           {s.ajustes.tragos && (
             <span className="lobby-tragos">
-              <img src="/img/iconos/trago.webp" alt="" /> Modo tragos
+              <img src="/img/iconos/trago.webp" alt="" />
+              <span>
+                Modo tragos
+                <small>Cada troll es un trago más: el 1.º uno, el 2.º dos, el 3.º tres…</small>
+              </span>
             </span>
           )}
         </div>
