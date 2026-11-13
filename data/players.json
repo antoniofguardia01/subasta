@@ -5688,9 +5688,12 @@
   "precioMinimo": 12,
   "etiqueta": "COMÚN · EL LATERAL DEL CANAL",
   "dato": "Sube por la izquierda como si el canal fuera suyo. Y el peaje también.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/eric-davis.webp"
+  ],
   "buscar": "Eric Davis",
-  "wiki": "Éric Davis"
+  "wiki": "Éric Davis",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "cecilio-waterman",
@@ -5703,9 +5706,12 @@
   "precioMinimo": 10,
   "etiqueta": "COMÚN · EL ÁRBOL DE LA ÁREA",
   "dato": "Grande, fuerte y con un cabezazo que ya pidió permiso para quedarse.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/cecilio-waterman.webp"
+  ],
   "buscar": "Cecilio Waterman",
-  "wiki": "Cecilio Waterman"
+  "wiki": "Cecilio Waterman",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "franco-mastantuono",
@@ -5735,9 +5741,12 @@
   "precioMinimo": 12,
   "etiqueta": "COMÚN · EL SUPLENTE DE LUJO",
   "dato": "Marcó el gol del título y luego pasó tres años calentando.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/mariano-diaz.webp"
+  ],
   "buscar": "Mariano Díaz",
-  "wiki": "Mariano Díaz Mejía"
+  "wiki": "Mariano Díaz Mejía",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "martin-braithwaite",
@@ -5750,9 +5759,12 @@
   "precioMinimo": 14,
   "etiqueta": "COMÚN · EL FICHAJE DE EMERGENCIA",
   "dato": "Lo ficharon por urgencia y todavía no sabemos de qué.",
-  "fotos": [],
+  "fotos": [
+   "/img/players/martin-braithwaite.webp"
+  ],
   "buscar": "Martin Braithwaite",
-  "wiki": "Martin Braithwaite"
+  "wiki": "Martin Braithwaite",
+  "fotoFuente": "foto enviada por el dueño"
  },
  {
   "id": "luke-shaw",
