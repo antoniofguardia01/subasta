@@ -319,3 +319,12 @@ h1, h2, h3, p { margin: 0; }
 /* La franja bajo el nombre muestra la frase del panel (dato / descripción), en vez de "COMÚN · ...". */
 .pn-etiqueta { align-items: center; }
 .pn-etiqueta span { font-size: 0.8em; font-weight: 700; font-stretch: 100%; text-transform: none; letter-spacing: 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ── Que la placa no tape al jugador revelado ── */
+/* Pantallas anchas que no son 16:9 (iPad, PC): la figura no puede pasar de ~62u de ancho, si no se come toda la escena y la placa le cae encima. */
+.escena:not([data-compacta]) .esc-figura {
+  width: min(calc(var(--v) * 97 * 1.125), calc(var(--u) * 62));
+  height: min(calc(var(--v) * 97), calc(var(--u) * 62 / 1.125));
+}
+/* Celular: la placa del nombre baja a la parte de abajo (pecho/hombros) para dejar libre la cara. */
+.escena[data-compacta] .placa-nombre { align-self: end; margin-bottom: calc(var(--v) * 21); max-width: calc(var(--u) * 58); }
