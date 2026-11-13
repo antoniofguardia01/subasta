@@ -2,8 +2,10 @@
 import { Ajustes, Carta, FORMACION, Jugador, Mazo, Pos, RondaMazo, Troll } from './types';
 import { Rng, barajar, crearRng, elegir, entero, tokenAleatorio } from './rng';
 
-/** Un jugador cuenta como "barato" (carta salvavidas) si su precio mínimo no supera este valor. */
-export const UMBRAL_BARATO = 30;
+/** Ningún jugador sale a menos de esto (el dueño quiere que el presupuesto se use). */
+export const PRECIO_MIN = 30;
+/** Una carta cuenta como "barata" (salvavidas) si su precio mínimo no supera este valor. */
+export const UMBRAL_BARATO = 40;
 /** Cada ronda lleva al menos esta cantidad de cartas baratas. */
 export const BARATAS_POR_RONDA = 2;
 
@@ -17,10 +19,12 @@ export const ETIQUETAS_SORPRESA = ['FICHAJE BOMBA', 'REFUERZO DE LUJO', 'JOYA DE
  */
 export function rangoPrecio(j: Pick<Jugador, 'precioMinimo' | 'precioRango'>): [number, number] {
   const r = j.precioRango;
-  if (r && r.length === 2 && r[0] >= 1 && r[1] >= r[0]) return [Math.round(r[0]), Math.round(r[1])];
+  if (r && r.length === 2 && r[1] >= r[0]) return [Math.max(PRECIO_MIN, Math.round(r[0])), Math.max(PRECIO_MIN, Math.round(r[1]))];
   const base = j.precioMinimo;
-  const k = base >= 60 ? 0.2 : base >= 30 ? 0.3 : 0.4;
-  return [Math.max(1, Math.round(base * (1 - k))), Math.max(1, Math.round(base * (1 + k)))];
+  // Los que valen menos que el piso salen entre el piso y +12M; el resto, en una banda alrededor de su precio base (nunca bajo el piso).
+  if (base < PRECIO_MIN) return [PRECIO_MIN, PRECIO_MIN + 12];
+  const k = base >= 60 ? 0.2 : 0.3;
+  return [Math.max(PRECIO_MIN, Math.round(base * (1 - k))), Math.round(base * (1 + k))];
 }
 
 /** Señuelos: de vez en cuando un jugador flojo sale con precio de "bueno" (50–60) para que el precio no delate la calidad. */
@@ -222,7 +226,7 @@ export function crearReponedor(pool: readonly Jugador[], trolls: readonly Troll[
   const precioRepuesto = (t: Troll, pos: Pos): number => {
     const reales = pool.filter((j) => j.pos === pos);
     if (!camuflar || !reales.length) return Math.max(1, Math.round(t.precioMinimo));
-    return Math.max(5, elegir(rng, reales).precioMinimo);
+    return Math.max(PRECIO_MIN, elegir(rng, reales).precioMinimo);
   };
   return (hueco: number): Carta | null => {
     const pos = FORMACION[hueco];

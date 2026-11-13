@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Partida, TIEMPOS } from '../shared/game';
-import { generarMazo, pisosDeRonda, rangoPrecio, SENUELO_HASTA, SENUELO_MAX, SENUELO_MIN, UMBRAL_BARATO } from '../shared/deck';
+import { generarMazo, pisosDeRonda, PRECIO_MIN, rangoPrecio, SENUELO_HASTA, SENUELO_MAX, SENUELO_MIN, UMBRAL_BARATO } from '../shared/deck';
 import { AJUSTES_DEFECTO, Ajustes, FORMACION, Jugador, Pos, Troll, rangoTrolls } from '../shared/types';
 
 // ───────────── Datos de prueba: 270 jugadores (30 por posición, laterales 15 + 15) ─────────────
@@ -181,9 +181,10 @@ describe('mazo', () => {
 
   it('el precio de cada carta se sortea en una banda alrededor del precio base y cambia entre partidas', () => {
     expect(rangoPrecio({ precioMinimo: 100 })).toEqual([80, 120]);
-    expect(rangoPrecio({ precioMinimo: 40 })).toEqual([28, 52]);
-    expect(rangoPrecio({ precioMinimo: 15 })).toEqual([9, 21]);
+    expect(rangoPrecio({ precioMinimo: 40 })).toEqual([30, 52]);
+    expect(rangoPrecio({ precioMinimo: 15 })).toEqual([PRECIO_MIN, PRECIO_MIN + 12]);
     expect(rangoPrecio({ precioMinimo: 100, precioRango: [90, 130] })).toEqual([90, 130]);
+    expect(rangoPrecio({ precioMinimo: 100, precioRango: [10, 20] })).toEqual([PRECIO_MIN, PRECIO_MIN]); // el piso manda aun con rango a mano
     const base = new Map(pool().map((j) => [j.id, j]));
     const vistos = new Map<string, Set<number>>();
     let senuelos = 0;
@@ -199,6 +200,7 @@ describe('mazo', () => {
           expect(enBanda || esSenuelo).toBe(true);
           if (esSenuelo && !enBanda) senuelos++;
           if (j.precioMinimo > SENUELO_HASTA) expect(enBanda).toBe(true); // los buenos nunca llevan señuelo
+          expect(c.precioMinimo).toBeGreaterThanOrEqual(PRECIO_MIN); // nadie sale bajo el piso
           if (!vistos.has(c.refId)) vistos.set(c.refId, new Set());
           vistos.get(c.refId)!.add(c.precioMinimo);
         }

@@ -402,3 +402,10 @@
 @keyframes fin-sobra-revela { 0%, 45% { filter: brightness(0) invert(1); transform: scale(0.96); } 100% { filter: none; transform: scale(1); } }
 @keyframes fin-sobra-sello { from { opacity: 0; transform: rotate(5deg) scale(2.6); } to { opacity: 1; transform: rotate(5deg) scale(1); } }
 .fin-sobras { padding-top: 22px; }
+
+/* Ruleta redonda en cualquier pantalla: no se achata aunque falte alto, y en el celular se adapta al espacio disponible. */
+.rul-rueda { flex: none; aspect-ratio: 1 / 1; }
+@supports (width: 1cqw) {
+  .ruleta[data-compacta] { container-type: size; }
+  .ruleta[data-compacta] .rul-rueda { --rd: min(70cqw, 46cqh); }
+}

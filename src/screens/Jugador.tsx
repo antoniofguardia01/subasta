@@ -237,9 +237,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
           <button className="btn" onClick={() => setHoja('tema')}>
             Escenario
           </button>
-          <button className="btn" onClick={(e) => confirm('¿Salir de la sala?') && (sala.enviar({ t: 'salir' }), void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } }))}>
-            Salir de la sala
-          </button>
+          <BotonConfirmar className="btn" etiqueta="Salir de la sala" aviso="¿Seguro? Toca otra vez para salir" alConfirmar={(e) => (sala.enviar({ t: 'salir' }), void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } }))} />
           <BotonPantalla className="btn-pantalla--lobby" />
         </div>
       </div>
@@ -398,6 +396,36 @@ function SelectorTema({ sala, s, anfitrion }: { sala: Sala; s: EstadoPublico; an
         </button>
       )}
     </div>
+  );
+}
+
+// ───────────── Botón que pide confirmación dentro del juego ─────────────
+// El `confirm()` del navegador falla a veces (pantalla completa, navegadores dentro de otras apps, diálogos bloqueados):
+// devuelve "no" sin mostrar nada y el botón parece muerto. Esto lo reemplaza con un segundo toque.
+
+function BotonConfirmar({ className, etiqueta, aviso, alConfirmar }: { className: string; etiqueta: string; aviso: string; alConfirmar: (e: React.MouseEvent) => void }) {
+  const [armado, setArmado] = useState(false);
+  useEffect(() => {
+    if (!armado) return;
+    const id = setTimeout(() => setArmado(false), 5000);
+    return () => clearTimeout(id);
+  }, [armado]);
+  return (
+    <button
+      className={className}
+      data-armado={armado ? '1' : undefined}
+      onClick={(e) => {
+        if (!armado) {
+          vibrar(15);
+          setArmado(true);
+        } else {
+          setArmado(false);
+          alConfirmar(e);
+        }
+      }}
+    >
+      {armado ? aviso : etiqueta}
+    </button>
   );
 }
 
@@ -920,13 +948,9 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
             Cambiar escenario
           </button>
           {anfitrion && (
-            <button className="btn btn-peligro" onClick={() => confirm('¿Terminar la partida ahora? Se muestran los resultados con lo que cada uno tiene.') && (sala.enviar({ t: 'terminar' }), setHoja(null))}>
-              Terminar partida
-            </button>
+            <BotonConfirmar className="btn btn-peligro" etiqueta="Terminar partida" aviso="¿Seguro? Toca otra vez: se muestran los resultados" alConfirmar={() => (sala.enviar({ t: 'terminar' }), setHoja(null))} />
           )}
-          <button className="btn" onClick={(e) => confirm('¿Salir de la sala? Tu equipo se pierde.') && (sala.enviar({ t: 'salir' }), void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } }))}>
-            Salir de la sala
-          </button>
+          <BotonConfirmar className="btn" etiqueta="Salir de la sala" aviso="¿Seguro? Tu equipo se pierde. Toca otra vez" alConfirmar={(e) => (sala.enviar({ t: 'salir' }), void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } }))} />
           <BotonPantalla className="btn-pantalla--menu" />
           <BotonSonido />
           {anfitrion && (

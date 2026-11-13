@@ -407,3 +407,6 @@
 .j-sobras b { font-size: 20px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .j-sobras small { font-size: 12px; font-weight: 700; opacity: 0.85; }
 .j-sobras > div[data-troll='1'] small { color: #ff8b97; opacity: 1; }
+
+/* Confirmación de dos toques (terminar partida, salir de la sala) */
+.btn[data-armado='1'] { background: #ff3b4e; color: #fff; animation: late 0.6s ease-in-out infinite alternate; }

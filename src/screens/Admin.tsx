@@ -228,7 +228,7 @@ function Jugadores({ est, api, recargar, avisar }: Props) {
         <button className="btn btn--acento" onClick={() => setNuevo(!nuevo)}>{nuevo ? 'Cerrar' : 'Agregar jugador'}</button>
       </div>
       {nuevo && <NuevoJugador api={api} recargar={async () => (await recargar(), setNuevo(false))} avisar={avisar} />}
-      <p className="admin-resumen">{lista.length} jugadores · este es el precio BASE: en cada partida sale con un precio al azar cerca de este (±20% los caros, ±30–40% los baratos) y a veces los flojos salen con precio de 50–60 para despistar</p>
+      <p className="admin-resumen">{lista.length} jugadores · este es el precio BASE: en cada partida sale con un precio al azar cerca de este (±20% los caros, ±30% los medios), nadie sale por menos de $30M (los más baratos salen entre 30 y 42) y a veces los flojos salen con precio de 50–60 para despistar</p>
       <div className="admin-tabla">{lista.slice(0, 80).map((j) => <FilaJugador key={j.id + j.precioMinimo + j.fotos[0]} j={j} api={api} recargar={recargar} avisar={avisar} />)}</div>
       {lista.length > 80 && <p className="admin-resumen">Mostrando 80 de {lista.length}: afina la búsqueda.</p>}
     </section>
