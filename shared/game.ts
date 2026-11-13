@@ -678,6 +678,7 @@ export class Partida {
         pos: r.pos,
         cartas,
         pendientes: this.pendientes().map((j) => j.id),
+        muestra: r.muestra,
         sobran: this.sobran(),
       };
       const c = this.cartaActual();

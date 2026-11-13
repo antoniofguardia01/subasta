@@ -3,7 +3,7 @@ import { CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef
 import gsap from 'gsap';
 import type { EstadoPublico, JugadorSala } from '../../shared/types';
 import { MAX_PARTICIPANTES, POS_NOMBRE } from '../../shared/types';
-import { Avatar, BotonPantalla, Cancha, ConfetiVideo, Fondo, Numero, QR, Ticker, cuentaEquipo } from '../components/comunes';
+import { Avatar, BotonPantalla, Cancha, Fondo, Numero, QR, Ticker, cuentaEquipo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
 import { Reloj, Tic } from '../components/Reloj';
@@ -12,7 +12,7 @@ import { irConTelon } from '../lib/ruta';
 import { Sala, useSala } from '../lib/sala';
 import { esTele } from '../lib/tele';
 import { useEquipoEnPantalla } from '../lib/vistaFinal';
-import { activarSonido, alCambiarSonido, ambiente, sonar, sonidoActivo } from '../lib/sonido';
+import { activarSonido, alCambiarSonido, sonar, sonidoActivo } from '../lib/sonido';
 import { TEMAS } from '../lib/temas';
 import { reducirMovimiento } from '../lib/util';
 import { IconoLiviano, IconoMusica, IconoSonido } from '../components/Iconos';
@@ -48,14 +48,12 @@ export function Escenario({ codigo }: { codigo: string }) {
   const fase = s?.fase;
   const pausa = s?.pausa;
   useEffect(() => {
-    if (!fase || !conSonido) return ambiente(null);
-    const NIVEL: Partial<Record<string, number>> = { lobby: 0.05, intro: 0.3, ronda: 0.25, presenta: 0.35, puja: 0.5, ultima: 0.9, ruleta: 0.85, martillo: 0.75, revela: 0.6, finronda: 0.3, final: 0.55 };
-    ambiente(pausa ? 0 : (NIVEL[fase] ?? 0.25));
+    if (!fase || !conSonido) return musica(null);
     // La música: más tranquila que la tribuna en el lobby y mucho más viva en la puja y en la última oportunidad.
     const MUSICA: Partial<Record<string, number>> = { lobby: 0.12, intro: 0.5, ronda: 0.4, presenta: 0.45, puja: 0.62, ultima: 1, ruleta: 0.9, martillo: 0.7, revela: 0.5, finronda: 0.3, final: 0.8 };
     musica(pausa ? 0.05 : (MUSICA[fase] ?? 0.4));
   }, [fase, pausa, conSonido]);
-  useEffect(() => () => (ambiente(null), musica(null)), []);
+  useEffect(() => () => musica(null), []);
   useEffect(() => {
     if (!conSonido) musica(null);
   }, [conSonido]);
@@ -299,7 +297,7 @@ function Tira({ s, panel, setPanel, conSonido, pausar }: { s: EstadoPublico; pan
   const quedan = r ? r.cartas.filter((c) => c.estado === 'espera' || c.estado === 'actual').length : 0;
   const pend = r ? r.pendientes.map((id) => s.jugadores.find((j) => j.id === id)!).filter(Boolean) : [];
   return (
-    <div className="tv-tira" data-lleno={r && r.cartas.length + pend.length > 11 ? '1' : '0'} data-on={r && s.fase !== 'ronda' && s.fase !== 'finronda' ? '1' : '0'}>
+    <div className="tv-tira" data-lleno={r && r.cartas.length + pend.length > 11 ? '1' : '0'} data-on={r ? '1' : '0'} data-cambio={s.fase === 'ronda' || s.fase === 'finronda' ? '1' : undefined}>
       {r && (
         <>
           <div className="tira-bloque">
@@ -406,7 +404,7 @@ function PanelTV({ s, panel }: { s: EstadoPublico; panel: Panel }) {
                 </div>
                 <span className="num saldo-monto">${j.saldo}M</span>
                 <span className="saldo-extra">
-                  gastó <b className="num">${j.gastado}M</b> · tope <b className="num">${j.tope}M</b> · skips <b className="num">{j.skips}</b>
+                  gastó <b className="num">${j.gastado}M</b> · tope <b className="num">${j.tope}M</b>
                 </span>
               </div>
             ))}
@@ -465,9 +463,6 @@ export function CanchaMedida(props: Parameters<typeof Cancha>[0]) {
 
 // ───────────── Cartel de ronda ─────────────
 
-const ICONO_POS: Record<string, string> = { POR: '/img/iconos/guante.webp', DC: '/img/iconos/botin.webp', ED: '/img/iconos/botin.webp', EI: '/img/iconos/botin.webp' };
-for (const p of ['DFC', 'LD', 'LI', 'MCD', 'MC', 'MCO']) ICONO_POS[p] = '/img/iconos/camiseta.webp';
-
 function CartelRonda({ s }: { s: EstadoPublico }) {
   const r = s.ronda;
   const on = s.fase === 'ronda';
@@ -483,13 +478,19 @@ function CartelRonda({ s }: { s: EstadoPublico }) {
             Ronda <b className="num">{r.indice + 1}</b>
             <i className="num">/{r.total}</i>
           </span>
-          <h2>{POS_NOMBRE[r.pos]}</h2>
+          <h2 style={{ fontSize: `${230 * Math.min(1, 10 / POS_NOMBRE[r.pos].length)}px` }}>{POS_NOMBRE[r.pos]}</h2>
           <p>
             {r.cartas.length} cartas · {s.jugadores.length} compradores · {r.sobran > 0 ? `sobra${r.sobran > 1 ? 'n' : ''} ${r.sobran}` : 'no sobra ninguna'}
           </p>
         </div>
       )}
-      {r && <img className="cartel-icono" key={`i${r.indice}`} src={ICONO_POS[r.pos]} alt="" />}
+      {r && !!r.muestra?.length && (
+        <div className="cartel-trio" key={`t${r.indice}`}>
+          {r.muestra.map((f, i) => (
+            <img key={i} data-i={i} src={f} alt="" draggable={false} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -666,9 +667,6 @@ function LobbyTV({ s }: { s: EstadoPublico }) {
             <b className="num">+{s.ajustes.incremento}M</b> cada toque
           </span>
           <span>
-            <b className="num">{s.ajustes.skips}</b> skips
-          </span>
-          <span>
             <b className="num">
               {s.ajustes.trollsMin}–{s.ajustes.trollsMax}
             </b>{' '}
@@ -753,7 +751,6 @@ function FinalTV({ s, fx, sala }: { s: EstadoPublico; fx: React.RefObject<FxApi 
   return (
     <div className="tv-final" ref={raiz}>
       <Fondo paleta={ganador ? 'oro' : 'oscuro'} vel={1.6} />
-      {ganador && <ConfetiVideo />}
       <div className="final-izq">
         <div className="final-titulo">
           <img className="final-trofeo" src="/img/iconos/trofeo.webp" alt="" />

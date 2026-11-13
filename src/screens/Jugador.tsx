@@ -3,7 +3,7 @@ import { CSSProperties, FormEvent, useCallback, useEffect, useLayoutEffect, useR
 import gsap from 'gsap';
 import type { Ajustes, EstadoPublico, JugadorSala, MotivoRechazo } from '../../shared/types';
 import { MAX_PARTICIPANTES, POS_NOMBRE, rangoTrolls } from '../../shared/types';
-import { Avatar, BotonPantalla, Fondo, Numero, Ticker, cuentaEquipo, ConfetiVideo } from '../components/comunes';
+import { Avatar, BotonPantalla, Fondo, Numero, Ticker, cuentaEquipo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
 import { Reloj, Tic } from '../components/Reloj';
@@ -312,7 +312,6 @@ function Reglas({ sala, s, editable }: { sala: Sala; s: EstadoPublico; editable:
       <Paso rotulo="Segundos por oferta" valor={a.segundos} min={5} max={40} paso={5} sufijo="s" cambiar={(v) => poner({ segundos: v })} editable={editable} />
       <Paso rotulo="Cada oferta suma" valor={a.incremento} min={1} max={10} sufijo="M" cambiar={(v) => poner({ incremento: v })} editable={editable} />
       <Paso rotulo="Cartas extra por ronda" valor={a.extra} min={0} max={2} cambiar={(v) => poner({ extra: v })} editable={editable} />
-      <Paso rotulo="Skips por participante" valor={a.skips} min={0} max={5} cambiar={(v) => poner({ skips: v })} editable={editable} />
       {/* El rango se puede fijar a mano antes de empezar; tocarlo apaga el ajuste automático. */}
       <Paso rotulo="Trolls por ronda: mínimo" valor={a.trollsMin} min={0} max={5} cambiar={(v) => poner({ trollsMin: v, trollsMax: Math.max(v, a.trollsMax) })} editable={editable} />
       <Paso rotulo="Trolls por ronda: máximo" valor={a.trollsMax} min={a.trollsMin} max={5} cambiar={(v) => poner({ trollsMax: v })} editable={editable} />
@@ -590,7 +589,6 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   const siguiente = (carta?.precio ?? 0) + s.ajustes.incremento;
   const alcanza = siguiente <= yo.tope;
   const puedeOfertar = enPuja && pendiente && !lidero && alcanza && !s.pausa;
-  const puedeSaltear = s.fase === 'puja' && pendiente && !carta?.liderId && (r?.sobran ?? 0) > 0 && yo.skips > 0 && !s.pausa;
 
   useEffect(
     () =>
@@ -848,10 +846,6 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
             tope <i className="num">${yo.tope}M</i>
           </small>
         </div>
-        <button className="j-skip" disabled={!puedeSaltear} onClick={() => carta && (vibrar(18), sala.enviar({ t: 'saltear', uid: carta.uid }))}>
-          Saltear
-          <i className="num">{yo.skips}</i>
-        </button>
         <button className="j-tab" data-destino="equipo" onClick={() => (setVerA(yo.id), setHoja('equipo'))}>
           Equipo
           <i className="num">{cuentaEquipo(yo)}/11</i>
@@ -877,9 +871,6 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
             </span>
             <span>
               Equipo <b className="num">{cuentaEquipo(visto)}/11</b>
-            </span>
-            <span>
-              Skips <b className="num">{visto.skips}</b>
             </span>
           </div>
           {hoja === 'equipo' && <CanchaMedida equipo={visto.equipo} color={visto.color} huecoActivo={r?.pendientes.includes(visto.id) ? r.hueco : undefined} />}
@@ -1013,7 +1004,6 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   return (
     <div className="m-final" ref={raiz}>
       <Fondo paleta={miPuesto === 1 ? 'oro' : 'oscuro'} />
-      {miPuesto === 1 && <ConfetiVideo />}
       <div className="f-scroll">
         <div className="f-titulo" data-campeon={miPuesto === 1 ? "1" : "0"}>
           {miPuesto === 1 && <img className="f-trofeo" src="/img/iconos/trofeo.webp" alt="" />}

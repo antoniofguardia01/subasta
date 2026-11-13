@@ -44,7 +44,6 @@ function reiniciar(q: Q) {
   gsap.set(q('.esc-sello'), { opacity: 0 });
   gsap.set(q('.esc-martillo'), { opacity: 0 });
   gsap.set(q('.esc-venta'), { opacity: 0 });
-  gsap.set(q('.esc-troll'), { opacity: 0 });
   gsap.set(q('.esc-capa'), { scaleX: 1, scaleY: 1, x: 0 });
 }
 
@@ -100,6 +99,11 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
     if (!el) return;
     const q = gsap.utils.selector(el) as unknown as Q;
     const ant = previa.current;
+    const vid = q('.esc-martillo-video')[0] as HTMLVideoElement | undefined;
+    if (vid && fase !== 'martillo') {
+      gsap.set(vid, { opacity: 0 });
+      vid.pause();
+    }
     previa.current = { uid: carta?.uid ?? null, fase };
     if (!carta) return;
     const nueva = ant.uid !== carta.uid;
@@ -147,6 +151,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       const video = q('.esc-martillo-video')[0] as HTMLVideoElement | undefined;
       if (venta && video && !rm) {
         // ── Martillazo en video (solo TV): corte rápido con el martillo real; al desvanecerse cae el sello ──
+        window.setTimeout(() => gsap.set(video, { opacity: 0 }), 1500); // por si la línea de tiempo se corta en un equipo lento
         t.add(() => {
           video.currentTime = 0;
           void video.play().catch(() => {});
@@ -249,6 +254,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         // El apellido cae letra por letra, como un marcador que se arma.
         .from(q('.pn-l'), { yPercent: -130, rotationX: 80, opacity: 0, duration: 0.55, ease: 'back.out(2.2)', stagger: 0.035 }, F + 0.5)
         .from(q('.pn-etiqueta'), { scaleX: 0, transformOrigin: '0% 50%', duration: 0.45, ease: 'expo.out' }, F + 0.8)
+        .from(q('.pn-dato, .pn-troll'), { opacity: 0, y: 14, duration: 0.5, ease: 'expo.out' }, F + 1.1)
         // El foco se apaga con el destello, los rayos giran (más fuertes cuanto más rara la carta) y la palabra gigante cruza detrás.
         .to(q('.esc-foco'), { opacity: 0, duration: 0.5, ease: 'power2.out' }, F)
         .to(q('.esc-rayos'), { opacity: vendida ? (troll ? 0.5 : [0.45, 0.85, 1][nivel]) : 0.25, duration: 0.6, ease: 'power2.out' }, F + 0.05)
@@ -265,16 +271,14 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       if (!rm) t.to(figura, { scale: 1.035, duration: Math.max(3, total - F - 2.5), ease: 'sine.inOut' }, F + 1.2);
       if (!rm) {
         if (troll) {
-          t.fromTo(figura, { rotation: -11, scale: 1.12 }, { rotation: 0, scale: 1, duration: 1.1, ease: 'elastic.out(1.1, 0.3)' }, F + 0.08)
-            .fromTo(q('.esc-troll'), { opacity: 0, scale: 3.2, rotation: 28 }, { opacity: 1, scale: 1, rotation: 11, duration: 0.42, ease: 'back.out(2.4)' }, F + 0.22);
+          t.fromTo(figura, { rotation: -11, scale: 1.12 }, { rotation: 0, scale: 1, duration: 1.1, ease: 'elastic.out(1.1, 0.3)' }, F + 0.08);
         } else t.to(figura, { scale: 1, duration: 0.9, ease: 'elastic.out(1, 0.5)' }, F + 0.1);
-      } else if (troll) t.set(q('.esc-troll'), { opacity: 1, rotation: 11 }, F + 0.2);
+      }
 
       // ── Salida coreografiada, justo antes de que el servidor pase a la siguiente carta ──
       const X = Math.max(F + 1.4, total - 1.05);
       t.to(q('.placa-nombre'), { xPercent: -115, duration: 0.36, ease: 'power2.in' }, X)
         .to(q('.esc-venta'), { opacity: 0, y: 16, duration: 0.22, ease: 'power2.in' }, X)
-        .to(q('.esc-troll'), { opacity: 0, scale: 0.7, duration: 0.22, ease: 'power2.in' }, X)
         .to(q('.esc-rayos'), { opacity: 0, duration: 0.3 }, X)
         .to(q('.esc-gigante'), { opacity: 0, duration: 0.3 }, X)
         .to(q('.esc-fondo2'), { clipPath: 'circle(0% at 70% 62%)', duration: 0.6, ease: 'expo.inOut' }, X + 0.22);
@@ -385,6 +389,8 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
                   <span>{rev.etiqueta}</span>
                   {rev.tipo === 'jugador' && <b className="num">{rev.rating}</b>}
                 </div>
+                {rev.dato && <p className="pn-dato">{rev.dato}</p>}
+                {rev.tipo === 'troll' && <span className="pn-troll">{carta?.compradorId ? '¡Caíste!' : '¡Se salvaron!'}</span>}
               </div>
             )}
           </div>
@@ -416,9 +422,6 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
 
         <div className="esc-sello" aria-hidden>
           <span>{d ? SELLO[d] : ''}</span>
-        </div>
-        <div className="esc-troll" aria-hidden>
-          <span>{carta?.compradorId ? '¡Caíste!' : '¡Se salvaron!'}</span>
         </div>
         <img className="esc-martillo" src="/media/martillo.webp" alt="" draggable={false} aria-hidden />
         {!compacta && !esLite() && <video className="esc-martillo-video" src="/media/martillo.mp4" muted playsInline preload="auto" aria-hidden />}

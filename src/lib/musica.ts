@@ -1,7 +1,9 @@
-// Música dinámica generada en vivo con WebAudio (sin archivos): un secuenciador de compases en La menor
-// (Am – F – C – G) con capas que van entrando según la intensidad (0 = lobby tranquilo, 1 = última oportunidad):
-//   0.00 pad + bajo suave · 0.30 hi-hat · 0.35 bombo · 0.45 arpegio · 0.50 palmas/caja · 0.60 bombo a negras · 0.80 arpegio doble
-// El tempo sube con la intensidad (104 → 140 bpm).
+// Música dinámica generada en vivo con WebAudio (sin archivos): house / electrónica suave.
+// Secuenciador de compases en La menor (Am9 – Fmaj7 – Cmaj7 – G6) con capas que entran según la intensidad
+// (0 = lobby tranquilo, 1 = última oportunidad):
+//   0.00 colchón de acordes · 0.20 bajo en contratiempo · 0.25 bombo suave · 0.30 hi-hat abierto · 0.35 acordes cortos (stabs)
+//   0.50 palmas suaves + plucks · 0.60 shaker · 0.80 plucks en semicorcheas · 0.85 redoble de palmas cada 4 compases
+// Los acordes "respiran" con el bombo (sidechain simulado). El tempo sube con la intensidad (112 → 124 bpm).
 import { alCambiarSonido, audio, sonidoActivo } from './sonido';
 import { guardar, leer } from './util';
 
@@ -10,10 +12,10 @@ type Ctx = BaseAudioContext;
 const midi = (n: number) => 440 * 2 ** ((n - 69) / 12);
 // Acordes por compás: raíz del bajo + notas del acorde (MIDI).
 const ACORDES = [
-  { bajo: 45, notas: [57, 60, 64] }, // Am
-  { bajo: 41, notas: [53, 57, 60] }, // F
-  { bajo: 48, notas: [55, 60, 64] }, // C
-  { bajo: 43, notas: [55, 59, 62] }, // G
+  { bajo: 45, notas: [57, 60, 64, 67] }, // Am7
+  { bajo: 41, notas: [53, 57, 60, 64] }, // Fmaj7
+  { bajo: 48, notas: [55, 60, 64, 71] }, // Cmaj7
+  { bajo: 43, notas: [55, 59, 62, 64] }, // G6
 ];
 
 let ruidoBuf: AudioBuffer | null = null;
@@ -63,17 +65,17 @@ function golpeRuido(ctx: Ctx, dst: AudioNode, t: number, dur: number, vol: numbe
 
 function bombo(ctx: Ctx, dst: AudioNode, t: number, vol: number) {
   const o = ctx.createOscillator();
-  o.frequency.setValueAtTime(140, t);
-  o.frequency.exponentialRampToValueAtTime(42, t + 0.13);
+  o.frequency.setValueAtTime(125, t);
+  o.frequency.exponentialRampToValueAtTime(44, t + 0.12);
   const g = ctx.createGain();
   g.gain.setValueAtTime(vol, t);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.26);
   o.connect(g).connect(dst);
   o.start(t);
-  o.stop(t + 0.25);
+  o.stop(t + 0.3);
 }
 
-export const tempo = (nivel: number) => 104 + Math.max(0, Math.min(1, nivel)) * 36;
+export const tempo = (nivel: number) => 112 + Math.max(0, Math.min(1, nivel)) * 12;
 export const duracionCompas = (nivel: number) => (60 / tempo(nivel)) * 4;
 
 /** Escribe un compás completo de música a partir del instante `t`. Devuelve su duración en segundos. */
@@ -81,43 +83,50 @@ export function escribirCompas(ctx: Ctx, dst: AudioNode, t: number, indice: numb
   const ac = ACORDES[indice % ACORDES.length];
   const paso = 60 / tempo(nivel) / 4; // semicorchea
   const dur = paso * 16;
+  const conBombo = nivel >= 0.25;
 
-  // Pad: el acorde largo, siempre presente.
-  for (const n of ac.notas) nota(ctx, dst, t, midi(n), dur * 1.05, 'triangle', 0.045, 1800, dur * 0.35);
-  // Bajo: más movido cuanto más intensidad.
-  if (nivel >= 0.08) {
-    const pasos = nivel < 0.5 ? [0, 6, 10] : [0, 2, 4, 6, 8, 10, 12, 14];
-    pasos.forEach((p, i) => {
-      const f = midi(ac.bajo + (nivel >= 0.5 && i % 4 === 3 ? 12 : 0));
-      nota(ctx, dst, t + p * paso, f, paso * (nivel < 0.5 ? 3.2 : 1.7), 'sawtooth', 0.11, 420 + nivel * 500);
-    });
-  }
+  // Los acordes pasan por un volumen que se hunde con cada bombo y vuelve (el "bombeo" del house).
+  const aire = ctx.createGain();
+  aire.connect(dst);
+  aire.gain.setValueAtTime(1, t);
+  if (conBombo)
+    for (let b = 0; b < 4; b++) {
+      const tb = t + b * paso * 4;
+      aire.gain.setValueAtTime(0.4, tb);
+      aire.gain.linearRampToValueAtTime(1, tb + paso * 3.4);
+    }
+
+  // Colchón: el acorde largo, siempre presente.
+  for (const n of ac.notas) nota(ctx, aire, t, midi(n), dur * 1.08, 'triangle', 0.04, 1500, dur * 0.4);
+  // Acordes cortos de órgano (stabs) a contratiempo.
+  if (nivel >= 0.35)
+    for (const p of [3, 10]) for (const n of ac.notas) nota(ctx, aire, t + p * paso, midi(n + 12), paso * 1.6, 'sine', 0.03, 2400, 0.01);
+  // Bajo suave en el contratiempo.
+  if (nivel >= 0.2)
+    for (const p of [2, 6, 10, 14]) {
+      nota(ctx, aire, t + p * paso, midi(ac.bajo), paso * 1.8, 'sawtooth', 0.085, 240 + nivel * 120, 0.01);
+      nota(ctx, aire, t + p * paso, midi(ac.bajo), paso * 1.8, 'sine', 0.12, undefined, 0.01);
+    }
   // Percusión.
-  const hat = nivel >= 0.3;
-  const bomboFuerte = nivel >= 0.6;
   for (let p = 0; p < 16; p++) {
     const tp = t + p * paso;
-    if (nivel >= 0.35 && (p === 0 || p === 8 || (bomboFuerte && (p === 4 || p === 12)))) bombo(ctx, dst, tp, 0.5);
-    if (hat) {
-      const fuerte = nivel >= 0.6;
-      if (fuerte || p % 2 === 1 || p % 4 === 2) golpeRuido(ctx, dst, tp, 0.05, p % 4 === 2 ? 0.1 : 0.06, 'highpass', 7500);
-    }
+    if (conBombo && p % 4 === 0) bombo(ctx, dst, tp, 0.34);
+    if (nivel >= 0.3 && p % 4 === 2) golpeRuido(ctx, dst, tp, 0.11, 0.05, 'highpass', 8200); // hi-hat abierto en contratiempo
+    if (nivel >= 0.6 && p % 2 === 1) golpeRuido(ctx, dst, tp, 0.04, 0.022, 'highpass', 9000); // shaker
     if (nivel >= 0.5 && (p === 4 || p === 12)) {
-      golpeRuido(ctx, dst, tp, 0.14, 0.22, 'bandpass', 1900);
-      if (nivel >= 0.75) golpeRuido(ctx, dst, tp + paso * 0.5, 0.05, 0.1, 'bandpass', 2400);
+      golpeRuido(ctx, dst, tp, 0.12, 0.075, 'bandpass', 1500);
+      golpeRuido(ctx, dst, tp + 0.012, 0.09, 0.04, 'bandpass', 2300);
     }
   }
-  // Arpegio: dos octavas cuando la cosa se pone fea.
-  if (nivel >= 0.45) {
-    const [a, b, c] = ac.notas;
-    const patron = [a, b, c, b, a, b, c, b + 12, a + 12, c, b, c, a, b, c, b];
-    patron.forEach((n, i) => {
-      const alto = nivel >= 0.8 && i % 2 === 1 ? 12 : 0;
-      nota(ctx, dst, t + i * paso, midi(n + 12 + alto), paso * 0.9, 'square', 0.028 + nivel * 0.016, 2600 + nivel * 2400);
-    });
+  // Plucks suaves: corcheas, y semicorcheas cuando la cosa se calienta.
+  if (nivel >= 0.5) {
+    const [a, b, c, d] = ac.notas;
+    const patron = [a, c, b, d, c, b, d, c];
+    const salto = nivel >= 0.8 ? 1 : 2;
+    for (let i = 0; i < 16; i += salto) nota(ctx, aire, t + i * paso, midi(patron[(i / salto) % patron.length] + 12), paso * 1.4, 'triangle', 0.024, 2600, 0.004);
   }
-  // Redoble de caja en el último compás del ciclo cuando está muy caliente.
-  if (nivel >= 0.85 && indice % 4 === 3) for (let p = 12; p < 16; p++) golpeRuido(ctx, dst, t + p * paso, 0.06, 0.12 + (p - 12) * 0.04, 'bandpass', 2200);
+  // Redoble de palmas en el último compás del ciclo cuando está muy caliente.
+  if (nivel >= 0.85 && indice % 4 === 3) for (let p = 12; p < 16; p++) golpeRuido(ctx, dst, t + p * paso, 0.07, 0.07 + (p - 12) * 0.02, 'bandpass', 2000);
   return dur;
 }
 
@@ -125,7 +134,7 @@ export function escribirCompas(ctx: Ctx, dst: AudioNode, t: number, indice: numb
 export async function renderizarPrueba(segundos: number, nivelEn: (t: number) => number, sr = 32000): Promise<Float32Array> {
   const ctx = new OfflineAudioContext(1, Math.ceil(segundos * sr), sr);
   const bus = ctx.createGain();
-  bus.gain.value = 0.55;
+  bus.gain.value = 0.6;
   bus.connect(ctx.destination);
   let t = 0;
   let i = 0;
@@ -180,10 +189,10 @@ function aplicar() {
     bus.gain.value = 0;
     filtro = ctx.createBiquadFilter();
     filtro.type = 'lowpass';
-    filtro.frequency.value = 6000;
+    filtro.frequency.value = 5000;
     bus.connect(filtro).connect(maestro);
   }
-  bus.gain.setTargetAtTime(0.8, ctx.currentTime, 0.6);
+  bus.gain.setTargetAtTime(0.6, ctx.currentTime, 0.6);
   if (!timer) {
     siguiente = ctx.currentTime + 0.1;
     timer = setInterval(() => {
@@ -191,7 +200,7 @@ function aplicar() {
       if (!c || !bus || objetivo === null) return;
       // La intensidad se acerca a la pedida de a poco, para que los cambios no sean bruscos.
       actual += (objetivo - actual) * 0.5;
-      filtro?.frequency.setTargetAtTime(1800 + actual * 6000, c.currentTime, 0.3);
+      filtro?.frequency.setTargetAtTime(1600 + actual * 3400, c.currentTime, 0.3);
       while (siguiente < c.currentTime + 0.4) siguiente += escribirCompas(c, bus, siguiente, compas++, actual);
     }, 120);
   }

@@ -192,6 +192,15 @@ export function generarMazo(
     rondas.push({ hueco, pos, cartas: barajar(rng, cartas) });
   }
 
+  // Muestra para el cartel de ronda: 3 futbolistas de esa posición que NO salen en la partida (no se spoilea nada).
+  for (const r of rondas) {
+    const delPuesto = porPos.get(r.pos) ?? [];
+    const enRonda = new Set(r.cartas.map((c) => c.refId));
+    const fuera = barajar(rng, delPuesto.filter((j) => !usados.has(j.id)));
+    const relleno = barajar(rng, delPuesto.filter((j) => usados.has(j.id) && !enRonda.has(j.id)));
+    r.muestra = [...fuera, ...relleno].slice(0, 3).map((j) => elegir(rng, j.fotos));
+  }
+
   return { semilla, rondas };
 }
 

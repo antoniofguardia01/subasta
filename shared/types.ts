@@ -127,6 +127,8 @@ export interface RondaMazo {
   hueco: number;
   pos: Pos;
   cartas: Carta[];
+  /** Fotos de 3 futbolistas de esa posición que NO salen en la partida (para el cartel de ronda). */
+  muestra?: string[];
 }
 
 export interface Mazo {
@@ -212,6 +214,7 @@ export interface RondaVista {
   pendientes: string[];
   /** Cuántas cartas se pueden descartar todavía (restantes − pendientes). */
   sobran: number;
+  muestra?: string[];
 }
 
 export interface OfertaVista {

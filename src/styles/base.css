@@ -284,3 +284,33 @@ h1, h2, h3, p { margin: 0; }
 .enc-ayuda { float: right; font-size: 12px; opacity: 0.7; font-weight: 600; }
 .enc-tam { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; font-size: 14px; font-weight: 700; }
 .enc-tam span { float: right; }
+
+/* ── Pulido: cartel de ronda con tres jugadores, detalle dentro de la placa, botones en los cambios de ronda, trofeo sin cortar ── */
+.cartel-texto { max-width: 58%; }
+.cartel-trio { position: absolute; right: 70px; top: 50%; width: 700px; height: 540px; transform: translateY(-50%); pointer-events: none; }
+.cartel-trio img { position: absolute; bottom: 0; width: auto; filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.55)); animation: trio-entra 720ms var(--ease-out) both; }
+.cartel-trio img[data-i='0'] { left: 0; height: 74%; rotate: -4deg; z-index: 1; animation-delay: 420ms; }
+.cartel-trio img[data-i='1'] { left: 50%; height: 100%; margin-left: -300px; z-index: 2; animation-delay: 280ms; }
+.cartel-trio img[data-i='2'] { right: 0; height: 74%; rotate: 4deg; z-index: 1; animation-delay: 560ms; }
+@keyframes trio-entra { from { opacity: 0; transform: translateY(90px) scale(0.82); } to { opacity: 1; transform: none; } }
+
+/* El detalle va dentro de la placa, en el costado izquierdo: nunca sobre la cara. */
+.pn-dato { max-width: calc(var(--u) * 31); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.escena[data-compacta] .pn-dato { max-width: calc(var(--u) * 38); }
+.pn-troll { margin-top: calc(var(--u) * 1); align-self: flex-start; padding: 0.15em 0.7em; border-radius: 0.4em; background: #ffe14a; color: #14161a; font-size: calc(var(--u) * 2.2); font-weight: 900; font-stretch: 75%; text-transform: uppercase; }
+.escena[data-compacta] .pn-troll { font-size: calc(var(--u) * 3.2); }
+
+/* Pausa y equipos también entre rondas: la tira queda solo con los botones, por encima del cartel. */
+.tv-tira[data-cambio='1'] { z-index: 20; background: none; pointer-events: none; }
+.tv-tira[data-cambio='1'] .tira-bloque { display: none; }
+.tv-tira[data-cambio='1'] .tv-botones { pointer-events: auto; }
+.tv-panel { z-index: 18; }
+
+/* Trofeo: sin margen negativo, para que no lo corte el borde. */
+.final-trofeo { top: 14px; height: 118px; }
+.f-trofeo { top: 12px; height: 70px; }
+.cartel-trio { width: 780px; right: 40px; }
+.cartel-trio img { -webkit-mask-image: linear-gradient(to top, transparent 0, #000 16%); mask-image: linear-gradient(to top, transparent 0, #000 16%); }
+.cartel-trio img[data-i='0'] { left: -20px; }
+.cartel-trio img[data-i='1'] { margin-left: -300px; }
+.cartel-trio img[data-i='2'] { right: -20px; }
