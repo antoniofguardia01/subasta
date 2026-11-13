@@ -80,3 +80,7 @@
 .enc-caja footer button:disabled { opacity: 0.4; }
 .enc-caja footer .admin-primario { background: #c6f432; color: #14161a; }
 @media (max-width: 720px) { .enc-cuerpo { grid-template-columns: 1fr; } }
+
+/* Las opciones de los desplegables las pinta el navegador: sin esto salen letras claras sobre fondo claro. */
+.admin select { color-scheme: dark; }
+.admin select option, .admin select optgroup { background-color: #14161a; color: #f2fff6; }
