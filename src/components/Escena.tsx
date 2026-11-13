@@ -31,7 +31,8 @@ type Q = (s: string) => Element[];
 
 function reiniciar(q: Q) {
   gsap.set(q('.esc-figura'), { yPercent: 108, x: 0, y: 0, scale: 1, rotation: 0, opacity: 1 });
-  gsap.set(q('.esc-silueta'), { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 });
+  gsap.set(q('.esc-silueta'), { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, scale: 1, transformOrigin: '50% 100%' });
+  gsap.set(q('.esc-color'), { opacity: 1, scale: 1, transformOrigin: '50% 100%' });
   gsap.set(q('.esc-luz'), { opacity: 0, yPercent: 0 });
   gsap.set(q('.esc-destello'), { opacity: 0 });
   gsap.set(q('.esc-fondo2'), { clipPath: 'circle(0% at 70% 62%)' });
@@ -244,8 +245,8 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         // El fondo cambia de paleta con un barrido circular que nace en el pecho del jugador.
         .to(q('.esc-fondo2'), { clipPath: 'circle(150% at 70% 62%)', duration: rm ? 0.3 : 0.85, ease: 'expo.out' }, F + 0.02)
         // El color aparece de abajo hacia arriba, detrás de una línea de luz.
-        .to(q('.esc-silueta'), { clipPath: 'inset(0% 0% 100% 0%)', duration: rm ? 0.2 : 0.55, ease: 'power2.inOut' }, F + 0.05)
-        .fromTo(q('.esc-luz'), { opacity: 1, y: 0 }, { y: -alto, duration: 0.55, ease: 'power2.inOut' }, F + 0.05)
+        .to(q('.esc-silueta'), troll ? { opacity: 0, scale: rm ? 1 : 1.14, duration: rm ? 0.1 : 0.22, ease: 'power2.out' } : { clipPath: 'inset(0% 0% 100% 0%)', duration: rm ? 0.2 : 0.55, ease: 'power2.inOut' }, F + 0.05)
+        .fromTo(q('.esc-luz'), { opacity: troll ? 0 : 1, y: 0 }, { y: -alto, duration: 0.55, ease: 'power2.inOut' }, F + 0.05)
         .to(q('.esc-luz'), { opacity: 0, duration: 0.15 }, F + 0.55)
         .to(q('.placa-precio'), { xPercent: -115, duration: 0.3, ease: 'power2.in' }, F + 0.04)
         .fromTo(q('.placa-nombre'), { xPercent: -115 }, { xPercent: 0, duration: 0.6, ease: 'expo.out' }, F + 0.32)
@@ -260,6 +261,8 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         .fromTo(q('.esc-gigante'), { opacity: 0, xPercent: 25 }, { opacity: 1, xPercent: -25, duration: Math.max(4, total - F - 1), ease: 'none' }, F + 0.1)
         // Golpe de cámara: todo se acerca y vuelve.
         .fromTo(q('.esc-capa'), { scale: 1.07 }, { scale: 1, duration: 0.9, ease: 'expo.out', immediateRender: false }, F);
+      // El troll no se ve hasta el destello (si no, se ve la foto real detrás de la silueta del disfraz) y aparece con un rebote.
+      if (troll) t.fromTo(q('.esc-color'), { opacity: 0, scale: rm ? 1 : 0.84 }, { opacity: 1, scale: 1, duration: rm ? 0.15 : 0.55, ease: 'back.out(2)' }, F + 0.05);
       // El puntaje cuenta desde cero.
       const nota = el.querySelector<HTMLElement>('.pn-etiqueta b');
       if (nota && !rm) {
