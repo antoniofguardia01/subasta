@@ -366,7 +366,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
               </span>
             </div>
             {rev && (
-              <div className="placa-nombre" data-paleta={rev.rareza}>
+              <div className="placa-nombre" data-paleta={rev.rareza} data-tipo={rev.tipo}>
                 <div className="pn-cuerpo">
                   {rev.apellido && rev.nombre && (
                     <span className="pn-linea pn-nombre" style={{ '--k': Math.min(1, 12 / rev.nombre.length) } as CSSProperties}>

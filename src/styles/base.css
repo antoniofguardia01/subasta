@@ -314,3 +314,4 @@ h1, h2, h3, p { margin: 0; }
 .cartel-trio img[data-i='0'] { left: -20px; }
 .cartel-trio img[data-i='1'] { margin-left: -300px; }
 .cartel-trio img[data-i='2'] { right: -20px; }
+.placa-nombre[data-tipo='troll'] .pn-etiqueta { display: none; }
