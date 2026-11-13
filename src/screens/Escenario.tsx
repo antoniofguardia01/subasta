@@ -222,6 +222,11 @@ export function Escenario({ codigo }: { codigo: string }) {
           </div>
         )}
         <PanelTV s={s} panel={enJuego ? (s.panel ?? panel) : null} />
+        <div className="tv-pausa" data-on={s.pausa ? '1' : '0'} aria-hidden={!s.pausa}>
+          <img className="tv-pausa-icono" src="/img/iconos/silbato.webp" alt="" />
+          <b>Pausa</b>
+          <span>El anfitrión detuvo la subasta</span>
+        </div>
         <div className="tv-ticker">
           <Ticker mensajes={s.ticker} pausa={pausarTicker} alto={64} />
         </div>

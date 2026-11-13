@@ -328,3 +328,17 @@ h1, h2, h3, p { margin: 0; }
 }
 /* Celular: la placa del nombre baja a la parte de abajo (pecho/hombros) para dejar libre la cara. */
 .escena[data-compacta] .placa-nombre { align-self: end; margin-bottom: calc(var(--v) * 21); max-width: calc(var(--u) * 58); }
+
+/* Pausa en la TV: por encima del cartel de ronda y del resumen (el aviso dentro de la escena quedaba tapado). */
+.escena:not([data-compacta]) .esc-pausa { display: none; }
+.tv-pausa { position: absolute; left: 0; right: 0; top: 150px; bottom: 118px; z-index: 17; display: grid; place-content: center; justify-items: center; text-align: center; gap: 6px; background: rgba(6, 8, 7, 0.8); color: #fff; opacity: 0; pointer-events: none; transition: opacity 260ms ease; }
+.tv-pausa[data-on='1'] { opacity: 1; }
+.tv-pausa > * { transition: transform 420ms var(--ease-rebote, cubic-bezier(0.34, 1.56, 0.64, 1)); }
+.tv-pausa[data-on='0'] > * { transform: scale(0.7) translateY(24px); }
+.tv-pausa-icono { height: 300px; width: auto; filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.5)); animation: silbato-vibra 0.5s ease-in-out infinite alternate; }
+.tv-pausa b { font-size: 230px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; animation: late 1.2s ease-in-out infinite alternate; }
+.tv-pausa span { font-size: 40px; font-weight: 600; opacity: 0.8; }
+.tv-pausa[data-on='0'] b, .tv-pausa[data-on='0'] .tv-pausa-icono { animation-play-state: paused; }
+
+/* Trofeo: sin sombra ni filtro (la sombra se cortaba contra el borde del bloque y se veía como un cuadro). Solo la imagen del trofeo. */
+.final-trofeo, .f-trofeo { filter: none; }
