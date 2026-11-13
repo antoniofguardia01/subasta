@@ -25,7 +25,7 @@ import {
   Troll,
   rangoTrolls,
 } from './types';
-import { crearReponedor, generarMazo, pisosDeRonda } from './deck';
+import { crearReponedor, generarMazo, pisosDeRonda, Recientes } from './deck';
 import { crearRng } from './rng';
 import { calcularFinal } from './score';
 
@@ -245,10 +245,18 @@ export class Partida {
 
   // ───────────── Arranque ─────────────
 
-  empezar(pool: readonly Jugador[], trolls: readonly Troll[], semilla: number, ahora: number): boolean {
+  /** Ids de jugadores y trolls que salen en el mazo (para recordar qué salió en las últimas partidas). */
+  idsDelMazo(): { jugadores: string[]; trolls: string[] } {
+    const jugadores = new Set<string>();
+    const trolls = new Set<string>();
+    for (const r of this.mazo?.rondas ?? []) for (const c of r.cartas) (c.tipo === 'troll' ? trolls : jugadores).add(c.refId);
+    return { jugadores: [...jugadores], trolls: [...trolls] };
+  }
+
+  empezar(pool: readonly Jugador[], trolls: readonly Troll[], semilla: number, ahora: number, recientes?: Recientes): boolean {
     if (this.fase !== 'lobby' || this.jugadores.length < 2) return false;
     this.ajustarTrolls();
-    this.mazo = generarMazo(pool, trolls, this.jugadores.length, this.ajustes, semilla);
+    this.mazo = generarMazo(pool, trolls, this.jugadores.length, this.ajustes, semilla, recientes);
     this.pisos = pisosDeRonda(this.mazo);
     this.ruletas = 0;
     this.reponer = crearReponedor(pool, trolls, this.mazo, semilla);

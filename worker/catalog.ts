@@ -29,6 +29,24 @@ export class CatalogDO implements DurableObject {
     const ok = (extra: object = {}) => Response.json({ ok: true, ...extra });
     const mal = (error: string) => Response.json({ ok: false, error }, { status: 400 });
 
+    // Memoria de lo que salió en las últimas 2 partidas (de cualquier sala), para que las partidas sean variadas.
+    if (ruta === '/recientes') {
+      const guardado = (await s.get<{ partidas: { j: string[]; t: string[] }[] }>('recientes')) ?? { partidas: [] };
+      if (req.method === 'POST') {
+        const lista = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string').slice(0, 400) : []);
+        guardado.partidas = [...guardado.partidas, { j: lista(body.jugadores), t: lista(body.trolls) }].slice(-2);
+        await s.put('recientes', guardado);
+        return ok();
+      }
+      const nivel = { jugadores: {} as Record<string, number>, trolls: {} as Record<string, number> };
+      guardado.partidas.forEach((p, i) => {
+        const v = i === guardado.partidas.length - 1 ? 2 : 1;
+        for (const id of p.j) nivel.jugadores[id] = Math.max(nivel.jugadores[id] ?? 0, v);
+        for (const id of p.t) nivel.trolls[id] = Math.max(nivel.trolls[id] ?? 0, v);
+      });
+      return Response.json(nivel);
+    }
+
     if (ruta === '/datos') {
       const trolls = [...(await s.list({ prefix: 'troll:' })).values()];
       const overrides: Record<string, unknown> = {};

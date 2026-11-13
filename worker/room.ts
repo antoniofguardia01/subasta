@@ -6,6 +6,7 @@ import jugadoresJson from '../data/players.json';
 import trollsJson from '../data/trolls.json';
 import { CatalogoDatos, jugadoresFinal, plantillasFinal, trollsFinal } from '../shared/catalogo';
 import tickerJson from '../data/ticker.json';
+import type { Recientes } from '../shared/deck';
 
 interface Conexion {
   clave: string;
@@ -234,8 +235,20 @@ export class RoomDO implements DurableObject {
         if (!esAnfitrion) return;
         await this.cargarCatalogo();
         const semilla = crypto.getRandomValues(new Uint32Array(1))[0];
-        if (!p.empezar(this.pool(), this.trolls(), semilla, ahora))
+        const catalogo = this.env.CATALOG!.get(this.env.CATALOG!.idFromName('global'));
+        let recientes: Recientes | undefined;
+        try {
+          recientes = (await (await catalogo.fetch('https://do/recientes')).json()) as Recientes;
+        } catch {
+          /* sin memoria: el sorteo sale igual */
+        }
+        if (!p.empezar(this.pool(), this.trolls(), semilla, ahora, recientes))
           return this.enviar(ws, { t: 'error', codigo: 'faltan', texto: 'Hacen falta al menos 2 participantes para empezar.' });
+        try {
+          await catalogo.fetch('https://do/recientes', { method: 'POST', body: JSON.stringify(p.idsDelMazo()) });
+        } catch {
+          /* no es grave */
+        }
         break;
       }
       case 'ofertar':

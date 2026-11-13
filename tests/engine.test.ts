@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Partida, TIEMPOS } from '../shared/game';
-import { generarMazo, pisosDeRonda, PRECIO_MIN, rangoPrecio, SENUELO_HASTA, SENUELO_MAX, SENUELO_MIN, UMBRAL_BARATO } from '../shared/deck';
+import { BASE_BARATA, generarMazo, pisosDeRonda, PRECIO_MIN, rangoPrecio, SENUELO_HASTA, SENUELO_MAX, SENUELO_MIN, UMBRAL_BARATO } from '../shared/deck';
 import { AJUSTES_DEFECTO, Ajustes, FORMACION, Jugador, Pos, Troll, rangoTrolls } from '../shared/types';
 
 // ───────────── Datos de prueba: 270 jugadores (30 por posición, laterales 15 + 15) ─────────────
@@ -197,9 +197,10 @@ describe('mazo', () => {
           const [lo, hi] = rangoPrecio(j);
           const enBanda = c.precioMinimo >= lo && c.precioMinimo <= hi;
           const esSenuelo = j.precioMinimo <= SENUELO_HASTA && c.precioMinimo >= SENUELO_MIN && c.precioMinimo <= SENUELO_MAX;
-          expect(enBanda || esSenuelo).toBe(true);
+          const esSalvavidas = j.precioMinimo <= BASE_BARATA && c.precioMinimo >= PRECIO_MIN && c.precioMinimo <= UMBRAL_BARATO;
+          expect(enBanda || esSenuelo || esSalvavidas).toBe(true);
           if (esSenuelo && !enBanda) senuelos++;
-          if (j.precioMinimo > SENUELO_HASTA) expect(enBanda).toBe(true); // los buenos nunca llevan señuelo
+          if (j.precioMinimo > BASE_BARATA) expect(enBanda).toBe(true); // los buenos nunca llevan señuelo ni se abaratan
           expect(c.precioMinimo).toBeGreaterThanOrEqual(PRECIO_MIN); // nadie sale bajo el piso
           if (!vistos.has(c.refId)) vistos.set(c.refId, new Set());
           vistos.get(c.refId)!.add(c.precioMinimo);
