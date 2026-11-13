@@ -96,6 +96,7 @@ export function generarMazo(
     foto: t.foto,
     token: tokenAleatorio(rng),
     marco: !!t.opaca,
+    ajuste: t.carta,
     fotoSilueta: disfraz ? elegir(rng, disfraz.fotos) : undefined,
     tokenSilueta: disfraz ? tokenAleatorio(rng) : undefined,
   });

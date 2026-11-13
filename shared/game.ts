@@ -634,6 +634,7 @@ export class Partida {
       pos: c.pos,
       hueco: c.hueco,
       marco: c.marco,
+      ajuste: c.ajuste,
     };
   }
 

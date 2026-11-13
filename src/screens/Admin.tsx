@@ -7,7 +7,7 @@ import { irConTelon } from '../lib/ruta';
 import { Avatar } from '../components/comunes';
 
 type Tab = 'trolls' | 'jugadores' | 'mensajes';
-interface TrollA { id: string; nombre: string; descripcion: string; precioMinimo: number; activo: boolean; pendiente: boolean; opaca: boolean; foto: string; rostro?: number[] }
+interface TrollA { id: string; nombre: string; descripcion: string; precioMinimo: number; activo: boolean; pendiente: boolean; opaca: boolean; foto: string; rostro?: number[]; carta?: number[] }
 interface JugA { id: string; nombre: string; apellido: string; pos: string; pais: string; rating: number; rareza: string; precioMinimo: number; etiqueta: string; dato: string; fotos: string[]; editado: boolean; propio: boolean }
 interface Plant { id: string; disparador: string; intensidad: number; texto: string; activo: boolean }
 interface Estado { jugadores: JugA[]; trolls: TrollA[]; muestras: boolean; plantillasBase: Plant[]; plantillas: { custom: Plant[]; apagadas: string[] } }
@@ -169,6 +169,7 @@ function TrollCard({ t, api, recargar, avisar }: { t: TrollA } & Omit<Props, 'es
   const [ros, setRos] = useState<number[] | undefined>(t.rostro);
   const [ar, setAr] = useState(1);
   const [enc, setEnc] = useState(false);
+  const [aj, setAj] = useState<number[] | undefined>(t.carta);
   const baseFoto = t.foto.replace(/&r=[^&]*/, '');
   const guardar = async (extra: object = {}) => {
     await api('c/troll/' + t.id, 'PUT', { nombre, descripcion: desc, precioMinimo: precio, ...extra });
@@ -193,7 +194,7 @@ function TrollCard({ t, api, recargar, avisar }: { t: TrollA } & Omit<Props, 'es
       <button className="admin-enc-boton" data-ajustado={ros ? '1' : '0'} onClick={() => setEnc(true)}>
         Vista previa y encuadre{ros ? '' : ' · sin ajustar'}
       </button>
-      {enc && <EncuadreModal nombre={nombre} opaca={t.opaca} baseFoto={baseFoto} ros={ros} setRos={setRos} ar={ar} setAr={setAr} guardar={guardar} cerrar={() => setEnc(false)} />}
+      {enc && <EncuadreModal nombre={nombre} opaca={t.opaca} baseFoto={baseFoto} ros={ros} setRos={setRos} aj={aj} setAj={setAj} ar={ar} setAr={setAr} guardar={guardar} cerrar={() => setEnc(false)} />}
       <div className="admin-fila">
         <button onClick={() => void guardar({ activo: !t.activo })}>{t.activo ? 'Desactivar' : 'Activar'}</button>
         <button onClick={() => foto.current?.click()}>Cambiar foto</button>
@@ -348,12 +349,14 @@ function Mensajes({ est, api, recargar, avisar }: Props) {
 
 // ───────────── Vista previa y encuadre de un troll ─────────────
 
-function EncuadreModal({ nombre, opaca, baseFoto, ros, setRos, ar, setAr, guardar, cerrar }: {
+function EncuadreModal({ nombre, opaca, baseFoto, ros, setRos, aj, setAj, ar, setAr, guardar, cerrar }: {
   nombre: string;
   opaca: boolean;
   baseFoto: string;
   ros: number[] | undefined;
   setRos: (r: number[] | undefined) => void;
+  aj: number[] | undefined;
+  setAj: (a: number[] | undefined) => void;
   ar: number;
   setAr: (a: number) => void;
   guardar: (extra?: object) => Promise<void>;
@@ -423,14 +426,49 @@ function EncuadreModal({ nombre, opaca, baseFoto, ros, setRos, ar, setAr, guarda
               {mostrar('Ficha', 56)}
               {mostrar('Chico', 34)}
             </div>
-            <p>Y cuando sale la carta</p>
+            <p>
+              Y cuando sale la carta <span className="enc-ayuda">arrastra la foto para moverla</span>
+            </p>
             <div className="enc-carta" data-opaca={opaca ? '1' : undefined}>
-              <img src={baseFoto} alt="" />
-              <div>
+              <div
+                className="enc-fig"
+                onPointerDown={(e) => {
+                  const caja = e.currentTarget.getBoundingClientRect();
+                  const ini = { x: e.clientX, y: e.clientY, a: aj ?? [0, 0, 1] };
+                  e.currentTarget.setPointerCapture(e.pointerId);
+                  let ultimo: number[] | undefined;
+                  const mover = (ev: PointerEvent) => {
+                    ultimo = [ini.a[0] + ((ev.clientX - ini.x) / caja.width) * 100, ini.a[1] + ((ev.clientY - ini.y) / caja.height) * 100, ini.a[2]];
+                    setAj(ultimo);
+                  };
+                  const soltar = () => {
+                    removeEventListener('pointermove', mover);
+                    removeEventListener('pointerup', soltar);
+                    if (ultimo) void guardar({ carta: ultimo });
+                  };
+                  addEventListener('pointermove', mover);
+                  addEventListener('pointerup', soltar);
+                }}
+              >
+                <img src={baseFoto} alt="" draggable={false} style={aj ? { translate: `${aj[0]}% ${aj[1]}%`, scale: String(aj[2]) } : undefined} />
+              </div>
+              <div className="enc-placa">
                 <small>Fichaje sorpresa</small>
-                <b>{nombre || 'Sin nombre'}</b>
+                <b style={{ fontSize: `${Math.max(10, Math.min(20, 170 / Math.max(1, (nombre || 'Sin nombre').length)))}px` }}>{nombre || 'Sin nombre'}</b>
               </div>
             </div>
+            <label className="enc-tam">
+              Tamaño de la foto en la carta <span>{Math.round((aj?.[2] ?? 1) * 100)}%</span>
+              <input
+                type="range"
+                min={40}
+                max={220}
+                value={Math.round((aj?.[2] ?? 1) * 100)}
+                onChange={(e) => setAj([aj?.[0] ?? 0, aj?.[1] ?? 0, Number(e.target.value) / 100])}
+                onPointerUp={() => aj && void guardar({ carta: aj })}
+                onKeyUp={() => aj && void guardar({ carta: aj })}
+              />
+            </label>
           </div>
         </div>
         <footer>
@@ -441,7 +479,16 @@ function EncuadreModal({ nombre, opaca, baseFoto, ros, setRos, ar, setAr, guarda
             }}
             disabled={!ros}
           >
-            Quitar encuadre
+            Quitar encuadre de la cara
+          </button>
+          <button
+            onClick={() => {
+              setAj(undefined);
+              void guardar({ carta: null });
+            }}
+            disabled={!aj}
+          >
+            Restablecer la carta
           </button>
           <button className="admin-primario" onClick={cerrar}>
             Listo

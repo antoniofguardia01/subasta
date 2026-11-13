@@ -75,12 +75,6 @@
 .enc-avatares figure { margin: 0; display: grid; justify-items: center; gap: 6px; }
 .enc-avatares figcaption { font-size: 12px; opacity: 0.7; }
 .enc-av { --c: rgba(255, 255, 255, 0.16); }
-.enc-carta { position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: linear-gradient(135deg, #ff7a6b, #d9304a); }
-.enc-carta img { position: absolute; right: 4%; bottom: 0; height: 100%; width: auto; max-width: 60%; object-fit: contain; }
-.enc-carta[data-opaca='1'] img { height: 92%; bottom: 4%; aspect-ratio: 1; object-fit: cover; clip-path: ellipse(44% 52% at 50% 50%); }
-.enc-carta div { position: absolute; left: 6%; top: 18%; padding: 8px 12px; border-radius: 8px; background: #14161a; color: #fff; display: grid; }
-.enc-carta small { font-size: 10px; opacity: 0.7; text-transform: uppercase; }
-.enc-carta b { font-size: 20px; text-transform: uppercase; }
 .enc-caja footer { display: flex; justify-content: space-between; gap: 10px; padding: 12px 18px; border-top: 1px solid rgba(255, 255, 255, 0.12); }
 .enc-caja footer button { padding: 11px 18px; border-radius: 10px; background: rgba(255, 255, 255, 0.12); font-weight: 800; }
 .enc-caja footer button:disabled { opacity: 0.4; }

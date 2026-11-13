@@ -50,6 +50,8 @@ export interface Troll {
   pendiente?: boolean;
   /** Dónde está la cara en la foto: [centro x, centro y, ancho de la cara, ancho/alto de la imagen], todo en fracciones. Sirve para encuadrar el avatar. */
   rostro?: [number, number, number, number];
+  /** Ajuste de la foto dentro de la carta al revelarse: [desplazamiento x %, desplazamiento y %, escala] sobre la caja de la figura. */
+  carta?: [number, number, number];
 }
 
 export interface Ajustes {
@@ -116,6 +118,7 @@ export interface Carta {
   fotoSilueta?: string;
   tokenSilueta?: string;
   marco?: boolean;
+  ajuste?: [number, number, number];
 }
 
 export interface RondaMazo {
@@ -162,6 +165,8 @@ export interface CartaVista {
   pos: Pos;
   hueco: number;
   marco?: boolean;
+  /** Ajuste de la foto (solo trolls): [x %, y %, escala]. */
+  ajuste?: [number, number, number];
 }
 
 export interface FichaEquipo extends CartaVista {

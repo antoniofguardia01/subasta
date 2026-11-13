@@ -327,7 +327,15 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
 
         {carta && (
           <div className="esc-figura">
-            <img className="esc-color" data-marco={rev?.marco ? '1' : undefined} src={rev?.img ?? carta.img} alt="" draggable={false} />
+            <img
+              className="esc-color"
+              data-marco={rev?.marco ? '1' : undefined}
+              data-ajuste={rev?.ajuste ? '1' : undefined}
+              style={rev?.ajuste ? ({ '--ax': `${rev.ajuste[0]}%`, '--ay': `${rev.ajuste[1]}%`, '--as': rev.ajuste[2] } as CSSProperties) : undefined}
+              src={rev?.img ?? carta.img}
+              alt=""
+              draggable={false}
+            />
             <img className="esc-silueta" src={carta.img} alt="" draggable={false} />
             <i className="esc-luz" />
           </div>

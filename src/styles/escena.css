@@ -241,3 +241,6 @@
 .pn-apellido > span { perspective: 400px; }
 .pn-l { display: inline-block; transform-origin: 50% 100%; }
 .esc-martillo-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 12; }
+
+/* Ajuste de la foto del troll dentro de la carta (lo elige el dueño en el panel). Propiedades individuales: no chocan con las animaciones de transform. */
+.esc-color[data-ajuste='1'] { translate: var(--ax) var(--ay); scale: var(--as); transform-origin: 50% 100%; }

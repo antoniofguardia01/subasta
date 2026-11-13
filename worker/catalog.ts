@@ -67,6 +67,13 @@ export class CatalogDO implements DurableObject {
       if ('descripcion' in body) n.descripcion = limpio(body.descripcion, 140);
       if ('precioMinimo' in body) n.precioMinimo = num(body.precioMinimo, 1, 100, 8);
       if ('activo' in body) n.activo = !!body.activo;
+      if ('carta' in body) {
+        const c = body.carta;
+        const ok3 = Array.isArray(c) && c.length === 3 && c.every((x) => typeof x === 'number' && Number.isFinite(x));
+        const lim = (v: number, min: number, max: number) => Math.round(Math.max(min, Math.min(max, v)) * 100) / 100;
+        if (ok3) n.carta = [lim(c[0], -80, 80), lim(c[1], -80, 80), lim(c[2], 0.4, 2.2)];
+        else delete n.carta;
+      }
       if ('rostro' in body) {
         const r = body.rostro;
         const ok4 = Array.isArray(r) && r.length === 4 && r.every((x) => typeof x === 'number' && Number.isFinite(x));
@@ -81,6 +88,7 @@ export class CatalogDO implements DurableObject {
         n.v = Date.now();
         n.opaca = !!body.opaca;
         if (!('rostro' in body)) delete n.rostro; // otra foto: hay que volver a ubicar la cara
+        if (!('carta' in body)) delete n.carta;
       }
       n.pendiente = !n.nombre;
       await s.put(`troll:${t[1]}`, n);

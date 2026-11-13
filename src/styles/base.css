@@ -271,3 +271,16 @@ h1, h2, h3, p { margin: 0; }
 .baraja-sobre { position: absolute; left: 50%; top: 50%; height: 420px; width: auto; margin: -210px 0 0 -160px; z-index: 4; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.6)); }
 .confeti-video { opacity: 0.95; animation: confeti-fuera 5s linear forwards; }
 @keyframes confeti-fuera { 0%, 75% { opacity: 0.95; } 100% { opacity: 0; } }
+
+/* Maqueta de la carta (misma geometría que el juego: figura de 1,125 de proporción a la derecha, placa a la izquierda) */
+.enc-carta { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: linear-gradient(135deg, #ff7a6b, #d9304a); }
+.enc-fig { position: absolute; right: 5%; bottom: 0; height: 97%; aspect-ratio: 1.125; cursor: grab; touch-action: none; }
+.enc-fig:active { cursor: grabbing; }
+.enc-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform-origin: 50% 100%; user-select: none; pointer-events: none; }
+.enc-carta[data-opaca='1'] .enc-fig img { clip-path: ellipse(44% 52% at 50% 50%); }
+.enc-placa { position: absolute; left: 4%; top: 14%; max-width: 46%; padding: 8px 12px; border-radius: 8px; background: #14161a; color: #fff; display: grid; gap: 2px; pointer-events: none; }
+.enc-placa small { font-size: 10px; opacity: 0.7; text-transform: uppercase; }
+.enc-placa b { line-height: 1.05; text-transform: uppercase; overflow-wrap: anywhere; }
+.enc-ayuda { float: right; font-size: 12px; opacity: 0.7; font-weight: 600; }
+.enc-tam { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; font-size: 14px; font-weight: 700; }
+.enc-tam span { float: right; }
