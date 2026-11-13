@@ -84,3 +84,10 @@
 /* Las opciones de los desplegables las pinta el navegador: sin esto salen letras claras sobre fondo claro. */
 .admin select { color-scheme: dark; }
 .admin select option, .admin select optgroup { background-color: #14161a; color: #f2fff6; }
+
+/* Paginación de la lista de jugadores */
+.admin-paginas { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin: 12px 0; font-size: 14px; }
+.admin-paginas button { padding: 8px 14px; border-radius: 10px; background: rgba(127, 127, 127, 0.22); font-weight: 800; }
+.admin-paginas button:disabled { opacity: 0.35; }
+.admin-paginas span { padding: 0 6px; }
+.admin-paginas select { width: auto; min-width: 170px; }

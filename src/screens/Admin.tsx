@@ -213,10 +213,16 @@ function Jugadores({ est, api, recargar, avisar }: Props) {
   const [q, setQ] = useState('');
   const [pos, setPos] = useState('');
   const [nuevo, setNuevo] = useState(false);
+  const [pagina, setPagina] = useState(0);
   const lista = useMemo(() => {
     const n = q.trim().toLowerCase();
-    return est.jugadores.filter((j) => (!pos || j.pos === pos) && (!n || `${j.nombre} ${j.apellido}`.toLowerCase().includes(n))).sort((a, b) => b.precioMinimo - a.precioMinimo);
+    return est.jugadores.filter((j) => (!pos || j.pos === pos) && (!n || `${j.nombre} ${j.apellido}`.toLowerCase().includes(n))).sort((a, b) => b.precioMinimo - a.precioMinimo || `${a.apellido}${a.nombre}`.localeCompare(`${b.apellido}${b.nombre}`));
   }, [est.jugadores, q, pos]);
+  // Al cambiar el filtro se vuelve a la primera página.
+  useEffect(() => setPagina(0), [q, pos]);
+  const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
+  const actual = Math.min(pagina, paginas - 1);
+  const visibles = lista.slice(actual * POR_PAGINA, (actual + 1) * POR_PAGINA);
   return (
     <section>
       <div className="admin-barra">
@@ -229,9 +235,36 @@ function Jugadores({ est, api, recargar, avisar }: Props) {
       </div>
       {nuevo && <NuevoJugador api={api} recargar={async () => (await recargar(), setNuevo(false))} avisar={avisar} />}
       <p className="admin-resumen">{lista.length} jugadores · este es el precio BASE: en cada partida sale con un precio al azar cerca de este (±20% los caros, ±30% los medios), nadie sale por menos de $30M (los más baratos salen entre 30 y 42) y a veces los flojos salen con precio de 50–60 para despistar</p>
-      <div className="admin-tabla">{lista.slice(0, 80).map((j) => <FilaJugador key={j.id + j.precioMinimo + j.fotos[0]} j={j} api={api} recargar={recargar} avisar={avisar} />)}</div>
-      {lista.length > 80 && <p className="admin-resumen">Mostrando 80 de {lista.length}: afina la búsqueda.</p>}
+      <Paginador actual={actual} paginas={paginas} total={lista.length} cambiar={setPagina} />
+      <div className="admin-tabla">{visibles.map((j) => <FilaJugador key={j.id + j.precioMinimo + j.fotos[0]} j={j} api={api} recargar={recargar} avisar={avisar} />)}</div>
+      <Paginador actual={actual} paginas={paginas} total={lista.length} cambiar={(n) => (setPagina(n), scrollTo({ top: 0, behavior: 'smooth' }))} />
     </section>
+  );
+}
+
+const POR_PAGINA = 40;
+
+function Paginador({ actual, paginas, total, cambiar }: { actual: number; paginas: number; total: number; cambiar: (n: number) => void }) {
+  if (paginas <= 1) return null;
+  const desde = actual * POR_PAGINA + 1;
+  const hasta = Math.min(total, (actual + 1) * POR_PAGINA);
+  return (
+    <div className="admin-paginas">
+      <button disabled={actual === 0} onClick={() => cambiar(0)} aria-label="Primera página">«</button>
+      <button disabled={actual === 0} onClick={() => cambiar(actual - 1)}>‹ Anterior</button>
+      <span>
+        Página <b>{actual + 1}</b> de {paginas} · jugadores {desde}–{hasta} de {total}
+      </span>
+      <select value={actual} onChange={(e) => cambiar(Number(e.target.value))} aria-label="Ir a la página">
+        {Array.from({ length: paginas }, (_, i) => (
+          <option key={i} value={i}>
+            Ir a la página {i + 1}
+          </option>
+        ))}
+      </select>
+      <button disabled={actual >= paginas - 1} onClick={() => cambiar(actual + 1)}>Siguiente ›</button>
+      <button disabled={actual >= paginas - 1} onClick={() => cambiar(paginas - 1)} aria-label="Última página">»</button>
+    </div>
   );
 }
 
