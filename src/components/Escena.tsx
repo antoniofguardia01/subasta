@@ -406,11 +406,12 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
           <div className="esc-trago" style={{ '--comprador': comprador.color } as CSSProperties}>
             <img className="esc-trago-copas" src="/img/iconos/trago.webp" alt="" />
             <span className="esc-trago-texto">
-              <small>¡{comprador.nombre} toma!</small>
+              <small>
+                ¡{comprador.nombre} toma! <em>Lleva {carta.tragosTotal ?? carta.tragos}</em>
+              </small>
               <b className="num">
                 {carta.tragos} <i>{carta.tragos === 1 ? 'trago' : 'tragos'}</i>
               </b>
-              <em>Lleva {carta.tragosTotal ?? carta.tragos} en total</em>
             </span>
           </div>
         )}
