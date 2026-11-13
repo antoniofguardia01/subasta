@@ -334,7 +334,6 @@ function Reglas({ sala, s, editable }: { sala: Sala; s: EstadoPublico; editable:
         </button>
       </div>
       <Paso rotulo="Última oportunidad" valor={a.ultimaOportunidad} min={3} max={30} sufijo="s" cambiar={(v) => poner({ ultimaOportunidad: v })} editable={editable} />
-      <Paso rotulo="Picante de las burlas" valor={a.intensidad} min={1} max={3} cambiar={(v) => poner({ intensidad: v as 1 | 2 | 3 })} editable={editable} />
       <div className="regla">
         <span>
           Si nadie oferta, alguien se la lleva

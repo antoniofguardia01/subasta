@@ -83,7 +83,7 @@ export interface Ajustes {
 export const AJUSTES_DEFECTO: Ajustes = {
   presupuesto: 1000,
   incremento: 1,
-  segundos: 15,
+  segundos: 5,
   extra: 1,
   skips: 2,
   trollsMin: 1,
@@ -93,7 +93,7 @@ export const AJUSTES_DEFECTO: Ajustes = {
   ultimaOportunidad: 10,
   forzar: true,
   orden: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-  intensidad: 2,
+  intensidad: 3, // fijo: las burlas siempre van sin filtro (ya no se puede elegir)
   tema: 'estadio',
 };
 

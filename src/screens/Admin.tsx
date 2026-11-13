@@ -299,7 +299,7 @@ function Mensajes({ est, api, recargar, avisar }: Props) {
   const [texto, setTexto] = useState('');
   const [fijo, setFijo] = useState(false);
   const [en, setEn] = useState(0);
-  const [nueva, setNueva] = useState<Plant>({ id: '', disparador: 'vendido', intensidad: 2, texto: '', activo: true });
+  const [nueva, setNueva] = useState<Plant>({ id: '', disparador: 'vendido', intensidad: 3, texto: '', activo: true });
   const apagadas = new Set(est.plantillas.apagadas);
 
   const enviar = async () => {
@@ -324,7 +324,6 @@ function Mensajes({ est, api, recargar, avisar }: Props) {
       <h2>Mis plantillas ({est.plantillas.custom.length})</h2>
       <div className="admin-nuevo">
         <select value={nueva.disparador} onChange={(e) => setNueva({ ...nueva, disparador: e.target.value })}>{DISPARADORES.map((d) => <option key={d}>{d}</option>)}</select>
-        <label>Picante<input type="number" min={1} max={3} value={nueva.intensidad} onChange={(e) => setNueva({ ...nueva, intensidad: Number(e.target.value) })} /></label>
         <input placeholder="Texto con {jugador} {monto} {carta} {rival} {posicion}" value={nueva.texto} onChange={(e) => setNueva({ ...nueva, texto: e.target.value })} />
         <button className="btn btn--acento" disabled={!nueva.texto.trim()} onClick={async () => (await guardar([...est.plantillas.custom, nueva], est.plantillas.apagadas), setNueva({ ...nueva, texto: '' }))}>Guardar plantilla</button>
       </div>

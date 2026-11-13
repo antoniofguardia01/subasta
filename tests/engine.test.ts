@@ -34,7 +34,7 @@ const T = TIEMPOS;
 
 function sala(n: number, ajustes: Partial<Ajustes> = {}, semilla = 42, nTrolls = 30) {
   const p = new Partida('TEST');
-  p.cambiarAjustes(ajustes);
+  p.cambiarAjustes({ segundos: 15, ...ajustes }); // las pruebas de la mecánica usan 15 s; el valor por defecto real es 5 s (ver más abajo)
   for (let i = 0; i < n; i++) expect(p.entrar(`p${i}`, `Jugador ${i}`, 'a').ok).toBe(true);
   let ahora = 1000;
   expect(p.empezar(pool(), trolls(nTrolls), semilla, ahora)).toBe(true);
@@ -230,6 +230,25 @@ describe('mazo', () => {
       for (const r of m.rondas) expect(r.cartas.filter((c) => c.precioMinimo <= UMBRAL_BARATO).length).toBeGreaterThanOrEqual(2);
       expect(pisosDeRonda(m).reduce((x, y) => x + y, 0)).toBeLessThan(AJUSTES_DEFECTO.presupuesto / 2);
     }
+  });
+});
+
+describe('valores fijos y por defecto', () => {
+  it('el tiempo por oferta por defecto es 5 s y el picante de las burlas siempre es 3', () => {
+    expect(AJUSTES_DEFECTO.segundos).toBe(5);
+    expect(AJUSTES_DEFECTO.intensidad).toBe(3);
+    const p = new Partida('FIJO');
+    expect(p.ajustes.segundos).toBe(5);
+    p.cambiarAjustes({ intensidad: 1 });
+    expect(p.ajustes.intensidad).toBe(3); // ya no se puede cambiar
+    p.entrar('a', 'Ana', '');
+    p.entrar('b', 'Beto', '');
+    expect(p.empezar(pool(), trolls(), 3, 1000)).toBe(true);
+    p.cambiarAjustes({ intensidad: 2 }); // ni en plena partida
+    expect(p.ajustes.intensidad).toBe(3);
+    const q = new Partida('REST');
+    q.importar({ ...p.exportar(), ajustes: { ...p.ajustes, intensidad: 1 } }, pool(), trolls(), 2000);
+    expect(q.ajustes.intensidad).toBe(3); // una partida guardada con otro nivel pasa a 3
   });
 });
 

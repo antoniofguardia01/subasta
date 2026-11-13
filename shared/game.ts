@@ -207,7 +207,6 @@ export class Partida {
     if (this.fase !== 'lobby') {
       // En plena partida solo se puede cambiar lo cosmético.
       if (parcial.tema) this.ajustes.tema = parcial.tema;
-      if (parcial.intensidad) this.ajustes.intensidad = parcial.intensidad;
       return;
     }
     const a = { ...this.ajustes, ...parcial };
@@ -225,7 +224,7 @@ export class Partida {
     if ((parcial.trollsMin !== undefined || parcial.trollsMax !== undefined) && parcial.trollsAuto === undefined) a.trollsAuto = false;
     a.ultimaOportunidad = lim(a.ultimaOportunidad, 3, 30);
     a.forzar = !!a.forzar;
-    a.intensidad = lim(a.intensidad, 1, 3) as 1 | 2 | 3;
+    a.intensidad = 3; // las burlas siempre van sin filtro
     const ordenOk =
       Array.isArray(a.orden) && a.orden.length === FORMACION.length && new Set(a.orden).size === FORMACION.length && a.orden.every((n) => n >= 0 && n < FORMACION.length);
     if (!ordenOk) a.orden = [...AJUSTES_DEFECTO.orden];
@@ -750,6 +749,7 @@ export class Partida {
     for (const k of Partida.CAMPOS) if (k in o) (this as Record<string, unknown>)[k] = o[k];
     this.comproEnRonda = new Set((o.comproEnRonda as string[]) ?? []);
     this.secos = new Set((o.secos as string[]) ?? []);
+    this.ajustes.intensidad = 3; // partidas guardadas con otro nivel también pasan a sin filtro
     if (this.mazo) this.reponer = crearReponedor(pool, trolls, this.mazo, this.mazo.semilla);
     // Nadie está conectado todavía, y la fase en curso retoma con un respiro.
     for (const j of this.jugadores) j.conectado = false;
