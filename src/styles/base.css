@@ -314,4 +314,8 @@ h1, h2, h3, p { margin: 0; }
 .cartel-trio img[data-i='0'] { left: -20px; }
 .cartel-trio img[data-i='1'] { margin-left: -300px; }
 .cartel-trio img[data-i='2'] { right: -20px; }
-.placa-nombre[data-tipo='troll'] .pn-etiqueta { display: none; }
+
+
+/* La franja bajo el nombre muestra la frase del panel (dato / descripción), en vez de "COMÚN · ...". */
+.pn-etiqueta { align-items: center; }
+.pn-etiqueta span { font-size: 0.8em; font-weight: 700; font-stretch: 100%; text-transform: none; letter-spacing: 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

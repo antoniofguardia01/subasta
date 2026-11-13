@@ -11,7 +11,6 @@ import { reducirMovimiento, vibrar } from '../lib/util';
 import { Avatar, Fondo, Numero } from './comunes';
 import type { FxApi } from './Fx';
 import type { Tic } from './Reloj';
-import { IconoRareza } from './Iconos';
 
 interface Props {
   sala: Sala;
@@ -254,7 +253,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         // El apellido cae letra por letra, como un marcador que se arma.
         .from(q('.pn-l'), { yPercent: -130, rotationX: 80, opacity: 0, duration: 0.55, ease: 'back.out(2.2)', stagger: 0.035 }, F + 0.5)
         .from(q('.pn-etiqueta'), { scaleX: 0, transformOrigin: '0% 50%', duration: 0.45, ease: 'expo.out' }, F + 0.8)
-        .from(q('.pn-dato, .pn-troll'), { opacity: 0, y: 14, duration: 0.5, ease: 'expo.out' }, F + 1.1)
+        .from(q('.pn-troll'), { opacity: 0, y: 14, duration: 0.5, ease: 'expo.out' }, F + 1.1)
         // El foco se apaga con el destello, los rayos giran (más fuertes cuanto más rara la carta) y la palabra gigante cruza detrás.
         .to(q('.esc-foco'), { opacity: 0, duration: 0.5, ease: 'power2.out' }, F)
         .to(q('.esc-rayos'), { opacity: vendida ? (troll ? 0.5 : [0.45, 0.85, 1][nivel]) : 0.25, duration: 0.6, ease: 'power2.out' }, F + 0.05)
@@ -385,11 +384,9 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
                   </span>
                 </div>
                 <div className="pn-etiqueta">
-                  <i><IconoRareza rareza={rev.rareza} /></i>
-                  <span>{rev.etiqueta}</span>
+                  <span>{rev.dato || rev.etiqueta}</span>
                   {rev.tipo === 'jugador' && <b className="num">{rev.rating}</b>}
                 </div>
-                {rev.dato && <p className="pn-dato">{rev.dato}</p>}
                 {rev.tipo === 'troll' && <span className="pn-troll">{carta?.compradorId ? '¡Caíste!' : '¡Se salvaron!'}</span>}
               </div>
             )}
