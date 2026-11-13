@@ -234,7 +234,7 @@ function Jugadores({ est, api, recargar, avisar }: Props) {
         <button className="btn btn--acento" onClick={() => setNuevo(!nuevo)}>{nuevo ? 'Cerrar' : 'Agregar jugador'}</button>
       </div>
       {nuevo && <NuevoJugador api={api} recargar={async () => (await recargar(), setNuevo(false))} avisar={avisar} />}
-      <p className="admin-resumen">{lista.length} jugadores · este es el precio BASE: en cada partida sale con un precio al azar cerca de este (±20% los caros, ±30% los medios), nadie sale por menos de $30M (los más baratos salen entre 30 y 42) y a veces los flojos salen con precio de 50–60 para despistar</p>
+      <p className="admin-resumen">{lista.length} jugadores · este es el precio BASE: en cada partida sale con un precio al azar cerca de este (±20% los caros, ±30% los medios), nadie sale por menos de $30M (todos los de base bajo 30 salen a $30M exactos) y a veces los flojos salen con precio de 50–60 para despistar</p>
       <Paginador actual={actual} paginas={paginas} total={lista.length} cambiar={setPagina} />
       <div className="admin-tabla">{visibles.map((j) => <FilaJugador key={j.id + j.precioMinimo + j.fotos[0]} j={j} api={api} recargar={recargar} avisar={avisar} />)}</div>
       <Paginador actual={actual} paginas={paginas} total={lista.length} cambiar={(n) => (setPagina(n), scrollTo({ top: 0, behavior: 'smooth' }))} />
@@ -294,7 +294,13 @@ function FilaJugador({ j, api, recargar, avisar }: { j: JugA } & Omit<Props, 'es
       {(j.editado || j.propio) && (
         <button onClick={async () => confirm(j.propio ? '¿Borrar este jugador?' : '¿Volver a los valores originales?') && (await api('c/jugador/' + j.id, 'DELETE'), await recargar())}>{j.propio ? 'Borrar' : 'Restaurar'}</button>
       )}
-      <input ref={foto} type="file" accept="image/*" hidden onChange={async (e) => e.target.files?.[0] && (await guardar({ imagen: (await comprimir(e.target.files[0])).imagen }))} />
+      <input ref={foto} type="file" accept="image/*" hidden onChange={async (e) => {
+          const f = e.target.files?.[0];
+          if (!f) return;
+          const { imagen, opaca } = await comprimir(f);
+          await guardar({ imagen });
+          if (opaca) avisar('⚠ Esa foto tiene fondo: la silueta saldrá como un cuadro blanco. Sube una recortada (sin fondo).');
+        }} />
     </div>
   );
 }
@@ -305,7 +311,9 @@ function NuevoJugador({ api, recargar, avisar }: Omit<Props, 'est'>) {
   const poner = (k: string, v: string | number) => setF((x) => ({ ...x, [k]: v }));
   const crear = async () => {
     if (!archivo) return avisar('Falta la foto (recortada y de frente)');
-    const r = await api('c/jugador', 'POST', { ...f, imagen: (await comprimir(archivo)).imagen });
+    const { imagen, opaca } = await comprimir(archivo);
+    if (opaca && !confirm('Esa foto tiene fondo: la silueta saldrá como un cuadro blanco. ¿Agregarla igual?')) return;
+    const r = await api('c/jugador', 'POST', { ...f, imagen });
     if (r.ok) (avisar('Jugador agregado'), await recargar());
     else avisar(r.error ?? 'No se pudo');
   };

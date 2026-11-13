@@ -182,7 +182,7 @@ describe('mazo', () => {
   it('el precio de cada carta se sortea en una banda alrededor del precio base y cambia entre partidas', () => {
     expect(rangoPrecio({ precioMinimo: 100 })).toEqual([80, 120]);
     expect(rangoPrecio({ precioMinimo: 40 })).toEqual([30, 52]);
-    expect(rangoPrecio({ precioMinimo: 15 })).toEqual([PRECIO_MIN, PRECIO_MIN + 12]);
+    expect(rangoPrecio({ precioMinimo: 15 })).toEqual([PRECIO_MIN, PRECIO_MIN]); // los que valen menos de 30M salen todos a 30M
     expect(rangoPrecio({ precioMinimo: 100, precioRango: [90, 130] })).toEqual([90, 130]);
     expect(rangoPrecio({ precioMinimo: 100, precioRango: [10, 20] })).toEqual([PRECIO_MIN, PRECIO_MIN]); // el piso manda aun con rango a mano
     const base = new Map(pool().map((j) => [j.id, j]));

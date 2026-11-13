@@ -29,8 +29,8 @@ export function rangoPrecio(j: Pick<Jugador, 'precioMinimo' | 'precioRango'>): [
   const r = j.precioRango;
   if (r && r.length === 2 && r[1] >= r[0]) return [Math.max(PRECIO_MIN, Math.round(r[0])), Math.max(PRECIO_MIN, Math.round(r[1]))];
   const base = j.precioMinimo;
-  // Los que valen menos que el piso salen entre el piso y +12M; el resto, en una banda alrededor de su precio base (nunca bajo el piso).
-  if (base < PRECIO_MIN) return [PRECIO_MIN, PRECIO_MIN + 12];
+  // Los que valen menos que el piso salen todos a $30M exactos; el resto, en una banda alrededor de su precio base (nunca bajo el piso).
+  if (base < PRECIO_MIN) return [PRECIO_MIN, PRECIO_MIN];
   const k = base >= 60 ? 0.2 : 0.3;
   return [Math.max(PRECIO_MIN, Math.round(base * (1 - k))), Math.round(base * (1 + k))];
 }
