@@ -19,7 +19,7 @@ interface Env {
   ADMIN_PIN: string;
 }
 
-const TIPOS: Record<string, string> = { html: 'text/html; charset=utf-8', js: 'text/javascript', css: 'text/css', json: 'application/json', svg: 'image/svg+xml', webp: 'image/webp', jpg: 'image/jpeg', png: 'image/png', mp4: 'video/mp4', mp3: 'audio/mpeg', woff2: 'font/woff2' };
+const TIPOS: Record<string, string> = { html: 'text/html; charset=utf-8', js: 'text/javascript', css: 'text/css', json: 'application/json', svg: 'image/svg+xml', webp: 'image/webp', jpg: 'image/jpeg', png: 'image/png', mp4: 'video/mp4', webm: 'video/webm', mp3: 'audio/mpeg', woff2: 'font/woff2' };
 
 /** Sirve un archivo estático: en local desde los assets de wrangler, en producción desde KV. */
 async function servir(env: Env, req: Request): Promise<Response> {
