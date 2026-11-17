@@ -147,6 +147,18 @@
 .imp-anf .btn { flex: 1; font-size: 18px; }
 .imp-anf .btn:not(.btn--acento) { flex: 0 0 auto; background: rgba(255, 255, 255, 0.14); box-shadow: none; }
 
+/* Orden para hablar */
+.imp-orden { width: min(100%, 420px); display: flex; flex-direction: column; gap: 8px; }
+.imp-orden-rotulo { align-self: center; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 12px; border-radius: 20px; background: var(--placa); color: var(--placa-tinta); animation: sube 360ms var(--ease-out) both; }
+.imp-orden ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.imp-orden li { display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 14px 0 6px; border-radius: 14px; background: rgba(8, 10, 9, 0.72); animation: fila-entra 420ms calc(200ms + var(--i) * 90ms) var(--ease-out) both; }
+.imp-orden li i { font-style: normal; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.14); font-size: 20px; font-weight: 900; flex: none; }
+.imp-orden li .avatar { font-size: 38px; }
+.imp-orden li b { flex: 1; min-width: 0; font-size: 20px; font-weight: 900; font-stretch: 75%; text-transform: uppercase; color: var(--c); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.imp-orden li[data-yo] { background: var(--acento); }
+.imp-orden li[data-yo] b, .imp-orden li[data-yo] i { color: var(--acento-tinta); }
+.imp-orden li[data-yo] i { background: rgba(0, 0, 0, 0.14); }
+
 /* Votación */
 .imp-urna { width: min(100%, 460px); display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
 .imp-candidato { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 8px 12px; border-radius: 20px; background: rgba(8, 10, 9, 0.72); border: 3px solid transparent; transition: transform 160ms var(--ease-out), border-color 200ms ease, background-color 200ms ease; animation: ficha-cae 440ms calc(var(--i) * 45ms) var(--ease-rebote) both; }
@@ -322,6 +334,9 @@
 .itv-cara[data-fuera]::after { content: ''; position: absolute; left: 4px; right: 4px; top: 58px; height: 10px; border-radius: 5px; background: var(--imp); transform: rotate(-35deg); }
 .itv-cara[data-marca]::before { content: '✓'; position: absolute; z-index: 2; top: -6px; right: 4px; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--acento); color: var(--acento-tinta); font-size: 30px; font-weight: 900; animation: sello-cae 380ms var(--ease-rebote) both; }
 .itv-cara[data-marca] .avatar { transform: scale(1.06); }
+
+.itv-turno { position: absolute; z-index: 2; top: -8px; left: 2px; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: #fff; color: #14161a; font-style: normal; font-size: 32px; font-weight: 900; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35); animation: sello-cae 420ms calc(500ms + var(--i) * 120ms) var(--ease-rebote) both; }
+.itv-ronda-caras[data-orden] .itv-cara:first-child .itv-turno { background: var(--acento); color: var(--acento-tinta); }
 
 /* Mazo que se reparte */
 .itv-mazo { position: relative; width: 300px; height: 150px; }

@@ -243,16 +243,18 @@ function JuegoTV({ sala, s }: { sala: SalaImp; s: EstadoImp }) {
 const jug = (s: EstadoImp, id: string | null | undefined) => (id ? s.jugadores.find((j) => j.id === id) : undefined);
 
 /** Ronda de caras: los vivos en color, los eliminados apagados y tachados. */
-function Ronda({ s, marca }: { s: EstadoImp; marca?: (id: string) => string | undefined }) {
+function Ronda({ s, marca, orden }: { s: EstadoImp; marca?: (id: string) => string | undefined; orden?: boolean }) {
   const r = s.ronda!;
+  const ids = orden ? r.orden : r.participantes;
   return (
-    <div className="itv-ronda-caras" data-n={r.participantes.length > 8 ? 'muchos' : undefined}>
-      {r.participantes.map((id, i) => {
+    <div className="itv-ronda-caras" data-n={ids.length > 8 ? 'muchos' : undefined} data-orden={orden ? '1' : undefined}>
+      {ids.map((id, i) => {
         const j = jug(s, id);
         if (!j) return null;
         const fuera = !r.vivos.includes(id);
         return (
           <span key={id} className="itv-cara" data-fuera={fuera ? '1' : undefined} data-marca={marca?.(id)} style={{ '--c': j.color, '--i': i } as CSSProperties}>
+            {orden && <i className="itv-turno num">{i + 1}</i>}
             <Avatar src={j.avatar} color={j.color} off={!j.conectado} />
             <b>{j.nombre}</b>
           </span>
@@ -283,15 +285,23 @@ function RepartoTV({ s }: { s: EstadoImp }) {
 function DebateTV({ s }: { s: EstadoImp }) {
   const r = s.ronda!;
   const cosa = s.ajustes.modo === 'clubes' ? 'el club' : 'el jugador';
-  const elim = r.eliminados.length;
+  const ultimo = r.eliminados[r.eliminados.length - 1];
+  const caido = r.votacion > 1 && ultimo && !ultimo.eraImpostor ? jug(s, ultimo.pid) : null;
   return (
     <div className="itv-centro">
       <b className="itv-grande itv-grito">{r.votacion === 1 ? '¡A hablar!' : 'Otra vuelta'}</b>
       <p className="itv-texto">
-        Por turnos, <b>una palabra</b> sobre {cosa}. Sin decir el nombre.
-        {elim > 0 && ` Ya ${elim === 1 ? 'cayó uno' : `cayeron ${elim}`}: el impostor sigue entre ustedes.`}
+        {r.votacion === 1 ? (
+          <>
+            <b>Una palabra</b> cada uno sobre {cosa}, en este orden. Sin decir el nombre.
+          </>
+        ) : (
+          <>
+            {caido && <>{caido.nombre} era inocente. </>}El impostor sigue entre ustedes: <b>otra palabra</b> cada uno, en el mismo orden, y a votar de nuevo.
+          </>
+        )}
       </p>
-      <Ronda s={s} />
+      <Ronda s={s} orden />
     </div>
   );
 }

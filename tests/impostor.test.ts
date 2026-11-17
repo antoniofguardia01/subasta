@@ -67,6 +67,33 @@ describe('Impostor: arranque', () => {
   });
 });
 
+describe('Impostor: orden para hablar', () => {
+  it('cada ronda sortea un orden nuevo con todos los participantes', () => {
+    const p = partida(6, { rondas: 6, adivinar: false });
+    const ordenes = new Set<string>();
+    for (let k = 0; k < 6; k++) {
+      expect([...r(p).orden].sort()).toEqual([...r(p).participantes].sort());
+      ordenes.add(r(p).orden.join(','));
+      aVotar(p, 100 * k);
+      votarA(p, r(p).impostores[0], 100 * k + 1);
+      p.avanzar(p.vence, secretos);
+      p.siguiente(secretos, p.vence);
+    }
+    expect(ordenes.size).toBeGreaterThan(1);
+  });
+
+  it('si sacan a un inocente se sigue en el mismo orden, sin el eliminado', () => {
+    const p = partida(5);
+    const antes = r(p).orden.slice();
+    aVotar(p);
+    const inocente = civiles(p)[0];
+    votarA(p, inocente);
+    p.avanzar(p.vence, secretos);
+    expect(p.fase).toBe('debate');
+    expect(p.vista(null, 20).ronda?.orden).toEqual(antes.filter((x) => x !== inocente));
+  });
+});
+
 describe('Impostor: votación', () => {
   it('no se puede votar a uno mismo ni a un eliminado', () => {
     const p = partida(4);

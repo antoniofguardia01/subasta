@@ -498,11 +498,18 @@ export function MascaraImp() {
 function Debate({ sala, s, yo, vivo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: JugadorImpVista; vivo: boolean; anfitrion: boolean }) {
   const r = s.ronda!;
   const cosa = s.ajustes.modo === 'clubes' ? 'el club' : 'el jugador';
+  const ultimo = r.eliminados[r.eliminados.length - 1];
+  const caido = r.votacion > 1 && ultimo && !ultimo.eraImpostor ? s.jugadores.find((j) => j.id === ultimo.pid) : null;
+  const instr = !vivo
+    ? 'Quedaste afuera de esta ronda. Mira, escucha y no sapees.'
+    : r.votacion === 1
+      ? `Una palabra cada uno sobre ${cosa}, en este orden. Sin decir el nombre.`
+      : `${caido ? `${caido.id === yo.id ? 'Eras' : `${caido.nombre} era`} inocente. ` : ''}El impostor sigue entre ustedes: otra palabra cada uno, en el mismo orden, y a votar de nuevo.`;
   return (
     <div className="imp-debate">
       <b className="imp-gritito">{r.votacion === 1 ? '¡A hablar!' : 'Otra vuelta'}</b>
-      <p className="imp-instr">{vivo ? `Por turnos, una palabra sobre ${cosa}. Sin decir el nombre.` : 'Quedaste afuera de esta ronda. Mira, escucha y no sapees.'}</p>
-      <Vivos s={s} yo={yo.id} />
+      <p className="imp-instr">{instr}</p>
+      <OrdenHablar s={s} yo={yo.id} />
       {anfitrion && (
         <div className="imp-anf">
           <button className="btn btn--acento" onClick={() => (vibrar(20), sala.enviar({ t: 'aVotar' }))}>
@@ -513,6 +520,30 @@ function Debate({ sala, s, yo, vivo, anfitrion }: { sala: SalaImp; s: EstadoImp;
           </button>
         </div>
       )}
+    </div>
+  );
+}
+
+/** Orden para decir la palabra (sorteado en cada ronda; los eliminados ya no aparecen). */
+function OrdenHablar({ s, yo }: { s: EstadoImp; yo: string }) {
+  const r = s.ronda!;
+  const mio = r.orden.indexOf(yo);
+  return (
+    <div className="imp-orden">
+      <span className="imp-orden-rotulo">{mio >= 0 ? `Te toca hablar en el ${mio + 1}.º lugar` : 'Orden para hablar'}</span>
+      <ol>
+        {r.orden.map((id, i) => {
+          const j = s.jugadores.find((x) => x.id === id);
+          if (!j) return null;
+          return (
+            <li key={id} data-yo={id === yo ? '1' : undefined} style={{ '--c': j.color, '--i': i } as CSSProperties}>
+              <i className="num">{i + 1}</i>
+              <Avatar src={j.avatar} color={j.color} off={!j.conectado} />
+              <b>{id === yo ? 'Tú' : j.nombre}</b>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 }

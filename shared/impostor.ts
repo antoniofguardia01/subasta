@@ -104,6 +104,8 @@ interface Ronda {
   secreto: Secreto;
   impostores: string[];
   participantes: string[];
+  /** Orden para decir la palabra: se sortea de nuevo en cada ronda. */
+  orden: string[];
   vivos: string[];
   vistos: string[];
   votacion: number;
@@ -142,6 +144,8 @@ export interface RondaVista {
   n: number;
   nImpostores: number;
   participantes: string[];
+  /** Orden para hablar (solo los que siguen en pie). */
+  orden: string[];
   vivos: string[];
   vistos: string[];
   votacion: number;
@@ -325,11 +329,14 @@ export class PartidaImp {
     const mismos = barajar(() => this.azar(), otros.filter((c) => c.grupo === secreto.grupo));
     const resto = barajar(() => this.azar(), otros.filter((c) => c.grupo !== secreto.grupo));
     const opciones = barajar(() => this.azar(), [secreto, ...[...mismos, ...resto].slice(0, OPCIONES_ADIVINA - 1)]);
+    // Orden para hablar: nuevo en cada ronda (el impostor puede caer en cualquier lugar).
+    const orden = barajar(() => this.azar(), participantes);
     this.ronda = {
       n: this.rondaN,
       secreto,
       impostores,
       participantes,
+      orden,
       vivos: participantes.slice(),
       vistos: [],
       votacion: 1,
@@ -501,6 +508,7 @@ export class PartidaImp {
     if (!r || this.fase === 'lobby' || this.fase === 'final' || this.fase === 'finronda') return;
     const eraImp = r.impostores.includes(id);
     r.participantes = r.participantes.filter((p) => p !== id);
+    if (r.orden) r.orden = r.orden.filter((p) => p !== id);
     r.vivos = r.vivos.filter((p) => p !== id);
     r.vistos = r.vistos.filter((p) => p !== id);
     delete r.votos[id];
@@ -562,6 +570,7 @@ export class PartidaImp {
         n: r.n,
         nImpostores: r.impostores.length,
         participantes: r.participantes,
+        orden: (r.orden ?? r.participantes).filter((p) => r.vivos.includes(p)),
         vivos: r.vivos,
         vistos: r.vistos,
         votacion: r.votacion,
