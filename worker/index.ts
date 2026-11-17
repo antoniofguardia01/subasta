@@ -89,11 +89,12 @@ export default {
     // ── Salas ──
     if (partes[1] === 'salas') {
       if (partes.length === 2 && req.method === 'POST') {
-        const cuerpo = (await req.json().catch(() => ({}))) as { clave?: string };
+        const cuerpo = (await req.json().catch(() => ({}))) as { clave?: string; juego?: string };
+        const juego = cuerpo.juego === 'impostor' ? 'impostor' : 'subasta';
         for (let intento = 0; intento < 8; intento++) {
           const b = crypto.getRandomValues(new Uint8Array(4));
           const codigo = [...b].map((n) => LETRAS[n % LETRAS.length]).join('');
-          const r = await sala(env, codigo).fetch('https://do/crear', { method: 'POST', body: JSON.stringify({ codigo, clave: cuerpo.clave }) });
+          const r = await sala(env, codigo).fetch('https://do/crear', { method: 'POST', body: JSON.stringify({ codigo, clave: cuerpo.clave, juego }) });
           if (r.ok) return json({ codigo });
         }
         return json({ error: 'sin_codigos' }, 503);

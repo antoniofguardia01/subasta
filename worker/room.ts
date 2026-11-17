@@ -7,6 +7,7 @@ import trollsJson from '../data/trolls.json';
 import { CatalogoDatos, jugadoresFinal, plantillasFinal, trollsFinal } from '../shared/catalogo';
 import tickerJson from '../data/ticker.json';
 import type { Recientes } from '../shared/deck';
+import { SalaImpostor } from './impostor';
 
 interface Conexion {
   clave: string;
@@ -32,6 +33,8 @@ export class RoomDO implements DurableObject {
   private codigo = '';
   private guardado: ReturnType<typeof setTimeout> | null = null;
   private cargada = false;
+  /** Si la sala es de Impostor, todo pasa por acá (mismo código, mismo Durable Object). */
+  private impostor: SalaImpostor | null = null;
 
   constructor(
     private state: DurableObjectState,
@@ -64,8 +67,13 @@ export class RoomDO implements DurableObject {
     await this.restaurar();
 
     if (ruta === '/crear' && req.method === 'POST') {
-      if (this.partida) return Response.json({ ok: false }, { status: 409 });
-      const { codigo, clave } = (await req.json()) as { codigo: string; clave?: string };
+      if (this.partida || this.impostor) return Response.json({ ok: false }, { status: 409 });
+      const { codigo, clave, juego } = (await req.json()) as { codigo: string; clave?: string; juego?: string };
+      if (juego === 'impostor') {
+        this.impostor = new SalaImpostor(this.state, this.env, codigo, clave ?? null, () => (this.impostor = null));
+        await this.impostor.iniciar();
+        return Response.json({ ok: true, codigo });
+      }
       this.codigo = codigo;
       this.partida = new Partida(codigo);
       this.claveCreador = clave ?? null;
@@ -75,9 +83,11 @@ export class RoomDO implements DurableObject {
       return Response.json({ ok: true, codigo });
     }
 
+    if (this.impostor) return this.impostor.fetch(req);
+
     if (ruta === '/info') {
       if (!this.partida) return Response.json({ existe: false });
-      return Response.json({ existe: true, fase: this.partida.fase, jugadores: this.partida.jugadores.length });
+      return Response.json({ existe: true, juego: 'subasta', fase: this.partida.fase, jugadores: this.partida.jugadores.length });
     }
 
     if (ruta.startsWith('/foto/')) {
@@ -141,7 +151,9 @@ export class RoomDO implements DurableObject {
   private async restaurar() {
     if (this.cargada) return;
     this.cargada = true;
-    if (this.partida) return;
+    if (this.partida || this.impostor) return;
+    this.impostor = await SalaImpostor.restaurar(this.state, this.env, () => (this.impostor = null));
+    if (this.impostor) return;
     const copia = await this.state.storage.get<{ codigo: string; claveCreador: string | null; cuando: number; datos: Record<string, unknown> }>('partida');
     if (!copia) return;
     if (Date.now() - copia.cuando > 6 * 60 * 60 * 1000) {

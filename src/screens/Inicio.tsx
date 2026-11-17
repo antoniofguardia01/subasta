@@ -9,6 +9,7 @@ import { musica } from '../lib/musica';
 import { TEMAS, aplicarTema, elegirTemaPropio, temaActual } from '../lib/temas';
 import { claveDispositivo, pareceTV, reducirMovimiento, usarFlechas, vibrar } from '../lib/util';
 import { IconoSonido } from '../components/Iconos';
+import { recordarJuego, type Juego } from '../lib/juego';
 
 const TITULARES = [
   'Bienvenidos a la Subasta Futbolera: 1000 millones por cabeza y once huecos que llenar',
@@ -29,7 +30,7 @@ export function Inicio() {
   const raiz = useRef<HTMLDivElement>(null);
   const fx = useRef<FxApi>(null);
   const video = useRef<HTMLVideoElement>(null);
-  const [modo, setModo] = useState<'menu' | 'codigo'>('menu');
+  const [modo, setModo] = useState<'menu' | 'codigo' | 'juego'>('menu');
   const [letras, setLetras] = useState('');
   const [estado, setEstado] = useState<'idle' | 'buscando' | 'ok' | 'mal'>('idle');
   const [creando, setCreando] = useState(false);
@@ -153,15 +154,16 @@ export function Inicio() {
     };
   }, []);
 
-  const crear = async (e: React.MouseEvent) => {
+  const crear = async (e: React.MouseEvent, juego: Juego) => {
     if (creando) return;
     const origen = centro(e.currentTarget);
     setCreando(true);
     vibrar(20);
     try {
-      const r = await fetch('/api/salas', { method: 'POST', body: JSON.stringify({ clave: claveDispositivo() }) });
+      const r = await fetch('/api/salas', { method: 'POST', body: JSON.stringify({ clave: claveDispositivo(), juego }) });
       const d = (await r.json()) as { codigo: string };
       if (!d.codigo) throw new Error('sin código');
+      recordarJuego(d.codigo, juego);
       sonar.barrido();
       await irConTelon(`/r/${d.codigo}`, { origen, cartel: d.codigo });
     } catch {
@@ -255,8 +257,8 @@ export function Inicio() {
 
         <div className="inicio-menu">
           <div className="ini-panel" data-on={modo === 'menu' ? '1' : '0'}>
-            <button className="btn btn--acento ini-btn ini-entra" onClick={crear} disabled={creando} autoFocus={!tele}>
-              {creando ? 'Armando la sala…' : 'Crear sala'}
+            <button className="btn btn--acento ini-btn ini-entra" onClick={() => (vibrar(10), sonar.toque(), setModo('juego'))} autoFocus={!tele}>
+              Crear sala
             </button>
             <button className="btn ini-btn ini-entra" onClick={abrirCodigo}>
               Unirme con código
@@ -269,6 +271,34 @@ export function Inicio() {
             >
               Modo TV
               {tele && <small>Parece que esto es una tele: pulsa OK</small>}
+            </button>
+          </div>
+
+          <div className="ini-panel ini-panel--juego" data-on={modo === 'juego' ? '1' : '0'}>
+            <span className="ini-rotulo">¿A qué jugamos?</span>
+            <button className="ini-juego" data-juego="subasta" onClick={(e) => void crear(e, 'subasta')} disabled={creando} tabIndex={modo === 'juego' ? 0 : -1}>
+              <img src="/img/iconos/sobre.webp" alt="" />
+              <span>
+                <b>Subasta</b>
+                <small>Arma tu once con 1000 millones. Cuidado con los trolls.</small>
+              </span>
+            </button>
+            <button className="ini-juego" data-juego="impostor" onClick={(e) => void crear(e, 'impostor')} disabled={creando} tabIndex={modo === 'juego' ? 0 : -1}>
+              <i className="ini-juego-mascara" aria-hidden>
+                <svg viewBox="0 0 120 80">
+                  <path d="M8 18 C30 4 90 4 112 18 C114 44 100 70 76 70 C68 70 64 58 60 58 C56 58 52 70 44 70 C20 70 6 44 8 18 Z" fill="currentColor" />
+                  <ellipse cx="38" cy="34" rx="15" ry="10" fill="#14161a" />
+                  <ellipse cx="82" cy="34" rx="15" ry="10" fill="#14161a" />
+                </svg>
+              </i>
+              <span>
+                <b>El Impostor</b>
+                <small>Todos saben quién es. Menos uno. Futbolistas o clubes.</small>
+              </span>
+            </button>
+            {creando && <span className="ini-estado">Armando la sala…</span>}
+            <button className="btn btn--linea ini-volver" onClick={() => setModo('menu')} tabIndex={modo === 'juego' ? 0 : -1}>
+              Volver
             </button>
           </div>
 

@@ -18,7 +18,7 @@ import { useEquipoEnPantalla } from '../lib/vistaFinal';
 import { IconoCerrar, IconoLapiz, IconoMenos } from '../components/Iconos';
 import { Escaner, hayCamara } from '../components/Escaner';
 
-interface AvatarDato {
+export interface AvatarDato {
   id: string;
   nombre: string;
   foto: string;
@@ -81,7 +81,7 @@ export function Jugador({ codigo }: { codigo: string }) {
   );
 }
 
-function Capa({ on, children }: { on: boolean; children: React.ReactNode }) {
+export function Capa({ on, children }: { on: boolean; children: React.ReactNode }) {
   return (
     <div className="m-capa" data-on={on ? '1' : '0'}>
       {children}
@@ -276,7 +276,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   );
 }
 
-function Paso({ rotulo, valor, min, max, paso = 1, sufijo = '', cambiar, editable }: { rotulo: string; valor: number; min: number; max: number; paso?: number; sufijo?: string; cambiar: (v: number) => void; editable: boolean }) {
+export function Paso({ rotulo, valor, min, max, paso = 1, sufijo = '', cambiar, editable }: { rotulo: string; valor: number; min: number; max: number; paso?: number; sufijo?: string; cambiar: (v: number) => void; editable: boolean }) {
   return (
     <div className="regla">
       <span>{rotulo}</span>
@@ -362,7 +362,8 @@ function Reglas({ sala, s, editable }: { sala: Sala; s: EstadoPublico; editable:
   );
 }
 
-function SelectorTema({ sala, s, anfitrion }: { sala: Sala; s: EstadoPublico; anfitrion: boolean }) {
+/** Sirve para los dos juegos: solo usa el tema de la sala y el mensaje de ajustes. */
+export function SelectorTema({ sala, s, anfitrion }: { sala: { enviar(m: { t: 'ajustes'; ajustes: { tema: string } }): void }; s: { ajustes: { tema: string } }; anfitrion: boolean }) {
   const [propio, setPropio] = useState(temaPropio());
   const elegir = (id: string) => {
     vibrar(10);
@@ -412,7 +413,7 @@ function SelectorTema({ sala, s, anfitrion }: { sala: Sala; s: EstadoPublico; an
 // El `confirm()` del navegador falla a veces (pantalla completa, navegadores dentro de otras apps, diálogos bloqueados):
 // devuelve "no" sin mostrar nada y el botón parece muerto. Esto lo reemplaza con un segundo toque.
 
-function BotonConfirmar({ className, etiqueta, aviso, alConfirmar }: { className: string; etiqueta: string; aviso: string; alConfirmar: (e: React.MouseEvent) => void }) {
+export function BotonConfirmar({ className, etiqueta, aviso, alConfirmar }: { className: string; etiqueta: string; aviso: string; alConfirmar: (e: React.MouseEvent) => void }) {
   const [armado, setArmado] = useState(false);
   useEffect(() => {
     if (!armado) return;
@@ -445,7 +446,7 @@ interface TvGuardada {
   nombre: string;
 }
 
-function ConectarTV({ codigo }: { codigo: string }) {
+export function ConectarTV({ codigo }: { codigo: string }) {
   const [tvs, setTvs] = useState<TvGuardada[]>(leer('tvs', []));
   const [enLinea, setEnLinea] = useState<Record<string, boolean>>({});
   const [letras, setLetras] = useState('');
@@ -589,7 +590,7 @@ function ConectarTV({ codigo }: { codigo: string }) {
 
 // ───────────── Hoja inferior ─────────────
 
-function Hoja({ on, titulo, cerrar, children }: { on: boolean; titulo: string; cerrar: () => void; children: React.ReactNode }) {
+export function Hoja({ on, titulo, cerrar, children }: { on: boolean; titulo: string; cerrar: () => void; children: React.ReactNode }) {
   return (
     <div className="hoja" data-on={on ? '1' : '0'} aria-hidden={!on}>
       <div className="hoja-velo" onClick={cerrar} />

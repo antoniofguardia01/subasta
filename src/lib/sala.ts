@@ -6,23 +6,29 @@ import { claveDispositivo } from './util';
 
 export type Conexion = 'conectando' | 'ok' | 'reconectando' | 'sin_sala' | 'expulsado';
 
-export interface VistaSala {
+/** Lo mínimo que tiene que tener el estado de cualquier juego (subasta o impostor). */
+export interface EstadoBase {
+  ajustes: { tema: string };
+  anfitrionId: string | null;
+}
+
+export interface VistaSala<E extends EstadoBase = EstadoPublico> {
   conexion: Conexion;
-  estado: EstadoPublico | null;
+  estado: E | null;
   tu: string | null;
   anfitrion: boolean;
   error: { codigo: string; texto: string; n: number } | null;
 }
 
-type OyenteEvento = (ev: Evento, estado: EstadoPublico) => void;
+type OyenteEvento<E = EstadoPublico> = (ev: Evento, estado: E) => void;
 
-export class Sala {
-  vista: VistaSala = { conexion: 'conectando', estado: null, tu: null, anfitrion: false, error: null };
+export class Sala<E extends EstadoBase = EstadoPublico, C = MsgCliente> {
+  vista: VistaSala<E> = { conexion: 'conectando', estado: null, tu: null, anfitrion: false, error: null };
   /** Diferencia entre el reloj del servidor y el local (ms). */
   desfase = 0;
   private ws: WebSocket | null = null;
   private oyentes = new Set<() => void>();
-  private oyentesEv = new Set<OyenteEvento>();
+  private oyentesEv = new Set<OyenteEvento<E>>();
   private intentos = 0;
   private cerrada = false;
   private latido: ReturnType<typeof setInterval> | null = null;
@@ -46,7 +52,7 @@ export class Sala {
     }
   };
 
-  private poner(parcial: Partial<VistaSala>) {
+  private poner(parcial: Partial<VistaSala<E>>) {
     this.vista = { ...this.vista, ...parcial };
     this.oyentes.forEach((f) => f());
   }
@@ -64,13 +70,13 @@ export class Sala {
     ws.onopen = () => {
       this.intentos = 0;
       this.mejorIda = Infinity;
-      this.enviar({ t: 'hola', clave: claveDispositivo(), rol: this.rol });
+      this.mandar({ t: 'hola', clave: claveDispositivo(), rol: this.rol });
       this.ping();
       if (this.latido) clearInterval(this.latido);
       this.latido = setInterval(() => this.ping(), 4000);
     };
     ws.onmessage = (ev) => {
-      let msg: MsgServidor;
+      let msg: MsgServidor | { t: 'estado'; s: E; ev: Evento[]; ahora: number };
       try {
         msg = JSON.parse(ev.data);
       } catch {
@@ -88,8 +94,9 @@ export class Sala {
         this.poner({ tu: msg.tu, anfitrion: msg.anfitrion, conexion: 'ok' });
       } else if (msg.t === 'estado') {
         aplicarTemaDeSala(msg.s.ajustes.tema);
-        this.poner({ estado: msg.s, conexion: 'ok', anfitrion: !!this.vista.tu && msg.s.anfitrionId === this.vista.tu });
-        for (const e of msg.ev) this.oyentesEv.forEach((f) => f(e, msg.s));
+        const s = msg.s as E;
+        this.poner({ estado: s, conexion: 'ok', anfitrion: !!this.vista.tu && s.anfitrionId === this.vista.tu });
+        for (const e of msg.ev) this.oyentesEv.forEach((f) => f(e, s));
       } else if (msg.t === 'error') {
         if (msg.codigo === 'expulsado') {
           this.cerrada = true;
@@ -134,11 +141,15 @@ export class Sala {
   }
 
   private ping() {
-    this.enviar({ t: 'ping', t0: Date.now() });
+    this.mandar({ t: 'ping', t0: Date.now() });
   }
 
-  enviar(msg: MsgCliente) {
+  private mandar(msg: unknown) {
     if (this.ws?.readyState === 1) this.ws.send(JSON.stringify(msg));
+  }
+
+  enviar(msg: C) {
+    this.mandar(msg);
   }
 
   ahora() {
@@ -152,7 +163,7 @@ export class Sala {
     };
   };
 
-  alEvento(f: OyenteEvento) {
+  alEvento(f: OyenteEvento<E>) {
     this.oyentesEv.add(f);
     return () => {
       this.oyentesEv.delete(f);
@@ -168,17 +179,18 @@ export class Sala {
   }
 }
 
-const salas = new Map<string, { sala: Sala; usos: number }>();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const salas = new Map<string, { sala: Sala<any, any>; usos: number }>();
 
 /** Hook: se conecta a una sala (una sola conexión por código+rol aunque varios componentes la usen). */
-export function useSala(codigo: string, rol: 'jugador' | 'escenario'): [Sala, VistaSala] {
+export function useSala<E extends EstadoBase = EstadoPublico, C = MsgCliente>(codigo: string, rol: 'jugador' | 'escenario'): [Sala<E, C>, VistaSala<E>] {
   const k = `${codigo}:${rol}`;
   let entrada = salas.get(k);
   if (!entrada) {
-    entrada = { sala: new Sala(codigo, rol), usos: 0 };
+    entrada = { sala: new Sala<E, C>(codigo, rol), usos: 0 };
     salas.set(k, entrada);
   }
-  const sala = entrada.sala;
+  const sala = entrada.sala as Sala<E, C>;
   useEffect(() => {
     const e = salas.get(k)!;
     e.usos++;
@@ -197,6 +209,6 @@ export function useSala(codigo: string, rol: 'jugador' | 'escenario'): [Sala, Vi
   return [sala, vista];
 }
 
-export function useEventos(sala: Sala, f: OyenteEvento) {
+export function useEventos<E extends EstadoBase>(sala: Sala<E, unknown>, f: OyenteEvento<E>) {
   useEffect(() => sala.alEvento(f), [sala, f]);
 }

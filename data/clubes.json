@@ -1,0 +1,1120 @@
+[
+ {
+  "id": "real-madrid",
+  "nombre": "Real Madrid",
+  "sigla": "RMA",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#ffffff",
+   "#1b2a6b"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Merengues"
+ },
+ {
+  "id": "fc-barcelona",
+  "nombre": "FC Barcelona",
+  "sigla": "FCB",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#a50044",
+   "#004d98"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Culés"
+ },
+ {
+  "id": "atletico-de-madrid",
+  "nombre": "Atlético de Madrid",
+  "sigla": "ATM",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#cb3524",
+   "#ffffff"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Colchoneros"
+ },
+ {
+  "id": "sevilla-fc",
+  "nombre": "Sevilla FC",
+  "sigla": "SEV",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#ffffff",
+   "#d4011d"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Nervionenses"
+ },
+ {
+  "id": "real-betis",
+  "nombre": "Real Betis",
+  "sigla": "BET",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#0bb363",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Verdiblancos"
+ },
+ {
+  "id": "valencia-cf",
+  "nombre": "Valencia CF",
+  "sigla": "VCF",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#ffffff",
+   "#ee3524"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Che"
+ },
+ {
+  "id": "athletic-club",
+  "nombre": "Athletic Club",
+  "sigla": "ATH",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#ee2523",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Leones"
+ },
+ {
+  "id": "villarreal-cf",
+  "nombre": "Villarreal CF",
+  "sigla": "VIL",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#ffe667",
+   "#005187"
+  ],
+  "dificultad": 3,
+  "apodo": "El Submarino Amarillo"
+ },
+ {
+  "id": "real-sociedad",
+  "nombre": "Real Sociedad",
+  "sigla": "RSO",
+  "pais": "España",
+  "liga": "LaLiga",
+  "colores": [
+   "#0067b1",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "La Real"
+ },
+ {
+  "id": "manchester-united",
+  "nombre": "Manchester United",
+  "sigla": "MUN",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#da291c",
+   "#000000"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Diablos Rojos"
+ },
+ {
+  "id": "manchester-city",
+  "nombre": "Manchester City",
+  "sigla": "MCI",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#6cabdd",
+   "#1c2c5b"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Citizens"
+ },
+ {
+  "id": "liverpool",
+  "nombre": "Liverpool",
+  "sigla": "LIV",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#c8102e",
+   "#00b2a9"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Reds"
+ },
+ {
+  "id": "chelsea",
+  "nombre": "Chelsea",
+  "sigla": "CHE",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#034694",
+   "#ffffff"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Blues"
+ },
+ {
+  "id": "arsenal",
+  "nombre": "Arsenal",
+  "sigla": "ARS",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#ef0107",
+   "#ffffff"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Gunners"
+ },
+ {
+  "id": "tottenham-hotspur",
+  "nombre": "Tottenham Hotspur",
+  "sigla": "TOT",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#ffffff",
+   "#132257"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Spurs"
+ },
+ {
+  "id": "newcastle-united",
+  "nombre": "Newcastle United",
+  "sigla": "NEW",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#000000",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Las Urracas"
+ },
+ {
+  "id": "aston-villa",
+  "nombre": "Aston Villa",
+  "sigla": "AVL",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#670e36",
+   "#95bfe5"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Villanos"
+ },
+ {
+  "id": "west-ham-united",
+  "nombre": "West Ham United",
+  "sigla": "WHU",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#7a263a",
+   "#1bb1e7"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Martillos"
+ },
+ {
+  "id": "everton",
+  "nombre": "Everton",
+  "sigla": "EVE",
+  "pais": "Inglaterra",
+  "liga": "Premier League",
+  "colores": [
+   "#003399",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Toffees"
+ },
+ {
+  "id": "bayern-munich",
+  "nombre": "Bayern Múnich",
+  "sigla": "FCB",
+  "pais": "Alemania",
+  "liga": "Bundesliga",
+  "colores": [
+   "#dc052d",
+   "#0066b2"
+  ],
+  "dificultad": 1,
+  "apodo": "El Gigante de Baviera"
+ },
+ {
+  "id": "borussia-dortmund",
+  "nombre": "Borussia Dortmund",
+  "sigla": "BVB",
+  "pais": "Alemania",
+  "liga": "Bundesliga",
+  "colores": [
+   "#fde100",
+   "#000000"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Abejorros"
+ },
+ {
+  "id": "bayer-leverkusen",
+  "nombre": "Bayer Leverkusen",
+  "sigla": "B04",
+  "pais": "Alemania",
+  "liga": "Bundesliga",
+  "colores": [
+   "#e32221",
+   "#000000"
+  ],
+  "dificultad": 2,
+  "apodo": "Las Aspirinas"
+ },
+ {
+  "id": "rb-leipzig",
+  "nombre": "RB Leipzig",
+  "sigla": "RBL",
+  "pais": "Alemania",
+  "liga": "Bundesliga",
+  "colores": [
+   "#ffffff",
+   "#dd0741"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Toros Rojos"
+ },
+ {
+  "id": "schalke-04",
+  "nombre": "Schalke 04",
+  "sigla": "S04",
+  "pais": "Alemania",
+  "liga": "Bundesliga",
+  "colores": [
+   "#004d9d",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Mineros"
+ },
+ {
+  "id": "juventus",
+  "nombre": "Juventus",
+  "sigla": "JUV",
+  "pais": "Italia",
+  "liga": "Serie A",
+  "colores": [
+   "#000000",
+   "#ffffff"
+  ],
+  "dificultad": 1,
+  "apodo": "La Vecchia Signora"
+ },
+ {
+  "id": "ac-milan",
+  "nombre": "AC Milan",
+  "sigla": "MIL",
+  "pais": "Italia",
+  "liga": "Serie A",
+  "colores": [
+   "#fb090b",
+   "#000000"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Rossoneri"
+ },
+ {
+  "id": "inter-de-milan",
+  "nombre": "Inter de Milán",
+  "sigla": "INT",
+  "pais": "Italia",
+  "liga": "Serie A",
+  "colores": [
+   "#010e80",
+   "#000000"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Nerazzurri"
+ },
+ {
+  "id": "napoli",
+  "nombre": "Napoli",
+  "sigla": "NAP",
+  "pais": "Italia",
+  "liga": "Serie A",
+  "colores": [
+   "#12a0d7",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Partenopei"
+ },
+ {
+  "id": "as-roma",
+  "nombre": "AS Roma",
+  "sigla": "ROM",
+  "pais": "Italia",
+  "liga": "Serie A",
+  "colores": [
+   "#8e1f2f",
+   "#f0bc42"
+  ],
+  "dificultad": 2,
+  "apodo": "La Loba"
+ },
+ {
+  "id": "lazio",
+  "nombre": "Lazio",
+  "sigla": "LAZ",
+  "pais": "Italia",
+  "liga": "Serie A",
+  "colores": [
+   "#87d8f7",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Las Águilas"
+ },
+ {
+  "id": "atalanta",
+  "nombre": "Atalanta",
+  "sigla": "ATA",
+  "pais": "Italia",
+  "liga": "Serie A",
+  "colores": [
+   "#1e71b8",
+   "#000000"
+  ],
+  "dificultad": 3,
+  "apodo": "La Dea"
+ },
+ {
+  "id": "paris-saint-germain",
+  "nombre": "Paris Saint-Germain",
+  "sigla": "PSG",
+  "pais": "Francia",
+  "liga": "Ligue 1",
+  "colores": [
+   "#004170",
+   "#da291c"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Parisinos"
+ },
+ {
+  "id": "olympique-de-marsella",
+  "nombre": "Olympique de Marsella",
+  "sigla": "OM",
+  "pais": "Francia",
+  "liga": "Ligue 1",
+  "colores": [
+   "#2faee0",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Focenses"
+ },
+ {
+  "id": "olympique-de-lyon",
+  "nombre": "Olympique de Lyon",
+  "sigla": "OL",
+  "pais": "Francia",
+  "liga": "Ligue 1",
+  "colores": [
+   "#ffffff",
+   "#da0812"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Gones"
+ },
+ {
+  "id": "as-monaco",
+  "nombre": "AS Mónaco",
+  "sigla": "ASM",
+  "pais": "Francia",
+  "liga": "Ligue 1",
+  "colores": [
+   "#e51b22",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Monegascos"
+ },
+ {
+  "id": "ajax",
+  "nombre": "Ajax",
+  "sigla": "AJA",
+  "pais": "Países Bajos",
+  "liga": "Eredivisie",
+  "colores": [
+   "#d2122e",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Hijos de los Dioses"
+ },
+ {
+  "id": "psv-eindhoven",
+  "nombre": "PSV Eindhoven",
+  "sigla": "PSV",
+  "pais": "Países Bajos",
+  "liga": "Eredivisie",
+  "colores": [
+   "#ed1c24",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Granjeros"
+ },
+ {
+  "id": "feyenoord",
+  "nombre": "Feyenoord",
+  "sigla": "FEY",
+  "pais": "Países Bajos",
+  "liga": "Eredivisie",
+  "colores": [
+   "#ed1c24",
+   "#000000"
+  ],
+  "dificultad": 3,
+  "apodo": "El Club del Pueblo"
+ },
+ {
+  "id": "benfica",
+  "nombre": "Benfica",
+  "sigla": "SLB",
+  "pais": "Portugal",
+  "liga": "Primeira Liga",
+  "colores": [
+   "#e83030",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Las Águilas"
+ },
+ {
+  "id": "fc-porto",
+  "nombre": "FC Porto",
+  "sigla": "FCP",
+  "pais": "Portugal",
+  "liga": "Primeira Liga",
+  "colores": [
+   "#003893",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Dragones"
+ },
+ {
+  "id": "sporting-de-lisboa",
+  "nombre": "Sporting de Lisboa",
+  "sigla": "SCP",
+  "pais": "Portugal",
+  "liga": "Primeira Liga",
+  "colores": [
+   "#00805f",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Leones"
+ },
+ {
+  "id": "celtic",
+  "nombre": "Celtic",
+  "sigla": "CEL",
+  "pais": "Escocia",
+  "liga": "Premiership",
+  "colores": [
+   "#018749",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Bhoys"
+ },
+ {
+  "id": "rangers",
+  "nombre": "Rangers",
+  "sigla": "RAN",
+  "pais": "Escocia",
+  "liga": "Premiership",
+  "colores": [
+   "#1b458f",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Gers"
+ },
+ {
+  "id": "galatasaray",
+  "nombre": "Galatasaray",
+  "sigla": "GS",
+  "pais": "Turquía",
+  "liga": "Süper Lig",
+  "colores": [
+   "#a90432",
+   "#fdb912"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Leones"
+ },
+ {
+  "id": "fenerbahce",
+  "nombre": "Fenerbahçe",
+  "sigla": "FB",
+  "pais": "Turquía",
+  "liga": "Süper Lig",
+  "colores": [
+   "#163962",
+   "#ffed00"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Canarios"
+ },
+ {
+  "id": "al-nassr",
+  "nombre": "Al-Nassr",
+  "sigla": "NAS",
+  "pais": "Arabia Saudita",
+  "liga": "Saudi Pro League",
+  "colores": [
+   "#fcd116",
+   "#1b3c8c"
+  ],
+  "dificultad": 2,
+  "apodo": "El Sol"
+ },
+ {
+  "id": "al-hilal",
+  "nombre": "Al-Hilal",
+  "sigla": "HIL",
+  "pais": "Arabia Saudita",
+  "liga": "Saudi Pro League",
+  "colores": [
+   "#1b3c8c",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "El Líder"
+ },
+ {
+  "id": "inter-miami",
+  "nombre": "Inter Miami",
+  "sigla": "MIA",
+  "pais": "Estados Unidos",
+  "liga": "MLS",
+  "colores": [
+   "#f7b5cd",
+   "#231f20"
+  ],
+  "dificultad": 1,
+  "apodo": "Las Garzas"
+ },
+ {
+  "id": "la-galaxy",
+  "nombre": "LA Galaxy",
+  "sigla": "LAG",
+  "pais": "Estados Unidos",
+  "liga": "MLS",
+  "colores": [
+   "#00245d",
+   "#ffd200"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Galácticos"
+ },
+ {
+  "id": "boca-juniors",
+  "nombre": "Boca Juniors",
+  "sigla": "BOC",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#1a3a8a",
+   "#f9c800"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Xeneizes"
+ },
+ {
+  "id": "river-plate",
+  "nombre": "River Plate",
+  "sigla": "RIV",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#ffffff",
+   "#e30613"
+  ],
+  "dificultad": 1,
+  "apodo": "Los Millonarios"
+ },
+ {
+  "id": "racing-club",
+  "nombre": "Racing Club",
+  "sigla": "RAC",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#6ab4e6",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "La Academia"
+ },
+ {
+  "id": "independiente",
+  "nombre": "Independiente",
+  "sigla": "IND",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#e2001a",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Diablos Rojos"
+ },
+ {
+  "id": "san-lorenzo",
+  "nombre": "San Lorenzo",
+  "sigla": "SLO",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#1d2e6b",
+   "#c8102e"
+  ],
+  "dificultad": 2,
+  "apodo": "El Ciclón"
+ },
+ {
+  "id": "estudiantes-de-la-plata",
+  "nombre": "Estudiantes de La Plata",
+  "sigla": "EDL",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#e30613",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Pincharratas"
+ },
+ {
+  "id": "velez-sarsfield",
+  "nombre": "Vélez Sarsfield",
+  "sigla": "VEL",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#ffffff",
+   "#1d3b8a"
+  ],
+  "dificultad": 3,
+  "apodo": "El Fortín"
+ },
+ {
+  "id": "rosario-central",
+  "nombre": "Rosario Central",
+  "sigla": "CEN",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#0057b8",
+   "#ffd100"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Canallas"
+ },
+ {
+  "id": "newell-s-old-boys",
+  "nombre": "Newell's Old Boys",
+  "sigla": "NOB",
+  "pais": "Argentina",
+  "liga": "Liga Profesional",
+  "colores": [
+   "#e2001a",
+   "#000000"
+  ],
+  "dificultad": 3,
+  "apodo": "La Lepra"
+ },
+ {
+  "id": "flamengo",
+  "nombre": "Flamengo",
+  "sigla": "FLA",
+  "pais": "Brasil",
+  "liga": "Brasileirão",
+  "colores": [
+   "#c4161c",
+   "#000000"
+  ],
+  "dificultad": 1,
+  "apodo": "El Mengão"
+ },
+ {
+  "id": "palmeiras",
+  "nombre": "Palmeiras",
+  "sigla": "PAL",
+  "pais": "Brasil",
+  "liga": "Brasileirão",
+  "colores": [
+   "#006437",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "El Verdão"
+ },
+ {
+  "id": "corinthians",
+  "nombre": "Corinthians",
+  "sigla": "COR",
+  "pais": "Brasil",
+  "liga": "Brasileirão",
+  "colores": [
+   "#ffffff",
+   "#000000"
+  ],
+  "dificultad": 2,
+  "apodo": "El Timão"
+ },
+ {
+  "id": "sao-paulo",
+  "nombre": "São Paulo",
+  "sigla": "SAO",
+  "pais": "Brasil",
+  "liga": "Brasileirão",
+  "colores": [
+   "#ffffff",
+   "#e2231a"
+  ],
+  "dificultad": 2,
+  "apodo": "El Tricolor"
+ },
+ {
+  "id": "santos",
+  "nombre": "Santos",
+  "sigla": "SAN",
+  "pais": "Brasil",
+  "liga": "Brasileirão",
+  "colores": [
+   "#ffffff",
+   "#000000"
+  ],
+  "dificultad": 2,
+  "apodo": "El Peixe"
+ },
+ {
+  "id": "fluminense",
+  "nombre": "Fluminense",
+  "sigla": "FLU",
+  "pais": "Brasil",
+  "liga": "Brasileirão",
+  "colores": [
+   "#7a0026",
+   "#006140"
+  ],
+  "dificultad": 3,
+  "apodo": "El Flu"
+ },
+ {
+  "id": "gremio",
+  "nombre": "Grêmio",
+  "sigla": "GRE",
+  "pais": "Brasil",
+  "liga": "Brasileirão",
+  "colores": [
+   "#0d80bf",
+   "#000000"
+  ],
+  "dificultad": 3,
+  "apodo": "El Inmortal"
+ },
+ {
+  "id": "vasco-da-gama",
+  "nombre": "Vasco da Gama",
+  "sigla": "VAS",
+  "pais": "Brasil",
+  "liga": "Brasileirão",
+  "colores": [
+   "#000000",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "El Gigante de la Colina"
+ },
+ {
+  "id": "penarol",
+  "nombre": "Peñarol",
+  "sigla": "PEÑ",
+  "pais": "Uruguay",
+  "liga": "Primera División",
+  "colores": [
+   "#fdd116",
+   "#000000"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Carboneros"
+ },
+ {
+  "id": "nacional",
+  "nombre": "Nacional",
+  "sigla": "NAC",
+  "pais": "Uruguay",
+  "liga": "Primera División",
+  "colores": [
+   "#ffffff",
+   "#0f2d6b"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Tricolores"
+ },
+ {
+  "id": "colo-colo",
+  "nombre": "Colo-Colo",
+  "sigla": "COL",
+  "pais": "Chile",
+  "liga": "Primera División",
+  "colores": [
+   "#ffffff",
+   "#000000"
+  ],
+  "dificultad": 2,
+  "apodo": "El Cacique"
+ },
+ {
+  "id": "universidad-de-chile",
+  "nombre": "Universidad de Chile",
+  "sigla": "UCH",
+  "pais": "Chile",
+  "liga": "Primera División",
+  "colores": [
+   "#00309f",
+   "#e30613"
+  ],
+  "dificultad": 3,
+  "apodo": "El Bulla"
+ },
+ {
+  "id": "atletico-nacional",
+  "nombre": "Atlético Nacional",
+  "sigla": "ATN",
+  "pais": "Colombia",
+  "liga": "Liga BetPlay",
+  "colores": [
+   "#008d36",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "El Verde Paisa"
+ },
+ {
+  "id": "millonarios",
+  "nombre": "Millonarios",
+  "sigla": "MIL",
+  "pais": "Colombia",
+  "liga": "Liga BetPlay",
+  "colores": [
+   "#0055a5",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "El Embajador"
+ },
+ {
+  "id": "america-de-cali",
+  "nombre": "América de Cali",
+  "sigla": "AME",
+  "pais": "Colombia",
+  "liga": "Liga BetPlay",
+  "colores": [
+   "#d50032",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "La Mechita"
+ },
+ {
+  "id": "club-america",
+  "nombre": "Club América",
+  "sigla": "AME",
+  "pais": "México",
+  "liga": "Liga MX",
+  "colores": [
+   "#fff200",
+   "#0a2240"
+  ],
+  "dificultad": 1,
+  "apodo": "Las Águilas"
+ },
+ {
+  "id": "chivas-de-guadalajara",
+  "nombre": "Chivas de Guadalajara",
+  "sigla": "GDL",
+  "pais": "México",
+  "liga": "Liga MX",
+  "colores": [
+   "#cd1f2d",
+   "#ffffff"
+  ],
+  "dificultad": 1,
+  "apodo": "El Rebaño Sagrado"
+ },
+ {
+  "id": "cruz-azul",
+  "nombre": "Cruz Azul",
+  "sigla": "CAZ",
+  "pais": "México",
+  "liga": "Liga MX",
+  "colores": [
+   "#0047bb",
+   "#ffffff"
+  ],
+  "dificultad": 2,
+  "apodo": "La Máquina"
+ },
+ {
+  "id": "pumas-unam",
+  "nombre": "Pumas UNAM",
+  "sigla": "PUM",
+  "pais": "México",
+  "liga": "Liga MX",
+  "colores": [
+   "#002b5c",
+   "#c5a961"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Pumas"
+ },
+ {
+  "id": "tigres-uanl",
+  "nombre": "Tigres UANL",
+  "sigla": "TIG",
+  "pais": "México",
+  "liga": "Liga MX",
+  "colores": [
+   "#fdb913",
+   "#003a70"
+  ],
+  "dificultad": 2,
+  "apodo": "Los Felinos"
+ },
+ {
+  "id": "rayados-de-monterrey",
+  "nombre": "Rayados de Monterrey",
+  "sigla": "MTY",
+  "pais": "México",
+  "liga": "Liga MX",
+  "colores": [
+   "#00205b",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "La Pandilla"
+ },
+ {
+  "id": "caracas-fc",
+  "nombre": "Caracas FC",
+  "sigla": "CAR",
+  "pais": "Venezuela",
+  "liga": "Liga FUTVE",
+  "colores": [
+   "#c8102e",
+   "#000000"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Rojos del Ávila"
+ },
+ {
+  "id": "deportivo-tachira",
+  "nombre": "Deportivo Táchira",
+  "sigla": "TAC",
+  "pais": "Venezuela",
+  "liga": "Liga FUTVE",
+  "colores": [
+   "#ffd100",
+   "#000000"
+  ],
+  "dificultad": 3,
+  "apodo": "El Carrusel Aurinegro"
+ },
+ {
+  "id": "ldu-quito",
+  "nombre": "LDU Quito",
+  "sigla": "LDU",
+  "pais": "Ecuador",
+  "liga": "LigaPro",
+  "colores": [
+   "#ffffff",
+   "#d71920"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Albos"
+ },
+ {
+  "id": "barcelona-sc",
+  "nombre": "Barcelona SC",
+  "sigla": "BSC",
+  "pais": "Ecuador",
+  "liga": "LigaPro",
+  "colores": [
+   "#ffd100",
+   "#e30613"
+  ],
+  "dificultad": 3,
+  "apodo": "El Ídolo del Astillero"
+ },
+ {
+  "id": "olimpia",
+  "nombre": "Olimpia",
+  "sigla": "OLI",
+  "pais": "Paraguay",
+  "liga": "Primera División",
+  "colores": [
+   "#ffffff",
+   "#000000"
+  ],
+  "dificultad": 3,
+  "apodo": "El Decano"
+ },
+ {
+  "id": "alianza-lima",
+  "nombre": "Alianza Lima",
+  "sigla": "ALI",
+  "pais": "Perú",
+  "liga": "Liga 1",
+  "colores": [
+   "#1d2e6b",
+   "#ffffff"
+  ],
+  "dificultad": 3,
+  "apodo": "Los Íntimos"
+ },
+ {
+  "id": "universitario",
+  "nombre": "Universitario",
+  "sigla": "UNI",
+  "pais": "Perú",
+  "liga": "Liga 1",
+  "colores": [
+   "#f2e8c9",
+   "#8b1e2d"
+  ],
+  "dificultad": 3,
+  "apodo": "La U"
+ }
+]

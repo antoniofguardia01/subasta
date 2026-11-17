@@ -28,6 +28,16 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 - `src/styles/fuentes.css` — generado. Cada escenario tiene una familia compuesta: `font-stretch: 62%` = titular, `100%` = texto, `125%` = placa.
 - `tests/engine.test.ts` — tests del motor. Correr `npm test` después de tocar `shared/`.
 
+## El Impostor (segundo juego)
+
+- Misma app, mismo Worker y mismo código de sala de 4 letras: la portada pregunta "¿A qué jugamos?" y `POST /api/salas` lleva `juego: 'impostor'`. `RoomDO` (`worker/room.ts`) le pasa todo a `SalaImpostor` (`worker/impostor.ts`) si la sala es de Impostor; se guarda en el almacenamiento del DO con la clave `impostor`. `/api/salas/CODIGO` responde `juego`; en el cliente `src/lib/juego.ts` (`useJuego`) decide qué pantalla mostrar en `/r/` y `/stage/`.
+- Motor puro: `shared/impostor.ts` (`PartidaImp`: `lobby → reparto → debate → votacion → veredicto → (debate… | adivina) → finronda → (reparto… | final)`). **Cada celular recibe su propia vista** (`vista(pid)`): el impostor nunca recibe el secreto; la TV recibe la vista pública (sin secreto ni impostor hasta `finronda`). Tests: `tests/impostor.test.ts`.
+- Secretos: futbolistas de `data/players.json` (dificultad por rating en `shared/impostorDatos.ts`: Cracks ≥86 o leyenda, Conocidos ≥82, Todos) o clubes de `data/clubes.json` (nombre, sigla, país, liga, 2 colores, dificultad 1–3, apodo). El escudo es un dibujo genérico con los colores y la sigla (`Escudo` en `src/components/impostor.tsx`), no el escudo real.
+- Configuración del anfitrión en el lobby: modo (futbolistas/clubes), dificultad, rondas (1–10), impostores (2 solo desde 6 jugadores), segundos para hablar, última chance del impostor (adivinar entre 8 opciones) y modo tragos (cada eliminación = 1 trago).
+- Puntos (`PUNTOS_IMP`): impostor que sobrevive +3, impostor descubierto que adivina +2, cada inocente si gana el grupo +1, "buen ojo" (votó al impostor cuando cayó) +1. Dos empates en una ronda: gana el impostor.
+- Pantallas: `src/screens/ImpJugador.tsx` (celular) e `ImpEscenario.tsx` (TV 1920×1080); estilos en `src/styles/impostor.css`. Reutiliza `Hoja`, `Paso`, `ConectarTV`, `SelectorTema`, `BotonConfirmar` y `Capa` exportados de `Jugador.tsx`.
+- Para probarlo con bots: script `imp.mjs` del scratchpad de la sesión (anfitrión en un celular de Playwright, TV y bots por WebSocket que marcan "listo", votan y adivinan al azar).
+
 ## Pantallas
 
 - Celular, iPad y PC usan `/r/CODIGO` (columna centrada de hasta 680 px; en PC la barra espaciadora oferta). En PC e iPad horizontal hay un diseño a dos columnas (escena grande + controles). El escenario (`/stage/CODIGO`) se abre desde Modo TV; el dueño pidió quitar el botón de pantalla principal para los jugadores. Todos tienen botón de pantalla completa (`BotonPantalla`; no existe en iPhone).

@@ -7,12 +7,16 @@ import './styles/escenario.css';
 import './styles/jugador.css';
 import './styles/inicio.css';
 import './styles/admin.css';
+import './styles/impostor.css';
 import { Escenario } from './screens/Escenario';
 import { Inicio } from './screens/Inicio';
 import { Jugador } from './screens/Jugador';
 import { Tv } from './screens/Tv';
 import { Admin } from './screens/Admin';
 import { Vincular } from './screens/Vincular';
+import { ImpJugador } from './screens/ImpJugador';
+import { ImpEscenario } from './screens/ImpEscenario';
+import { useJuego } from './lib/juego';
 import { ir, irConTelon, useRuta } from './lib/ruta';
 import { alLlamarTele, encenderTele, esTele, teleEnSala } from './lib/tele';
 import { aplicarTema, temaPropio } from './lib/temas';
@@ -41,12 +45,19 @@ function App() {
     if (partes.length === 1 && /^[A-Za-z]{4}$/.test(partes[0]) && partes[0] !== 'tv') ir(`/r/${partes[0].toUpperCase()}`, true);
   }, [ruta]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (partes[0] === 'stage' && codigo) return <Escenario key={codigo} codigo={codigo} />;
-  if (partes[0] === 'r' && codigo) return <Jugador key={codigo} codigo={codigo} />;
+  if ((partes[0] === 'stage' || partes[0] === 'r') && codigo) return <SalaSegunJuego key={codigo} codigo={codigo} tele={partes[0] === 'stage'} />;
   if (partes[0] === 'v' && codigo) return <Vincular key={codigo} codigo={codigo} />;
   if (partes[0] === 'tv') return <Tv />;
   if (partes[0] === 'admin') return <Admin />;
   return <Inicio />;
+}
+
+/** El mismo código de sala sirve para los dos juegos: se pregunta cuál es antes de conectarse. */
+function SalaSegunJuego({ codigo, tele }: { codigo: string; tele: boolean }) {
+  const juego = useJuego(codigo);
+  if (juego === null) return <div className="pantalla" />;
+  if (juego === 'impostor') return tele ? <ImpEscenario codigo={codigo} /> : <ImpJugador codigo={codigo} />;
+  return tele ? <Escenario codigo={codigo} /> : <Jugador codigo={codigo} />;
 }
 
 createRoot(document.getElementById('app')!).render(<App />);
