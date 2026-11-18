@@ -11,7 +11,7 @@ import { Sala, VistaSala, useSala } from '../lib/sala';
 import { desbloquearSonido, sonar } from '../lib/sonido';
 import { guardar, leer, vibrar } from '../lib/util';
 import { Cargando, SinSala } from './Escenario';
-import { AvatarDato, BotonConfirmar, Capa, ConectarTV, Hoja, Paso, SelectorTema } from './Jugador';
+import { AvatarDato, BotonConfirmar, Capa, ConectarTV, Hoja, Paso, QrGrande, QrSala, SelectorTema } from './Jugador';
 
 type SalaImp = Sala<EstadoImp, MsgClienteImp>;
 
@@ -136,7 +136,7 @@ function Entrar({ sala, s, vista }: { sala: SalaImp; s: EstadoImp; vista: VistaS
 // ───────────── Lobby ─────────────
 
 function Lobby({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: JugadorImpVista; anfitrion: boolean }) {
-  const [hoja, setHoja] = useState<'config' | 'tv' | 'tema' | 'como' | null>(null);
+  const [hoja, setHoja] = useState<'config' | 'tv' | 'tema' | 'como' | 'qr' | null>(null);
   const url = `${location.origin}/r/${s.codigo}`;
   const compartir = async () => {
     try {
@@ -187,6 +187,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
             </span>
           )}
         </button>
+        <QrSala codigo={s.codigo} agrandar={() => setHoja('qr')} />
         <h2>
           En la sala <b className="num">{s.jugadores.length}</b>
           <i className="num">/{MAX_IMP}</i>
@@ -254,6 +255,9 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
       </Hoja>
       <Hoja on={hoja === 'tv'} titulo="Conectar TV" cerrar={() => setHoja(null)}>
         {hoja === 'tv' && <ConectarTV codigo={s.codigo} />}
+      </Hoja>
+      <Hoja on={hoja === 'qr'} titulo="Invitar a la sala" cerrar={() => setHoja(null)}>
+        <QrGrande codigo={s.codigo} />
       </Hoja>
       <Hoja on={hoja === 'tema'} titulo="Escenario" cerrar={() => setHoja(null)}>
         <SelectorTema sala={sala} s={s} anfitrion={anfitrion} />

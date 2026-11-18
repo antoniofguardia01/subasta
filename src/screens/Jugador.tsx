@@ -3,7 +3,7 @@ import { CSSProperties, FormEvent, useCallback, useEffect, useLayoutEffect, useR
 import gsap from 'gsap';
 import type { Ajustes, EstadoPublico, JugadorSala, MotivoRechazo } from '../../shared/types';
 import { MAX_PARTICIPANTES, POS_NOMBRE, rangoTrolls } from '../../shared/types';
-import { Avatar, BotonPantalla, Fondo, Numero, Ticker, cuentaEquipo } from '../components/comunes';
+import { Avatar, BotonPantalla, Fondo, Numero, QR, Ticker, cuentaEquipo } from '../components/comunes';
 import { Escena } from '../components/Escena';
 import { Fx, FxApi } from '../components/Fx';
 import { Reloj, Tic } from '../components/Reloj';
@@ -177,7 +177,7 @@ function Entrar({ sala, s, vista }: { sala: Sala; s: EstadoPublico; vista: Vista
 // ───────────── Lobby ─────────────
 
 function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: JugadorSala; anfitrion: boolean }) {
-  const [hoja, setHoja] = useState<'reglas' | 'tv' | 'tema' | null>(null);
+  const [hoja, setHoja] = useState<'reglas' | 'tv' | 'tema' | 'qr' | null>(null);
   const url = `${location.origin}/r/${s.codigo}`;
   const compartir = async () => {
     try {
@@ -206,6 +206,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
       </header>
 
       <div className="lobby-cuerpo">
+        <QrSala codigo={s.codigo} agrandar={() => setHoja('qr')} />
         <h2>
           En la sala <b className="num">{s.jugadores.length}</b>
           <i className="num">/{MAX_PARTICIPANTES}</i>
@@ -268,6 +269,9 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
       </Hoja>
       <Hoja on={hoja === 'tv'} titulo="Conectar TV" cerrar={() => setHoja(null)}>
         {hoja === 'tv' && <ConectarTV codigo={s.codigo} />}
+      </Hoja>
+      <Hoja on={hoja === 'qr'} titulo="Invitar a la sala" cerrar={() => setHoja(null)}>
+        <QrGrande codigo={s.codigo} />
       </Hoja>
       <Hoja on={hoja === 'tema'} titulo="Escenario" cerrar={() => setHoja(null)}>
         <SelectorTema sala={sala} s={s} anfitrion={anfitrion} />
@@ -405,6 +409,40 @@ export function SelectorTema({ sala, s, anfitrion }: { sala: { enviar(m: { t: 'a
           Usar el de la sala
         </button>
       )}
+    </div>
+  );
+}
+
+// ───────────── QR para entrar a la sala ─────────────
+
+/** Tarjeta del lobby: QR para que los demás entren con la cámara. Al tocarla se agranda. */
+export function QrSala({ codigo, agrandar }: { codigo: string; agrandar: () => void }) {
+  const url = `${location.origin}/r/${codigo}`;
+  return (
+    <button className="sala-qr" onClick={() => (vibrar(10), agrandar())} aria-label="Agrandar el QR de la sala">
+      <span className="sala-qr-img">
+        <QR texto={url} />
+      </span>
+      <span className="sala-qr-texto">
+        <b>Escaneen para entrar</b>
+        <small>
+          O entren a <em>{location.host}</em> con el código <em>{codigo}</em>
+        </small>
+        <i>Toca para agrandar</i>
+      </span>
+    </button>
+  );
+}
+
+export function QrGrande({ codigo }: { codigo: string }) {
+  const url = `${location.origin}/r/${codigo}`;
+  return (
+    <div className="qr-grande">
+      <span className="qr-grande-img">
+        <QR texto={url} />
+      </span>
+      <b>{codigo}</b>
+      <small>{location.host}</small>
     </div>
   );
 }
