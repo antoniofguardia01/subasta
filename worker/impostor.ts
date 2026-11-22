@@ -178,9 +178,6 @@ export class SalaImpostor {
       case 'votar':
         if (pid) p.votar(pid, String(msg.pid), ahora);
         break;
-      case 'adivinar':
-        if (pid) p.adivinar(pid, String(msg.id), ahora);
-        break;
       case 'aVotar':
         if (esAnfitrion || tele) p.aVotar(ahora);
         break;

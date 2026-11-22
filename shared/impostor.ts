@@ -1,11 +1,11 @@
 // El Impostor futbolero: todos ven el mismo futbolista (o club) menos el impostor. Se habla en voz alta,
 // se vota en el celular, el más votado queda eliminado. Máquina de estados pura: el servidor llama avanzar(ahora).
 //
-// lobby → reparto → debate → votacion → veredicto → (debate… | adivina) → finronda → (reparto… | final)
+// lobby → reparto → debate → votacion → veredicto → (debate… | finronda) → (reparto… | final)
 import { barajar, crearRng, Rng } from './rng';
 import { COLORES_EQUIPO } from './types';
 
-export type FaseImp = 'lobby' | 'reparto' | 'debate' | 'votacion' | 'veredicto' | 'adivina' | 'finronda' | 'final';
+export type FaseImp = 'lobby' | 'reparto' | 'debate' | 'votacion' | 'veredicto' | 'finronda' | 'final';
 export type ModoImp = 'jugadores' | 'clubes';
 export type TrollsImp = 'no' | 'aveces' | 'solo';
 
@@ -21,14 +21,12 @@ export interface AjustesImp {
   dificultad: 1 | 2 | 3;
   /** Segundos para hablar antes de votar. */
   debate: number;
-  /** Si al impostor lo descubren, puede salvarse adivinando el secreto. */
-  adivinar: boolean;
   /** Modo tragos: cada vez que te eliminan, tomas. */
   tragos: boolean;
   tema: string;
 }
 
-export const AJUSTES_IMP: AjustesImp = { modo: 'jugadores', trolls: 'aveces', rondas: 5, impostores: 1, dificultad: 1, debate: 90, adivinar: true, tragos: false, tema: 'estadio' };
+export const AJUSTES_IMP: AjustesImp = { modo: 'jugadores', trolls: 'aveces', rondas: 5, impostores: 1, dificultad: 1, debate: 90, tragos: false, tema: 'estadio' };
 
 export const LIMITES_IMP = { rondasMin: 1, rondasMax: 10, debateMin: 30, debateMax: 300 } as const;
 /** Con trolls en "a veces", probabilidad de que el secreto de una ronda sea un troll. */
@@ -36,15 +34,12 @@ export const PROB_TROLL = 0.3;
 export const MIN_IMP = 3;
 export const MAX_IMP = 12;
 export const MIN_DOS_IMPOSTORES = 6;
-/** Opciones que ve el impostor descubierto para adivinar. */
-export const OPCIONES_ADIVINA = 8;
 
 export const TIEMPOS_IMP = {
   /** Tiempo máximo para que todos miren su carta (sigue antes si todos tocan "Listo"). */
   reparto: 30_000,
   votacion: 30_000,
   veredicto: 9_000,
-  adivina: 25_000,
   finronda: 25_000,
   /** Las votaciones siguientes dan menos tiempo para hablar. */
   debateSiguiente: 0.5,
@@ -53,8 +48,6 @@ export const TIEMPOS_IMP = {
 export const PUNTOS_IMP = {
   /** El impostor llega al final sin que lo descubran. */
   impostorGana: 3,
-  /** Lo descubrieron pero adivinó el secreto. */
-  impostorAdivina: 2,
   /** Cada participante (no impostor) cuando el grupo gana. */
   grupoGana: 1,
   /** Extra para quien votó al impostor en la votación que lo eliminó. */
@@ -102,7 +95,7 @@ export interface Veredicto {
 }
 
 export type Ganador = 'grupo' | 'impostor';
-export type Motivo = 'descubierto' | 'sobrevivio' | 'adivino' | 'empates' | 'abandono';
+export type Motivo = 'descubierto' | 'sobrevivio' | 'empates' | 'abandono';
 
 interface Ronda {
   n: number;
@@ -117,8 +110,6 @@ interface Ronda {
   votos: Record<string, string>;
   empates: number;
   veredictos: Veredicto[];
-  opciones: Secreto[];
-  adivinanza: { pid: string; elegido: string | null; acierto: boolean } | null;
   buenOjo: string[];
   ganador: Ganador | null;
   motivo: Motivo | null;
@@ -158,10 +149,6 @@ export interface RondaVista {
   empates: number;
   eliminados: { pid: string; eraImpostor: boolean; votacion: number }[];
   veredicto: Veredicto | null;
-  opciones: Secreto[] | null;
-  adivinanza: { pid: string; elegido: string | null; acierto: boolean } | null;
-  /** Quién está adivinando (fase adivina). */
-  adivina: string | null;
   // Se revela al terminar la ronda:
   secreto: Secreto | null;
   impostores: string[] | null;
@@ -198,7 +185,6 @@ export type MsgClienteImp =
   | { t: 'votar'; pid: string }
   | { t: 'aVotar' }
   | { t: 'masTiempo' }
-  | { t: 'adivinar'; id: string }
   | { t: 'siguiente' }
   | { t: 'expulsar'; pid: string }
   | { t: 'anfitrion'; pid: string }
@@ -274,7 +260,6 @@ export class PartidaImp {
     if (p.impostores === 1 || p.impostores === 2) a.impostores = p.impostores;
     if (p.dificultad === 1 || p.dificultad === 2 || p.dificultad === 3) a.dificultad = p.dificultad;
     if (typeof p.debate === 'number') a.debate = Math.round(Math.min(LIMITES_IMP.debateMax, Math.max(LIMITES_IMP.debateMin, p.debate)));
-    if (typeof p.adivinar === 'boolean') a.adivinar = p.adivinar;
     if (typeof p.tragos === 'boolean') a.tragos = p.tragos;
     if (typeof p.tema === 'string') a.tema = p.tema.slice(0, 20);
   }
@@ -334,11 +319,6 @@ export class PartidaImp {
       impostores.push(elegido.id);
       elegido.impostor++;
     }
-    // Opciones para la adivinanza final: el secreto + señuelos del mismo grupo primero.
-    const otros = candidatos.filter((c) => c.id !== secreto.id);
-    const mismos = barajar(() => this.azar(), otros.filter((c) => c.grupo === secreto.grupo));
-    const resto = barajar(() => this.azar(), otros.filter((c) => c.grupo !== secreto.grupo));
-    const opciones = barajar(() => this.azar(), [secreto, ...[...mismos, ...resto].slice(0, OPCIONES_ADIVINA - 1)]);
     // Orden para hablar: nuevo en cada ronda (el impostor puede caer en cualquier lugar).
     const orden = barajar(() => this.azar(), participantes);
     this.ronda = {
@@ -353,8 +333,6 @@ export class PartidaImp {
       votos: {},
       empates: 0,
       veredictos: [],
-      opciones,
-      adivinanza: null,
       buenOjo: [],
       ganador: null,
       motivo: null,
@@ -429,28 +407,13 @@ export class PartidaImp {
     this.fijar('veredicto', TIEMPOS_IMP.veredicto, ahora);
   }
 
-  adivinar(pid: string, id: string, ahora: number) {
-    const r = this.ronda;
-    if (this.fase !== 'adivina' || !r || r.adivinanza?.pid !== pid || r.adivinanza.elegido) return;
-    if (!r.opciones.some((o) => o.id === id)) return;
-    r.adivinanza.elegido = id;
-    r.adivinanza.acierto = id === r.secreto.id;
-    this.terminarRonda(r.adivinanza.acierto ? 'impostor' : 'grupo', r.adivinanza.acierto ? 'adivino' : 'descubierto', ahora);
-  }
-
-  /** Después del veredicto: ¿sigue la ronda, adivina el impostor o termina? */
+  /** Después del veredicto: ¿sigue la ronda o termina? */
   private trasVeredicto(ahora: number) {
     const r = this.ronda!;
     const v = r.veredictos[r.veredictos.length - 1];
     const impVivos = r.impostores.filter((p) => r.vivos.includes(p));
     const grupoVivos = r.vivos.filter((p) => !r.impostores.includes(p));
-    if (v?.eraImpostor && impVivos.length === 0) {
-      if (this.ajustes.adivinar && v.pid) {
-        r.adivinanza = { pid: v.pid, elegido: null, acierto: false };
-        return this.fijar('adivina', TIEMPOS_IMP.adivina, ahora);
-      }
-      return this.terminarRonda('grupo', 'descubierto', ahora);
-    }
+    if (v?.eraImpostor && impVivos.length === 0) return this.terminarRonda('grupo', 'descubierto', ahora);
     if (impVivos.length >= grupoVivos.length) return this.terminarRonda('impostor', 'sobrevivio', ahora);
     if (r.empates >= 2) return this.terminarRonda('impostor', 'empates', ahora);
     r.votacion++;
@@ -467,7 +430,7 @@ export class PartidaImp {
       for (const pid of r.participantes) {
         const imp = r.impostores.includes(pid);
         let p = 0;
-        if (ganador === 'impostor' && imp) p += motivo === 'adivino' ? PUNTOS_IMP.impostorAdivina : PUNTOS_IMP.impostorGana;
+        if (ganador === 'impostor' && imp) p += PUNTOS_IMP.impostorGana;
         if (ganador === 'grupo' && !imp) p += PUNTOS_IMP.grupoGana;
         if (r.buenOjo.includes(pid)) p += PUNTOS_IMP.buenOjo;
         puntos[pid] = p;
@@ -526,7 +489,6 @@ export class PartidaImp {
     if (r.vivos.length < 2) return this.terminarRonda('impostor', 'abandono', ahora);
     if (this.fase === 'reparto' && r.participantes.every((p) => r.vistos.includes(p))) this.debatir(ahora);
     if (this.fase === 'votacion' && r.vivos.every((p) => r.votos[p])) this.cerrarVotacion(ahora);
-    if (this.fase === 'adivina' && r.adivinanza?.pid === id) this.terminarRonda('grupo', 'descubierto', ahora);
   }
 
   // ───────────── Reloj ─────────────
@@ -551,12 +513,6 @@ export class PartidaImp {
       case 'veredicto':
         this.trasVeredicto(ahora);
         break;
-      case 'adivina': {
-        const r = this.ronda!;
-        if (r.adivinanza) r.adivinanza.acierto = false;
-        this.terminarRonda('grupo', 'descubierto', ahora);
-        break;
-      }
       case 'finronda':
         this.siguiente(candidatos, ahora);
         break;
@@ -572,7 +528,7 @@ export class PartidaImp {
   vista(pid: string | null, disponibles: number): EstadoImp {
     const r = this.ronda;
     const fin = this.fase === 'finronda' || this.fase === 'final';
-    const enVeredicto = this.fase === 'veredicto' || this.fase === 'adivina' || this.fase === 'finronda';
+    const enVeredicto = this.fase === 'veredicto' || this.fase === 'finronda';
     let ronda: RondaVista | null = null;
     if (r && this.fase !== 'lobby') {
       const revelado = fin && r.ganador !== null;
@@ -588,9 +544,6 @@ export class PartidaImp {
         empates: r.empates,
         eliminados: r.veredictos.filter((v) => v.pid).map((v) => ({ pid: v.pid!, eraImpostor: v.eraImpostor, votacion: v.votacion })),
         veredicto: enVeredicto || fin ? (r.veredictos[r.veredictos.length - 1] ?? null) : null,
-        opciones: this.fase === 'adivina' || revelado ? r.opciones : null,
-        adivinanza: this.fase === 'adivina' || revelado ? r.adivinanza : null,
-        adivina: this.fase === 'adivina' ? (r.adivinanza?.pid ?? null) : null,
         secreto: revelado ? r.secreto : null,
         impostores: revelado ? r.impostores : null,
         ganador: revelado ? r.ganador : null,
@@ -640,5 +593,7 @@ export class PartidaImp {
     // El reloj se reinicia desde ahora para no perder la fase en curso.
     if (this.vence) this.vence = ahora + Math.min(this.duracion, Math.max(5_000, this.vence - ahora));
     for (const j of this.jugadores) j.conectado = false;
+    // Una partida guardada con la vieja "última chance" en curso se cierra como si el impostor no hubiera adivinado.
+    if ((this.fase as string) === 'adivina' && this.ronda) this.terminarRonda('grupo', 'descubierto', ahora);
   }
 }

@@ -188,9 +188,8 @@ export function Tabla({ s, yo, delta, tragos, className = '', demora = 0.9 }: { 
 }
 
 export const MOTIVO_TEXTO: Record<string, string> = {
-  descubierto: 'Lo descubrieron y no adivinó',
+  descubierto: 'Lo descubrieron a tiempo',
   sobrevivio: 'Nadie lo descubrió a tiempo',
-  adivino: 'Lo descubrieron… pero adivinó el secreto',
   empates: 'El grupo no se puso de acuerdo dos veces',
   abandono: 'Ronda anulada: alguien se fue',
 };

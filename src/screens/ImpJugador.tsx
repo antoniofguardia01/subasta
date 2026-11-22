@@ -1,4 +1,4 @@
-// Celular del Impostor: entrar, lobby con la configuración, la carta secreta, la votación, la adivinanza y la tabla.
+// Celular del Impostor: entrar, lobby con la configuración, la carta secreta, la votación y la tabla.
 import { CSSProperties, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import type { AjustesImp, EstadoImp, JugadorImpVista, MsgClienteImp } from '../../shared/impostor';
@@ -316,15 +316,6 @@ function Configurar({ sala, s, editable }: { sala: SalaImp; s: EstadoImp; editab
         <Opciones valor={a.impostores} opciones={[[1, 'Uno'], [2, 'Dos']]} cambiar={(impostores) => poner({ impostores })} editable={editable} />
       </div>
       <Paso rotulo="Tiempo para hablar" valor={a.debate} min={LIMITES_IMP.debateMin} max={LIMITES_IMP.debateMax} paso={15} sufijo="s" cambiar={(debate) => poner({ debate })} editable={editable} />
-      <div className="regla">
-        <span>
-          Última chance del impostor
-          <small>Si lo descubren, puede salvarse adivinando quién era</small>
-        </span>
-        <button className="interruptor" data-on={a.adivinar ? '1' : '0'} disabled={!editable} onClick={() => (vibrar(8), poner({ adivinar: !a.adivinar }))} aria-pressed={a.adivinar}>
-          <i />
-        </button>
-      </div>
       <div className="regla regla-tragos" data-on={a.tragos ? '1' : '0'}>
         <img className="regla-trago-img" src="/img/iconos/trago.webp" alt="" />
         <span>
@@ -355,18 +346,12 @@ function ComoSeJuega({ a }: { a: AjustesImp }) {
           Cuando se acaba el tiempo se <b>vota en el celular</b>. El más votado queda eliminado{a.tragos ? ' y toma' : ''}.
         </li>
         <li>Si eliminan a un inocente, se sigue hablando y se vuelve a votar. El impostor gana si quedan tantos impostores como inocentes, o si hay dos empates.</li>
-        {a.adivinar && <li>Si atrapan al impostor, tiene una última chance: adivinar el {cosa} entre 8 opciones.</li>}
       </ol>
       <h3>Puntos</h3>
       <ul>
         <li>
           Impostor que no descubren: <b>+{PUNTOS_IMP.impostorGana}</b>
         </li>
-        {a.adivinar && (
-          <li>
-            Impostor descubierto que adivina: <b>+{PUNTOS_IMP.impostorAdivina}</b>
-          </li>
-        )}
         <li>
           Cada inocente si gana el grupo: <b>+{PUNTOS_IMP.grupoGana}</b>
         </li>
@@ -380,7 +365,7 @@ function ComoSeJuega({ a }: { a: AjustesImp }) {
 
 // ───────────── Juego ─────────────
 
-const FASE_TEXTO: Record<string, string> = { reparto: 'Tu carta', debate: 'A hablar', votacion: 'Votación', veredicto: 'Veredicto', adivina: 'Última chance', finronda: 'Fin de la ronda' };
+const FASE_TEXTO: Record<string, string> = { reparto: 'Tu carta', debate: 'A hablar', votacion: 'Votación', veredicto: 'Veredicto', finronda: 'Fin de la ronda' };
 
 function Juego({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: JugadorImpVista; anfitrion: boolean }) {
   const r = s.ronda!;
@@ -410,7 +395,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
 
   return (
     <div className="imp-juego" data-fase={f} data-impostor={tu?.impostor ? '1' : undefined}>
-      <Fondo paleta={f === 'veredicto' || f === 'adivina' ? 'troll' : 'misterio'} vel={f === 'votacion' ? 2 : 1} />
+      <Fondo paleta={f === 'veredicto' ? 'troll' : 'misterio'} vel={f === 'votacion' ? 2 : 1} />
       <header className="imp-cab">
         <span className="imp-cab-ronda">
           Ronda <b className="num">{r.n}</b>
@@ -419,7 +404,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
         <b className="imp-cab-fase" key={f}>
           {FASE_TEXTO[f]}
         </b>
-        {(f === 'debate' || f === 'votacion' || f === 'adivina' || f === 'reparto') && <Cuenta vence={s.vence} duracion={s.duracion} ahora={ahora} className="imp-cab-cuenta" />}
+        {(f === 'debate' || f === 'votacion' || f === 'reparto') && <Cuenta vence={s.vence} duracion={s.duracion} ahora={ahora} className="imp-cab-cuenta" />}
       </header>
 
       <main className="imp-cuerpo">
@@ -427,7 +412,6 @@ function Juego({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
         <Capa on={f === 'debate'}>{f === 'debate' && <Debate s={s} yo={yo} vivo={vivo} anfitrion={anfitrion} sala={sala} />}</Capa>
         <Capa on={f === 'votacion'}>{f === 'votacion' && <Votacion sala={sala} s={s} yo={yo} vivo={vivo} />}</Capa>
         <Capa on={f === 'veredicto'}>{f === 'veredicto' && <VeredictoMovil s={s} yo={yo} />}</Capa>
-        <Capa on={f === 'adivina'}>{f === 'adivina' && <Adivina sala={sala} s={s} yo={yo} />}</Capa>
         <Capa on={f === 'finronda'}>{f === 'finronda' && <FinRonda sala={sala} s={s} yo={yo} anfitrion={anfitrion} />}</Capa>
       </main>
 
@@ -666,43 +650,6 @@ function VeredictoMovil({ s, yo }: { s: EstadoImp; yo: JugadorImpVista }) {
             </p>
           )}
         </div>
-      )}
-    </div>
-  );
-}
-
-function Adivina({ sala, s, yo }: { sala: SalaImp; s: EstadoImp; yo: JugadorImpVista }) {
-  const r = s.ronda!;
-  const yoAdivino = r.adivina === yo.id;
-  const [marcado, setMarcado] = useState<string | null>(null);
-  const quien = s.jugadores.find((j) => j.id === r.adivina);
-  const cosa = s.ajustes.modo === 'clubes' ? 'el club' : 'el jugador';
-  return (
-    <div className="imp-adivina">
-      <b className="imp-gritito">{yoAdivino ? '¡Última chance!' : `${quien?.nombre ?? 'El impostor'} intenta salvarse`}</b>
-      <p className="imp-instr">{yoAdivino ? `Te atraparon. Si adivinas ${cosa}, igual ganas.` : `Tiene que adivinar ${cosa}. Cara de póker.`}</p>
-      <div className="imp-opciones" data-mio={yoAdivino ? '1' : undefined}>
-        {r.opciones?.map((o, i) => (
-          <button
-            key={o.id}
-            className="imp-opcion"
-            data-on={marcado === o.id ? '1' : '0'}
-            disabled={!yoAdivino}
-            style={{ '--i': i } as CSSProperties}
-            onClick={() => {
-              vibrar(10);
-              setMarcado(o.id);
-            }}
-          >
-            <ImagenSecreto s={o} />
-            <b>{o.nombre}</b>
-          </button>
-        ))}
-      </div>
-      {yoAdivino && (
-        <button className="btn btn--acento imp-confirmar" disabled={!marcado} onClick={() => marcado && (vibrar([20, 40, 80]), sala.enviar({ t: 'adivinar', id: marcado }))}>
-          {marcado ? `Es ${r.opciones?.find((o) => o.id === marcado)?.nombre}` : 'Elige uno'}
-        </button>
       )}
     </div>
   );

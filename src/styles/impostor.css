@@ -193,17 +193,6 @@
 @keyframes brindis { from { transform: rotate(-12deg); } to { transform: rotate(12deg) translateY(-4px); } }
 .imp-ver-final > p { font-size: 17px; font-weight: 600; opacity: 0.9; max-width: 340px; }
 
-/* Adivinanza */
-.imp-opciones { width: min(100%, 480px); display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.imp-opcion { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 16px; background: rgba(8, 10, 9, 0.72); border: 3px solid transparent; text-align: left; transition: transform 160ms var(--ease-out), border-color 200ms ease, background-color 200ms ease; animation: ficha-cae 420ms calc(var(--i) * 50ms) var(--ease-rebote) both; }
-.imp-opcion:disabled { opacity: 0.85; cursor: default; }
-.imp-opcion:active:not(:disabled) { transform: scale(0.96); }
-.imp-opcion .imp-foto, .imp-opcion .escudo { width: 54px; height: 54px; flex: none; border-radius: 12px; object-fit: cover; object-position: 50% 10%; background: rgba(255, 255, 255, 0.1); }
-.imp-opcion .escudo { background: none; }
-.imp-opcion b { font-size: 15px; font-weight: 800; line-height: 1.1; text-transform: uppercase; font-stretch: 88%; }
-.imp-opcion[data-on='1'] { border-color: var(--acento); background: rgba(255, 255, 255, 0.16); transform: scale(1.03); }
-.imp-confirmar { width: min(100%, 480px); font-size: 20px; }
-
 /* Fin de ronda */
 .imp-fin-cab { width: min(100%, 480px); padding: 14px 16px; border-radius: 20px; text-align: center; background: var(--placa); color: var(--placa-tinta); animation: caja-entra 560ms var(--ease-rebote) both; }
 .imp-fin-cab b { display: block; font-size: 40px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 0.95; color: var(--acento); }
@@ -371,13 +360,6 @@
 .itv-trago img { height: 90px; width: auto; animation: brindis 0.6s 4s ease-in-out 3 alternate both; }
 .itv-trago b { color: #fff; }
 
-/* Adivinanza */
-.itv-opciones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 1500px; }
-.itv-opcion { display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: 22px; background: rgba(8, 10, 9, 0.75); text-align: left; animation: ficha-cae 500ms calc(400ms + var(--i) * 80ms) var(--ease-rebote) both; }
-.itv-opcion .imp-foto, .itv-opcion .escudo { width: 110px; height: 110px; flex: none; border-radius: 16px; object-fit: cover; object-position: 50% 10%; background: rgba(255, 255, 255, 0.1); }
-.itv-opcion .escudo { background: none; }
-.itv-opcion b { font-size: 28px; font-weight: 900; text-transform: uppercase; line-height: 1.05; font-stretch: 88%; }
-
 /* Fin de ronda */
 .itv-fin { position: absolute; inset: 0; display: flex; gap: 60px; padding: 0 80px 40px; }
 .itv-fin-izq { flex: 1; display: flex; flex-direction: column; gap: 30px; }
@@ -395,9 +377,6 @@
 .itv-fin-imps > span { display: flex; align-items: center; gap: 18px; }
 .itv-fin-imps .avatar { font-size: 110px; box-shadow: 0 0 0 6px var(--imp); }
 .itv-fin-imps b { font-size: 56px; font-weight: 900; font-stretch: 75%; text-transform: uppercase; color: var(--c); }
-.itv-fin-adivino { font-size: 28px; font-weight: 700; padding: 8px 18px; border-radius: 14px; background: rgba(8, 10, 9, 0.6); }
-.itv-fin-adivino b { font-size: inherit; color: #fff; font-weight: 900; }
-.itv-fin-adivino[data-acierto='1'] b { color: var(--acento); }
 .itv-fin-tabla { width: 680px; flex: none; display: flex; flex-direction: column; gap: 14px; }
 .itv-fin-titulo { font-size: 44px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; }
 .imp-tv .imp-tabla { width: 100%; gap: 10px; }

@@ -69,7 +69,7 @@ describe('Impostor: arranque', () => {
 
 describe('Impostor: orden para hablar', () => {
   it('cada ronda sortea un orden nuevo con todos los participantes', () => {
-    const p = partida(6, { rondas: 6, adivinar: false });
+    const p = partida(6, { rondas: 6 });
     const ordenes = new Set<string>();
     for (let k = 0; k < 6; k++) {
       expect([...r(p).orden].sort()).toEqual([...r(p).participantes].sort());
@@ -103,7 +103,7 @@ describe('Impostor: votación', () => {
   });
 
   it('descubren al impostor: gana el grupo, buen ojo suma', () => {
-    const p = partida(4, { adivinar: false });
+    const p = partida(4);
     aVotar(p);
     const imp = r(p).impostores[0];
     votarA(p, imp);
@@ -153,22 +153,29 @@ describe('Impostor: votación', () => {
   });
 });
 
-describe('Impostor: adivinanza y tragos', () => {
-  it('el impostor descubierto adivina y se lleva puntos', () => {
+describe('Impostor: sin última chance y tragos', () => {
+  it('al descubrir al impostor la ronda termina de una: gana el grupo, sin adivinanza', () => {
     const p = partida(4, { tragos: true });
     aVotar(p);
     const imp = r(p).impostores[0];
     votarA(p, imp);
     p.avanzar(p.vence, secretos);
-    expect(p.fase).toBe('adivina');
-    expect(p.vista(null, 20).ronda?.opciones).toHaveLength(8);
-    expect(p.vista(null, 20).ronda?.opciones?.some((o) => o.id === r(p).secreto.id)).toBe(true);
-    p.adivinar(imp, r(p).secreto.id, 5);
-    expect(r(p).ganador).toBe('impostor');
-    expect(r(p).motivo).toBe('adivino');
-    expect(p.jugador(imp)!.puntos).toBe(PUNTOS_IMP.impostorAdivina);
+    expect(p.fase).toBe('finronda');
+    expect(r(p).ganador).toBe('grupo');
+    expect(r(p).motivo).toBe('descubierto');
+    expect(p.jugador(imp)!.puntos).toBe(0);
     // Lo eliminaron: toma igual.
     expect(p.jugador(imp)!.tragos).toBe(1);
+  });
+
+  it('una partida guardada con la vieja última chance en curso se cierra al restaurarla', () => {
+    const p = partida(4);
+    const copia = JSON.parse(JSON.stringify(p.exportar()));
+    copia.fase = 'adivina';
+    const q = new PartidaImp('ABCD');
+    q.importar(copia, 1000);
+    expect(q.fase).toBe('finronda');
+    expect(q.ronda!.ganador).toBe('grupo');
   });
 
   it('modo tragos: cada eliminación es un trago; sin el modo, no se cuentan', () => {
@@ -188,7 +195,7 @@ describe('Impostor: adivinanza y tragos', () => {
 
 describe('Impostor: rondas y final', () => {
   it('juega las rondas configuradas sin repetir secreto y termina', () => {
-    const p = partida(4, { rondas: 3, adivinar: false });
+    const p = partida(4, { rondas: 3 });
     const vistos = new Set<string>();
     for (let k = 0; k < 3; k++) {
       vistos.add(r(p).secreto.id);
@@ -246,7 +253,7 @@ describe('Impostor: trolls como secreto', () => {
     expect(candidatosImp({ modo: 'clubes', dificultad: 3, trolls: 'solo' }, jugs, cs, amigos).some((c) => c.tipo === 'troll')).toBe(false);
   });
 
-  it('"a veces" saca trolls en una parte de las rondas, y la adivinanza usa otros trolls', () => {
+  it('"a veces" saca trolls en una parte de las rondas', () => {
     const mezcla = candidatosImp({ modo: 'jugadores', dificultad: 1, trolls: 'aveces' }, jugs, cs, amigos);
     let conTroll = 0;
     const N = 60;
@@ -254,12 +261,7 @@ describe('Impostor: trolls como secreto', () => {
       const p = new PartidaImp('ABCD');
       for (let i = 0; i < 3; i++) p.entrar(`p${i}`, `Jugador${i}`, '');
       p.empezar(mezcla, 1000 + k, 0);
-      if (p.ronda!.secreto.tipo === 'troll') {
-        conTroll++;
-        const ops = p.ronda!.opciones;
-        expect(ops).toHaveLength(8);
-        expect(ops.filter((o) => o.tipo === 'troll').length).toBeGreaterThanOrEqual(8);
-      }
+      if (p.ronda!.secreto.tipo === 'troll') conTroll++;
     }
     expect(conTroll).toBeGreaterThan(N * 0.1);
     expect(conTroll).toBeLessThan(N * 0.6);

@@ -15,7 +15,7 @@ import { MascaraImp, Podio } from './ImpJugador';
 
 type SalaImp = Sala<EstadoImp, MsgClienteImp>;
 
-const MUSICA: Record<string, number> = { lobby: 0.15, reparto: 0.3, debate: 0.45, votacion: 0.8, veredicto: 0.2, adivina: 0.9, finronda: 0.35, final: 0.7 };
+const MUSICA: Record<string, number> = { lobby: 0.15, reparto: 0.3, debate: 0.45, votacion: 0.8, veredicto: 0.2, finronda: 0.35, final: 0.7 };
 
 export function ImpEscenario({ codigo }: { codigo: string }) {
   const [sala, vista] = useSala<EstadoImp, MsgClienteImp>(codigo, 'escenario');
@@ -94,7 +94,7 @@ export function ImpEscenario({ codigo }: { codigo: string }) {
   return (
     <div className="pantalla escenario imp-tv" data-fase={f}>
       <div className="lienzo" ref={lienzo}>
-        <Fondo paleta={f === 'veredicto' || f === 'adivina' || f === 'lobby' ? 'troll' : f === 'final' ? 'leyenda' : 'misterio'} vel={f === 'votacion' ? 2.2 : 1} />
+        <Fondo paleta={f === 'veredicto' || f === 'lobby' ? 'troll' : f === 'final' ? 'leyenda' : 'misterio'} vel={f === 'votacion' ? 2.2 : 1} />
         <div className="tv-capa" data-on={f === 'lobby' ? '1' : '0'}>
           {f === 'lobby' && <LobbyTV s={s} />}
         </div>
@@ -203,7 +203,7 @@ function JuegoTV({ sala, s }: { sala: SalaImp; s: EstadoImp }) {
   // Tic en los últimos 5 segundos de hablar y de votar.
   const seg = Math.ceil(faltan / 1000);
   useEffect(() => {
-    if ((f === 'votacion' || f === 'debate' || f === 'adivina') && seg > 0 && seg <= 5) sonar.tic(seg <= 3);
+    if ((f === 'votacion' || f === 'debate') && seg > 0 && seg <= 5) sonar.tic(seg <= 3);
   }, [seg, f]);
   return (
     <div className="itv-juego" data-fase={f}>
@@ -215,7 +215,7 @@ function JuegoTV({ sala, s }: { sala: SalaImp; s: EstadoImp }) {
         </div>
         {r.votacion > 1 && (f === 'debate' || f === 'votacion') && <span className="itv-votacion">Votación {r.votacion}</span>}
         <span className="itv-flex" />
-        {(f === 'debate' || f === 'votacion' || f === 'adivina' || f === 'reparto') && <Cuenta vence={s.vence} duracion={s.duracion} ahora={ahora} className="itv-cuenta" />}
+        {(f === 'debate' || f === 'votacion' || f === 'reparto') && <Cuenta vence={s.vence} duracion={s.duracion} ahora={ahora} className="itv-cuenta" />}
       </header>
       <div className="itv-escena">
         <div className="tv-capa itv-sub" data-on={f === 'reparto' ? '1' : '0'}>
@@ -229,9 +229,6 @@ function JuegoTV({ sala, s }: { sala: SalaImp; s: EstadoImp }) {
         </div>
         <div className="tv-capa itv-sub" data-on={f === 'veredicto' ? '1' : '0'}>
           {f === 'veredicto' && <VeredictoTV s={s} />}
-        </div>
-        <div className="tv-capa itv-sub" data-on={f === 'adivina' ? '1' : '0'}>
-          {f === 'adivina' && <AdivinaTV s={s} />}
         </div>
         <div className="tv-capa itv-sub" data-on={f === 'finronda' ? '1' : '0'}>
           {f === 'finronda' && <FinRondaTV s={s} />}
@@ -388,32 +385,9 @@ function useVeredictoSonido(empate: boolean, eraImpostor: boolean) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 }
 
-function AdivinaTV({ s }: { s: EstadoImp }) {
-  const r = s.ronda!;
-  const j = jug(s, r.adivina);
-  const cosa = s.ajustes.modo === 'clubes' ? 'el club' : 'el jugador';
-  return (
-    <div className="itv-centro itv-adivina">
-      <b className="itv-grande">¡Lo atraparon!</b>
-      <p className="itv-texto">
-        Pero <b>{j?.nombre ?? 'el impostor'}</b> todavía puede salvarse si adivina {cosa}.
-      </p>
-      <div className="itv-opciones">
-        {r.opciones?.map((o, i) => (
-          <span key={o.id} className="itv-opcion" style={{ '--i': i } as CSSProperties}>
-            <ImagenSecreto s={o} />
-            <b>{o.nombre}</b>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function FinRondaTV({ s }: { s: EstadoImp }) {
   const r = s.ronda!;
   const imps = (r.impostores ?? []).map((id) => jug(s, id)).filter(Boolean) as JugadorImpVista[];
-  const elegido = r.adivinanza?.elegido ? r.opciones?.find((o) => o.id === r.adivinanza!.elegido) : null;
   return (
     <div className="itv-fin" data-ganador={r.ganador}>
       <div className="itv-fin-izq">
@@ -431,11 +405,6 @@ function FinRondaTV({ s }: { s: EstadoImp }) {
                 <b>{j.nombre}</b>
               </span>
             ))}
-            {elegido && (
-              <p className="itv-fin-adivino" data-acierto={r.adivinanza?.acierto ? '1' : '0'}>
-                Dijo <b>{elegido.nombre}</b> {r.adivinanza?.acierto ? '¡y acertó!' : '… y no.'}
-              </p>
-            )}
           </div>
         </div>
       </div>
