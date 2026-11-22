@@ -238,7 +238,7 @@ describe('Impostor: trolls como secreto', () => {
   it('según la opción, entran, entran mezclados o son los únicos', () => {
     const base = { modo: 'jugadores' as const, dificultad: 1 as const };
     const nada = candidatosImp({ ...base, trolls: 'no' }, jugs, cs, amigos);
-    const mezcla = candidatosImp({ ...base, trolls: 'aveces' }, jugs, cs, amigos);
+    const mezcla = candidatosImp({ ...base, trolls: 'mezcla' }, jugs, cs, amigos);
     const solo = candidatosImp({ ...base, trolls: 'solo' }, jugs, cs, amigos);
     expect(nada.some((c) => c.tipo === 'troll')).toBe(false);
     expect(mezcla.filter((c) => c.tipo === 'troll')).toHaveLength(10);
@@ -249,22 +249,25 @@ describe('Impostor: trolls como secreto', () => {
 
   it('los trolls pendientes, apagados o en clubes no salen', () => {
     const raros: Troll[] = [{ ...amigos[0], pendiente: true }, { ...amigos[1], activo: false }, amigos[2]];
-    expect(candidatosImp({ modo: 'jugadores', dificultad: 1, trolls: 'aveces' }, jugs, cs, raros).filter((c) => c.tipo === 'troll')).toHaveLength(1);
+    expect(candidatosImp({ modo: 'jugadores', dificultad: 1, trolls: 'mezcla' }, jugs, cs, raros).filter((c) => c.tipo === 'troll')).toHaveLength(1);
     expect(candidatosImp({ modo: 'clubes', dificultad: 3, trolls: 'solo' }, jugs, cs, amigos).some((c) => c.tipo === 'troll')).toBe(false);
   });
 
-  it('"a veces" saca trolls en una parte de las rondas', () => {
-    const mezcla = candidatosImp({ modo: 'jugadores', dificultad: 1, trolls: 'aveces' }, jugs, cs, amigos);
+  it('"mezcla" suma los trolls a la lista: salen en la misma proporción que ocupan, sin cuota fija', () => {
+    const mezcla = candidatosImp({ modo: 'jugadores', dificultad: 3, trolls: 'mezcla' }, jugs, cs, amigos);
+    const esperado = amigos.length / mezcla.length;
     let conTroll = 0;
-    const N = 60;
+    const N = 800;
     for (let k = 0; k < N; k++) {
       const p = new PartidaImp('ABCD');
       for (let i = 0; i < 3; i++) p.entrar(`p${i}`, `Jugador${i}`, '');
       p.empezar(mezcla, 1000 + k, 0);
       if (p.ronda!.secreto.tipo === 'troll') conTroll++;
     }
-    expect(conTroll).toBeGreaterThan(N * 0.1);
-    expect(conTroll).toBeLessThan(N * 0.6);
+    // Con 10 trolls entre ~366 cartas, salen poco (≈3 %), nunca "siempre" ni una cuota del 30 %.
+    expect(conTroll / N).toBeGreaterThan(esperado * 0.4);
+    expect(conTroll / N).toBeLessThan(esperado * 2);
+    expect(conTroll / N).toBeLessThan(0.15);
   });
 
   it('con "solo trolls" todas las rondas son de un amigo', () => {

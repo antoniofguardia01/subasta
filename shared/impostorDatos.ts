@@ -72,7 +72,7 @@ export function secretosTrolls(trolls: Troll[]): (Secreto & { dificultad: number
 export function candidatosImp(a: Pick<AjustesImp, 'modo' | 'dificultad'> & { trolls?: AjustesImp['trolls'] }, jugadores: Jugador[], clubes: Club[], trolls: Troll[] = []): Secreto[] {
   const sinDif = ({ dificultad: _d, ...s }: Secreto & { dificultad: number }): Secreto => s;
   if (a.modo === 'clubes') return filtrarDificultad(secretosClubes(clubes), a.dificultad).map(sinDif);
-  const modoTrolls = a.trolls ?? 'aveces';
+  const modoTrolls = a.trolls ?? 'mezcla';
   const amigos = secretosTrolls(trolls).map(sinDif);
   const futbolistas = filtrarDificultad(secretosJugadores(jugadores), a.dificultad).map(sinDif);
   // "Solo trolls" necesita al menos 2 cartas distintas; si no alcanzan, se completa con futbolistas.

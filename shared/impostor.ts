@@ -7,7 +7,8 @@ import { COLORES_EQUIPO } from './types';
 
 export type FaseImp = 'lobby' | 'reparto' | 'debate' | 'votacion' | 'veredicto' | 'finronda' | 'final';
 export type ModoImp = 'jugadores' | 'clubes';
-export type TrollsImp = 'no' | 'aveces' | 'solo';
+/** no = sin trolls · mezcla = los trolls se suman a la lista (uno más entre todos) · solo = únicamente trolls. */
+export type TrollsImp = 'no' | 'mezcla' | 'solo';
 
 export interface AjustesImp {
   /** Qué se esconde: un futbolista o un club. */
@@ -26,11 +27,9 @@ export interface AjustesImp {
   tema: string;
 }
 
-export const AJUSTES_IMP: AjustesImp = { modo: 'jugadores', trolls: 'aveces', rondas: 5, impostores: 1, dificultad: 1, debate: 90, tragos: false, tema: 'estadio' };
+export const AJUSTES_IMP: AjustesImp = { modo: 'jugadores', trolls: 'mezcla', rondas: 5, impostores: 1, dificultad: 1, debate: 90, tragos: false, tema: 'estadio' };
 
 export const LIMITES_IMP = { rondasMin: 1, rondasMax: 10, debateMin: 30, debateMax: 300 } as const;
-/** Con trolls en "a veces", probabilidad de que el secreto de una ronda sea un troll. */
-export const PROB_TROLL = 0.3;
 export const MIN_IMP = 3;
 export const MAX_IMP = 12;
 export const MIN_DOS_IMPOSTORES = 6;
@@ -255,7 +254,7 @@ export class PartidaImp {
     }
     const a = this.ajustes;
     if (p.modo === 'jugadores' || p.modo === 'clubes') a.modo = p.modo;
-    if (p.trolls === 'no' || p.trolls === 'aveces' || p.trolls === 'solo') a.trolls = p.trolls;
+    if (p.trolls === 'no' || p.trolls === 'mezcla' || p.trolls === 'solo') a.trolls = p.trolls;
     if (typeof p.rondas === 'number') a.rondas = Math.round(Math.min(LIMITES_IMP.rondasMax, Math.max(LIMITES_IMP.rondasMin, p.rondas)));
     if (p.impostores === 1 || p.impostores === 2) a.impostores = p.impostores;
     if (p.dificultad === 1 || p.dificultad === 2 || p.dificultad === 3) a.dificultad = p.dificultad;
@@ -292,12 +291,9 @@ export class PartidaImp {
 
   nuevaRonda(candidatos: Secreto[], ahora: number) {
     this.rondaN++;
-    // Con trolls en "a veces", cada ronda tira una moneda cargada: troll o futbolista. Sin repetir hasta agotar.
+    // Los trolls (si están activados) ya vienen mezclados en la lista: un secreto más entre todos. Sin repetir hasta agotar.
     const libres = candidatos.filter((c) => !this.usados.includes(c.id));
-    let fuente = libres.length ? libres : candidatos;
-    const deTroll = fuente.filter((c) => c.tipo === 'troll');
-    const deOtros = fuente.filter((c) => c.tipo !== 'troll');
-    if (deTroll.length && deOtros.length) fuente = this.azar() < PROB_TROLL ? deTroll : deOtros;
+    const fuente = libres.length ? libres : candidatos;
     const secreto = fuente[Math.floor(this.azar() * fuente.length)];
     this.usados.push(secreto.id);
     const participantes = this.jugadores.map((j) => j.id);

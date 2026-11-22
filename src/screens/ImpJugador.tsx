@@ -295,9 +295,9 @@ function Configurar({ sala, s, editable }: { sala: SalaImp; s: EstadoImp; editab
         <div className="regla regla--bloque">
           <span>
             Trolls
-            <small>{a.trolls === 'no' ? 'Solo futbolistas de verdad' : a.trolls === 'aveces' ? 'De vez en cuando el secreto es uno de los amigos' : 'Todas las rondas, un amigo de la lista'}</small>
+            <small>{a.trolls === 'no' ? 'Solo futbolistas de verdad' : a.trolls === 'solo' ? 'Todas las rondas, un amigo de la lista' : 'Los amigos se suman a la lista de futbolistas: uno más entre todos'}</small>
           </span>
-          <Opciones valor={a.trolls ?? 'aveces'} opciones={[['no', 'Sin trolls'], ['aveces', 'A veces'], ['solo', 'Solo trolls']]} cambiar={(trolls) => poner({ trolls })} editable={editable} />
+          <Opciones valor={a.trolls === 'no' || a.trolls === 'solo' ? a.trolls : 'mezcla'} opciones={[['no', 'Sin trolls'], ['mezcla', 'Sumar a la lista'], ['solo', 'Solo trolls']]} cambiar={(trolls) => poner({ trolls })} editable={editable} />
         </div>
       )}
       <div className="regla regla--bloque">
@@ -337,7 +337,7 @@ function ComoSeJuega({ a }: { a: AjustesImp }) {
     <div className="imp-como">
       <ol>
         <li>
-          Todos reciben el mismo <b>{cosa}</b>{a.modo === 'jugadores' && a.trolls === 'aveces' ? ' (o a veces un troll: uno de los amigos)' : ''} en el celular. Menos el <b>impostor</b>: a él le sale que es el impostor.
+          Todos reciben el mismo <b>{cosa}</b>{a.modo === 'jugadores' && a.trolls !== 'no' && a.trolls !== 'solo' ? ' (o, si les toca, un troll: uno de los amigos)' : ''} en el celular. Menos el <b>impostor</b>: a él le sale que es el impostor.
         </li>
         <li>
           Por turnos, cada uno dice <b>una palabra</b> en voz alta sobre el {cosa}. Sin decir el nombre, y sin regalarle la respuesta al impostor.
