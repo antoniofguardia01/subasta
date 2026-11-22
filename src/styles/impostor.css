@@ -31,6 +31,7 @@
 .imp-resumen span { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 20px; background: rgba(255, 255, 255, 0.1); font-size: 14px; font-weight: 700; animation: sube 340ms var(--ease-out) both; }
 .imp-resumen span b { color: var(--acento); font-weight: 900; }
 .imp-resumen .imp-resumen-trago { background: #ffc233; color: #1a1205; }
+.imp-resumen .imp-resumen-troll, .itv-chips .itv-chip-troll { background: #ffe14a; color: #14161a; font-weight: 900; text-transform: uppercase; }
 .imp-resumen-trago img { height: 20px; width: auto; }
 .imp-seg { display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: rgba(255, 255, 255, 0.08); }
 .imp-seg button { flex: 1; padding: 10px 8px; border-radius: 10px; font-size: 15px; font-weight: 800; text-transform: uppercase; transition: background-color 200ms ease, color 200ms ease, transform 140ms var(--ease-out); }
@@ -105,6 +106,10 @@
 .imp-carta-pie b { font-size: 30px; font-weight: 900; font-stretch: 75%; text-transform: uppercase; line-height: 1; }
 .imp-carta-pie span { font-size: 14px; font-weight: 700; opacity: 0.75; }
 .imp-carta-pie em { font-style: normal; font-size: 14px; font-weight: 700; color: var(--acento); }
+.imp-carta-troll { position: absolute; z-index: 2; top: 14px; right: 14px; padding: 3px 12px; border-radius: 8px; background: #ffe14a; color: #14161a; font-size: 18px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; box-shadow: 0 0 0 3px #14161a; transform: rotate(4deg); animation: sello-cae 420ms 500ms var(--ease-rebote) both; }
+.imp-carta[data-tipo='troll'] { background: radial-gradient(circle at 50% 30%, var(--troll-1), var(--troll-0) 55%, var(--troll-2)); }
+.imp-carta--chica .imp-carta-troll { top: 8px; right: 8px; font-size: 13px; padding: 2px 8px; }
+.itv-fin-revela .imp-carta-troll { top: 22px; right: 22px; font-size: 32px; padding: 4px 18px; }
 .imp-carta--chica { width: 150px; height: 200px; border-radius: 18px; flex: none; box-shadow: 0 8px 0 rgba(0, 0, 0, 0.3); }
 .imp-carta--chica .imp-carta-pie { padding: 8px 10px; }
 .imp-carta--chica .imp-carta-pie b { font-size: 18px; }

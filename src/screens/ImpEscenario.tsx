@@ -160,6 +160,7 @@ function LobbyTV({ s }: { s: EstadoImp }) {
             <b className="num">{a.rondas}</b> {a.rondas === 1 ? 'ronda' : 'rondas'}
           </span>
           <span>{DIFICULTAD_TEXTO[a.dificultad]}</span>
+          {a.modo === 'jugadores' && a.trolls !== 'no' && <span className="itv-chip-troll">{a.trolls === 'solo' ? 'Solo trolls' : 'Con trolls'}</span>}
           <span>
             <b className="num">{a.impostores === 2 && n >= MIN_DOS_IMPOSTORES ? 2 : 1}</b> impostor{a.impostores === 2 && n >= MIN_DOS_IMPOSTORES ? 'es' : ''}
           </span>

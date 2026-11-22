@@ -175,6 +175,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
             <b className="num">{a.rondas}</b> {a.rondas === 1 ? 'ronda' : 'rondas'}
           </span>
           <span>{DIFICULTAD_TEXTO[a.dificultad]}</span>
+          {a.modo === 'jugadores' && a.trolls !== 'no' && <span className="imp-resumen-troll">{a.trolls === 'solo' ? 'Solo trolls' : 'Con trolls'}</span>}
           <span>
             <b className="num">{a.impostores === 2 && s.jugadores.length >= MIN_DOS_IMPOSTORES ? 2 : 1}</b> impostor{a.impostores === 2 && s.jugadores.length >= MIN_DOS_IMPOSTORES ? 'es' : ''}
           </span>
@@ -233,7 +234,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
             <button className="btn btn--acento lobby-empezar" disabled={pocos} onClick={() => (vibrar([20, 30, 60]), sala.enviar({ t: 'empezar' }))}>
               {pocos ? 'Faltan participantes' : 'Empezar'}
             </button>
-            <span>{pocos ? `Hacen falta al menos ${MIN_IMP}` : `${s.disponibles} ${a.modo === 'clubes' ? 'clubes' : 'futbolistas'} posibles`}</span>
+            <span>{pocos ? `Hacen falta al menos ${MIN_IMP}` : `${s.disponibles} ${a.modo === 'clubes' ? 'clubes' : a.trolls === 'solo' ? 'trolls' : 'secretos'} posibles`}</span>
           </>
         ) : (
           <p className="lobby-esperando">
@@ -290,6 +291,15 @@ function Configurar({ sala, s, editable }: { sala: SalaImp; s: EstadoImp; editab
         </span>
         <Opciones valor={a.modo} opciones={[['jugadores', 'Futbolistas'], ['clubes', 'Clubes']]} cambiar={(modo) => poner({ modo })} editable={editable} />
       </div>
+      {a.modo === 'jugadores' && (
+        <div className="regla regla--bloque">
+          <span>
+            Trolls
+            <small>{a.trolls === 'no' ? 'Solo futbolistas de verdad' : a.trolls === 'aveces' ? 'De vez en cuando el secreto es uno de los amigos' : 'Todas las rondas, un amigo de la lista'}</small>
+          </span>
+          <Opciones valor={a.trolls ?? 'aveces'} opciones={[['no', 'Sin trolls'], ['aveces', 'A veces'], ['solo', 'Solo trolls']]} cambiar={(trolls) => poner({ trolls })} editable={editable} />
+        </div>
+      )}
       <div className="regla regla--bloque">
         <span>
           Dificultad
@@ -331,12 +341,12 @@ function Configurar({ sala, s, editable }: { sala: SalaImp; s: EstadoImp; editab
 }
 
 function ComoSeJuega({ a }: { a: AjustesImp }) {
-  const cosa = a.modo === 'clubes' ? 'club' : 'futbolista';
+  const cosa = a.modo === 'clubes' ? 'club' : a.trolls === 'solo' ? 'troll' : 'futbolista';
   return (
     <div className="imp-como">
       <ol>
         <li>
-          Todos reciben el mismo <b>{cosa}</b> en el celular. Menos el <b>impostor</b>: a él le sale que es el impostor.
+          Todos reciben el mismo <b>{cosa}</b>{a.modo === 'jugadores' && a.trolls === 'aveces' ? ' (o a veces un troll: uno de los amigos)' : ''} en el celular. Menos el <b>impostor</b>: a él le sale que es el impostor.
         </li>
         <li>
           Por turnos, cada uno dice <b>una palabra</b> en voz alta sobre el {cosa}. Sin decir el nombre, y sin regalarle la respuesta al impostor.

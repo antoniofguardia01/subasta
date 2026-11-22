@@ -69,6 +69,7 @@ export function CartaSecreto({ s, className = '', style }: { s: Secreto; classNa
       <div className="imp-carta-img">
         <ImagenSecreto s={s} />
       </div>
+      {s.tipo === 'troll' && <span className="imp-carta-troll">Troll</span>}
       <div className="imp-carta-pie">
         <b>{s.nombre}</b>
         <span>{s.detalle}</span>

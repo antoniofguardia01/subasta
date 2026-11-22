@@ -3,10 +3,11 @@
 // Diferencia clave: cada celular recibe su propia vista (el impostor nunca recibe el secreto).
 import { PartidaImp, type MsgClienteImp, type Secreto } from '../shared/impostor';
 import { candidatosImp, type Club } from '../shared/impostorDatos';
-import type { Jugador } from '../shared/types';
-import { CatalogoDatos, jugadoresFinal } from '../shared/catalogo';
+import type { Jugador, Troll } from '../shared/types';
+import { CatalogoDatos, jugadoresFinal, trollsFinal } from '../shared/catalogo';
 import jugadoresJson from '../data/players.json';
 import clubesJson from '../data/clubes.json';
+import trollsJson from '../data/trolls.json';
 
 interface Conexion {
   clave: string;
@@ -74,7 +75,7 @@ export class SalaImpostor {
   }
 
   private candidatos(): Secreto[] {
-    return candidatosImp(this.partida.ajustes, jugadoresFinal(jugadoresJson as unknown as Jugador[], this.cat), clubesJson as unknown as Club[]);
+    return candidatosImp(this.partida.ajustes, jugadoresFinal(jugadoresJson as unknown as Jugador[], this.cat), clubesJson as unknown as Club[], trollsFinal(trollsJson as unknown as Troll[], this.cat));
   }
 
   async fetch(req: Request): Promise<Response> {
