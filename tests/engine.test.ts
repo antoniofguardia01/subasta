@@ -67,10 +67,15 @@ describe('mazo', () => {
       const ids = m.rondas.flatMap((r) => r.cartas.map((c) => c.refId));
       expect(new Set(ids).size).toBe(ids.length);
       m.rondas.forEach((r, i) => {
-        expect(r.pos).toBe(FORMACION[i]);
+        expect(r.pos).toBe(FORMACION[AJUSTES_DEFECTO.orden[i]]);
         for (const c of r.cartas) if (c.tipo === 'jugador') expect(c.refId.startsWith(r.pos + '-')).toBe(true);
       });
     }
+  });
+
+  it('la última ronda es la del delantero centro (antes que él va el extremo izquierdo)', () => {
+    const m = generarMazo(pool(), trolls(), 4, AJUSTES_DEFECTO, 7);
+    expect(m.rondas.map((r) => r.pos).slice(-2)).toEqual(['EI', 'DC']);
   });
 
   it('el rango de trolls por ronda crece con la cantidad de participantes', () => {

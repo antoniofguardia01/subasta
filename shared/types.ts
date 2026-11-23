@@ -3,7 +3,7 @@
 export type Pos = 'POR' | 'LD' | 'DFC' | 'LI' | 'MCD' | 'MC' | 'MCO' | 'ED' | 'DC' | 'EI';
 export type Rareza = 'comun' | 'plata' | 'oro' | 'prime' | 'leyenda' | 'troll';
 
-/** Formación fija 4-3-3: los 11 huecos, en el orden de rondas por defecto. */
+/** Formación fija 4-3-3: los 11 huecos. El orden de las rondas lo da `AJUSTES_DEFECTO.orden` (el delantero centro va último). */
 export const FORMACION: Pos[] = ['POR', 'LD', 'DFC', 'DFC', 'LI', 'MCD', 'MC', 'MCO', 'ED', 'DC', 'EI'];
 
 export const POS_NOMBRE: Record<Pos, string> = {
@@ -94,7 +94,7 @@ export const AJUSTES_DEFECTO: Ajustes = {
   trollsCamuflados: true,
   ultimaOportunidad: 10,
   forzar: true,
-  orden: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  orden: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 9],
   intensidad: 3, // fijo: las burlas siempre van sin filtro (ya no se puede elegir)
   tema: 'estadio',
   tragos: false,
