@@ -1,7 +1,13 @@
 {
- "fecha": "2026-11-23T03:29:10.161Z",
- "total": 428,
- "conFoto": 428,
- "fallaron": [],
+ "fecha": "2026-11-23T14:31:36.114Z",
+ "total": 506,
+ "conFoto": 505,
+ "fallaron": [
+  {
+   "id": "raul-asencio",
+   "ok": false,
+   "motivo": "sin retrato (id 75605)"
+  }
+ ],
  "flojos": []
 }
