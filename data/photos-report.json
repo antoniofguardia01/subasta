@@ -1,13 +1,7 @@
 {
- "fecha": "2026-11-12T23:50:48.713Z",
- "total": 356,
- "conFoto": 352,
- "fallaron": [
-  {
-   "id": "mariano-diaz",
-   "ok": false,
-   "motivo": "muy chica (180px)"
-  }
- ],
+ "fecha": "2026-11-23T03:29:10.161Z",
+ "total": 428,
+ "conFoto": 428,
+ "fallaron": [],
  "flojos": []
 }

@@ -4,14 +4,14 @@ import gsap from 'gsap';
 import type { AjustesImp, EstadoImp, JugadorImpVista, MsgClienteImp } from '../../shared/impostor';
 import { LIMITES_IMP, MAX_IMP, MIN_DOS_IMPOSTORES, MIN_IMP, PUNTOS_IMP } from '../../shared/impostor';
 import { Avatar, BotonPantalla, Fondo } from '../components/comunes';
-import { CartaSecreto, Cuenta, DIFICULTAD_TEXTO, ImagenSecreto, MOTIVO_TEXTO, Tabla, ordenTabla } from '../components/impostor';
+import { CartaSecreto, Cuenta, ImagenSecreto, MOTIVO_TEXTO, Tabla, ordenTabla } from '../components/impostor';
 import { Fx, FxApi } from '../components/Fx';
 import { irConTelon } from '../lib/ruta';
 import { Sala, VistaSala, useSala } from '../lib/sala';
 import { desbloquearSonido, sonar } from '../lib/sonido';
 import { guardar, leer, vibrar } from '../lib/util';
 import { Cargando, SinSala } from './Escenario';
-import { AvatarDato, BotonConfirmar, Capa, ConectarTV, Hoja, Paso, QrGrande, QrSala, SelectorTema } from './Jugador';
+import { AvatarDato, BarraFinal, BotonConfirmar, Capa, ConectarTV, Hoja, Paso, QrGrande, QrSala, SelectorTema } from './Jugador';
 
 type SalaImp = Sala<EstadoImp, MsgClienteImp>;
 
@@ -174,8 +174,7 @@ function Lobby({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
           <span>
             <b className="num">{a.rondas}</b> {a.rondas === 1 ? 'ronda' : 'rondas'}
           </span>
-          <span>{DIFICULTAD_TEXTO[a.dificultad]}</span>
-          {a.modo === 'jugadores' && a.trolls !== 'no' && <span className="imp-resumen-troll">{a.trolls === 'solo' ? 'Solo trolls' : 'Con trolls'}</span>}
+          {a.modo === 'jugadores' && a.trolls === 'solo' && <span className="imp-resumen-troll">Solo trolls</span>}
           <span>
             <b className="num">{a.impostores === 2 && s.jugadores.length >= MIN_DOS_IMPOSTORES ? 2 : 1}</b> impostor{a.impostores === 2 && s.jugadores.length >= MIN_DOS_IMPOSTORES ? 'es' : ''}
           </span>
@@ -295,18 +294,11 @@ function Configurar({ sala, s, editable }: { sala: SalaImp; s: EstadoImp; editab
         <div className="regla regla--bloque">
           <span>
             Trolls
-            <small>{a.trolls === 'no' ? 'Solo futbolistas de verdad' : a.trolls === 'solo' ? 'Todas las rondas, un amigo de la lista' : 'Los amigos se suman a la lista de futbolistas: uno más entre todos'}</small>
+            <small>{a.trolls === 'solo' ? 'Todas las rondas, un amigo de la lista' : 'Todos los futbolistas de la base, sin trolls'}</small>
           </span>
-          <Opciones valor={a.trolls === 'no' || a.trolls === 'solo' ? a.trolls : 'mezcla'} opciones={[['no', 'Sin trolls'], ['mezcla', 'Sumar a la lista'], ['solo', 'Solo trolls']]} cambiar={(trolls) => poner({ trolls })} editable={editable} />
+          <Opciones valor={a.trolls === 'solo' ? 'solo' : 'no'} opciones={[['no', 'Sin trolls'], ['solo', 'Solo trolls']]} cambiar={(trolls) => poner({ trolls })} editable={editable} />
         </div>
       )}
-      <div className="regla regla--bloque">
-        <span>
-          Dificultad
-          <small>{a.dificultad === 1 ? 'Solo los que conoce hasta tu abuela' : a.dificultad === 2 ? 'Conocidos para cualquier futbolero' : 'Cualquiera de la base: para los que saben'}</small>
-        </span>
-        <Opciones valor={a.dificultad} opciones={[[1, 'Cracks'], [2, 'Conocidos'], [3, 'Todos']]} cambiar={(d) => poner({ dificultad: d })} editable={editable} />
-      </div>
       <Paso rotulo="Rondas" valor={a.rondas} min={LIMITES_IMP.rondasMin} max={LIMITES_IMP.rondasMax} cambiar={(rondas) => poner({ rondas })} editable={editable} />
       <div className="regla regla--bloque">
         <span>
@@ -337,7 +329,7 @@ function ComoSeJuega({ a }: { a: AjustesImp }) {
     <div className="imp-como">
       <ol>
         <li>
-          Todos reciben el mismo <b>{cosa}</b>{a.modo === 'jugadores' && a.trolls !== 'no' && a.trolls !== 'solo' ? ' (o, si les toca, un troll: uno de los amigos)' : ''} en el celular. Menos el <b>impostor</b>: a él le sale que es el impostor.
+          Todos reciben el mismo <b>{cosa}</b> en el celular. Menos el <b>impostor</b>: a él le sale que es el impostor.
         </li>
         <li>
           Por turnos, cada uno dice <b>una palabra</b> en voz alta sobre el {cosa}. Sin decir el nombre, y sin regalarle la respuesta al impostor.
@@ -374,6 +366,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
   const fx = useRef<FxApi>(null);
   const vivo = r.vivos.includes(yo.id);
   const [verCarta, setVerCarta] = useState(false);
+  const [menu, setMenu] = useState(false);
   const f = s.fase;
 
   // Sonidos y vibración al cambiar de fase.
@@ -405,6 +398,11 @@ function Juego({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
           {FASE_TEXTO[f]}
         </b>
         {(f === 'debate' || f === 'votacion' || f === 'reparto') && <Cuenta vence={s.vence} duracion={s.duracion} ahora={ahora} className="imp-cab-cuenta" />}
+        <button className="imp-cab-menu" onClick={() => (vibrar(8), setMenu(true))} aria-label="Menú">
+          <i />
+          <i />
+          <i />
+        </button>
       </header>
 
       <main className="imp-cuerpo">
@@ -422,6 +420,15 @@ function Juego({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
           <span className="imp-ver-contenido">{tu.impostor ? <b className="imp-ver-imp">Eres el impostor</b> : tu.secreto && <><ImagenSecreto s={tu.secreto} className="imp-ver-img" /><b>{tu.secreto.nombre}</b></>}</span>
         </button>
       )}
+      <Hoja on={menu} titulo="Menú" cerrar={() => setMenu(false)}>
+        <div className="imp-menu">
+          {anfitrion && (
+            <BotonConfirmar className="btn btn-peligro" etiqueta="Terminar partida" aviso="¿Seguro? Toca otra vez: se muestran los resultados" alConfirmar={() => (sala.enviar({ t: 'terminar' }), setMenu(false))} />
+          )}
+          <BotonConfirmar className="btn" etiqueta="Salir de la sala" aviso="¿Seguro? Toca otra vez para salir" alConfirmar={(e) => (sala.enviar({ t: 'salir' }), void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } }))} />
+          <BotonPantalla className="btn-pantalla--lobby" />
+        </div>
+      </Hoja>
       <Fx ref={fx} />
     </div>
   );
@@ -729,16 +736,14 @@ function Final({ sala, s, yo, anfitrion }: { sala: SalaImp; s: EstadoImp; yo: Ju
           El más sediento: <b>{masTragos.nombre}</b> con <b className="num">{masTragos.tragos}</b> {masTragos.tragos === 1 ? 'trago' : 'tragos'}
         </p>
       )}
-      <footer className="imp-final-pie">
-        {anfitrion ? (
-          <button className="btn btn--acento" onClick={() => (vibrar(20), sala.enviar({ t: 'revancha' }))}>
-            Revancha
-          </button>
-        ) : (
-          <p className="imp-esperan">El anfitrión decide si hay revancha</p>
-        )}
-        <BotonConfirmar className="btn" etiqueta="Salir" aviso="¿Seguro? Toca otra vez" alConfirmar={(e) => (sala.enviar({ t: 'salir' }), void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } }))} />
-      </footer>
+      <BarraFinal
+        anfitrion={anfitrion}
+        revancha={() => sala.enviar({ t: 'revancha' })}
+        salir={(e) => {
+          sala.enviar({ t: 'salir' });
+          void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } });
+        }}
+      />
       <Fx ref={fx} />
     </div>
   );

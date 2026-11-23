@@ -3,7 +3,7 @@ import { CSSProperties, useCallback, useEffect, useLayoutEffect, useRef, useStat
 import type { EstadoImp, JugadorImpVista, MsgClienteImp } from '../../shared/impostor';
 import { MIN_DOS_IMPOSTORES, MIN_IMP } from '../../shared/impostor';
 import { Avatar, Fondo, QR } from '../components/comunes';
-import { CartaSecreto, Cuenta, DIFICULTAD_TEXTO, ImagenSecreto, MOTIVO_TEXTO, Tabla, useFaltan } from '../components/impostor';
+import { CartaSecreto, Cuenta, ImagenSecreto, MOTIVO_TEXTO, Tabla, useFaltan } from '../components/impostor';
 import { Fx, FxApi } from '../components/Fx';
 import { IconoMusica, IconoSonido } from '../components/Iconos';
 import { useSala, type Sala } from '../lib/sala';
@@ -159,8 +159,7 @@ function LobbyTV({ s }: { s: EstadoImp }) {
           <span>
             <b className="num">{a.rondas}</b> {a.rondas === 1 ? 'ronda' : 'rondas'}
           </span>
-          <span>{DIFICULTAD_TEXTO[a.dificultad]}</span>
-          {a.modo === 'jugadores' && a.trolls !== 'no' && <span className="itv-chip-troll">{a.trolls === 'solo' ? 'Solo trolls' : 'Con trolls'}</span>}
+          {a.modo === 'jugadores' && a.trolls === 'solo' && <span className="itv-chip-troll">Solo trolls</span>}
           <span>
             <b className="num">{a.impostores === 2 && n >= MIN_DOS_IMPOSTORES ? 2 : 1}</b> impostor{a.impostores === 2 && n >= MIN_DOS_IMPOSTORES ? 'es' : ''}
           </span>

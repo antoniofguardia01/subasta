@@ -11,7 +11,7 @@ import { Ruleta } from '../components/Ruleta';
 import { irConTelon } from '../lib/ruta';
 import { Sala, VistaSala, useSala } from '../lib/sala';
 import { activarSonido, desbloquearSonido, sonar, sonidoPreferido } from '../lib/sonido';
-import { TEMAS, elegirTemaPropio, temaPropio } from '../lib/temas';
+import { TEMAS } from '../lib/temas';
 import { guardar, leer, vibrar } from '../lib/util';
 import { CanchaMedida, Cargando, SinSala } from './Escenario';
 import { useEquipoEnPantalla } from '../lib/vistaFinal';
@@ -366,27 +366,18 @@ function Reglas({ sala, s, editable }: { sala: Sala; s: EstadoPublico; editable:
   );
 }
 
-/** Sirve para los dos juegos: solo usa el tema de la sala y el mensaje de ajustes. */
+/** Sirve para los dos juegos. El anfitrión elige el escenario de toda la sala (celulares y TV); los demás lo ven. */
 export function SelectorTema({ sala, s, anfitrion }: { sala: { enviar(m: { t: 'ajustes'; ajustes: { tema: string } }): void }; s: { ajustes: { tema: string } }; anfitrion: boolean }) {
-  const [propio, setPropio] = useState(temaPropio());
   const elegir = (id: string) => {
+    if (!anfitrion) return;
     vibrar(10);
-    if (anfitrion) {
-      // El anfitrión cambia el escenario de toda la sala (TV incluida).
-      elegirTemaPropio(null);
-      setPropio(null);
-      sala.enviar({ t: 'ajustes', ajustes: { tema: id } });
-    } else {
-      elegirTemaPropio(id);
-      setPropio(id);
-    }
+    sala.enviar({ t: 'ajustes', ajustes: { tema: id } });
   };
-  const actual = propio ?? s.ajustes.tema;
   return (
     <div className="temas">
-      <p className="temas-nota">{anfitrion ? 'Eliges el escenario de toda la sala, TV incluida.' : 'Cambia solo en tu celular. La TV usa el del anfitrión.'}</p>
+      <p className="temas-nota">{anfitrion ? 'Eliges el escenario de toda la sala: lo ven todos los celulares y la TV.' : 'El escenario lo elige el anfitrión y se ve igual en todos los celulares.'}</p>
       {TEMAS.map((t) => (
-        <button key={t.id} className="tema" data-on={actual === t.id ? '1' : '0'} onClick={() => elegir(t.id)}>
+        <button key={t.id} className="tema" data-on={s.ajustes.tema === t.id ? '1' : '0'} disabled={!anfitrion} onClick={() => elegir(t.id)}>
           <span className="tema-muestra" style={{ background: t.muestra[0] }}>
             <i style={{ background: t.muestra[1] }} />
             <i style={{ background: t.muestra[2] }} />
@@ -398,17 +389,6 @@ export function SelectorTema({ sala, s, anfitrion }: { sala: { enviar(m: { t: 'a
           {s.ajustes.tema === t.id && <em>Sala</em>}
         </button>
       ))}
-      {!anfitrion && propio && (
-        <button
-          className="btn btn--linea temas-volver"
-          onClick={() => {
-            elegirTemaPropio(null);
-            setPropio(null);
-          }}
-        >
-          Usar el de la sala
-        </button>
-      )}
     </div>
   );
 }
@@ -1142,18 +1122,41 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
               </div>
             );
           })}
-          {anfitrion ? (
-            <button className="btn btn--acento f-revancha" onClick={() => sala.enviar({ t: 'revancha' })}>
-              Jugar la revancha
-            </button>
-          ) : (
-            <p className="f-nota">El anfitrión puede armar la revancha.</p>
-          )}
         </div>
       </div>
+      {/* Siempre a la vista, sin tener que bajar hasta el fondo: salir de un toque (la partida ya terminó) y la revancha. */}
+      <BarraFinal
+        anfitrion={anfitrion}
+        revancha={() => sala.enviar({ t: 'revancha' })}
+        salir={(e) => {
+          sala.enviar({ t: 'salir' });
+          void irConTelon('/', { origen: { x: e.clientX, y: e.clientY } });
+        }}
+      />
       <Ticker mensajes={s.ticker} alto={32} />
       <Fx ref={fx} />
     </div>
+  );
+}
+
+/** Barra fija al pie de la pantalla final (Subasta e Impostor): Salir siempre visible, de un solo toque. */
+export function BarraFinal({ anfitrion, revancha, salir }: { anfitrion: boolean; revancha: () => void; salir: (e: React.MouseEvent) => void }) {
+  return (
+    <footer className="barra-final">
+      {anfitrion ? (
+        <button className="btn btn--acento barra-final-revancha" onClick={() => (vibrar(20), revancha())}>
+          Revancha
+        </button>
+      ) : (
+        <span className="barra-final-nota">El anfitrión decide si hay revancha</span>
+      )}
+      <button className="btn barra-final-salir" onClick={(e) => (vibrar(15), salir(e))}>
+        <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9" />
+        </svg>
+        Salir
+      </button>
+    </footer>
   );
 }
 

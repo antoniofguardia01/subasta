@@ -33,10 +33,13 @@ export function elegirTemaPropio(id: string | null) {
   aplicarTema(id ?? temaSala);
 }
 
-/** Aplica el tema de la sala salvo que el dispositivo haya elegido uno propio. */
+/**
+ * Dentro de una sala manda el tema de la sala: lo elige el anfitrión y lo ven todos (celulares y TV).
+ * El tema propio del dispositivo solo vale en la portada.
+ */
 export function aplicarTemaDeSala(id: string) {
   if (valido(id)) temaSala = id;
-  aplicarTema(temaPropio() ?? temaSala);
+  aplicarTema(temaSala);
 }
 
 export function aplicarTema(id: string) {

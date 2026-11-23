@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { MIN_DOS_IMPOSTORES, PartidaImp, PUNTOS_IMP, Secreto, TIEMPOS_IMP } from '../shared/impostor';
-import { candidatosImp, Club, dificultadJugador } from '../shared/impostorDatos';
+import { candidatosImp, Club } from '../shared/impostorDatos';
 import type { Jugador, Troll } from '../shared/types';
 import jugadoresJson from '../data/players.json';
 import clubesJson from '../data/clubes.json';
@@ -234,44 +234,29 @@ const amigos: Troll[] = Array.from({ length: 10 }, (_, i) => ({ id: `t-${i}`, no
 describe('Impostor: trolls como secreto', () => {
   const jugs = jugadoresJson as unknown as Jugador[];
   const cs = clubesJson as unknown as Club[];
+  const conFoto = jugs.filter((j) => j.fotos?.length).length;
 
-  it('según la opción, entran, entran mezclados o son los únicos', () => {
-    const base = { modo: 'jugadores' as const, dificultad: 1 as const };
-    const nada = candidatosImp({ ...base, trolls: 'no' }, jugs, cs, amigos);
-    const mezcla = candidatosImp({ ...base, trolls: 'mezcla' }, jugs, cs, amigos);
-    const solo = candidatosImp({ ...base, trolls: 'solo' }, jugs, cs, amigos);
+  it('solo dos opciones: sin trolls (todos los futbolistas) o solo trolls', () => {
+    const nada = candidatosImp({ modo: 'jugadores', trolls: 'no' }, jugs, cs, amigos);
+    const solo = candidatosImp({ modo: 'jugadores', trolls: 'solo' }, jugs, cs, amigos);
     expect(nada.some((c) => c.tipo === 'troll')).toBe(false);
-    expect(mezcla.filter((c) => c.tipo === 'troll')).toHaveLength(10);
-    expect(mezcla.length).toBe(nada.length + 10);
+    // Sin dificultad: entran todos los futbolistas con foto.
+    expect(nada).toHaveLength(conFoto);
     expect(solo.every((c) => c.tipo === 'troll')).toBe(true);
     expect(solo[0]).toMatchObject({ nombre: expect.stringContaining('Amigo'), detalle: expect.stringContaining('Cuento') });
+    // Un valor viejo ("mezcla") se trata como sin trolls.
+    expect(candidatosImp({ modo: 'jugadores', trolls: 'mezcla' }, jugs, cs, amigos)).toHaveLength(conFoto);
   });
 
-  it('los trolls pendientes, apagados o en clubes no salen', () => {
-    const raros: Troll[] = [{ ...amigos[0], pendiente: true }, { ...amigos[1], activo: false }, amigos[2]];
-    expect(candidatosImp({ modo: 'jugadores', dificultad: 1, trolls: 'mezcla' }, jugs, cs, raros).filter((c) => c.tipo === 'troll')).toHaveLength(1);
-    expect(candidatosImp({ modo: 'clubes', dificultad: 3, trolls: 'solo' }, jugs, cs, amigos).some((c) => c.tipo === 'troll')).toBe(false);
-  });
-
-  it('"mezcla" suma los trolls a la lista: salen en la misma proporción que ocupan, sin cuota fija', () => {
-    const mezcla = candidatosImp({ modo: 'jugadores', dificultad: 3, trolls: 'mezcla' }, jugs, cs, amigos);
-    const esperado = amigos.length / mezcla.length;
-    let conTroll = 0;
-    const N = 800;
-    for (let k = 0; k < N; k++) {
-      const p = new PartidaImp('ABCD');
-      for (let i = 0; i < 3; i++) p.entrar(`p${i}`, `Jugador${i}`, '');
-      p.empezar(mezcla, 1000 + k, 0);
-      if (p.ronda!.secreto.tipo === 'troll') conTroll++;
-    }
-    // Con 10 trolls entre ~366 cartas, salen poco (≈3 %), nunca "siempre" ni una cuota del 30 %.
-    expect(conTroll / N).toBeGreaterThan(esperado * 0.4);
-    expect(conTroll / N).toBeLessThan(esperado * 2);
-    expect(conTroll / N).toBeLessThan(0.15);
+  it('los trolls pendientes o apagados no salen, y en clubes nunca hay trolls', () => {
+    const raros: Troll[] = [{ ...amigos[0], pendiente: true }, { ...amigos[1], activo: false }, amigos[2], amigos[3]];
+    expect(candidatosImp({ modo: 'jugadores', trolls: 'solo' }, jugs, cs, raros).map((c) => c.id)).toEqual(['t-2', 't-3']);
+    expect(candidatosImp({ modo: 'clubes', trolls: 'solo' }, jugs, cs, amigos).some((c) => c.tipo === 'troll')).toBe(false);
+    expect(candidatosImp({ modo: 'clubes' }, jugs, cs)).toHaveLength(cs.length);
   });
 
   it('con "solo trolls" todas las rondas son de un amigo', () => {
-    const solo = candidatosImp({ modo: 'jugadores', dificultad: 1, trolls: 'solo' }, jugs, cs, amigos);
+    const solo = candidatosImp({ modo: 'jugadores', trolls: 'solo' }, jugs, cs, amigos);
     const p = new PartidaImp('ABCD');
     for (let i = 0; i < 3; i++) p.entrar(`p${i}`, `Jugador${i}`, '');
     p.cambiarAjustes({ rondas: 3, trolls: 'solo' });
@@ -279,16 +264,36 @@ describe('Impostor: trolls como secreto', () => {
     expect(p.ronda!.secreto.tipo).toBe('troll');
     expect(p.ajustes.trolls).toBe('solo');
   });
+
+  it('al restaurar una sala vieja, "mezcla" pasa a sin trolls y se borra la dificultad', () => {
+    const p = partida(4);
+    const copia = JSON.parse(JSON.stringify(p.exportar()));
+    copia.ajustes.trolls = 'mezcla';
+    copia.ajustes.dificultad = 1;
+    const q = new PartidaImp('ABCD');
+    q.importar(copia, 1000);
+    expect(q.ajustes.trolls).toBe('no');
+    expect('dificultad' in q.ajustes).toBe(false);
+  });
 });
 
-describe('Impostor: datos', () => {
-  it('hay suficientes futbolistas y clubes en cada dificultad', () => {
-    const js = jugadoresJson as unknown as Jugador[];
-    const cs = clubesJson as unknown as Club[];
-    for (const dificultad of [1, 2, 3] as const) {
-      expect(candidatosImp({ modo: 'jugadores', dificultad }, js, cs).length).toBeGreaterThanOrEqual(40);
-      expect(candidatosImp({ modo: 'clubes', dificultad }, js, cs).length).toBeGreaterThanOrEqual(20);
+describe('Impostor: sorteo parejo', () => {
+  it('cada secreto tiene la misma probabilidad de salir en la primera ronda', () => {
+    const lista: Secreto[] = Array.from({ length: 40 }, (_, i) => ({ tipo: 'jugador', id: `x${i}`, nombre: `X ${i}`, detalle: '', grupo: 'g' }));
+    const cuenta = new Map<string, number>();
+    const N = 8000;
+    for (let k = 0; k < N; k++) {
+      const p = new PartidaImp('ABCD');
+      for (let i = 0; i < 3; i++) p.entrar(`p${i}`, `Jugador${i}`, '');
+      p.empezar(lista, (k * 2654435761) >>> 0, 0);
+      const id = p.ronda!.secreto.id;
+      cuenta.set(id, (cuenta.get(id) ?? 0) + 1);
     }
-    expect(dificultadJugador({ rating: 91, rareza: 'prime' })).toBe(1);
+    const esperado = N / lista.length;
+    expect(cuenta.size).toBe(lista.length);
+    for (const n of cuenta.values()) {
+      expect(n).toBeGreaterThan(esperado * 0.6);
+      expect(n).toBeLessThan(esperado * 1.4);
+    }
   });
 });

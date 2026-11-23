@@ -160,7 +160,7 @@ export function Inicio() {
     setCreando(true);
     vibrar(20);
     try {
-      const r = await fetch('/api/salas', { method: 'POST', body: JSON.stringify({ clave: claveDispositivo(), juego }) });
+      const r = await fetch('/api/salas', { method: 'POST', body: JSON.stringify({ clave: claveDispositivo(), juego, tema: temaActual() }) });
       const d = (await r.json()) as { codigo: string };
       if (!d.codigo) throw new Error('sin código');
       recordarJuego(d.codigo, juego);

@@ -7,19 +7,17 @@ import { COLORES_EQUIPO } from './types';
 
 export type FaseImp = 'lobby' | 'reparto' | 'debate' | 'votacion' | 'veredicto' | 'finronda' | 'final';
 export type ModoImp = 'jugadores' | 'clubes';
-/** no = sin trolls · mezcla = los trolls se suman a la lista (uno más entre todos) · solo = únicamente trolls. */
-export type TrollsImp = 'no' | 'mezcla' | 'solo';
+/** no = sin trolls (todos los futbolistas) · solo = únicamente trolls (los amigos). */
+export type TrollsImp = 'no' | 'solo';
 
 export interface AjustesImp {
   /** Qué se esconde: un futbolista o un club. */
   modo: ModoImp;
   rondas: number;
-  /** Trolls (los amigos) como secreto: nunca, a veces o solo trolls. Solo en la versión futbolistas. */
+  /** Trolls (los amigos) como secreto: sin trolls o solo trolls. Solo en la versión futbolistas. */
   trolls: TrollsImp;
   /** Con menos de MIN_DOS_IMPOSTORES participantes se juega con uno aunque digan 2. */
   impostores: 1 | 2;
-  /** 1 = solo cracks que todos conocen, 2 = conocidos, 3 = cualquiera. */
-  dificultad: 1 | 2 | 3;
   /** Segundos para hablar antes de votar. */
   debate: number;
   /** Modo tragos: cada vez que te eliminan, tomas. */
@@ -27,7 +25,7 @@ export interface AjustesImp {
   tema: string;
 }
 
-export const AJUSTES_IMP: AjustesImp = { modo: 'jugadores', trolls: 'mezcla', rondas: 5, impostores: 1, dificultad: 1, debate: 90, tragos: false, tema: 'estadio' };
+export const AJUSTES_IMP: AjustesImp = { modo: 'jugadores', trolls: 'no', rondas: 5, impostores: 1, debate: 90, tragos: false, tema: 'estadio' };
 
 export const LIMITES_IMP = { rondasMin: 1, rondasMax: 10, debateMin: 30, debateMax: 300 } as const;
 export const MIN_IMP = 3;
@@ -169,7 +167,7 @@ export interface EstadoImp {
   rondaN: number;
   ronda: RondaVista | null;
   historial: ResumenRonda[];
-  /** Cuántos secretos hay disponibles con el modo y la dificultad elegidos. */
+  /** Cuántos secretos hay disponibles con el modo elegido. */
   disponibles: number;
   /** Lo que solo ve este celular. */
   tu: { impostor: boolean; secreto: Secreto | null; companeros: string[]; voto: string | null; visto: boolean } | null;
@@ -193,11 +191,6 @@ export type MsgClienteImp =
   | { t: 'ping'; t0: number };
 
 type Res = { ok: true } | { ok: false; codigo: string; texto: string };
-
-/** Qué secretos entran según la dificultad. */
-export function filtrarDificultad<T extends { dificultad: number }>(lista: T[], dificultad: number): T[] {
-  return lista.filter((x) => x.dificultad <= dificultad);
-}
 
 export class PartidaImp {
   fase: FaseImp = 'lobby';
@@ -254,10 +247,9 @@ export class PartidaImp {
     }
     const a = this.ajustes;
     if (p.modo === 'jugadores' || p.modo === 'clubes') a.modo = p.modo;
-    if (p.trolls === 'no' || p.trolls === 'mezcla' || p.trolls === 'solo') a.trolls = p.trolls;
+    if (p.trolls === 'no' || p.trolls === 'solo') a.trolls = p.trolls;
     if (typeof p.rondas === 'number') a.rondas = Math.round(Math.min(LIMITES_IMP.rondasMax, Math.max(LIMITES_IMP.rondasMin, p.rondas)));
     if (p.impostores === 1 || p.impostores === 2) a.impostores = p.impostores;
-    if (p.dificultad === 1 || p.dificultad === 2 || p.dificultad === 3) a.dificultad = p.dificultad;
     if (typeof p.debate === 'number') a.debate = Math.round(Math.min(LIMITES_IMP.debateMax, Math.max(LIMITES_IMP.debateMin, p.debate)));
     if (typeof p.tragos === 'boolean') a.tragos = p.tragos;
     if (typeof p.tema === 'string') a.tema = p.tema.slice(0, 20);
@@ -271,7 +263,7 @@ export class PartidaImp {
   empezar(candidatos: Secreto[], semilla: number, ahora: number): Res {
     if (this.fase !== 'lobby' && this.fase !== 'final') return { ok: false, codigo: 'en_juego', texto: 'Ya están jugando.' };
     if (this.jugadores.length < MIN_IMP) return { ok: false, codigo: 'faltan', texto: `Hacen falta al menos ${MIN_IMP} para jugar al impostor.` };
-    if (candidatos.length < 2) return { ok: false, codigo: 'sin_cartas', texto: 'No hay secretos para esa dificultad.' };
+    if (candidatos.length < 2) return { ok: false, codigo: 'sin_cartas', texto: 'No hay secretos para jugar.' };
     this.semilla = semilla >>> 0;
     this.rng = crearRng(this.semilla);
     this.pasos = 0;
@@ -291,7 +283,7 @@ export class PartidaImp {
 
   nuevaRonda(candidatos: Secreto[], ahora: number) {
     this.rondaN++;
-    // Los trolls (si están activados) ya vienen mezclados en la lista: un secreto más entre todos. Sin repetir hasta agotar.
+    // Al azar entre todos los secretos posibles, sin repetir hasta agotar.
     const libres = candidatos.filter((c) => !this.usados.includes(c.id));
     const fuente = libres.length ? libres : candidatos;
     const secreto = fuente[Math.floor(this.azar() * fuente.length)];
@@ -589,6 +581,9 @@ export class PartidaImp {
     // El reloj se reinicia desde ahora para no perder la fase en curso.
     if (this.vence) this.vence = ahora + Math.min(this.duracion, Math.max(5_000, this.vence - ahora));
     for (const j of this.jugadores) j.conectado = false;
+    // Ajustes de versiones anteriores: "a veces"/"mezcla" pasa a sin trolls; la dificultad ya no existe.
+    if (this.ajustes.trolls !== 'solo') this.ajustes.trolls = 'no';
+    delete (this.ajustes as unknown as Record<string, unknown>).dificultad;
     // Una partida guardada con la vieja "última chance" en curso se cierra como si el impostor no hubiera adivinado.
     if ((this.fase as string) === 'adivina' && this.ronda) this.terminarRonda('grupo', 'descubierto', ahora);
   }

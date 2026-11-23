@@ -47,7 +47,7 @@
 /* ───────── Celular: juego ───────── */
 .imp-juego { display: flex; flex-direction: column; color: #fff; overflow: hidden; }
 .imp-juego > .fondo { position: absolute; inset: 0; z-index: 0; }
-.imp-juego > *:not(.fondo):not(.fx-lienzo) { position: relative; z-index: 1; }
+.imp-juego > *:not(.fondo):not(.fx-lienzo):not(.hoja) { position: relative; z-index: 1; }
 .imp-cab { display: flex; align-items: center; gap: 10px; min-height: 64px; padding: calc(env(safe-area-inset-top) + 10px) var(--pad) 8px; }
 .imp-cab-ronda { padding: 4px 11px; border-radius: 8px; background: var(--placa); color: var(--placa-tinta); font-size: 14px; font-weight: 800; text-transform: uppercase; white-space: nowrap; }
 .imp-cab-ronda b { font-size: 18px; color: var(--acento); }
@@ -55,6 +55,12 @@
 .imp-cab-fase { flex: 1; min-width: 0; font-size: 26px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35); animation: fase-entra 460ms var(--ease-out) both; }
 @keyframes fase-entra { from { opacity: 0; transform: translateX(24px); clip-path: inset(0 100% 0 0); } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); } }
 .imp-cab-cuenta { width: 54px; height: 54px; font-size: 20px; }
+.imp-cab-menu { width: 46px; height: 46px; flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-radius: 14px; background: var(--placa); }
+.imp-cab-menu i { width: 20px; height: 3px; border-radius: 2px; background: var(--placa-tinta); }
+.imp-cab-menu:active { transform: scale(0.94); }
+.imp-menu { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+.imp-menu .btn { font-size: 18px; background: rgba(255, 255, 255, 0.12); box-shadow: none; }
+
 .imp-cuerpo { flex: 1; min-height: 0; }
 .imp-cuerpo > .m-capa > * { overflow-y: auto; padding: 4px var(--pad) 16px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
 
@@ -229,7 +235,9 @@
 .it-puntos { min-width: 38px; text-align: right; font-size: 24px; font-weight: 900; }
 
 /* Final */
-.imp-final { display: flex; flex-direction: column; align-items: center; gap: 14px; overflow-y: auto; padding: calc(env(safe-area-inset-top) + 14px) var(--pad) calc(env(safe-area-inset-bottom) + 14px); color: #fff; }
+.imp-final { display: flex; flex-direction: column; align-items: center; gap: 14px; overflow-y: auto; padding: calc(env(safe-area-inset-top) + 14px) var(--pad) 0; color: #fff; }
+/* La barra de salir queda pegada abajo aunque la tabla sea larga. */
+.imp-final > .barra-final { position: sticky; bottom: 0; align-self: stretch; margin: auto calc(-1 * var(--pad)) 0; padding-bottom: calc(env(safe-area-inset-bottom) + 10px); }
 .imp-final > *:not(.fondo):not(.fx-lienzo) { position: relative; z-index: 1; }
 .imp-final > .fondo { position: fixed; }
 .imp-final-cab { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }

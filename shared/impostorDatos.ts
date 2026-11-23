@@ -1,6 +1,5 @@
-// Arma la lista de secretos posibles (futbolistas o clubes) para el Impostor según el modo y la dificultad.
+// Arma la lista de secretos posibles para el Impostor: todos los futbolistas con foto, todos los clubes, o solo trolls.
 import type { AjustesImp, Secreto } from './impostor';
-import { filtrarDificultad } from './impostor';
 import { POS_NOMBRE, type Jugador, type Troll } from './types';
 
 export interface Club {
@@ -10,22 +9,15 @@ export interface Club {
   pais: string;
   liga: string;
   colores: [string, string];
-  /** 1 = lo conoce todo el mundo, 3 = para los que saben. */
+  /** 1 = lo conoce todo el mundo, 3 = para los que saben (ya no se usa para filtrar: siempre entran todos). */
   dificultad: 1 | 2 | 3;
   apodo: string;
 }
 
-/** Qué tan conocido es un futbolista, por su nivel. */
-export function dificultadJugador(j: Pick<Jugador, 'rating' | 'rareza'>): 1 | 2 | 3 {
-  if (j.rareza === 'leyenda' || j.rating >= 86) return 1;
-  if (j.rating >= 82) return 2;
-  return 3;
-}
-
-/** Posición agrupada: los señuelos de la adivinanza salen del mismo grupo. */
+/** Posición agrupada (sirve para agrupar secretos parecidos). */
 const GRUPO_POS: Record<string, string> = { POR: 'arco', LD: 'defensa', DFC: 'defensa', LI: 'defensa', MCD: 'medio', MC: 'medio', MCO: 'medio', ED: 'ataque', DC: 'ataque', EI: 'ataque' };
 
-export function secretosJugadores(jugadores: Jugador[]): (Secreto & { dificultad: number })[] {
+export function secretosJugadores(jugadores: Jugador[]): Secreto[] {
   return jugadores
     .filter((j) => j.fotos?.length)
     .map((j) => ({
@@ -35,11 +27,10 @@ export function secretosJugadores(jugadores: Jugador[]): (Secreto & { dificultad
       detalle: `${POS_NOMBRE[j.pos] ?? j.pos} · ${j.pais}`,
       grupo: GRUPO_POS[j.pos] ?? 'otros',
       img: j.fotos[0],
-      dificultad: dificultadJugador(j),
     }));
 }
 
-export function secretosClubes(clubes: Club[]): (Secreto & { dificultad: number })[] {
+export function secretosClubes(clubes: Club[]): Secreto[] {
   return clubes.map((c) => ({
     tipo: 'club' as const,
     id: c.id,
@@ -49,12 +40,11 @@ export function secretosClubes(clubes: Club[]): (Secreto & { dificultad: number 
     colores: c.colores,
     sigla: c.sigla,
     apodo: c.apodo,
-    dificultad: c.dificultad,
   }));
 }
 
 /** Los trolls con nombre (los amigos) pueden ser secreto: la foto es la cara, la descripción es el "detalle". */
-export function secretosTrolls(trolls: Troll[]): (Secreto & { dificultad: number })[] {
+export function secretosTrolls(trolls: Troll[]): Secreto[] {
   return trolls
     .filter((t) => t.activo && !t.pendiente && t.nombre.trim())
     .map((t) => ({
@@ -64,19 +54,18 @@ export function secretosTrolls(trolls: Troll[]): (Secreto & { dificultad: number
       detalle: t.descripcion.trim() || 'Una cara conocida',
       grupo: 'troll',
       img: t.foto,
-      // Los amigos los conoce todo el grupo: entran con cualquier dificultad.
-      dificultad: 1,
     }));
 }
 
-export function candidatosImp(a: Pick<AjustesImp, 'modo' | 'dificultad'> & { trolls?: AjustesImp['trolls'] }, jugadores: Jugador[], clubes: Club[], trolls: Troll[] = []): Secreto[] {
-  const sinDif = ({ dificultad: _d, ...s }: Secreto & { dificultad: number }): Secreto => s;
-  if (a.modo === 'clubes') return filtrarDificultad(secretosClubes(clubes), a.dificultad).map(sinDif);
-  const modoTrolls = a.trolls ?? 'mezcla';
-  const amigos = secretosTrolls(trolls).map(sinDif);
-  const futbolistas = filtrarDificultad(secretosJugadores(jugadores), a.dificultad).map(sinDif);
-  // "Solo trolls" necesita al menos 2 cartas distintas; si no alcanzan, se completa con futbolistas.
-  if (modoTrolls === 'solo' && amigos.length >= 2) return amigos;
-  if (modoTrolls === 'no') return futbolistas;
-  return [...futbolistas, ...amigos];
+/**
+ * Sin dificultad: siempre entran todos. En la versión futbolistas hay dos opciones:
+ * sin trolls (todos los futbolistas) o solo trolls (los amigos). En clubes no hay trolls.
+ */
+export function candidatosImp(a: Pick<AjustesImp, 'modo'> & { trolls?: string }, jugadores: Jugador[], clubes: Club[], trolls: Troll[] = []): Secreto[] {
+  if (a.modo === 'clubes') return secretosClubes(clubes);
+  const futbolistas = secretosJugadores(jugadores);
+  if (a.trolls !== 'solo') return futbolistas;
+  // "Solo trolls" necesita al menos 2 cartas distintas; si no alcanzan, se juega con futbolistas.
+  const amigos = secretosTrolls(trolls);
+  return amigos.length >= 2 ? amigos : futbolistas;
 }

@@ -1,6 +1,6 @@
 // La escena de la carta: silueta + precio (misterio), martillazo y revelación.
 // La silueta es la MISMA imagen que la foto a color, con un filtro que la vuelve blanca: no hay assets duplicados.
-import { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState, Fragment } from 'react';
 import gsap from 'gsap';
 import type { CartaActualVista, Desenlace, EstadoPublico, Fase, JugadorSala, Rareza } from '../../shared/types';
 import { POS_NOMBRE } from '../../shared/types';
@@ -43,7 +43,7 @@ function reiniciar(q: Q) {
   gsap.set(q('.placa-nombre'), { xPercent: -115 });
   gsap.set(q('.esc-sello'), { opacity: 0 });
   gsap.set(q('.esc-martillo'), { opacity: 0 });
-  gsap.set(q('.esc-venta'), { opacity: 0 });
+  gsap.set(q('.esc-venta'), { opacity: 0, clearProps: 'top,bottom' });
   gsap.set(q('.esc-trago'), { opacity: 0 });
   gsap.set(q('.esc-capa'), { scaleX: 1, scaleY: 1, x: 0 });
 }
@@ -199,10 +199,11 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
     if (fase === 'revela' && rev && (nueva || ant.fase !== 'revela')) {
       tl.current?.kill();
       colocar(q);
-      const nivel: 0 | 1 | 2 = rev.rareza === 'leyenda' ? 2 : rev.rareza === 'prime' ? 1 : 0;
       const troll = rev.tipo === 'troll';
+      // Un troll se revela EXACTAMENTE igual que un futbolista del precio que aparentaba (su disfraz):
+      // misma anticipación, mismo barrido, mismo rebote. Nada lo delata antes del destello.
+      const nivel: 0 | 1 | 2 = troll ? (carta.precioMinimo >= 150 ? 2 : carta.precioMinimo >= 100 ? 1 : 0) : rev.rareza === 'leyenda' ? 2 : rev.rareza === 'prime' ? 1 : 0;
       const vendida = !!carta.compradorId;
-      const u = el.clientWidth / 100;
       const alto = (figura[0] as HTMLElement).offsetHeight;
       const t = gsap.timeline();
       let F = 0.25; // momento del destello
@@ -218,11 +219,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         F = 0.82;
         // El escenario se oscurece y queda solo un foco sobre la silueta: redoble.
         t.to(q('.esc-foco'), { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.05);
-        if (troll) {
-          // Los trolls tiemblan: algo anda mal…
-          t.to(figura, { x: u * 1.4, duration: 0.05, repeat: 9, yoyo: true, ease: 'sine.inOut' }, F).set(figura, { x: 0 });
-          F += 0.55;
-        } else if (nivel > 0) {
+        if (nivel > 0) {
           // Cartas grandes: cámara lenta, rayos y zoom antes del destello.
           const pausa = nivel === 2 ? 1.25 : 0.8;
           t.to(q('.esc-rayos'), { opacity: 1, duration: 0.5, ease: 'power2.out' }, F - 0.2).to(figura, { scale: 1.12, duration: pausa, ease: 'power1.in' }, F);
@@ -231,9 +228,10 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       }
 
       t.add(() => {
+        // El sonido sí cambia, pero recién en el destello: es la revelación misma.
         if (troll) sonar.troll();
         else sonar.revela(vendida ? nivel : 0);
-        if (vendida && nivel > 0) sonar.ovacion();
+        if (vendida && nivel > 0 && !troll) sonar.ovacion();
         const p = getComputedStyle(el.querySelector('.esc-fondo2')!);
         const colores = [p.getPropertyValue('--f1').trim() || '#fff', p.getPropertyValue('--fa').trim() || '#fff', '#ffffff'];
         fx.current?.onda(compacta ? 0.62 : 0.7, 0.6, colores[0], 0.9);
@@ -246,8 +244,8 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         // El fondo cambia de paleta con un barrido circular que nace en el pecho del jugador.
         .to(q('.esc-fondo2'), { clipPath: 'circle(150% at 70% 62%)', duration: rm ? 0.3 : 0.85, ease: 'expo.out' }, F + 0.02)
         // El color aparece de abajo hacia arriba, detrás de una línea de luz.
-        .to(q('.esc-silueta'), troll ? { opacity: 0, scale: rm ? 1 : 1.14, duration: rm ? 0.1 : 0.22, ease: 'power2.out' } : { clipPath: 'inset(0% 0% 100% 0%)', duration: rm ? 0.2 : 0.55, ease: 'power2.inOut' }, F + 0.05)
-        .fromTo(q('.esc-luz'), { opacity: troll ? 0 : 1, y: 0 }, { y: -alto, duration: 0.55, ease: 'power2.inOut' }, F + 0.05)
+        .to(q('.esc-silueta'), { clipPath: 'inset(0% 0% 100% 0%)', duration: rm ? 0.2 : 0.55, ease: 'power2.inOut' }, F + 0.05)
+        .fromTo(q('.esc-luz'), { opacity: 1, y: 0 }, { y: -alto, duration: 0.55, ease: 'power2.inOut' }, F + 0.05)
         .to(q('.esc-luz'), { opacity: 0, duration: 0.15 }, F + 0.55)
         .to(q('.placa-precio'), { xPercent: -115, duration: 0.3, ease: 'power2.in' }, F + 0.04)
         .fromTo(q('.placa-nombre'), { xPercent: -115 }, { xPercent: 0, duration: 0.6, ease: 'expo.out' }, F + 0.32)
@@ -261,12 +259,34 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
         .fromTo(q('.esc-trago-copas'), { rotation: rm ? 0 : -18, scale: 0.8 }, { rotation: 0, scale: 1, duration: rm ? 0.1 : 0.9, ease: 'elastic.out(1.1, 0.35)' }, F + 1.45)
         // El foco se apaga con el destello, los rayos giran (más fuertes cuanto más rara la carta) y la palabra gigante cruza detrás.
         .to(q('.esc-foco'), { opacity: 0, duration: 0.5, ease: 'power2.out' }, F)
-        .to(q('.esc-rayos'), { opacity: vendida ? (troll ? 0.5 : [0.45, 0.85, 1][nivel]) : 0.25, duration: 0.6, ease: 'power2.out' }, F + 0.05)
+        .to(q('.esc-rayos'), { opacity: vendida ? [0.45, 0.85, 1][nivel] : 0.25, duration: 0.6, ease: 'power2.out' }, F + 0.05)
         .fromTo(q('.esc-gigante'), { opacity: 0, xPercent: 25 }, { opacity: 1, xPercent: -25, duration: Math.max(4, total - F - 1), ease: 'none' }, F + 0.1)
         // Golpe de cámara: todo se acerca y vuelve.
         .fromTo(q('.esc-capa'), { scale: 1.07 }, { scale: 1, duration: 0.9, ease: 'expo.out', immediateRender: false }, F);
-      // El troll no se ve hasta el destello (si no, se ve la foto real detrás de la silueta del disfraz) y aparece con un rebote.
-      if (troll) t.fromTo(q('.esc-color'), { opacity: 0, scale: rm ? 1 : 0.84 }, { opacity: 1, scale: 1, duration: rm ? 0.15 : 0.55, ease: 'back.out(2)' }, F + 0.05);
+      // Celular: la figura ocupa exactamente el hueco libre entre el cartel de venta y la placa del nombre,
+      // así la cara nunca queda tapada (funciona igual en un iPhone SE que en un celular grande).
+      if (compacta) {
+        const placa = el.querySelector<HTMLElement>('.placa-nombre');
+        if (placa) {
+          // Medido con getBoundingClientRect: la placa todavía está corrida en X (entra animada), pero su alto y su borde de arriba ya son los finales.
+          const caja = el.getBoundingClientRect();
+          const alto = caja.height;
+          const arriba = alto * 0.025 + 50;
+          const abajo = caja.bottom - placa.getBoundingClientRect().top + 6;
+          el.style.setProperty('--libre', `${Math.max(0, alto - arriba - abajo)}px`);
+          el.style.setProperty('--sobre-placa', `${abajo}px`);
+        }
+      }
+      // Celular: el cartel de venta se va de abajo, cambia de lugar oculto por el destello y reaparece arriba a la
+      // izquierda (donde estaba el precio), para que abajo quede solo la placa del nombre y la cara quede libre.
+      if (compacta) {
+        const venta = q('.esc-venta');
+        t.to(venta, { opacity: 0, y: 10, duration: 0.15, ease: 'power2.in' }, Math.max(0, F - 0.15))
+          .set(venta, { top: 'calc(var(--v) * 2.5)', bottom: 'auto' }, F + 0.02)
+          .fromTo(venta, { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out', immediateRender: false }, F + 0.35);
+      }
+      // La foto del troll recién aparece en el destello (antes se vería detrás de la silueta del disfraz), sin rebote propio.
+      if (troll) t.set(q('.esc-color'), { opacity: 0 }, 0).set(q('.esc-color'), { opacity: 1 }, F);
       if (carta.tragos) t.add(() => sonar.trago(carta.tragos), F + 1.4);
       // El puntaje cuenta desde cero.
       const nota = el.querySelector<HTMLElement>('.pn-etiqueta b');
@@ -276,11 +296,7 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       }
       // Mientras se lee, el jugador respira con un acercamiento muy lento.
       if (!rm) t.to(figura, { scale: 1.035, duration: Math.max(3, total - F - 2.5), ease: 'sine.inOut' }, F + 1.2);
-      if (!rm) {
-        if (troll) {
-          t.fromTo(figura, { rotation: -11, scale: 1.12 }, { rotation: 0, scale: 1, duration: 1.1, ease: 'elastic.out(1.1, 0.3)' }, F + 0.08);
-        } else t.to(figura, { scale: 1, duration: 0.9, ease: 'elastic.out(1, 0.5)' }, F + 0.1);
-      }
+      if (!rm) t.to(figura, { scale: 1, duration: 0.9, ease: 'elastic.out(1, 0.5)' }, F + 0.1);
 
       // ── Salida coreografiada, justo antes de que el servidor pase a la siguiente carta ──
       const X = Math.max(F + 1.4, total - 1.05);
@@ -384,10 +400,18 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
                   {/* Los nombres largos se achican en proporción para entrar siempre en la placa. */}
                   <span className="pn-linea pn-apellido" style={{ '--k': Math.min(1, 9.2 / (rev.apellido || rev.nombre).length) } as CSSProperties}>
                     <span>
-                      {(rev.apellido || rev.nombre).split('').map((l, i) => (
-                        <span className="pn-l" key={i}>
-                          {l === ' ' ? '\u00a0' : l}
-                        </span>
+                      {/* Agrupado por palabras: en el celular un nombre largo parte en dos líneas en vez de achicarse. */}
+                      {(rev.apellido || rev.nombre).split(' ').map((palabra, w) => (
+                        <Fragment key={w}>
+                          {w > 0 && ' '}
+                          <span className="pn-palabra">
+                            {palabra.split('').map((l, i) => (
+                              <span className="pn-l" key={i}>
+                                {l}
+                              </span>
+                            ))}
+                          </span>
+                        </Fragment>
                       ))}
                     </span>
                   </span>

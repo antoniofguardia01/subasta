@@ -68,14 +68,17 @@ export class RoomDO implements DurableObject {
 
     if (ruta === '/crear' && req.method === 'POST') {
       if (this.partida || this.impostor) return Response.json({ ok: false }, { status: 409 });
-      const { codigo, clave, juego } = (await req.json()) as { codigo: string; clave?: string; juego?: string };
+      const { codigo, clave, juego, tema } = (await req.json()) as { codigo: string; clave?: string; juego?: string; tema?: string };
       if (juego === 'impostor') {
         this.impostor = new SalaImpostor(this.state, this.env, codigo, clave ?? null, () => (this.impostor = null));
+        // La sala arranca con el escenario que el anfitrión tenía elegido en la portada.
+        if (tema) this.impostor.partida.cambiarAjustes({ tema });
         await this.impostor.iniciar();
         return Response.json({ ok: true, codigo });
       }
       this.codigo = codigo;
       this.partida = new Partida(codigo);
+      if (tema) this.partida.cambiarAjustes({ tema });
       this.claveCreador = clave ?? null;
       this.ticker = new Ticker((tickerJson as { plantillas: Plantilla[] }).plantillas);
       await this.cargarCatalogo();

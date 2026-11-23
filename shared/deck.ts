@@ -183,22 +183,34 @@ export function generarMazo(
       cartas.push(cartaDeTroll(t, hueco, disfraz));
     }
 
-    // Garantía de jugabilidad: asegurar cartas baratas (los trolls baratos cuentan).
+    // Todos los futbolistas tienen la misma chance: se eligen al azar (los que no salieron hace poco primero).
+    const elegidos: Jugador[] = libres.slice(0, nFut);
+    // Garantía de jugabilidad: si faltan cartas baratas (los trolls baratos cuentan), se cambia alguno de los
+    // elegidos por un barato al azar. El precio no hace que nadie salga más seguido que el resto.
+    // Se decide por el precio BASE (no por el sorteado): los señuelos y la banda no pueden dejar una ronda sin baratas.
     const baratasYa = cartas.filter((c) => c.precioMinimo <= UMBRAL_BARATO).length;
-    const elegidos: Jugador[] = [];
-    const faltanBaratas = Math.max(0, Math.min(BARATAS_POR_RONDA, total) - baratasYa);
-    // Primero los que están bajo el umbral (al azar); si no alcanzan, los más baratos que queden.
-    // La garantía se decide por el precio BASE (no por el sorteado): los señuelos y la banda no pueden dejar una ronda sin baratas.
-    const baratos = libres.filter((j) => j.precioMinimo <= BASE_BARATA);
-    const resto = libres.filter((j) => j.precioMinimo > BASE_BARATA).sort((a, b) => a.precioMinimo - b.precioMinimo);
-    for (const j of [...baratos, ...resto].slice(0, Math.min(faltanBaratas, nFut))) {
-      elegidos.push(j);
-      // Las cartas salvavidas nunca llevan señuelo ni se pasan del umbral.
-      if (j.precioMinimo <= BASE_BARATA && precio(j) > UMBRAL_BARATO) precioDe.set(j.id, entero(rng, PRECIO_MIN, UMBRAL_BARATO));
+    const necesarias = Math.max(0, Math.min(BARATAS_POR_RONDA, total) - baratasYa);
+    const esBarato = (j: Jugador) => j.precioMinimo <= BASE_BARATA;
+    const reserva = libres.slice(nFut).filter(esBarato);
+    for (let i = elegidos.length - 1; i >= 0 && elegidos.filter(esBarato).length < necesarias && reserva.length; i--)
+      if (!esBarato(elegidos[i])) elegidos[i] = reserva.shift()!;
+    // Si ni así alcanzan, los más baratos que queden hacen de salvavidas.
+    let faltan = necesarias - elegidos.filter(esBarato).length;
+    if (faltan > 0) {
+      const masBaratos = libres.filter((j) => !elegidos.includes(j)).sort((a, b) => a.precioMinimo - b.precioMinimo);
+      const caros = elegidos.map((j, i) => [j, i] as const).filter(([j]) => !esBarato(j)).sort((a, b) => b[0].precioMinimo - a[0].precioMinimo);
+      for (const [j, i] of caros) {
+        if (faltan <= 0 || !masBaratos.length || masBaratos[0].precioMinimo >= j.precioMinimo) break;
+        elegidos[i] = masBaratos.shift()!;
+        faltan--;
+      }
     }
-    for (const j of libres) {
-      if (elegidos.length >= nFut) break;
-      if (!elegidos.includes(j)) elegidos.push(j);
+    // Las cartas salvavidas nunca llevan señuelo ni se pasan del umbral.
+    let salvavidas = 0;
+    for (const j of elegidos) {
+      if (salvavidas >= necesarias || !esBarato(j)) continue;
+      salvavidas++;
+      if (precio(j) > UMBRAL_BARATO) precioDe.set(j.id, entero(rng, PRECIO_MIN, UMBRAL_BARATO));
     }
     for (const j of elegidos) {
       usados.add(j.id);
@@ -245,7 +257,9 @@ export function crearReponedor(pool: readonly Jugador[], trolls: readonly Troll[
     const libres = pool.filter((j) => j.pos === pos && j.fotos?.length && !usados.has(j.id));
     const base = { uid: `x${++serie}`, hueco, pos, token: tokenAleatorio(rng) };
     if (libres.length) {
-      const j = libres.slice().sort((a, b) => a.precioMinimo - b.precioMinimo)[0];
+      // Al azar entre los baratos que quedan (no siempre el más barato: si no, salía siempre el mismo).
+      const baratos = libres.filter((x) => x.precioMinimo <= BASE_BARATA);
+      const j = elegir(rng, baratos.length ? baratos : libres);
       usados.add(j.id);
       return {
         ...base,

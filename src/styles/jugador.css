@@ -454,3 +454,17 @@
 .qr-grande b { font-size: 54px; font-weight: 900; font-stretch: 125%; letter-spacing: 0.1em; color: var(--acento); line-height: 1; }
 .qr-grande small { font-size: 15px; opacity: 0.7; }
 @keyframes qr-pop { from { transform: scale(0.5) rotate(10deg); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* ───────── Barra fija de la pantalla final (Subasta e Impostor) ───────── */
+.barra-final {
+  position: relative; z-index: 5; flex: none; display: flex; align-items: center; gap: 10px;
+  padding: 10px var(--pad, 16px); background: rgba(8, 10, 9, 0.88); border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: sube 420ms 600ms var(--ease-out) both;
+}
+.barra-final .btn { height: 56px; font-size: 20px; border-radius: 16px; }
+.barra-final-revancha { flex: 1; }
+.barra-final-nota { flex: 1; font-size: 14px; font-weight: 700; opacity: 0.8; line-height: 1.25; }
+.barra-final-salir { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 22px; background: #fff; color: #14161a; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3); }
+.barra-final-salir:active { transform: translateY(2px); }
+.tema:disabled { cursor: default; }
+.tema:disabled:not([data-on='1']) { opacity: 0.5; }

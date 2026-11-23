@@ -194,4 +194,3 @@ export const MOTIVO_TEXTO: Record<string, string> = {
   abandono: 'Ronda anulada: alguien se fue',
 };
 
-export const DIFICULTAD_TEXTO = ['', 'Cracks', 'Conocidos', 'Todos'];
