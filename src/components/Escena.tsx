@@ -273,8 +273,11 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
           const alto = caja.height;
           const arriba = alto * 0.025 + 50;
           const abajo = caja.bottom - placa.getBoundingClientRect().top + 6;
-          el.style.setProperty('--libre', `${Math.max(0, alto - arriba - abajo)}px`);
-          el.style.setProperty('--sobre-placa', `${abajo}px`);
+          // La cara de los retratos está en el 60 % de arriba: el 30 % de abajo (pecho y hombros) puede quedar detrás de la placa.
+          const libre = Math.max(0, alto - arriba - abajo);
+          const hf = Math.min(libre / 0.7, alto * 0.92);
+          el.style.setProperty('--libre', `${hf}px`);
+          el.style.setProperty('--sobre-placa', `${Math.max(0, abajo - hf * 0.3)}px`);
         }
       }
       // Celular: el cartel de venta se va de abajo, cambia de lugar oculto por el destello y reaparece arriba a la
@@ -288,12 +291,6 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
       // La foto del troll recién aparece en el destello (antes se vería detrás de la silueta del disfraz), sin rebote propio.
       if (troll) t.set(q('.esc-color'), { opacity: 0 }, 0).set(q('.esc-color'), { opacity: 1 }, F);
       if (carta.tragos) t.add(() => sonar.trago(carta.tragos), F + 1.4);
-      // El puntaje cuenta desde cero.
-      const nota = el.querySelector<HTMLElement>('.pn-etiqueta b');
-      if (nota && !rm) {
-        const o = { v: 0 };
-        t.to(o, { v: rev.rating, duration: 0.9, ease: 'power2.out', onUpdate: () => (nota.textContent = String(Math.round(o.v))) }, F + 0.85);
-      }
       // Mientras se lee, el jugador respira con un acercamiento muy lento.
       if (!rm) t.to(figura, { scale: 1.035, duration: Math.max(3, total - F - 2.5), ease: 'sine.inOut' }, F + 1.2);
       if (!rm) t.to(figura, { scale: 1, duration: 0.9, ease: 'elastic.out(1, 0.5)' }, F + 0.1);
@@ -418,7 +415,6 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
                 </div>
                 <div className="pn-etiqueta">
                   <span>{rev.dato || rev.etiqueta}</span>
-                  {rev.tipo === 'jugador' && <b className="num">{rev.rating}</b>}
                 </div>
                 {rev.tipo === 'troll' && <span className="pn-troll">{carta?.compradorId ? '¡Caíste!' : '¡Se salvaron!'}</span>}
               </div>

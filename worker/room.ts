@@ -301,6 +301,12 @@ export class RoomDO implements DurableObject {
       case 'revancha':
         if (esAnfitrion && p.fase === 'final') p.revancha();
         break;
+      case 'votacionFinal':
+        if (esAnfitrion || con.rol === 'escenario') p.abrirVotacion(!!msg.on);
+        break;
+      case 'votoFinal':
+        if (pid) p.votarEquipo(pid, String(msg.pid));
+        break;
       default:
         return;
     }

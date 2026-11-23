@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { Partida, TIEMPOS } from '../shared/game';
 import { BASE_BARATA, generarMazo, pisosDeRonda, PRECIO_MIN, rangoPrecio, SENUELO_HASTA, SENUELO_MAX, SENUELO_MIN, UMBRAL_BARATO } from '../shared/deck';
-import { AJUSTES_DEFECTO, Ajustes, FORMACION, Jugador, Pos, Troll, rangoTrolls } from '../shared/types';
+import { AJUSTES_DEFECTO, Ajustes, FichaEquipo, FORMACION, Jugador, Pos, Troll, rangoTrolls } from '../shared/types';
+import { calcularFinal } from '../shared/score';
 
 // ───────────── Datos de prueba: 270 jugadores (30 por posición, laterales 15 + 15) ─────────────
 function pool(): Jugador[] {
@@ -659,5 +660,59 @@ describe('modo tragos', () => {
     expect(q.jugadores.every((j) => j.tragos === 0 && j.trolls === 0)).toBe(true);
     q.cambiarAjustes({ tragos: false });
     expect(q.ajustes.tragos).toBe(false);
+  });
+});
+
+describe('resultados: tabla por trolls y votación del mejor equipo', () => {
+  const ficha = (tipo: 'jugador' | 'troll') => ({ tipo, rating: 80, rareza: tipo === 'troll' ? 'troll' : 'oro' }) as unknown as FichaEquipo;
+  const equipo = (nTrolls: number) => FORMACION.map((_, i) => ficha(i < nTrolls ? 'troll' : 'jugador'));
+
+  it('menos trolls arriba; si empatan, el que gastó menos', () => {
+    const f = calcularFinal(
+      [
+        { id: 'a', nombre: 'A', saldo: 100, gastado: 900, equipo: equipo(2) },
+        { id: 'b', nombre: 'B', saldo: 300, gastado: 700, equipo: equipo(0) },
+        { id: 'c', nombre: 'C', saldo: 200, gastado: 800, equipo: equipo(2) },
+        { id: 'd', nombre: 'D', saldo: 0, gastado: 1000, equipo: equipo(0) },
+      ],
+      [],
+      AJUSTES_DEFECTO,
+    );
+    expect(f.puestos.map((p) => p.pid)).toEqual(['b', 'd', 'c', 'a']);
+    expect(f.puestos[0]).toMatchObject({ trolls: 0, gastado: 700, fichas: 11 });
+    expect('puntos' in f.puestos[0]).toBe(false);
+  });
+
+  it('la votación es opcional, nadie se vota a sí mismo y el más votado es el campeón', () => {
+    const { p, hasta, ir, ahora } = sala(3);
+    hasta('puja');
+    p.ofertar('p0', p.cartaActual()!.uid, ahora());
+    ir(15000);
+    p.terminar();
+    expect(p.vista(30).votoFinal).toBeNull();
+    p.abrirVotacion(true);
+    expect(p.vista(30).votoFinal).toMatchObject({ abierta: true, votaron: [] });
+    p.votarEquipo('p0', 'p0');
+    expect(p.vista(30).votoFinal!.votaron).toEqual([]);
+    p.votarEquipo('p0', 'p1');
+    p.votarEquipo('p2', 'p1');
+    expect(p.vista(30).votoFinal!.abierta).toBe(true);
+    p.votarEquipo('p1', 'p2');
+    // Votaron todos: se cierra sola.
+    expect(p.vista(30).votoFinal).toMatchObject({ abierta: false, ganador: 'p1', conteo: { p1: 2, p2: 1 } });
+  });
+
+  it('con empate de votos gana el mejor ubicado en la tabla; el anfitrión puede cerrarla antes', () => {
+    const { p, hasta } = sala(3);
+    hasta('puja');
+    p.terminar();
+    const orden = p.final!.puestos.map((x) => x.pid);
+    p.abrirVotacion(true);
+    p.votarEquipo(orden[2], orden[1]);
+    p.votarEquipo(orden[1], orden[2]);
+    p.abrirVotacion(false);
+    expect(p.vista(30).votoFinal!.ganador).toBe(orden[1]);
+    p.revancha();
+    expect(p.vista(30).votoFinal).toBeNull();
   });
 });

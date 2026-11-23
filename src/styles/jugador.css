@@ -468,3 +468,33 @@
 .barra-final-salir:active { transform: translateY(2px); }
 .tema:disabled { cursor: default; }
 .tema:disabled:not([data-on='1']) { opacity: 0.5; }
+
+/* ───────── Final: tabla por trolls y votación del mejor equipo ───────── */
+.f-criterio { margin: -4px 0 10px; font-size: 13px; font-weight: 700; opacity: 0.75; }
+.f-gasto { margin-left: auto; font-size: 15px; font-weight: 700; opacity: 0.75; white-space: nowrap; }
+.f-fila .f-tragos + .f-gasto { margin-left: 8px; }
+.f-fila .f-trolls { display: flex; flex-direction: column; align-items: center; min-width: 46px; line-height: 1; margin-left: 10px; }
+.f-fila .f-trolls b { font-size: 22px; font-weight: 900; }
+.f-fila .f-trolls small { font-size: 10px; font-weight: 800; text-transform: uppercase; opacity: 0.8; }
+.voto-eq { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; padding: 14px; border-radius: 18px; background: #14161a; animation: sube 420ms var(--ease-out) both; }
+.voto-eq--abrir { background: none; padding: 0; }
+.voto-eq--abrir .btn { font-size: 20px; }
+.voto-eq--abrir small { font-size: 13px; opacity: 0.8; text-align: center; }
+.voto-eq-titulo { font-size: 24px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; line-height: 1; }
+.voto-eq-cuenta { font-size: 13px; font-weight: 700; opacity: 0.8; }
+.voto-eq-cuenta b { color: var(--acento); }
+.voto-eq-opciones { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.voto-eq-op { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 6px; border-radius: 16px; background: rgba(255, 255, 255, 0.07); border: 3px solid transparent; transition: transform 150ms var(--ease-out), border-color 200ms ease, background-color 200ms ease; animation: ficha-cae 420ms calc(var(--i) * 45ms) var(--ease-rebote) both; }
+.voto-eq-op:active { transform: scale(0.95); }
+.voto-eq-op .avatar { font-size: 56px; }
+.voto-eq-op b { font-size: 17px; font-weight: 900; font-stretch: 75%; text-transform: uppercase; color: var(--c); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.voto-eq-op[data-on='1'] { border-color: var(--c); background: rgba(255, 255, 255, 0.15); transform: scale(1.03); }
+.voto-eq-cerrar { font-size: 17px; background: rgba(255, 255, 255, 0.12); box-shadow: none; }
+.voto-eq--res { border-left: 8px solid var(--c, #fff); }
+.voto-eq-ganador { display: flex; align-items: center; gap: 12px; animation: caja-entra 620ms var(--ease-rebote) both; }
+.voto-eq-ganador > img { height: 54px; width: auto; }
+.voto-eq-ganador .avatar { font-size: 58px; box-shadow: 0 0 0 4px var(--c); }
+.voto-eq-ganador span { display: flex; flex-direction: column; }
+.voto-eq-ganador small { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; }
+.voto-eq-ganador b { font-size: 30px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; color: var(--c); line-height: 1; }
+.voto-eq-detalle { font-size: 14px; font-weight: 700; opacity: 0.85; }

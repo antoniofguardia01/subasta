@@ -546,7 +546,7 @@ function FinRonda({ s }: { s: EstadoPublico }) {
                     </div>
                     <div className="fin-sobra-datos">
                       <b>{c.apellido || c.nombre}</b>
-                      <span>{c.tipo === 'troll' ? c.dato || 'Una sorpresa de las buenas' : `${c.etiqueta} · ${c.rating}`}</span>
+                      <span>{c.tipo === 'troll' ? c.dato || 'Una sorpresa de las buenas' : c.etiqueta}</span>
                     </div>
                     <i className="fin-sobra-sello">{c.tipo === 'troll' ? '¡Se salvaron!' : 'Se quedó en la banca'}</i>
                   </div>
@@ -733,8 +733,18 @@ function FinalTV({ s, fx, sala }: { s: EstadoPublico; fx: React.RefObject<FxApi 
   const [premio, setPremio] = useState(0);
   const ganador = puestos[0]?.j;
   const vista = useEquipoEnPantalla(sala, s);
-  const mostrado = puestos.find((p) => p.pid === vista.pid) ?? puestos[0];
+  const v = s.votoFinal;
+  const elegido = v?.ganador ? puestos.find((p) => p.pid === v.ganador) : undefined;
+  // Con votación terminada, la TV muestra el equipo elegido por la mesa.
+  const mostrado = (elegido && vista.auto ? elegido : undefined) ?? puestos.find((p) => p.pid === vista.pid) ?? puestos[0];
   const puestoMostrado = puestos.indexOf(mostrado) + 1;
+  // Festejo cuando la mesa elige al campeón.
+  useEffect(() => {
+    if (!elegido) return;
+    sonar.fanfarria();
+    const c = [elegido.j.color, '#fff', '#ffe27a'];
+    fx.current?.confeti(c, 220);
+  }, [elegido?.pid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useLayoutEffect(() => {
     if (!raiz.current || !puestos.length) return;
@@ -774,6 +784,7 @@ function FinalTV({ s, fx, sala }: { s: EstadoPublico; fx: React.RefObject<FxApi 
           <img className="final-trofeo" src="/img/iconos/trofeo.webp" alt="" />
           <span>Se bajó el martillo</span>
           <h1>Resultados</h1>
+          <small className="final-criterio">Menos trolls arriba · si empatan, el que gastó menos</small>
         </div>
         <div className="final-tabla">
           {puestos.map((p, i) => (
@@ -788,19 +799,31 @@ function FinalTV({ s, fx, sala }: { s: EstadoPublico; fx: React.RefObject<FxApi 
                     <b className="num">{p.tragos}</b> ·{' '}
                   </>
                 )}
-                media <b className="num">{Math.round(p.desglose.rating / 11)}</b> · sobró <b className="num">${p.j.saldo}M</b>
-                {p.desglose.trolls < 0 && (
+                gastó <b className="num">${p.gastado}M</b>
+                {p.fichas < 11 && (
                   <>
                     {' '}
-                    · trolls <b className="num">{p.desglose.trolls}</b>
+                    · <b className="num">{p.fichas}</b>/11
                   </>
                 )}
               </span>
-              <em className="num">{p.puntos}</em>
+              {v?.conteo && <span className="final-votos num">{v.conteo[p.pid] ?? 0} {(v.conteo[p.pid] ?? 0) === 1 ? 'voto' : 'votos'}</span>}
+              <em className="final-trolls">
+                <b className="num">{p.trolls}</b>
+                <small>{p.trolls === 1 ? 'troll' : 'trolls'}</small>
+              </em>
             </div>
           ))}
         </div>
-        {pr && (
+        {v?.abierta && (
+          <div className="final-votando">
+            <b>¿Quién armó el mejor equipo?</b>
+            <span>
+              Voten en el celular · <b className="num">{v.votaron.length}</b> de <b className="num">{puestos.length}</b> ya votaron
+            </span>
+          </div>
+        )}
+        {pr && !v?.abierta && (
           <div className="final-premios" key={premio} style={{ '--c': dueno?.color } as CSSProperties}>
             <span>Premio</span>
             <b>{pr.titulo}</b>
@@ -813,7 +836,7 @@ function FinalTV({ s, fx, sala }: { s: EstadoPublico; fx: React.RefObject<FxApi 
           <header>
             <Avatar src={mostrado.j.avatar} color={mostrado.j.color} />
             <span>
-              {puestoMostrado === 1 ? 'Mejor equipo' : `Puesto ${puestoMostrado}`}
+              {elegido?.pid === mostrado.pid ? 'Campeón · lo eligió la mesa' : !v?.ganador && puestoMostrado === 1 ? 'Primero en la tabla' : `Puesto ${puestoMostrado}`}
               <b>{mostrado.j.nombre}</b>
             </span>
           </header>

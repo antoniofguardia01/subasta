@@ -270,11 +270,24 @@ export interface Premio {
   pid: string;
 }
 
+/** Puesto en la tabla final: menos trolls es mejor; si empatan, gana quien gastó menos. Sin puntajes ni medias. */
 export interface PuestoFinal {
   pid: string;
-  puntos: number;
+  trolls: number;
+  gastado: number;
+  /** Fichas que consiguió (11 si completó el equipo). */
+  fichas: number;
   tragos: number;
-  desglose: { rating: number; rareza: number; completo: number; trolls: number; ahorro: number };
+}
+
+/** Votación opcional del mejor equipo (la abre el anfitrión en la pantalla final). */
+export interface VotoFinalVista {
+  abierta: boolean;
+  /** Quiénes ya votaron (no a quién). */
+  votaron: string[];
+  /** Al cerrarse: votos por participante y el ganador (empate: el mejor ubicado en la tabla). */
+  conteo: Record<string, number> | null;
+  ganador: string | null;
 }
 
 export interface MensajeTicker {
@@ -312,6 +325,7 @@ export interface EstadoPublico {
   /** Resultados: equipo elegido por el anfitrión (null = rotación automática cada 15 s desde finalDesde). */
   finalVista: string | null;
   finalDesde: number;
+  votoFinal: VotoFinalVista | null;
 }
 
 // ───────────────────────── Eventos efímeros (disparan animaciones) ─────────────────────────
@@ -342,6 +356,8 @@ export type MsgCliente =
   | { t: 'revancha' }
   | { t: 'salir' }
   | { t: 'verEquipo'; pid: string | null }
+  | { t: 'votacionFinal'; on: boolean }
+  | { t: 'votoFinal'; pid: string }
   | { t: 'terminar' }
   | { t: 'ping'; t0: number };
 

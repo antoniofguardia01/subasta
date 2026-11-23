@@ -97,6 +97,8 @@ export class Partida {
   panel: 'equipos' | 'saldos' | null = null;
   finalVista: string | null = null;
   finalDesde = 0;
+  /** Votación opcional del mejor equipo en la pantalla final. */
+  votoFinal: { abierta: boolean; votos: Record<string, string>; conteo: Record<string, number> | null; ganador: string | null } | null = null;
 
   mazo: Mazo | null = null;
   pisos: number[] = [];
@@ -297,8 +299,40 @@ export class Partida {
     this.fase = 'final';
     this.finalVista = null;
     this.finalDesde = Date.now();
+    this.votoFinal = null;
     const p = this.final.puestos;
     if (p.length) this.hechos.push({ h: 'final', ganadorId: p[0].pid, ultimoId: p[p.length - 1].pid });
+  }
+
+  // ───────────── Votación del mejor equipo (opcional, en la pantalla final) ─────────────
+
+  /** El anfitrión la abre o la cierra. Al cerrarla se cuentan los votos. */
+  abrirVotacion(on: boolean) {
+    if (this.fase !== 'final') return;
+    if (on) {
+      if (!this.votoFinal || !this.votoFinal.abierta) this.votoFinal = { abierta: true, votos: {}, conteo: null, ganador: null };
+      return;
+    }
+    if (this.votoFinal?.abierta) this.cerrarVotacion();
+  }
+
+  /** Cada participante vota un equipo que no sea el suyo (puede cambiar el voto mientras siga abierta). */
+  votarEquipo(pid: string, a: string) {
+    const v = this.votoFinal;
+    if (this.fase !== 'final' || !v?.abierta || pid === a || !this.jugador(pid) || !this.jugador(a)) return;
+    v.votos[pid] = a;
+    if (this.jugadores.every((j) => v.votos[j.id])) this.cerrarVotacion();
+  }
+
+  private cerrarVotacion() {
+    const v = this.votoFinal!;
+    const conteo: Record<string, number> = {};
+    for (const [quien, a] of Object.entries(v.votos)) if (this.jugador(quien) && this.jugador(a)) conteo[a] = (conteo[a] ?? 0) + 1;
+    const max = Math.max(0, ...Object.values(conteo));
+    // Empate: gana el que está mejor ubicado en la tabla (menos trolls, menos gastado).
+    const orden = this.final?.puestos.map((p) => p.pid) ?? this.jugadores.map((j) => j.id);
+    const ganador = max > 0 ? (orden.find((id) => conteo[id] === max) ?? null) : null;
+    this.votoFinal = { abierta: false, votos: v.votos, conteo, ganador };
   }
 
   revancha() {
@@ -308,6 +342,7 @@ export class Partida {
     this.rondaIdx = -1;
     this.cartaIdx = -1;
     this.final = undefined;
+    this.votoFinal = null;
     this.sobrantes = undefined;
     this.historial = [];
     this.limpiarCarta();
@@ -555,8 +590,9 @@ export class Partida {
         if (this.rondaIdx + 1 < this.mazo!.rondas.length) return this.iniciarRonda(this.rondaIdx + 1, t);
         this.final = calcularFinal(this.jugadores, this.historial, this.ajustes);
         this.fase = 'final';
-    this.finalVista = null;
-    this.finalDesde = Date.now();
+        this.finalVista = null;
+        this.finalDesde = Date.now();
+        this.votoFinal = null;
         const p = this.final.puestos;
         if (p.length) this.hechos.push({ h: 'final', ganadorId: p[0].pid, ultimoId: p[p.length - 1].pid });
         return;
@@ -761,12 +797,13 @@ export class Partida {
       panel: this.panel,
       finalVista: this.finalVista,
       finalDesde: this.finalDesde,
+      votoFinal: this.votoFinal ? { abierta: this.votoFinal.abierta, votaron: Object.keys(this.votoFinal.votos), conteo: this.votoFinal.conteo, ganador: this.votoFinal.ganador } : null,
     };
   }
 
   // ───────────── Copia de seguridad ─────────────
 
-  private static CAMPOS = ['ajustes', 'jugadores', 'anfitrionId', 'fase', 'pausa', 'pausaResto', 'panel', 'mazo', 'pisos', 'rondaIdx', 'cartaIdx', 'estados', 'compradores', 'preciosVenta', 'precio', 'liderId', 'ofertas', 'totalOfertas', 'vence', 'duracion', 'desenlace', 'compradorId', 'pagado', 'tragosCarta', 'salteadaPor', 'ruleta', 'sobrantes', 'final', 'historial', 'ruletas', 'finalVista', 'finalDesde'] as const;
+  private static CAMPOS = ['ajustes', 'jugadores', 'anfitrionId', 'fase', 'pausa', 'pausaResto', 'panel', 'mazo', 'pisos', 'rondaIdx', 'cartaIdx', 'estados', 'compradores', 'preciosVenta', 'precio', 'liderId', 'ofertas', 'totalOfertas', 'vence', 'duracion', 'desenlace', 'compradorId', 'pagado', 'tragosCarta', 'salteadaPor', 'ruleta', 'sobrantes', 'final', 'historial', 'ruletas', 'finalVista', 'finalDesde', 'votoFinal'] as const;
 
   /** Estado completo en un objeto plano (para guardarlo y restaurarlo si el servidor se reinicia). */
   exportar(): Record<string, unknown> {
@@ -786,6 +823,9 @@ export class Partida {
       j.tragos ??= 0;
     }
     this.tragosCarta ??= 0;
+    this.votoFinal ??= null;
+    // Resultados guardados con el puntaje viejo: se recalcula la tabla por trolls y gasto.
+    if (this.final && this.final.puestos.some((x) => typeof x.trolls !== 'number')) this.final = calcularFinal(this.jugadores, this.historial, this.ajustes);
     this.ajustes.tragos = !!this.ajustes.tragos;
     this.ajustes.intensidad = 3; // partidas guardadas con otro nivel también pasan a sin filtro
     if (this.mazo) this.reponer = crearReponedor(pool, trolls, this.mazo, this.mazo.semilla);

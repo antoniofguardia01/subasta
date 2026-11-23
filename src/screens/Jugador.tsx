@@ -843,7 +843,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
                       <div key={c.uid} data-troll={c.tipo === 'troll' ? '1' : undefined} style={{ '--i': i } as CSSProperties}>
                         <img src={c.img} alt="" data-marco={c.marco ? '1' : undefined} />
                         <b>{c.apellido || c.nombre}</b>
-                        <small>{c.tipo === 'troll' ? '¡Se salvaron!' : `${c.rating} · sin dueño`}</small>
+                        <small>{c.tipo === 'troll' ? '¡Se salvaron!' : 'Sin dueño'}</small>
                       </div>
                     ))}
                   </div>
@@ -1044,6 +1044,9 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   const f = s.final;
   const puestos = f ? f.puestos.map((p) => ({ ...p, j: s.jugadores.find((j) => j.id === p.pid)! })).filter((p) => p.j) : [];
   const miPuesto = puestos.findIndex((p) => p.pid === yo.id) + 1;
+  // Campeón: el que eligió la mesa si hubo votación; si no, el primero de la tabla (menos trolls).
+  const campeonId = s.votoFinal?.ganador ?? (s.votoFinal ? null : puestos[0]?.pid);
+  const soyCampeon = campeonId === yo.id;
   const vista = useEquipoEnPantalla(sala, s);
   // Lo que se muestra en la TV manda; quien no es anfitrión puede mirar otro equipo tocándolo (solo en su pantalla).
   const [propio, setPropio] = useState<string | null>(null);
@@ -1075,13 +1078,14 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
   if (!f) return null;
   return (
     <div className="m-final" ref={raiz}>
-      <Fondo paleta={miPuesto === 1 ? 'oro' : 'oscuro'} />
+      <Fondo paleta={soyCampeon ? 'oro' : 'oscuro'} />
       <div className="f-scroll">
-        <div className="f-titulo" data-campeon={miPuesto === 1 ? "1" : "0"}>
-          {miPuesto === 1 && <img className="f-trofeo" src="/img/iconos/trofeo.webp" alt="" />}
-          <span>Se bajó el martillo</span>
-          <h1 data-largo={miPuesto === puestos.length && miPuesto !== 1 ? '1' : undefined}>{miPuesto === 1 ? '¡Campeón!' : miPuesto === puestos.length ? 'Descendiste' : `Puesto ${miPuesto}`}</h1>
+        <div className="f-titulo" data-campeon={soyCampeon ? '1' : '0'} key={campeonId ?? 'x'}>
+          {soyCampeon && <img className="f-trofeo" src="/img/iconos/trofeo.webp" alt="" />}
+          <span>{soyCampeon && s.votoFinal?.ganador ? 'Lo eligió la mesa' : 'Se bajó el martillo'}</span>
+          <h1 data-largo={!soyCampeon && miPuesto === puestos.length ? '1' : undefined}>{soyCampeon ? '¡Campeón!' : miPuesto === puestos.length && puestos.length > 1 ? 'Descendiste' : `Puesto ${miPuesto}`}</h1>
         </div>
+        <p className="f-criterio">Tabla: menos trolls arriba; si empatan, el que gastó menos.</p>
         <div className="f-tabla">
           {puestos.map((p, i) => (
             <button className="f-fila" key={p.pid} data-puesto={i + 1} data-on={verA === p.pid ? '1' : '0'} style={{ '--c': p.j.color } as CSSProperties} onClick={() => setVerA(p.pid)}>
@@ -1094,10 +1098,15 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
                   <b className="num">{p.tragos}</b>
                 </small>
               )}
-              <em className="num">{p.puntos}</em>
+              <small className="f-gasto num">${p.gastado}M</small>
+              <em className="f-trolls">
+                <b className="num">{p.trolls}</b>
+                <small>{p.trolls === 1 ? 'troll' : 'trolls'}</small>
+              </em>
             </button>
           ))}
         </div>
+        <VotoEquipo sala={sala} s={s} yo={yo} anfitrion={anfitrion} />
         <div className="f-resto">
           <h3 style={{ '--c': visto.color } as CSSProperties}>
             Equipo de <b>{visto.id === yo.id ? 'ti' : visto.nombre}</b>
@@ -1135,6 +1144,102 @@ function Final({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
       />
       <Ticker mensajes={s.ticker} alto={32} />
       <Fx ref={fx} />
+    </div>
+  );
+}
+
+/** Votación opcional del mejor equipo: la abre el anfitrión, cada uno vota un equipo que no sea el suyo. */
+function VotoEquipo({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: JugadorSala; anfitrion: boolean }) {
+  const v = s.votoFinal;
+  const clave = `votoFinal.${s.codigo}.${s.finalDesde}`;
+  const [miVoto, setMiVoto] = useState<string | null>(() => leer<string | null>(clave, null));
+  useEffect(() => {
+    if (!v) setMiVoto(null);
+  }, [v]);
+  const ganador = v?.ganador ? s.jugadores.find((j) => j.id === v.ganador) : null;
+  // Si gané la votación: festejo.
+  const festejado = useRef(false);
+  useEffect(() => {
+    if (ganador && !festejado.current) {
+      festejado.current = true;
+      if (ganador.id === yo.id) (sonar.fanfarria(), vibrar([80, 60, 80, 60, 240]));
+      else sonar.ovacion();
+    }
+    if (!ganador) festejado.current = false;
+  }, [ganador?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!v)
+    return anfitrion ? (
+      <div className="voto-eq voto-eq--abrir">
+        <button className="btn btn--acento" onClick={() => (vibrar(20), sala.enviar({ t: 'votacionFinal', on: true }))}>
+          Votar el mejor equipo
+        </button>
+        <small>Opcional: cada uno elige el mejor equipo (no vale el propio) y el más votado es el campeón.</small>
+      </div>
+    ) : null;
+
+  if (v.abierta) {
+    const otros = s.jugadores.filter((j) => j.id !== yo.id);
+    return (
+      <div className="voto-eq">
+        <b className="voto-eq-titulo">¿Quién armó el mejor equipo?</b>
+        <span className="voto-eq-cuenta">
+          Votaron <b className="num">{v.votaron.length}</b> de <b className="num">{s.jugadores.length}</b> · puedes cambiar tu voto
+        </span>
+        <div className="voto-eq-opciones">
+          {otros.map((j, i) => (
+            <button
+              key={j.id}
+              className="voto-eq-op"
+              data-on={miVoto === j.id ? '1' : '0'}
+              style={{ '--c': j.color, '--i': i } as CSSProperties}
+              onClick={() => {
+                vibrar(15);
+                sonar.toque();
+                setMiVoto(j.id);
+                guardar(clave, j.id);
+                sala.enviar({ t: 'votoFinal', pid: j.id });
+              }}
+            >
+              <Avatar src={j.avatar} color={j.color} />
+              <b>{j.nombre}</b>
+            </button>
+          ))}
+        </div>
+        {anfitrion && (
+          <button className="btn voto-eq-cerrar" onClick={() => (vibrar(20), sala.enviar({ t: 'votacionFinal', on: false }))}>
+            Cerrar votación y ver el ganador
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  const conteo = Object.entries(v.conteo ?? {}).sort((a, b) => b[1] - a[1]);
+  return (
+    <div className="voto-eq voto-eq--res" style={{ '--c': ganador?.color } as CSSProperties}>
+      {ganador ? (
+        <div className="voto-eq-ganador">
+          <img src="/img/iconos/trofeo.webp" alt="" />
+          <Avatar src={ganador.avatar} color={ganador.color} />
+          <span>
+            <small>Mejor equipo según la mesa</small>
+            <b>{ganador.id === yo.id ? '¡Tú!' : ganador.nombre}</b>
+          </span>
+        </div>
+      ) : (
+        <b className="voto-eq-titulo">Nadie votó</b>
+      )}
+      {conteo.length > 0 && (
+        <p className="voto-eq-detalle">
+          {conteo.map(([pid, n]) => `${s.jugadores.find((j) => j.id === pid)?.nombre ?? '?'} ${n}`).join(' · ')}
+        </p>
+      )}
+      {anfitrion && (
+        <button className="btn voto-eq-cerrar" onClick={() => (vibrar(15), sala.enviar({ t: 'votacionFinal', on: true }))}>
+          Votar de nuevo
+        </button>
+      )}
     </div>
   );
 }

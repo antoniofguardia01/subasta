@@ -1,15 +1,5 @@
-// Puntaje final y premios cómicos. Los pesos son configuración: se ajustan acá.
-import { Ajustes, EstadoPublico, FichaEquipo, Historial, Premio, PuestoFinal, Rareza } from './types';
-
-export const PUNTAJE = {
-  rareza: { comun: 0, plata: 2, oro: 5, prime: 9, leyenda: 14, troll: 0 } as Record<Rareza, number>,
-  /** Bonus por tener los 11. */
-  equipoCompleto: 25,
-  /** Malus por cada troll en el equipo. */
-  porTroll: -8,
-  /** Un punto por cada tantos millones sin gastar (premia poco: la plata es para gastarla). */
-  millonesPorPunto: 40,
-};
+// Tabla final (por trolls y gasto) y premios cómicos.
+import { Ajustes, EstadoPublico, FichaEquipo, Historial, Premio, PuestoFinal } from './types';
 
 interface ParaPuntaje {
   id: string;
@@ -21,16 +11,12 @@ interface ParaPuntaje {
 }
 
 export function calcularFinal(jugadores: readonly ParaPuntaje[], historial: readonly Historial[], ajustes: Ajustes): NonNullable<EstadoPublico['final']> {
+  // Tabla: menos trolls arriba; si empatan, el que gastó menos. Sin puntajes ni medias.
   const puestos: PuestoFinal[] = jugadores.map((j) => {
     const fichas = j.equipo.filter((f): f is FichaEquipo => !!f);
-    const rating = fichas.reduce((s, f) => s + f.rating, 0);
-    const rareza = fichas.reduce((s, f) => s + PUNTAJE.rareza[f.rareza], 0);
-    const completo = fichas.length === j.equipo.length ? PUNTAJE.equipoCompleto : 0;
-    const trolls = fichas.filter((f) => f.tipo === 'troll').length * PUNTAJE.porTroll;
-    const ahorro = Math.floor(j.saldo / PUNTAJE.millonesPorPunto);
-    return { pid: j.id, puntos: rating + rareza + completo + trolls + ahorro, tragos: j.tragos ?? 0, desglose: { rating, rareza, completo, trolls, ahorro } };
+    return { pid: j.id, trolls: fichas.filter((f) => f.tipo === 'troll').length, gastado: j.gastado, fichas: fichas.length, tragos: j.tragos ?? 0 };
   });
-  puestos.sort((a, b) => b.puntos - a.puntos);
+  puestos.sort((a, b) => a.trolls - b.trolls || a.gastado - b.gastado);
 
   const premios: Premio[] = [];
   const nombre = (pid: string) => jugadores.find((j) => j.id === pid)?.nombre ?? '?';
@@ -117,8 +103,8 @@ export function calcularFinal(jugadores: readonly ParaPuntaje[], historial: read
     const ultimo = puestos[puestos.length - 1];
     premios.push({
       clave: 'peor',
-      titulo: 'Peor equipo del año',
-      detalle: `${nombre(ultimo.pid)} armó un equipo que desciende antes de arrancar.`,
+      titulo: 'Último de la tabla',
+      detalle: `${nombre(ultimo.pid)} terminó abajo de todo: ${ultimo.trolls} ${ultimo.trolls === 1 ? 'troll' : 'trolls'} en el equipo. Eso no es un plantel, es un asado.`,
       pid: ultimo.pid,
     });
   }

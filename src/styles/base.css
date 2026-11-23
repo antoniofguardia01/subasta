@@ -340,7 +340,7 @@ h1, h2, h3, p { margin: 0; }
    (Se cambian alto y posición, no transform: esos los maneja GSAP.) */
 .escena.escena[data-compacta][data-fase='revela'] .esc-figura {
   /* --libre la mide Escena en vivo: el hueco entre el cartel de venta (arriba) y la placa (abajo). */
-  --hf: clamp(calc(var(--v) * 30), var(--libre, calc(var(--v) * 94.5 - 200px)), calc(var(--v) * 70));
+  --hf: clamp(calc(var(--v) * 40), var(--libre, calc(var(--v) * 94.5 - 200px)), calc(var(--v) * 92));
   height: var(--hf); width: calc(var(--hf) * 1.125);
   bottom: var(--sobre-placa, calc(var(--v) * 97.5 - 44px - var(--hf))); right: calc((var(--u) * 100 - var(--hf) * 1.125) / 2);
 }
