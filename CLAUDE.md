@@ -84,6 +84,7 @@ Juego de subasta de futbolistas para jugar entre amigos (celulares + TV). Todo e
 - Desde las sesiones en la nube, publicar necesita `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` y un `CLOUDFLARE_API_TOKEN` cualquiera (el proxy pone el real).
 - Pendiente al publicar: correr `scripts/rostros.py` en producción (los trolls de allá todavía no tienen `rostro`) y terminar de importar las fotos de Wikipedia (`python3 scripts/importar-wiki.py`) de los ~26 jugadores nuevos sin foto (Zlatan, Pelé, Ronaldinho, Cruyff, Buffon, Xavi, Iniesta…).
 - Hay 27+ trolls reales cargados en el panel (fotos de la carpeta de Drive "Guilles", 4 con fondo a pedido del dueño); faltan sus nombres y descripciones.
+- **Fotos equivocadas encontradas (nov.):** el id de EA de 10 jugadores apuntaba a otra persona. Bounou se arregló (ea 209981), Rochet y Chiellini ya tienen foto de Wikipedia. Hummels, Mascherano, Verratti, Rakitić, Tadić, Ribéry y Ziyech quedaron con `fotos: []` (fuera del mazo) y `wiki` puesto: falta correr `python3 scripts/importar-wiki.py mats-hummels javier-mascherano marco-verratti ivan-rakitic dusan-tadic franck-ribery hakim-ziyech` cuando Wikimedia no limite (429). Para revisar todos los ids: buscar cada nombre en la API de EA y comprobar que el id guardado aparezca.
 - Revisar a ojo las fotos importadas (`docs/validacion-fotos.png`): alguna puede ser de otra persona con el mismo apellido.
 - Hay solo 4 leyendas (150M+): Messi, Cristiano, Modrić y Zlatan/Benzema en prime; la fuente de retratos no tiene jugadores históricos.
 

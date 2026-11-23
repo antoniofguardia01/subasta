@@ -2274,9 +2274,7 @@
   "precioMinimo": 44,
   "etiqueta": "PLATA · EL CEREBRO DE LA ZAGA",
   "dato": "Pasa mejor que algunos creativos.",
-  "fotos": [
-   "/img/players/mats-hummels.webp"
-  ],
+  "fotos": [],
   "buscar": "Mats Hummels",
   "wiki": "Mats Hummels"
  },
@@ -2614,9 +2612,7 @@
   "precioMinimo": 56,
   "etiqueta": "PLATA · EL JEFECITO",
   "dato": "Jugó de defensor y de capitán con la misma cara.",
-  "fotos": [
-   "/img/players/javier-mascherano.webp"
-  ],
+  "fotos": [],
   "buscar": "Javier Mascherano",
   "wiki": "Javier Mascherano"
  },
@@ -2751,9 +2747,7 @@
   "precioMinimo": 62,
   "etiqueta": "ORO · EL PEQUEÑO MAGO",
   "dato": "Pasa con la zurda y se queja con la derecha.",
-  "fotos": [
-   "/img/players/marco-verratti.webp"
-  ],
+  "fotos": [],
   "buscar": "Marco Verratti",
   "wiki": "Marco Verratti"
  },
@@ -2955,9 +2949,7 @@
   "precioMinimo": 36,
   "etiqueta": "PLATA · EL ELEGANTE CROATA",
   "dato": "Se retiró con el Barça en el corazón.",
-  "fotos": [
-   "/img/players/ivan-rakitic.webp"
-  ],
+  "fotos": [],
   "buscar": "Ivan Rakitic",
   "wiki": "Ivan Rakitić"
  },
@@ -3262,9 +3254,7 @@
   "precioMinimo": 18,
   "etiqueta": "COMÚN · EL SERBIO DE LAS ASISTENCIAS",
   "dato": "Con 35 sigue tirando pases sin mirar.",
-  "fotos": [
-   "/img/players/dusan-tadic.webp"
-  ],
+  "fotos": [],
   "buscar": "Dusan Tadic",
   "wiki": "Dušan Tadić"
  },
@@ -3585,9 +3575,7 @@
   "precioMinimo": 66,
   "etiqueta": "ORO · EL DE LA CICATRIZ",
   "dato": "Con la cara marcada y el alma limpia.",
-  "fotos": [
-   "/img/players/franck-ribery.webp"
-  ],
+  "fotos": [],
   "buscar": "Franck Ribery",
   "wiki": "Franck Ribéry"
  },
@@ -4474,9 +4462,7 @@
   "precioMinimo": 22,
   "etiqueta": "COMÚN · EL MAGO MARROQUÍ",
   "dato": "Zurdazo suyo, gol seguro.",
-  "fotos": [
-   "/img/players/hakim-ziyech.webp"
-  ],
+  "fotos": [],
   "buscar": "Hakim Ziyech",
   "wiki": "Hakim Ziyech"
  },
