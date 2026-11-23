@@ -10,6 +10,8 @@ export const UMBRAL_BARATO = 40;
 export const BARATAS_POR_RONDA = 2;
 /** Las cartas salvavidas se eligen entre jugadores de precio base hasta aquí (y se bajan a 30–40M): un grupo más ancho evita que siempre salgan los mismos baratos. */
 export const BASE_BARATA = 55;
+/** Hasta este precio base un jugador elegido puede salir de salvavidas (ganga a $30–40M) sin cambiar quién sale. */
+export const BASE_GANGA = 80;
 
 /** Qué salió en las últimas partidas (de cualquier sala): 2 = la última, 1 = la anterior. El sorteo prefiere lo que no salió hace poco. */
 export interface Recientes {
@@ -185,34 +187,27 @@ export function generarMazo(
     }
 
     // Todos los futbolistas tienen la misma chance: se eligen al azar (los que no salieron hace poco primero).
+    // El precio NO cambia quién sale: la garantía de cartas baratas se cumple bajando el precio, nunca cambiando jugadores.
     const elegidos: Jugador[] = libres.slice(0, nFut);
-    // Garantía de jugabilidad: si faltan cartas baratas (los trolls baratos cuentan), se cambia alguno de los
-    // elegidos por un barato al azar. El precio no hace que nadie salga más seguido que el resto.
-    // Se decide por el precio BASE (no por el sorteado): los señuelos y la banda no pueden dejar una ronda sin baratas.
+    // Garantía de jugabilidad: al menos BARATAS_POR_RONDA cartas a $30–40M (los trolls baratos cuentan).
+    // Primero hacen de salvavidas los elegidos de precio base bajo; si no alcanzan, los de base más baja que hayan salido
+    // (una ganga). Se decide por el precio BASE: los señuelos y la banda no pueden dejar una ronda sin baratas.
     const baratasYa = cartas.filter((c) => c.precioMinimo <= UMBRAL_BARATO).length;
     const necesarias = Math.max(0, Math.min(BARATAS_POR_RONDA, total) - baratasYa);
-    const esBarato = (j: Jugador) => j.precioMinimo <= BASE_BARATA;
-    const reserva = libres.slice(nFut).filter(esBarato);
-    for (let i = elegidos.length - 1; i >= 0 && elegidos.filter(esBarato).length < necesarias && reserva.length; i--)
-      if (!esBarato(elegidos[i])) elegidos[i] = reserva.shift()!;
-    // Si ni así alcanzan, los más baratos que queden hacen de salvavidas.
-    let faltan = necesarias - elegidos.filter(esBarato).length;
-    if (faltan > 0) {
-      const masBaratos = libres.filter((j) => !elegidos.includes(j)).sort((a, b) => a.precioMinimo - b.precioMinimo);
-      const caros = elegidos.map((j, i) => [j, i] as const).filter(([j]) => !esBarato(j)).sort((a, b) => b[0].precioMinimo - a[0].precioMinimo);
-      for (const [j, i] of caros) {
-        if (faltan <= 0 || !masBaratos.length || masBaratos[0].precioMinimo >= j.precioMinimo) break;
-        elegidos[i] = masBaratos.shift()!;
-        faltan--;
-      }
+    // 1) Salvavidas entre los ya elegidos: los de base más baja, siempre que no pasen de BASE_GANGA (un crack nunca se regala).
+    const salvavidas = [...elegidos].sort((a, b) => a.precioMinimo - b.precioMinimo).filter((j) => j.precioMinimo <= BASE_GANGA).slice(0, necesarias);
+    // 2) Solo si ni así alcanza (pasa poco), se cambia un elegido caro al azar por un barato al azar que no haya salido.
+    const reserva = libres.slice(nFut).filter((j) => j.precioMinimo <= BASE_BARATA);
+    while (salvavidas.length < necesarias && reserva.length) {
+      const caros = elegidos.filter((j) => !salvavidas.includes(j));
+      if (!caros.length) break;
+      const fuera = caros[Math.floor(rng() * caros.length)];
+      const dentro = reserva.splice(Math.floor(rng() * reserva.length), 1)[0];
+      elegidos[elegidos.indexOf(fuera)] = dentro;
+      salvavidas.push(dentro);
     }
-    // Las cartas salvavidas nunca llevan señuelo ni se pasan del umbral.
-    let salvavidas = 0;
-    for (const j of elegidos) {
-      if (salvavidas >= necesarias || !esBarato(j)) continue;
-      salvavidas++;
-      if (precio(j) > UMBRAL_BARATO) precioDe.set(j.id, entero(rng, PRECIO_MIN, UMBRAL_BARATO));
-    }
+    // Las cartas salvavidas nunca llevan señuelo y salen a $30–40M.
+    for (const j of salvavidas) if (precio(j) > UMBRAL_BARATO) precioDe.set(j.id, entero(rng, PRECIO_MIN, UMBRAL_BARATO));
     for (const j of elegidos) {
       usados.add(j.id);
       cartas.push(cartaDeJugador(j, hueco));

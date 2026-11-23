@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Partida, TIEMPOS } from '../shared/game';
-import { BASE_BARATA, generarMazo, pisosDeRonda, PRECIO_MIN, rangoPrecio, SENUELO_HASTA, SENUELO_MAX, SENUELO_MIN, UMBRAL_BARATO } from '../shared/deck';
+import { BASE_BARATA, BASE_GANGA, generarMazo, pisosDeRonda, PRECIO_MIN, rangoPrecio, SENUELO_HASTA, SENUELO_MAX, SENUELO_MIN, UMBRAL_BARATO } from '../shared/deck';
 import { AJUSTES_DEFECTO, Ajustes, FichaEquipo, FORMACION, Jugador, Pos, Troll, rangoTrolls } from '../shared/types';
 import { calcularFinal } from '../shared/score';
 
@@ -203,10 +203,10 @@ describe('mazo', () => {
           const [lo, hi] = rangoPrecio(j);
           const enBanda = c.precioMinimo >= lo && c.precioMinimo <= hi;
           const esSenuelo = j.precioMinimo <= SENUELO_HASTA && c.precioMinimo >= SENUELO_MIN && c.precioMinimo <= SENUELO_MAX;
-          const esSalvavidas = j.precioMinimo <= BASE_BARATA && c.precioMinimo >= PRECIO_MIN && c.precioMinimo <= UMBRAL_BARATO;
+          const esSalvavidas = j.precioMinimo <= BASE_GANGA && c.precioMinimo >= PRECIO_MIN && c.precioMinimo <= UMBRAL_BARATO;
           expect(enBanda || esSenuelo || esSalvavidas).toBe(true);
           if (esSenuelo && !enBanda) senuelos++;
-          if (j.precioMinimo > BASE_BARATA) expect(enBanda).toBe(true); // los buenos nunca llevan señuelo ni se abaratan
+          if (j.precioMinimo > BASE_GANGA) expect(enBanda).toBe(true); // los cracks nunca llevan señuelo ni se abaratan
           expect(c.precioMinimo).toBeGreaterThanOrEqual(PRECIO_MIN); // nadie sale bajo el piso
           if (!vistos.has(c.refId)) vistos.set(c.refId, new Set());
           vistos.get(c.refId)!.add(c.precioMinimo);
@@ -743,5 +743,21 @@ describe('trolls: misma probabilidad para todos', () => {
     // 6 de 40 trolls = 15 %. Antes, con la preferencia por "no salió hace poco", eran casi el 100 % de las primeras rondas.
     expect(pctNuevos).toBeGreaterThan(0.08);
     expect(pctNuevos).toBeLessThan(0.25);
+  });
+});
+
+describe('futbolistas: misma probabilidad', () => {
+  it('el precio no cambia quién sale: baratos y caros salen parejo', () => {
+    const lista = pool();
+    const cuenta = new Map<string, number>();
+    const N = 600;
+    for (let s = 1; s <= N; s++) {
+      const m = generarMazo(lista, trolls(), 4, AJUSTES_DEFECTO, s * 7919);
+      for (const r of m.rondas) for (const c of r.cartas) if (c.tipo === 'jugador') cuenta.set(c.refId, (cuenta.get(c.refId) ?? 0) + 1);
+    }
+    const prom = (l: Jugador[]) => l.reduce((a, j) => a + (cuenta.get(j.id) ?? 0), 0) / l.length / N;
+    const baratos = prom(lista.filter((j) => j.precioMinimo <= BASE_BARATA));
+    const caros = prom(lista.filter((j) => j.precioMinimo > BASE_BARATA));
+    expect(Math.abs(baratos - caros) / caros).toBeLessThan(0.1);
   });
 });
