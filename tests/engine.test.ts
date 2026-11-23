@@ -721,3 +721,27 @@ describe('resultados: tabla por trolls y votación del mejor equipo', () => {
     expect(p.vista(30).votoFinal).toBeNull();
   });
 });
+
+describe('trolls: misma probabilidad para todos', () => {
+  it('los recién cargados no salen más que el resto, aunque los demás hayan salido en las últimas partidas', () => {
+    const lista = trolls(40);
+    const nuevos = new Set(lista.slice(34).map((t) => t.id));
+    // Memoria de partidas recientes: salieron todos menos los 6 "nuevos".
+    const recientes = { jugadores: {}, trolls: Object.fromEntries(lista.filter((t) => !nuevos.has(t.id)).map((t) => [t.id, 2])) };
+    const cuenta = new Map<string, number>();
+    let total = 0;
+    for (let s = 1; s <= 300; s++) {
+      const m = generarMazo(pool(), lista, 4, AJUSTES_DEFECTO, s, recientes);
+      for (const r of m.rondas.slice(0, 2))
+        for (const c of r.cartas)
+          if (c.tipo === 'troll') {
+            cuenta.set(c.refId, (cuenta.get(c.refId) ?? 0) + 1);
+            total++;
+          }
+    }
+    const pctNuevos = [...nuevos].reduce((a, id) => a + (cuenta.get(id) ?? 0), 0) / total;
+    // 6 de 40 trolls = 15 %. Antes, con la preferencia por "no salió hace poco", eran casi el 100 % de las primeras rondas.
+    expect(pctNuevos).toBeGreaterThan(0.08);
+    expect(pctNuevos).toBeLessThan(0.25);
+  });
+});

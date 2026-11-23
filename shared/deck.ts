@@ -61,7 +61,6 @@ export function generarMazo(
 ): Mazo {
   const rng = crearRng(semilla);
   const nivelJ = (j: Jugador) => recientes?.jugadores[j.id] ?? 0;
-  const nivelT = (t: Troll) => recientes?.trolls[t.id] ?? 0;
   const total = cartasPorRonda(participantes, ajustes);
   const usados = new Set<string>();
   const porPos = new Map<Pos, Jugador[]>();
@@ -77,8 +76,10 @@ export function generarMazo(
   const precio = (j: Jugador) => precioDe.get(j.id) ?? Math.max(1, Math.round(j.precioMinimo));
 
   const trollsActivos = trolls.filter((t) => t.activo && t.foto);
-  // Barajado al azar y luego ordenado (de forma estable) por lo reciente que salió: primero los que no salieron hace poco.
-  const barajarTrolls = () => barajar(rng, trollsActivos).sort((a, b) => nivelT(a) - nivelT(b));
+  // Todos los trolls tienen SIEMPRE la misma probabilidad (pedido del dueño): barajado puro, sin preferir a los que no
+  // salieron hace poco. (Con pocos trolls, esa preferencia hacía que los recién cargados salieran en todas las partidas.)
+  // Dentro de una partida no se repiten hasta agotarlos.
+  const barajarTrolls = () => barajar(rng, trollsActivos);
   let bolsaTrolls = barajarTrolls();
   let ultimoTroll = '';
   const sacarTroll = (yaEnRonda: Set<string>): Troll | null => {
