@@ -334,7 +334,13 @@ h1, h2, h3, p { margin: 0; }
    Al revelarse, la figura sube un poco (la cara queda en el tercio de arriba) y la placa va abajo, sobre el torso,
    ocupando casi todo el ancho para que la descripción entre en pocas líneas. Encima del cartel de venta. */
 .pn-palabra { display: inline-block; white-space: nowrap; }
-.escena.escena[data-compacta] .esc-figura { transition: height 700ms var(--ease-out), width 700ms var(--ease-out), bottom 700ms var(--ease-out), right 700ms var(--ease-out); }
+/* Celular, antes de revelar: la figura sube un poco (la cara queda en el medio, no abajo) y el pecho se desvanece abajo
+   en vez de cortarse en seco. La máscara va en la caja, así vale igual para la silueta y la foto. */
+.escena.escena[data-compacta] .esc-figura {
+  bottom: calc(var(--v) * 9); height: calc(var(--v) * 90); width: calc(var(--v) * 90 * 1.125);
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 16%); mask-image: linear-gradient(to top, transparent 0, #000 16%);
+  transition: height 700ms var(--ease-out), width 700ms var(--ease-out), bottom 700ms var(--ease-out), right 700ms var(--ease-out);
+}
 /* Al revelarse la figura se ubica arriba y mide lo que deja libre la placa (alto de la escena − ~160 px),
    así la cara queda en la parte de arriba hasta en pantallas chicas y aunque la foto sea un primer plano.
    (Se cambian alto y posición, no transform: esos los maneja GSAP.) */

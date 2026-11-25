@@ -271,13 +271,15 @@ export function Escena({ sala, s, tic, fx, compacta, alVolar }: Props) {
           // Medido con getBoundingClientRect: la placa todavía está corrida en X (entra animada), pero su alto y su borde de arriba ya son los finales.
           const caja = el.getBoundingClientRect();
           const alto = caja.height;
-          const arriba = alto * 0.025 + 50;
+          // La foto puede subir hasta detrás del cartel de venta: tapa la punta del pelo, nunca la cara.
+          const arriba = alto * 0.025 + 14;
           const abajo = caja.bottom - placa.getBoundingClientRect().top + 6;
-          // La cara de los retratos está en el 60 % de arriba: el 30 % de abajo (pecho y hombros) puede quedar detrás de la placa.
+          // En los retratos la cara va del 22 % al 83 % del alto (medido con YuNet en todas las fotos): solo el 12 % de abajo
+          // (cuello y pecho) puede quedar detrás de la placa, así el mentón queda siempre a la vista.
           const libre = Math.max(0, alto - arriba - abajo);
-          const hf = Math.min(libre / 0.7, alto * 0.92);
+          const hf = Math.min(libre / 0.88, alto * 0.92);
           el.style.setProperty('--libre', `${hf}px`);
-          el.style.setProperty('--sobre-placa', `${Math.max(0, abajo - hf * 0.3)}px`);
+          el.style.setProperty('--sobre-placa', `${Math.max(0, abajo - hf * 0.12)}px`);
         }
       }
       // Celular: el cartel de venta se va de abajo, cambia de lugar oculto por el destello y reaparece arriba a la
