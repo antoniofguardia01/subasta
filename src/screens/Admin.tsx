@@ -214,6 +214,7 @@ function Jugadores({ est, api, recargar, avisar }: Props) {
   const [pos, setPos] = useState('');
   const [nuevo, setNuevo] = useState(false);
   const [pagina, setPagina] = useState(0);
+  const [viendo, setViendo] = useState<string | null>(null);
   const lista = useMemo(() => {
     const n = q.trim().toLowerCase();
     return est.jugadores.filter((j) => (!pos || j.pos === pos) && (!n || `${j.nombre} ${j.apellido}`.toLowerCase().includes(n))).sort((a, b) => b.precioMinimo - a.precioMinimo || `${a.apellido}${a.nombre}`.localeCompare(`${b.apellido}${b.nombre}`));
@@ -236,7 +237,25 @@ function Jugadores({ est, api, recargar, avisar }: Props) {
       {nuevo && <NuevoJugador api={api} recargar={async () => (await recargar(), setNuevo(false))} avisar={avisar} />}
       <p className="admin-resumen">{lista.length} jugadores · este es el precio BASE: en cada partida sale con un precio al azar cerca de este (±20% los caros, ±30% los medios), nadie sale por menos de $30M (todos los de base bajo 30 salen a $30M exactos) y a veces los flojos salen con precio de 50–60 para despistar</p>
       <Paginador actual={actual} paginas={paginas} total={lista.length} cambiar={setPagina} />
-      <div className="admin-tabla">{visibles.map((j) => <FilaJugador key={j.id + j.precioMinimo + j.fotos[0]} j={j} api={api} recargar={recargar} avisar={avisar} />)}</div>
+      <div className="admin-tabla">{visibles.map((j) => <FilaJugador key={j.id + j.precioMinimo + j.fotos[0]} j={j} api={api} recargar={recargar} avisar={avisar} ver={() => setViendo(j.id)} />)}</div>
+      {viendo && (() => {
+        const i = lista.findIndex((x) => x.id === viendo);
+        const j = lista[i];
+        if (!j) return null;
+        return (
+          <VistaJugador
+            key={j.id}
+            j={j}
+            posicion={`${i + 1} de ${lista.length}`}
+            anterior={i > 0 ? () => setViendo(lista[i - 1].id) : undefined}
+            siguiente={i < lista.length - 1 ? () => setViendo(lista[i + 1].id) : undefined}
+            api={api}
+            recargar={recargar}
+            avisar={avisar}
+            cerrar={() => setViendo(null)}
+          />
+        );
+      })()}
       <Paginador actual={actual} paginas={paginas} total={lista.length} cambiar={(n) => (setPagina(n), scrollTo({ top: 0, behavior: 'smooth' }))} />
     </section>
   );
@@ -268,7 +287,7 @@ function Paginador({ actual, paginas, total, cambiar }: { actual: number; pagina
   );
 }
 
-function FilaJugador({ j, api, recargar, avisar }: { j: JugA } & Omit<Props, 'est'>) {
+function FilaJugador({ j, api, recargar, avisar, ver }: { j: JugA; ver: () => void } & Omit<Props, 'est'>) {
   const [precio, setPrecio] = useState(j.precioMinimo);
   const [dato, setDato] = useState(j.dato);
   const foto = useRef<HTMLInputElement>(null);
@@ -279,7 +298,7 @@ function FilaJugador({ j, api, recargar, avisar }: { j: JugA } & Omit<Props, 'es
   };
   return (
     <div className="admin-fila-j" data-editado={j.editado || j.propio ? '1' : '0'}>
-      <img src={j.fotos[0]} alt="" onClick={() => foto.current?.click()} title="Cambiar foto" />
+      <img src={j.fotos[0]} alt="" onClick={ver} title="Vista previa" />
       <b>
         {j.nombre} {j.apellido}
         <small>
@@ -291,6 +310,9 @@ function FilaJugador({ j, api, recargar, avisar }: { j: JugA } & Omit<Props, 'es
         <input type="number" min={1} max={300} value={precio} onChange={(e) => setPrecio(Number(e.target.value))} onBlur={() => precio !== j.precioMinimo && void guardar({ precioMinimo: precio })} />
       </label>
       <input className="admin-dato" value={dato} onChange={(e) => setDato(e.target.value)} onBlur={() => dato !== j.dato && void guardar({ dato })} />
+      <button className="admin-ver" onClick={ver}>
+        Vista previa
+      </button>
       {(j.editado || j.propio) && (
         <button onClick={async () => confirm(j.propio ? '¿Borrar este jugador?' : '¿Volver a los valores originales?') && (await api('c/jugador/' + j.id, 'DELETE'), await recargar())}>{j.propio ? 'Borrar' : 'Restaurar'}</button>
       )}
@@ -384,6 +406,125 @@ function Mensajes({ est, api, recargar, avisar }: Props) {
         </div>
       ))}
     </section>
+  );
+}
+
+// ───────────── Vista previa de un jugador ─────────────
+
+/** Cómo se ve el jugador en el juego: silueta, carta revelada (celular y TV) y ficha del equipo. */
+function VistaJugador({ j, posicion, anterior, siguiente, api, recargar, avisar, cerrar }: { j: JugA; posicion: string; anterior?: () => void; siguiente?: () => void; cerrar: () => void } & Omit<Props, 'est'>) {
+  const foto = useRef<HTMLInputElement>(null);
+  const [dato, setDato] = useState(j.dato);
+  useEffect(() => {
+    const tecla = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'Escape') cerrar();
+      else if (e.key === 'ArrowLeft') anterior?.();
+      else if (e.key === 'ArrowRight') siguiente?.();
+    };
+    addEventListener('keydown', tecla);
+    return () => removeEventListener('keydown', tecla);
+  }, [cerrar, anterior, siguiente]);
+  const guardarDato = async () => {
+    if (dato === j.dato) return;
+    await api('c/jugador/' + j.id, 'PUT', { dato });
+    avisar('Guardado');
+    await recargar();
+  };
+  const img = j.fotos[0];
+  const apellido = j.apellido || j.nombre;
+  const nombre = j.apellido ? j.nombre : '';
+  const k = Math.min(1, 9.2 / apellido.length);
+  return createPortal(
+    <div className="enc-fondo" onClick={cerrar}>
+      <div className="enc-caja vj-caja" role="dialog" aria-label={`Vista previa de ${j.nombre} ${j.apellido}`} onClick={(e) => e.stopPropagation()}>
+        <header>
+          <b>
+            {j.nombre} {j.apellido} <small className="vj-sub">{j.pos} · {j.pais} · ${j.precioMinimo}M</small>
+          </b>
+          <button onClick={cerrar} aria-label="Cerrar">
+            <IconoCerrar />
+          </button>
+        </header>
+        <div className="vj-cuerpo">
+          <figure className="vj-bloque">
+            <div className="vj-cel vj-cel--sil" data-paleta="misterio">
+              <img className="vj-sil" src={img} alt="" draggable={false} />
+            </div>
+            <figcaption>Silueta (mientras se subasta)</figcaption>
+          </figure>
+          <figure className="vj-bloque">
+            <div className="vj-cel" data-paleta={j.rareza}>
+              <img className="vj-foto" src={img} alt="" draggable={false} />
+              <div className="vj-placa">
+                <div className="vj-placa-cuerpo">
+                  {nombre && <span className="vj-nombre">{nombre}</span>}
+                  <span className="vj-apellido" style={{ fontSize: `${Math.max(22, 30 * k)}px` }}>
+                    {apellido}
+                  </span>
+                </div>
+                <div className="vj-dato">{dato || j.etiqueta}</div>
+              </div>
+            </div>
+            <figcaption>Revelado en el celular</figcaption>
+          </figure>
+          <div className="vj-col">
+            <figure className="vj-bloque">
+              <div className="vj-tv" data-paleta={j.rareza}>
+                <img className="vj-foto" src={img} alt="" draggable={false} />
+                <div className="vj-tv-placa">
+                  {nombre && <span>{nombre}</span>}
+                  <b>{apellido}</b>
+                  <small>{dato || j.etiqueta}</small>
+                </div>
+              </div>
+              <figcaption>Revelado en la TV</figcaption>
+            </figure>
+            <figure className="vj-bloque vj-fichas">
+              <span className="vj-ficha" data-paleta={j.rareza}>
+                <img src={img} alt="" draggable={false} />
+              </span>
+              <span className="vj-ficha vj-ficha--chica" data-paleta={j.rareza}>
+                <img src={img} alt="" draggable={false} />
+              </span>
+              <figcaption>En la cancha del equipo</figcaption>
+            </figure>
+            <label className="vj-editar">
+              Dato que se muestra en la carta
+              <textarea value={dato} onChange={(e) => setDato(e.target.value)} onBlur={() => void guardarDato()} rows={2} maxLength={120} />
+            </label>
+          </div>
+        </div>
+        <footer>
+          <button onClick={anterior} disabled={!anterior}>
+            ‹ Anterior
+          </button>
+          <span className="vj-pos">{posicion}</span>
+          <button onClick={() => foto.current?.click()}>Cambiar foto</button>
+          <button onClick={siguiente} disabled={!siguiente}>
+            Siguiente ›
+          </button>
+          <button className="admin-primario" onClick={cerrar}>
+            Listo
+          </button>
+          <input
+            ref={foto}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={async (e) => {
+              const f = e.target.files?.[0];
+              if (!f) return;
+              const { imagen, opaca } = await comprimir(f);
+              await api('c/jugador/' + j.id, 'PUT', { imagen });
+              avisar(opaca ? '⚠ Esa foto tiene fondo: la silueta saldrá como un cuadro blanco. Sube una recortada (sin fondo).' : 'Foto reemplazada');
+              await recargar();
+            }}
+          />
+        </footer>
+      </div>
+    </div>,
+    document.body,
   );
 }
 

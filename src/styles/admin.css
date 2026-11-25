@@ -91,3 +91,41 @@
 .admin-paginas button:disabled { opacity: 0.35; }
 .admin-paginas span { padding: 0 6px; }
 .admin-paginas select { width: auto; min-width: 170px; }
+
+/* ───────── Vista previa de jugadores ───────── */
+.admin-ver { white-space: nowrap; }
+.vj-caja { width: min(1040px, 100%); }
+.vj-sub { margin-left: 8px; font-size: 13px; font-weight: 700; opacity: 0.7; text-transform: none; }
+.vj-cuerpo { display: grid; grid-template-columns: auto auto 1fr; gap: 20px; padding: 16px 18px; overflow: auto; align-items: start; }
+.vj-bloque { margin: 0; display: grid; justify-items: center; gap: 8px; }
+.vj-bloque figcaption { font-size: 12px; font-weight: 700; opacity: 0.75; text-align: center; }
+.vj-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+/* Celular: misma proporción que la escena del celular (≈ 342×400) y la misma ubicación de la foto al revelarse. */
+.vj-cel { position: relative; width: 250px; height: 292px; border-radius: 18px; overflow: hidden; background: radial-gradient(circle at 50% 30%, var(--f1, #6fe3ff), var(--f0, #1b4fe0) 55%, var(--f2, #0b1f7a)); }
+.vj-cel--sil { background: radial-gradient(circle at 50% 30%, var(--m1, #b4ec2b), var(--m0, #0fbf57) 60%, var(--m2, #0a5a3c)); }
+.vj-cel img { position: absolute; left: 50%; width: auto; transform: translateX(-50%); object-fit: contain; object-position: 50% 100%; }
+.vj-sil { bottom: 9%; height: 90%; filter: brightness(0) invert(1); -webkit-mask-image: linear-gradient(to top, transparent 0, #000 16%); mask-image: linear-gradient(to top, transparent 0, #000 16%); }
+.vj-cel .vj-foto { top: 6%; height: 74%; }
+.vj-placa { position: absolute; left: 4%; right: 4%; bottom: 3%; border-radius: 8px; overflow: hidden; }
+.vj-placa-cuerpo { display: flex; flex-direction: column; padding: 6px 10px 5px; background: #14161a; color: #fff; }
+.vj-nombre { font-size: 13px; font-weight: 900; font-stretch: 125%; text-transform: uppercase; color: var(--fa, #c6f432); line-height: 1; }
+.vj-apellido { font-weight: 900; font-stretch: 125%; text-transform: uppercase; line-height: 0.95; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vj-dato { padding: 6px 10px; background: #f6f2e7; color: #17191c; font-size: 11px; font-weight: 700; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* TV: 16:9, foto a la derecha y placa a la izquierda. */
+.vj-tv { position: relative; width: 100%; max-width: 420px; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: radial-gradient(circle at 70% 40%, var(--f1, #6fe3ff), var(--f0, #1b4fe0) 55%, var(--f2, #0b1f7a)); }
+.vj-tv .vj-foto { position: absolute; right: 4%; bottom: 0; height: 97%; width: auto; }
+.vj-tv-placa { position: absolute; left: 4%; top: 50%; transform: translateY(-50%); max-width: 52%; display: flex; flex-direction: column; padding: 6px 10px; border-radius: 6px; background: #14161a; color: #fff; line-height: 1; }
+.vj-tv-placa span { font-size: 10px; font-weight: 900; text-transform: uppercase; color: var(--fa, #c6f432); }
+.vj-tv-placa b { font-size: 18px; font-weight: 900; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vj-tv-placa small { margin-top: 4px; font-size: 9px; opacity: 0.85; line-height: 1.2; }
+.vj-fichas { grid-auto-flow: column; align-items: end; justify-content: start; gap: 14px; }
+.vj-fichas figcaption { grid-column: 1 / -1; grid-row: 2; justify-self: start; }
+.vj-ficha { position: relative; display: block; width: 64px; height: 64px; border-radius: 50%; overflow: hidden; background: var(--f3, #888); box-shadow: 0 0 0 3px var(--f0, #fff); }
+.vj-ficha--chica { width: 38px; height: 38px; }
+.vj-ficha img { position: absolute; left: -12%; top: 0; width: 124%; height: 124%; object-fit: cover; object-position: 50% 0; }
+.vj-editar { display: grid; gap: 6px; font-size: 13px; font-weight: 800; }
+.vj-editar textarea { width: 100%; padding: 8px 10px; border-radius: 10px; border: 0; font: inherit; font-weight: 500; resize: vertical; }
+.vj-pos { align-self: center; font-size: 13px; font-weight: 800; opacity: 0.75; }
+.vj-caja footer { flex-wrap: wrap; }
+@media (max-width: 820px) { .vj-cuerpo { grid-template-columns: 1fr 1fr; } .vj-col { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .vj-cuerpo { grid-template-columns: 1fr; justify-items: center; } }
