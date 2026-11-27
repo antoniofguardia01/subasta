@@ -10,6 +10,10 @@ export const UMBRAL_BARATO = 40;
 export const BARATAS_POR_RONDA = 2;
 /** Las cartas salvavidas se eligen entre jugadores de precio base hasta aquí (y se bajan a 30–40M): un grupo más ancho evita que siempre salgan los mismos baratos. */
 export const BASE_BARATA = 55;
+/** Jugadores "de relleno": con precio base hasta aquí salen a un precio al azar entre PRECIO_MIN y PRECIO_SORPRESA_MAX,
+ *  así un jugador del fondo de la lista puede salir caro y parecer un crack (pedido del dueño). */
+export const BASE_SORPRESA = 35;
+export const PRECIO_SORPRESA_MAX = 70;
 /** Hasta este precio base un jugador elegido puede salir de salvavidas (ganga a $30–40M) sin cambiar quién sale. */
 export const BASE_GANGA = 80;
 
@@ -31,8 +35,8 @@ export function rangoPrecio(j: Pick<Jugador, 'precioMinimo' | 'precioRango'>): [
   const r = j.precioRango;
   if (r && r.length === 2 && r[1] >= r[0]) return [Math.max(PRECIO_MIN, Math.round(r[0])), Math.max(PRECIO_MIN, Math.round(r[1]))];
   const base = j.precioMinimo;
-  // Los que valen menos que el piso salen todos a $30M exactos; el resto, en una banda alrededor de su precio base (nunca bajo el piso).
-  if (base < PRECIO_MIN) return [PRECIO_MIN, PRECIO_MIN];
+  // Los de relleno (base ≤ 35) salen a cualquier precio entre $30M y $70M; el resto, en una banda alrededor de su precio base (nunca bajo el piso).
+  if (base <= BASE_SORPRESA) return [PRECIO_MIN, PRECIO_SORPRESA_MAX];
   const k = base >= 60 ? 0.2 : 0.3;
   return [Math.max(PRECIO_MIN, Math.round(base * (1 - k))), Math.round(base * (1 + k))];
 }
@@ -44,7 +48,7 @@ export const SENUELO_MIN = 50;
 export const SENUELO_MAX = 60;
 
 export function sortearPrecio(rng: Rng, j: Pick<Jugador, 'precioMinimo' | 'precioRango'>, senuelo = true): number {
-  if (senuelo && !j.precioRango && j.precioMinimo <= SENUELO_HASTA && rng() < SENUELO_PROB) return entero(rng, SENUELO_MIN, SENUELO_MAX);
+  if (senuelo && !j.precioRango && j.precioMinimo > BASE_SORPRESA && j.precioMinimo <= SENUELO_HASTA && rng() < SENUELO_PROB) return entero(rng, SENUELO_MIN, SENUELO_MAX);
   const [lo, hi] = rangoPrecio(j);
   return entero(rng, lo, hi);
 }
@@ -194,12 +198,16 @@ export function generarMazo(
     // (una ganga). Se decide por el precio BASE: los señuelos y la banda no pueden dejar una ronda sin baratas.
     const baratasYa = cartas.filter((c) => c.precioMinimo <= UMBRAL_BARATO).length;
     const necesarias = Math.max(0, Math.min(BARATAS_POR_RONDA, total) - baratasYa);
-    // 1) Salvavidas entre los ya elegidos: los de base más baja, siempre que no pasen de BASE_GANGA (un crack nunca se regala).
-    const salvavidas = [...elegidos].sort((a, b) => a.precioMinimo - b.precioMinimo).filter((j) => j.precioMinimo <= BASE_GANGA).slice(0, necesarias);
+    // 1) Salvavidas entre los ya elegidos, siempre que no pasen de BASE_GANGA (un crack nunca se regala).
+    // Los que ya salieron baratos por azar cuentan; si faltan, se eligen AL AZAR entre los que pueden ser ganga
+    // (no siempre los de base más baja: si no, los de relleno volvían siempre a $30M y no había sorpresa).
+    const yaBaratos = elegidos.filter((j) => precio(j) <= UMBRAL_BARATO).length;
+    const salvavidas = barajar(rng, elegidos.filter((j) => precio(j) > UMBRAL_BARATO && j.precioMinimo <= BASE_GANGA)).slice(0, Math.max(0, necesarias - yaBaratos));
+    const objetivo = Math.max(0, necesarias - yaBaratos);
     // 2) Solo si ni así alcanza (pasa poco), se cambia un elegido caro al azar por un barato al azar que no haya salido.
     const reserva = libres.slice(nFut).filter((j) => j.precioMinimo <= BASE_BARATA);
-    while (salvavidas.length < necesarias && reserva.length) {
-      const caros = elegidos.filter((j) => !salvavidas.includes(j));
+    while (salvavidas.length < objetivo && reserva.length) {
+      const caros = elegidos.filter((j) => !salvavidas.includes(j) && precio(j) > UMBRAL_BARATO);
       if (!caros.length) break;
       const fuera = caros[Math.floor(rng() * caros.length)];
       const dentro = reserva.splice(Math.floor(rng() * reserva.length), 1)[0];

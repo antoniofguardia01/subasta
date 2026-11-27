@@ -12,7 +12,7 @@ import { irConTelon } from '../lib/ruta';
 import { Sala, VistaSala, useSala } from '../lib/sala';
 import { activarSonido, desbloquearSonido, sonar, sonidoPreferido } from '../lib/sonido';
 import { TEMAS } from '../lib/temas';
-import { guardar, leer, vibrar } from '../lib/util';
+import { guardar, leer, reducirMovimiento, vibrar } from '../lib/util';
 import { CanchaMedida, Cargando, SinSala } from './Escenario';
 import { useEquipoEnPantalla } from '../lib/vistaFinal';
 import { IconoCerrar, IconoLapiz, IconoMenos } from '../components/Iconos';
@@ -817,7 +817,7 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
               <>
                 <span>Barajando el mazo</span>
                 <b>Se viene el remate</b>
-                <small>Mira la tele… o no parpadees</small>
+                <BarajaMini s={s} sala={sala} />
               </>
             )}
             {s.fase === 'ronda' && r && (
@@ -829,6 +829,13 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
                 <small>
                   {r.cartas.length} cartas · {s.jugadores.length} compradores
                 </small>
+                {!!r.muestra?.length && (
+                  <div className="j-trio" aria-hidden>
+                    {r.muestra.map((f, i) => (
+                      <img key={i} data-i={i} src={f} alt="" draggable={false} />
+                    ))}
+                  </div>
+                )}
               </>
             )}
             {s.fase === 'finronda' && r && (
@@ -836,6 +843,24 @@ function Juego({ sala, s, yo, anfitrion }: { sala: Sala; s: EstadoPublico; yo: J
                 <span>Ronda cerrada</span>
                 <b>{yo.equipo[r.hueco] ? yo.equipo[r.hueco]!.apellido || yo.equipo[r.hueco]!.nombre : POS_NOMBRE[r.pos]}</b>
                 <small>{yo.equipo[r.hueco] ? `Tu ${POS_NOMBRE[r.pos].toLowerCase()} por $${yo.equipo[r.hueco]!.pagado}M` : ''}</small>
+                <div className="j-fin-compras">
+                  {s.historial
+                    .filter((h) => h.ronda === r.indice && h.compradorId)
+                    .map((h, i) => {
+                      const j = s.jugadores.find((x) => x.id === h.compradorId);
+                      return (
+                        <div key={h.carta.uid} className="j-fin-carta" data-paleta={h.carta.rareza} data-yo={j?.id === yo.id ? '1' : undefined} style={{ '--c': j?.color, '--i': i } as CSSProperties}>
+                          <span className="j-fin-foto">
+                            <img src={h.carta.img} alt="" draggable={false} />
+                          </span>
+                          <b>{h.carta.apellido || h.carta.nombre}</b>
+                          <em>
+                            {j?.id === yo.id ? 'Tú' : j?.nombre} · <i className="num">${h.precio}M</i>
+                          </em>
+                        </div>
+                      );
+                    })}
+                </div>
                 {!!s.sobrantes?.length && (
                   <div className="j-sobras">
                     <em>Se quedaron sin ver</em>
@@ -1262,6 +1287,68 @@ export function BarraFinal({ anfitrion, revancha, salir }: { anfitrion: boolean;
         Salir
       </button>
     </footer>
+  );
+}
+
+// ───────────── Barajeo en el celular (versión compacta del de la TV) ─────────────
+
+/** El sobre cae y revienta, las cartas se mezclan tres veces, abanico final y cuenta 3-2-1. Mismo ritmo que la TV. */
+function BarajaMini({ s, sala }: { s: EstadoPublico; sala: Sala }) {
+  const raiz = useRef<HTMLDivElement>(null);
+  const [cuenta, setCuenta] = useState(0);
+  useLayoutEffect(() => {
+    const el = raiz.current;
+    if (!el) return;
+    const q = gsap.utils.selector(el);
+    const cartas = q('.bm-carta');
+    const sobre = q('.bm-sobre');
+    const u = Math.max(1, el.clientWidth / 100); // distancias proporcionales al ancho
+    const quieto = reducirMovimiento();
+    const t = gsap.timeline();
+    if (!quieto) {
+      t.fromTo(sobre, { y: -u * 120, rotation: -14, scale: 1, opacity: 1 }, { y: 0, rotation: 0, duration: 0.5, ease: 'bounce.out' }, 0)
+        .to(sobre, { x: u * 2, rotation: 4, duration: 0.06, repeat: 7, yoyo: true, ease: 'sine.inOut' }, 0.5)
+        .add(() => vibrar(25), 0.52)
+        .to(sobre, { scale: 2.2, opacity: 0, duration: 0.35, ease: 'power3.out' }, 1.0);
+    } else gsap.set(sobre, { opacity: 0 });
+    t.from(cartas, { y: u * 90, rotation: () => gsap.utils.random(-50, 50), opacity: 0, duration: 0.7, ease: 'expo.out', stagger: 0.035 }, quieto ? 0.1 : 1.15);
+    if (!quieto) {
+      for (let v = 0; v < 3; v++)
+        t.to(cartas, { x: (i) => (i % 2 ? u * 18 : -u * 18), rotation: (i) => (i % 2 ? 9 : -9), duration: 0.32, ease: 'power2.inOut', stagger: 0.012 }, '>')
+          .add(() => vibrar(8))
+          .to(cartas, { x: 0, rotation: (i) => (i - 4) * 0.6, y: (i) => -i * 1.6, duration: 0.3, ease: 'power3.in', stagger: 0.02 }, '>');
+      t.to(cartas, { rotation: (i) => (i - 3.5) * 10, x: (i) => (i - 3.5) * u * 6.5, y: (i) => Math.abs(i - 3.5) * u * 1.2, duration: 0.7, ease: 'back.out(1.6)', stagger: 0.02 }, '>0.05');
+    }
+    return () => void t.kill();
+  }, []);
+  useEffect(() => {
+    let raf = 0;
+    let previo = -1;
+    const paso = () => {
+      const resto = s.vence - sala.ahora();
+      const n = resto <= 3200 && resto > 200 ? Math.ceil((resto - 200) / 1000) : 0;
+      if (n !== previo) {
+        previo = n;
+        setCuenta(n);
+        if (n > 0) vibrar(n === 1 ? [30, 40, 60] : 20);
+      }
+      raf = requestAnimationFrame(paso);
+    };
+    raf = requestAnimationFrame(paso);
+    return () => cancelAnimationFrame(raf);
+  }, [s.vence, sala]);
+  return (
+    <div className="bm" ref={raiz} aria-hidden>
+      <img className="bm-sobre" src="/img/iconos/sobre.webp" alt="" />
+      <div className="bm-mazo">
+        {Array.from({ length: 8 }, (_, i) => (
+          <i className="bm-carta" key={i} />
+        ))}
+      </div>
+      <div className="bm-cuenta num" key={cuenta} data-n={cuenta}>
+        {cuenta > 0 ? cuenta : ''}
+      </div>
+    </div>
   );
 }
 

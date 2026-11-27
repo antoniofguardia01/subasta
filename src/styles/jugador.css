@@ -498,3 +498,29 @@
 .voto-eq-ganador small { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; }
 .voto-eq-ganador b { font-size: 30px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; color: var(--c); line-height: 1; }
 .voto-eq-detalle { font-size: 14px; font-weight: 700; opacity: 0.85; }
+
+/* ───────── Animaciones de transición en el celular (barajeo, cartel de ronda, resumen) ───────── */
+.j-cartel > div:last-child { width: 100%; max-height: 100%; }
+/* Barajeo */
+.bm { position: relative; width: 100%; height: clamp(120px, 36vw, 200px); margin-top: 8px; }
+.bm-sobre { position: absolute; left: 50%; top: 50%; height: 80%; width: auto; translate: -50% -50%; z-index: 3; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.55)); }
+.bm-mazo { position: absolute; left: 50%; top: 52%; width: 0; height: 0; }
+.bm-carta { position: absolute; left: -24px; top: -34px; width: 48px; height: 68px; border-radius: 7px; border: 3px solid #fff; background: repeating-linear-gradient(135deg, var(--m0) 0 6px, var(--m2) 6px 12px); box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35); will-change: transform; }
+.bm-carta::after { content: ''; position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px; border-radius: 50%; background: var(--acento); border: 3px solid #fff; }
+.bm-cuenta { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; font-size: clamp(90px, 30vw, 160px); font-weight: 800; color: #fff; text-shadow: 0 6px 0 rgba(0, 0, 0, 0.45); pointer-events: none; animation: cuenta-grande 900ms var(--ease-out) both; }
+.bm-cuenta[data-n='0'] { display: none; }
+/* Cartel de ronda: tres jugadores de la posición entran desde abajo, como en la TV */
+.j-trio { position: relative; width: min(100%, 320px); height: clamp(90px, 30vw, 150px); margin: 8px auto 0; pointer-events: none; }
+.j-trio img { position: absolute; bottom: 0; width: auto; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.5)); -webkit-mask-image: linear-gradient(to top, transparent 0, #000 18%); mask-image: linear-gradient(to top, transparent 0, #000 18%); animation: trio-entra 720ms var(--ease-out) both; }
+.j-trio img[data-i='0'] { left: 2%; height: 78%; rotate: -5deg; z-index: 1; animation-delay: 420ms; }
+.j-trio img[data-i='1'] { left: 50%; height: 100%; translate: -50% 0; z-index: 2; animation-delay: 280ms; }
+.j-trio img[data-i='2'] { right: 2%; height: 78%; rotate: 5deg; z-index: 1; animation-delay: 560ms; }
+/* Resumen de la ronda: lo que compró cada uno */
+.j-fin-compras { display: flex; gap: 6px; justify-content: center; width: 100%; margin-top: 10px; overflow-x: auto; padding-bottom: 2px; }
+.j-fin-carta { flex: 0 1 92px; min-width: 64px; display: flex; flex-direction: column; gap: 3px; animation: carta-sube 560ms calc(300ms + var(--i) * 80ms) var(--ease-out) both; }
+.j-fin-foto { position: relative; display: block; height: clamp(64px, 20vw, 96px); border-radius: 10px; overflow: hidden; background: var(--f0, var(--m0)); border-bottom: 4px solid var(--c); }
+.j-fin-foto img { position: absolute; left: -10%; bottom: 0; width: 120%; height: 100%; object-fit: contain; object-position: 50% 100%; }
+.j-cartel .j-fin-carta b { font-size: 14px; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: none; }
+.j-fin-carta em { font-style: normal; font-size: 11px; font-weight: 700; color: var(--tinta2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.j-fin-carta em i { font-style: normal; color: var(--c); font-weight: 800; }
+.j-fin-carta[data-yo='1'] .j-fin-foto { box-shadow: 0 0 0 2px var(--c); }
